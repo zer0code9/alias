@@ -8,11 +8,17 @@ bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: 'z!help',
-            type: 'PLAYING'
+            name: '|z!help',
+            type: 'Watching servers'
         }
     })
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log("The best bot is ON!");
 });
+
+bot.on("message" , msg=>{
+    if (msg.content === "Hello"){
+        msg.reply("Hello :D nice to meet you!");
+    }
+})
 
 bot.login(token);
