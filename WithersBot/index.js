@@ -8,7 +8,7 @@ bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: '|z!help',
+            name: '| z!help',
             type: 'Watching servers'
         }
     })
@@ -16,9 +16,14 @@ bot.on("ready", () => {
 });
 
 bot.on("message" , msg=>{
-    if (msg.content === "Hello"){
-        msg.reply("Hello :D nice to meet you!");
+    if(!msg.content.startsWith(prefix) || msg.author.bot) return;
+
+    const args = msg.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    if(command === "hello"){
+        msg.channel.send("Hello :D nice to meet you!");
     }
-})
+});
 
 bot.login(token);
