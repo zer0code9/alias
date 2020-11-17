@@ -34,7 +34,6 @@ bot.on("message", msg => {
     if (!msg.content.startsWith(prefix)) return;
     if (msg.author.bot) return;
 
-    const args = msg.content.substring(prefix.length).split(" ");
 
     switch (args[0]) {
         case "help":
