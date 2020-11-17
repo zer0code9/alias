@@ -23,6 +23,8 @@ bot.on("message" , msg=>{
 
     if(command === "hello"){
         msg.channel.send("Hello :D nice to meet you!");
+    } else if(command === "wsw"){
+        msg.channel.send("https://www.youtube.com/channel/UCEhaRtTBEpzq3655QVpsOlQ");
     }
 });
 
