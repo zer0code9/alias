@@ -1,11 +1,13 @@
+const fs = require("fs");
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const prefix = "z!";
-const CI = "768214696019886121";
-const CS = "byZpJUW94I-UXFzEDkxbN4erfXcg8Uei";
+const CI = "768214696019886121"; // Client ID
+const CS = "byZpJUW94I-UXFzEDkxbN4erfXcg8Uei"; // Client Secret
+const PK = "4a9721b2aa668e06c96f96079998e8c6f8f2511610e7beab25d58f7edf4eeba6"; // Public Key
 
 // CONFIGS
 var botting = token.startsWith("mfa.");
