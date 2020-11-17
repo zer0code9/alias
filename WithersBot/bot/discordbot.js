@@ -5,9 +5,7 @@ const bot = new Discord.Client();
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const prefix = "z!";
-const CI = "768214696019886121"; // Client ID
-const CS = "byZpJUW94I-UXFzEDkxbN4erfXcg8Uei"; // Client Secret
-const PK = "4a9721b2aa668e06c96f96079998e8c6f8f2511610e7beab25d58f7edf4eeba6"; // Public Key
+
 
 // CONFIGS
 var botting = token.startsWith("mfa.");
@@ -23,7 +21,7 @@ bot.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 client.on('guildMemberAdd', member => {
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
+    const channel = member.guild.channels.find(channel => channel.name === 'welcome-members');
     if (!channel) return;
     channel.send(`Welcome to the server, ${member}`);
 });
