@@ -32,9 +32,11 @@ bot.on("message" , msg=>{
 
     if(command === "hello"){
         bot.command.get("hello").execute(msg, args);
-    } else if(command === "wsw"){
+    } 
+    if(command === "wsw"){
         bot.command.get("wsw").execute(msg, args);
     }
 });
+// if(command === ""){bot.command.get("").execute(msg, args);}
 
 bot.login(token);
