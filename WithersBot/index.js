@@ -11,14 +11,14 @@ for(const file of commandFiles){
 }
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
-const prefix = "z!";
+const prefix = "z";
 var version = "1.1.0";
 
 bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: ' servers | z!help',
+            name: ' servers | zhelp',
             type: 'Watching'
         }
     })
@@ -41,7 +41,7 @@ bot.on("message" , msg=>{
     try {
         bot.command.get(command.name).execute(msg, args);
     } catch (error) {
-        msg.reply(`Uh oh, something went wrong \n\`\`\`The error is ${error}\`\`\``);
+        msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }
     return;
 });

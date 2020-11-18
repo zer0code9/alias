@@ -16,6 +16,6 @@ module.exports = {
     name: "verison",
     description: "Verison of WithersBot",
     execute(msg, args){
-        msg.channel.send("1");
+        msg.channel.send("1.1.0");
     }
 }
