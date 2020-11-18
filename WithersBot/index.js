@@ -7,7 +7,7 @@ const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
 
-    bot.commands.set(command.name, comad);
+    bot.command.set(command.name, command);
 }
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
@@ -31,9 +31,9 @@ bot.on("message" , msg=>{
     const command = args.shift().toLowerCase();
 
     if(command === "hello"){
-        msg.channel.send("Hello :D nice to meet you!");
+        bot.command.get("hello").execute(msg, args);
     } else if(command === "wsw"){
-        msg.channel.send("https://www.youtube.com/channel/UCEhaRtTBEpzq3655QVpsOlQ");
+        bot.command.get("wsw").execute(msg, args);
     }
 });
 
