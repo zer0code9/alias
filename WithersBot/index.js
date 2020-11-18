@@ -1,5 +1,14 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
+const fs = require("fs");
+
+bot.command = new Discord.Collection();
+const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
+for(const file of commandFiles){
+    const command = require(`./commands/${file}`);
+
+    bot.commands.set(command.name, comad);
+}
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const prefix = "z!";
@@ -8,8 +17,8 @@ bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: '| z!help',
-            type: 'Watching servers'
+            name: ' servers | z!help',
+            type: 'Watching'
         }
     })
     console.log("The best bot is ON!");
