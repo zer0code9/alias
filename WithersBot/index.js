@@ -12,7 +12,7 @@ for(const file of commandFiles){
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const prefix = "z!";
-const version = "1.1.0";
+var version = "1.1.0";
 
 bot.on("ready", () => {
     bot.user.setPresence({
@@ -37,6 +37,13 @@ bot.on("message" , msg=>{
     if(command === "wsw"){
         bot.command.get("wsw").execute(msg, args);
     }
+
+    try {
+        bot.command.get(command.name).execute(msg, args);
+    } catch (error) {
+        msg.reply(`Uh oh, something went wrong \n\`\`\`The error is ${error}\`\`\``);
+    }
+    return;
 });
 // if(command === ""){bot.command.get("").execute(msg, args);}
 

@@ -12,3 +12,10 @@ module.exports = {
         msg.channel.send("Hello :D nice to meet you!");
     }
 }
+module.exports = {
+    name: "verison",
+    description: "Verison of WithersBot",
+    execute(msg, args){
+        msg.channel.send("1");
+    }
+}
