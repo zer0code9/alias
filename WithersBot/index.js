@@ -2,13 +2,15 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 const fs = require("fs");
 
-bot.command = new Discord.Collection();
+let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
 
-    bot.command.set(command.name, command);
+    commands.set(command.name, command);
 }
+bot.commands = commands;
+console.log(commands);
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const prefix = "z";
@@ -19,7 +21,7 @@ bot.on("ready", () => {
         status: 'online',
         activity: {
             name: ' servers | zhelp',
-            type: 'Watching'
+            type: 'WATCHING'
         }
     })
     console.log("The best bot is ON!");
@@ -31,15 +33,15 @@ bot.on("message" , msg=>{
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if(command === "hello"){
-        bot.command.get("hello").execute(msg, args);
-    } else
-    if(command === "wsw"){
-        bot.command.get("wsw").execute(msg, args);
+    if (!bot.commands.has(command)) return;
+    const extras = {
+        cmds: commands,
+        tc: textchannel,
+        vc: voicechannel
     }
 
     try {
-        bot.command.get(command.name).execute(msg, args);
+        bot.commands.get(command).execute(msg, args);
     } catch (error) {
         msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }

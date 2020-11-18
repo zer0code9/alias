@@ -1,6 +1,6 @@
 function bcalculator(msg, args) {
     if (args.length == 0) {
-        msg.channel.send("**How to use**\n```pc-calc [expression]```");
+        msg.channel.send("**How to use**\n```zcalc [expression]```");
         return;
     }
 
