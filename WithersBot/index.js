@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { NOTFOUND } = require("dns");
 const bot = new Discord.Client();
 const fs = require("fs");
 
@@ -28,17 +29,13 @@ bot.on("ready", () => {
 });
 
 bot.on("message" , msg=>{
+    if(!msg.content.startsWith(prefix) && !(bot.commands.has(command))){msg.reply(`I don't know what ${msg.content} means. Sorry`)}
     if(!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
     if (!bot.commands.has(command)) return;
-    const extras = {
-        cmds: commands,
-        tc: textchannel,
-        vc: voicechannel
-    }
 
     try {
         bot.commands.get(command).execute(msg, args);
