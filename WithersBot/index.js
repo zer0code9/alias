@@ -16,7 +16,7 @@ console.log(commands);
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const { prefix } = require("./config.json");
-var version = "1.1.0";
+var { version, versiondescription } = require("./config.json");
 
 bot.on("ready", () => {
     bot.user.setPresence({
