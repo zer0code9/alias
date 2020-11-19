@@ -15,7 +15,7 @@ bot.commands = commands;
 console.log(commands);
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
-const prefix = "z";
+const { prefix } = require("./config.json");
 var version = "1.1.0";
 
 bot.on("ready", () => {
@@ -34,12 +34,13 @@ bot.on("message" , msg=>{
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+    const cmds = commands;
 
     if (!bot.commands.has(command)){
         msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);
     } else
     try {
-        bot.commands.get(command).execute(msg, args);
+        bot.commands.get(command).execute(msg, args, cmds);
     } catch (error) {
         msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }

@@ -1,4 +1,4 @@
-const prefix = require("../index.js");
+const { prefix } = require("./WithersBot/config.js");
 function bcalculator(msg, args) {
     if (args.length == 0) {
         msg.channel.send("**How to use**\n```zcalc [expression]```");
