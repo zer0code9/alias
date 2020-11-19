@@ -1,4 +1,4 @@
-const { prefix } = require("./WithersBot/config.js");
+const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function sendHelp(msg, args, cmds){
     let docs = [];
@@ -24,12 +24,11 @@ function sendHelp(msg, args, cmds){
             help2.setColor("#0099ff");
             help2.setTitle('WithersBot');
             help2.setDescription('**WithersBot Commands:**');
-            help2.addFields(docs.filter(cmd => cmd.name === args[0]));
+            help2.addFields(docs.filter(cmds => cmds.name === args[0]));
             help2.setTimestamp(new Date());
             help2.setFooter('The Bot of WithersWorld');
         msg.channel.send(help2);
     }
-
     if (args.length > 0) {
 
         let selected = docs[args[0].toLowerCase()];
