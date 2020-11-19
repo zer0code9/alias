@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const { NOTFOUND } = require("dns");
 const bot = new Discord.Client();
 const fs = require("fs");
+const server = require("./commands/server");
 
 let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
@@ -29,14 +30,14 @@ bot.on("ready", () => {
 });
 
 bot.on("message" , msg=>{
-    if(!msg.content.startsWith(prefix) && !(bot.commands.has(command))){msg.reply(`I don't know what ${msg.content} means. Sorry`)}
     if(!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (!bot.commands.has(command)) return;
-
+    if (!bot.commands.has(command)){
+        msg.reply(`I don't know the command ${command}`);
+    } else
     try {
         bot.commands.get(command).execute(msg, args);
     } catch (error) {
