@@ -36,7 +36,7 @@ bot.on("message" , msg=>{
     const command = args.shift().toLowerCase();
 
     if (!bot.commands.has(command)){
-        msg.reply(`I don't know the command ${command}`);
+        msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);
     } else
     try {
         bot.commands.get(command).execute(msg, args);
