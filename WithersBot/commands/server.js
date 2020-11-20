@@ -20,7 +20,8 @@ function serverData(msg, args) {
 msg.channel.send(ServerInfo);
     }
     if (args == "role") {
-        msg.channel.send(`Your roles are ${role.name}`);
+        let member = msg.member;
+        msg.channel.send(`Your roles are ${member.roles}`);
         return;
     }
     if (args == "member") {

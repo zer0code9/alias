@@ -5,7 +5,8 @@ const fs = require("fs");
 const server = require("./commands/server");
 
 const guild = new Discord.Guild();
-const role = new Discord.Role(guild);
+const role = new Discord.Role(bot, guild);
+const member = new Discord.GuildMember(bot, guild);
 
 let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
@@ -49,6 +50,7 @@ bot.on("message" , msg=>{
     }
     return;
 });
+
 // if(command === ""){bot.command.get("").execute(msg, args);}
 
 bot.login(token);
