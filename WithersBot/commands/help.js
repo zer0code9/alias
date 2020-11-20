@@ -2,10 +2,10 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function sendHelp(msg, args, cmds){
     let docs = [];
-    for (const cmds of cmds.entries()) {
+    for (const [name, description, example] of cmds) {
         docs.push({
-            name: prefix + cmds,
-            value: cmds.description + '```' + cmds.example + '```'
+            name: prefix + name,
+            value: description + '```' + example + '```'
         });
     }
     if (args.length == 0) {
@@ -13,27 +13,20 @@ function sendHelp(msg, args, cmds){
         .setColor('RANDOM')
         .setTitle(`WithersBot`)
         .setDescription('**WithersBot Commands:**')
-        .addFields(docs);
-    msg.channel.send(help)
+        .addFields(docs)
+        .setFooter('The Bot of WithersWorld')
+    msg.channel.send(help);
     } else {
 
-        const help2 = new Discord.MessageEmbed();
-            help2.setColor("#0099ff");
-            help2.setTitle('WithersBot');
-            help2.setDescription('**WithersBot Commands:**');
-            help2.addFields(docs.filter(cmds => cmds.name === args[0]));
-            help2.setTimestamp(new Date());
-            help2.setFooter('The Bot of WithersWorld');
-        msg.channel.send(help2);
-    }
+    
     if (args.length > 0) {
 
         let selected = docs[args[0].toLowerCase()];
 
         if (typeof selected == "undefined")
             selected = {
-                name: "I can't find what command you're looking for.",
-                value: "You can get the full list of command by typing:\n```pc-help [command]```"
+                name: "I can't find the command you're looking for.",
+                value: "See all my commands by typing:\n```zhelp [command]```"
             };
 
         const selectiveDocs = {
@@ -49,6 +42,7 @@ function sendHelp(msg, args, cmds){
 
         msg.channel.send({ embed: selectiveDocs });
     }
+}
 }
 
 module.exports = {

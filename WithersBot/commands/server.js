@@ -7,25 +7,28 @@ function serverData(msg, args) {
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
  .setTitle(`Server infomation on ${guild.name}`)
- .setDescription(`Command executed by ${message.author.tag}`)
+ .setDescription(`Hello and welcome to ${guild.name} :D`)
  .addFields(
   { name: 'Members', value: `${guild.memberCount}` },
   { name: 'Region', value: `${guild.region}` },
-  { name: 'Owner', value: `${guild.owner.tag}`, inline: true },
-  { name: 'Created', value: `${guild.createdAt}`, inline: true }
+  { name: 'Owner', value: `${guild.owner}`},
+  { name: "Description", value: `${guild.description}`}
  );
 msg.channel.send(ServerInfo);
     }
     if (args == "active") {
-        msg.channel.send("Online Members: " + msg.guild.members.cache.filter(member => member.presence.status !== "offline").size);
+        msg.channel.send("Online Members: " + `${guild.presences.memberCount}`);
         return;
     }
     if (args == "role") {
-        msg.channel.send(`Your roles are`);
+        msg.channel.send(`Your roles are ${guild.msg.author.role}`);
         return;
     }
     if (args == "member") {
-        msg.channel.send(`There are ${guild.memberCount} members`)
+        msg.channel.send(`There are ${guild.memberCount} members`);
+    }
+    if (args == "banner") {
+        msg.channel.send(`${guild.banner}`);
     }
 }
 
