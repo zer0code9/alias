@@ -2,10 +2,10 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function sendHelp(msg, args, cmds){
     let docs = [];
-    for (const [name, description, example] of cmds) {
+    for (const [name, description] of cmds) {
         docs.push({
             name: prefix + name,
-            value: description.description + '```' + example.example + '```'
+            value: description.description + '```' + description.example + '```'
         });
     }
     if (args.length == 0) {
@@ -26,7 +26,7 @@ function sendHelp(msg, args, cmds){
         if (typeof selected == "undefined")
             selected = {
                 name: "I can't find the command you're looking for.",
-                value: "See all my commands by typing:\n```zhelp [command]```"
+                value: "See all my commands by typing:\n```zhelp```"
             };
 
         const selectiveDocs = {

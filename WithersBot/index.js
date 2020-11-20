@@ -1,10 +1,11 @@
 const Discord = require("discord.js");
 const { NOTFOUND } = require("dns");
 const bot = new Discord.Client();
-const role = new Discord.Role();
-const guild = new Discord.Guild();
 const fs = require("fs");
 const server = require("./commands/server");
+
+const guild = new Discord.Guild();
+const role = new Discord.Role(guild);
 
 let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
