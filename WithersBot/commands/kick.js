@@ -2,9 +2,9 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 function kickUser(msg, args) {
     if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
-        msg.channel.send(`${taggedUser.username} has been successfully kicked.\n\ Only use "kick" it when someone has a bad behavior`);
+        msg.channel.send(`${taggedUser.username} has been successfully kicked.\n\ Only use "kick" when someone has a bad behavior`);
       } else {
-        msg.reply(`I don't know that person ${taggedUser.username}`);
+        msg.reply(`I don't know that person`);
       }
 }
 

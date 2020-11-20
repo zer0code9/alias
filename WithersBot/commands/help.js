@@ -2,22 +2,19 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function sendHelp(msg, args, cmds){
     let docs = [];
-    for (const [key, value] of cmds.entries()) {
+    for (const cmds of cmds.entries()) {
         docs.push({
-            name: prefix + key,
-            value: value.description + '```' + value.example + '```'
+            name: prefix + cmds,
+            value: cmds.description + '```' + cmds.example + '```'
         });
     }
     if (args.length == 0) {
-            const help = new Discord.MessageEmbed();
-                help.setColor("#000FFF");
-                help.setTitle('WithersBot');
-                help.setDescription('**WithersBot Commands:**');
-                help.addFields(docs);
-                help.setTimestamp(new Date());
-                help.setFooter('The Bot of WithersWorld');
-            msg.channel.send(help);
-            return;
+        const help = new Discord.MessageEmbed()
+        .setColor('RANDOM')
+        .setTitle(`WithersBot`)
+        .setDescription('**WithersBot Commands:**')
+        .addFields(docs);
+    msg.channel.send(help)
     } else {
 
         const help2 = new Discord.MessageEmbed();

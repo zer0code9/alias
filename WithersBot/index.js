@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const { NOTFOUND } = require("dns");
 const bot = new Discord.Client();
+const guild = bot.guilds.cache.get("627583332930027541");
 const fs = require("fs");
 const server = require("./commands/server");
 
