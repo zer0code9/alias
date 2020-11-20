@@ -5,7 +5,7 @@ function sendHelp(msg, args, cmds){
     for (const [name, description, example] of cmds) {
         docs.push({
             name: prefix + name,
-            value: description + '```' + example + '```'
+            value: description.description + '```' + example.example + '```'
         });
     }
     if (args.length == 0) {

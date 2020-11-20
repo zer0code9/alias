@@ -37,7 +37,7 @@ function bcalculator(msg, args) {
 module.exports = {
     name: "calc",
     description: "Use the basic calculator on WithersBot",
-    exemple: prefix + "calc [expression]",
+    example: prefix + "calc [expression]",
     execute(msg, args){
         bcalculator(msg, args);
     }

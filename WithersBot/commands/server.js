@@ -21,7 +21,7 @@ msg.channel.send(ServerInfo);
         return;
     }
     if (args == "role") {
-        msg.channel.send(`Your roles are ${guild.msg.author.role}`);
+        msg.channel.send(`Your roles are ${role.name}`);
         return;
     }
     if (args == "member") {
