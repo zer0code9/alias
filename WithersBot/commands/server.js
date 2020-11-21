@@ -2,6 +2,8 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function serverData(msg, args) {
     let guild = msg.guild;
+    const member = msg.mentions.members.first();
+    //const string = args.slice(1).join(" ");
     if(args == 0){msg.channel.send(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`); return;}
 
     if(args == "status"){
@@ -30,36 +32,34 @@ return;
         msg.channel.send(`${guild.banner}`);
         return;
     }
+    if (args == "test") {
+        let argss = args.slice(args.length).join(" ");
+        try {
+            msg.channel.send(`${args}`, `${argss}`);
+        } catch (error) {
+            msg.reply(`${error}`);
+        }
+    }
 if (`${msg.author}` !== `${guild.owner}`) {msg.channel.send(`You are not the owner, ${msg.author}`); return;} else {
     if (args == "region") {
-        if (args[1] == 0) {
-            msg.reply("I can't change with no value. Try again.\n ```zserver region [region]```");
-            return;
-        } else {
+        if (`${string}` > 0) {
             guild.edit({
-                region: `${args[1]}`
+                region: `${string}`
             })
-            msg.channel.send(`${guild}'s region is now ${args[1]}`);
+            msg.channel.send(`${guild}'s region is now ${string}`);
         }
-
-        return;
+            return;
     }
         if (args == "name"){
-            if (args[1] == 0) {
-                msg.reply("I can't change with no value. Try again.\n ```zserver name [string]```");
-                return;
-            } else {
+            if (`${string}` > 0) {
                 guild.edit({
-                    name: `${args[1]}`
+                    name: `${string}`
                 })
-                msg.channel.send(`${guild}'s `)
-            }
+                msg.channel.send(`${guild}'s name is now ${string}`);
         }
-}
-    if (args == "name") {
-        msg.channel.send("What do you want the name of the guild to be?")
+            return;
+        }
     }
-    
 }
 
 module.exports = {

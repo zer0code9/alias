@@ -23,24 +23,24 @@ function sendHelp(msg, args, cmds){
 
         let selected = docs[args[0].toLowerCase()];
 
-        if (typeof selected == "undefined")
-            selected = {
-                name: "I can't find the command you're looking for.",
-                value: "See all my commands by typing:\n```zhelp```"
-            };
-
-        const selectiveDocs = {
-            color: "#474747",
-            title: 'WithersBot',
-            description: `**❌ ERROR**`,
-            timestamp: new Date(),
-            fields: [selected],
-            footer: {
-                text: 'The Bot of WithersWorld',
-            },
-        };
-
-        msg.channel.send({ embed: selectiveDocs });
+        if (typeof selected == "undefined") {
+                const helpSelected = new Discord.MessageEmbed()
+                .setColor("#922B21")
+                .setTitle(`WithersBot`)
+                .setDescription(`**❌ ERROR**`)
+                .addFields({ name: "I can't find the command you're looking for.", value: "See all my commands by typing:\n```zhelp```" })
+                .setFooter('The Bot of WithersWorld')
+        } else {
+            if (typeof selected == cmds) {
+                const helpSelected = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle(`WithersBot`)
+                .setDescription(`**WithersBot Command:**`)
+                .addFields(docs.filter(cmds => cmds.name === args[0]))
+                .setFooter('The Bot of WithersWorld')
+            }
+        }
+        msg.channel.send(helpSelected);
     }
 }
 }
