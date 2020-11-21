@@ -1,7 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function serverData(msg, args) {
-    const args2 = msg.content.slice(prefix.length).slice(args.length).split(/ +/);
+    const argss = args.slice(args.length);
     let guild = msg.guild;
     if(args == 0){msg.channel.send(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`); return;}
     if(args == "status"){
@@ -30,15 +30,27 @@ msg.channel.send(ServerInfo);
     if (args == "banner") {
         msg.channel.send(`${guild.banner}`);
     }
+if (msg.author != guild.owner) {msg.channel.send(`You are not the owner, ${msg.author}`)} else {
     if (args == "region") {
-        if (args2 > 0) {
-        guild.edit({
-            region: `${args2}`
-        })
-        msg.channel.send(`${guild}'s region is now ${args2}`);
+        if (argss == 0) {
+            msg.reply(`I can't change with no value. Try again.`);
+            return;
+        } else {
+            msg.channel.send(`${guild}'s region is now ${argss}`);
+        }
+        //guild.edit({
+            //region: `${msg.content}`
+        //})
         return;
     }
+        if (args == "name"){
+            
+        }
+}
+    if (args == "name") {
+        msg.channel.send("What do you want the name of the guild to be?")
     }
+    
 }
 
 module.exports = {
