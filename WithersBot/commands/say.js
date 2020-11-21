@@ -5,7 +5,7 @@ function sayIt(msg, args) {
         msg.channel.send("**How to use**\n```zsay [word]```");
         return;
     }else {
-        msg.channel.send(`${args}`);
+        msg.channel.send(`${args[0]} ${args[1]} ${args[3]} ${args[4]} ${args[5]}`);
         msg.delete();
     }
 }

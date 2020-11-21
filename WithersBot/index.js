@@ -4,10 +4,6 @@ const bot = new Discord.Client();
 const fs = require("fs");
 const server = require("./commands/server");
 
-const guild = new Discord.Guild();
-const role = new Discord.Role(bot, guild);
-const member = new Discord.GuildMember(bot, guild);
-
 let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
 for(const file of commandFiles){
@@ -39,6 +35,9 @@ bot.on("message" , msg=>{
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
     const cmds = commands;
+    const guild = msg.guild;
+    const vChannel = msg.member.voice.channel;
+    const member = msg.mentions.members.first();
 
     if (!bot.commands.has(command)){
         msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);
@@ -52,5 +51,6 @@ bot.on("message" , msg=>{
 });
 
 // if(command === ""){bot.command.get("").execute(msg, args);}
+// \n\`\`\`${}\`\`\`
 
 bot.login(token);
