@@ -13,6 +13,6 @@ module.exports = {
 			return `${user.username}'s avatar: <${user.displayAvatarURL}>`;
 		});
 
-		msg.channel.send(avatarList);
+		msg.channel.send(avatarList); 
     }
 }
