@@ -1,17 +1,20 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function cInfo(msg, args) {
-    const channel = msg.guild.roles.cache.find(role => role.name === `${args}`);
+    if (args == 0){
+    const channeli = msg.guild.channels.cache.find(channel => channel.name === `${msg.channel}` - "#");
+    msg.channel.send(channeli);
+    //const channelIi = channeli.toString();
     const channelInfo = new Discord.MessageEmbed()
     .setColor('RANDOM')
     .setTitle(`Info on`)
     .setDescription('**WithersBot Commands:**')
     .addFields(
-        { name: "Id", value: channel.id }
+        { name: "Id", value: `${channeli.id}` }
     )
     .setFooter('The Bot of WithersWorld')
 msg.channel.send(channelInfo);
-msg.channel.send(channel)
+    }
 }
 module.exports = {
     name: "channel",
