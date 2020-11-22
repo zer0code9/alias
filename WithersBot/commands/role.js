@@ -15,6 +15,10 @@ function cInfo(msg, args) {
     .setFooter('The Bot of WithersWorld')
 msg.channel.send(channelInfo);
     }
+
+    if (args[0] == "add") {
+        user
+    }
 }
 module.exports = {
     name: "channel",
