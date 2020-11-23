@@ -38,6 +38,7 @@ bot.on("message" , msg=>{
     const guild = msg.guild;
     const vChannel = msg.member.voice.channel;
     const member = msg.mentions.members.first();
+    const By = 'The Bot of WithersWorld' + new Date();
 
     if (!bot.commands.has(command)){
         msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);

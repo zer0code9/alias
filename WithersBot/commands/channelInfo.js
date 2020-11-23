@@ -12,7 +12,7 @@ function cInfo(msg, args) {
     .addFields(
         { name: "Id", value: `${channeli.id}` }
     )
-    .setFooter('The Bot of WithersWorld')
+    .setFooter('The Bot of WithersWorld', new Date())
 msg.channel.send(channelInfo);
     }
 }
