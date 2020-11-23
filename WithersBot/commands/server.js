@@ -4,7 +4,18 @@ function serverData(msg, args) {
     let guild = msg.guild;
     const member = msg.mentions.members.first();
     //const string = args.slice(1).join(" ");
-    if(args == 0){msg.channel.send(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`); return;}
+    if(args == 0){
+        const welcomeServer = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`)
+        .addFields(
+            { name: "status", value: `get info on the server! - ${prefix}server`},
+            { name: "region", value: `Set/change the region of the server - ${prefix}server region [region]`}
+        )
+        msg.channel.send(); 
+        return;
+    } else {
 
     if(args == "status"){
         const ServerInfo = new Discord.MessageEmbed()
@@ -21,12 +32,6 @@ function serverData(msg, args) {
  );
 msg.channel.send(ServerInfo);
 return;
-    }
-
-    if (args == "role") {
-        let member = msg.member;
-        msg.channel.send(`Your roles are ${member.roles}`);
-        return;
     }
     if (args == "banner") {
         msg.channel.send(`${guild.banner}`);
@@ -60,6 +65,7 @@ if (`${msg.author}` !== `${guild.owner}`) {msg.channel.send(`You are not the own
             return;
         }
     }
+}
 }
 
 module.exports = {

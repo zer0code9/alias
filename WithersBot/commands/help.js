@@ -14,7 +14,7 @@ function sendHelp(msg, args, cmds){
         .setTitle(`WithersBot`)
         .setDescription('**WithersBot Commands:**')
         .addFields(docs)
-        .setFooter('The Bot of WithersWorld')
+        .setFooter('The Bot of WithersWorld', new Date())
     msg.channel.send(help);
     } else {
 
@@ -29,7 +29,7 @@ function sendHelp(msg, args, cmds){
                 .setTitle(`WithersBot`)
                 .setDescription(`**❌ ERROR**`)
                 .addFields({ name: "I can't find the command you're looking for.", value: "See all my commands by typing:\n```zhelp```" })
-                .setFooter('The Bot of WithersWorld')
+                .setFooter('The Bot of WithersWorld', new Date())
         } else {
             if (typeof selected == cmds) {
                 const helpSelected = new Discord.MessageEmbed()
@@ -37,7 +37,7 @@ function sendHelp(msg, args, cmds){
                 .setTitle(`WithersBot`)
                 .setDescription(`**WithersBot Command:**`)
                 .addFields(docs.filter(cmds => cmds.name === args[0]))
-                .setFooter('The Bot of WithersWorld')
+                .setFooter('The Bot of WithersWorld', new Date())
             }
         }
         msg.channel.send(helpSelected);
