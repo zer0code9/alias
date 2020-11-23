@@ -14,7 +14,7 @@ function sendHelp(msg, args, cmds){
         .setTitle(`WithersBot`)
         .setDescription('**WithersBot Commands:**')
         .addFields(docs)
-        .setFooter('The Bot of WithersWorld', new Date())
+        .setFooter('WithersBot helps')
     msg.channel.send(help);
     } else {
 

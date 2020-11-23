@@ -10,7 +10,7 @@ function cInfo(msg, args) {
     .addFields(
         { name: "state", value: "get info on any channel - zchannel state [channelName]"}
     )
-    .setFooter('The Bot of WithersWorld', new Date())
+    .setFooter('WithersBot helps')
 msg.channel.send(channelInfo);
     } else {
         if (args == "state") {
@@ -22,7 +22,7 @@ msg.channel.send(channelInfo);
             .addFields(
                 { name: "Id", value: `${channeli.id}` }
             )
-            .setFooter('The Bot of WithersWorld', new Date())
+            .setFooter('WithersBot helps')
         msg.channel.send(channelInfo);
         }
     }

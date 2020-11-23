@@ -14,6 +14,7 @@ function serverData(msg, args) {
             { name: "region", value: `Set/change the region of the server - ${prefix}server region [region]`},
             { name: "name", value: `Set/change the name of the server - ${prefix}server name [name]`}
         )
+        .setFooter("WithersBot helps")
         msg.channel.send(); 
         return;
     } else {
@@ -30,7 +31,8 @@ function serverData(msg, args) {
   { name: "Verified?", value: `${guild.verified}`},
   { name: "Description", value: `${guild.description}`},
   { name: "Roles", value: `${guild.roles}`}
- );
+ )
+ .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);
 return;
     }
