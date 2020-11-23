@@ -11,7 +11,8 @@ function serverData(msg, args) {
         .setDescription(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`)
         .addFields(
             { name: "status", value: `get info on the server! - ${prefix}server`},
-            { name: "region", value: `Set/change the region of the server - ${prefix}server region [region]`}
+            { name: "region", value: `Set/change the region of the server - ${prefix}server region [region]`},
+            { name: "name", value: `Set/change the name of the server - ${prefix}server name [name]`}
         )
         msg.channel.send(); 
         return;
