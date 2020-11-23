@@ -1,7 +1,14 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 function bcalculator(msg, args) {
     if (args.length == 0) {
-        msg.channel.send("**How to use**\n```zcalc [expression]```");
+        const noCalc = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription(`Command: calc`)
+        .addFields({ name: "Command:", value: `${prefix}calc [equation]`})
+        .setFooter('WithersBot helps')
+    msg.channel.send(noCalc);
+        msg.channel.send(noCalc);
         return;
     }
 

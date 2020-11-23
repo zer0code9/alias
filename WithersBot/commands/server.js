@@ -15,7 +15,7 @@ function serverData(msg, args) {
             { name: "name", value: `Set/change the name of the server - ${prefix}server name [name]`}
         )
         .setFooter("WithersBot helps")
-        msg.channel.send(); 
+        msg.channel.send(welcomeServer); 
         return;
     } else {
 
