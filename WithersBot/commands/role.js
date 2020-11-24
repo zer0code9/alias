@@ -2,28 +2,30 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function cInfo(msg, args) {
     if (args == 0){
-    const channeli = msg.channels.find("id", `${args}`);
-    msg.channel.send(channeli);
-    //const channelIi = channeli.toString();
     const channelInfo = new Discord.MessageEmbed()
     .setColor('RANDOM')
     .setTitle(`Info on`)
-    .setDescription('**WithersBot Commands:**')
+    .setDescription('WithersBot Commands:')
     .addFields(
-        { name: "Id", value: `${channeli.id}` }
+        { name: "Add", value: `Add a permission to a role\n\`\`\`${prefix}role add [role] [permission]\`\`\`` },
+        { name: "Remove", value: `Remove a permission of a role\n\`\`\`${prefix}role remove [role] [permission]\`\`\``},
+        { name: "Create", value: `Create a role\n\`\`\`${prefix}role create [role]\`\`\``},
+        { name: "Delete", value: `Delete a role\n\`\`\`${prefix}role delete [role]\`\`\``},
+        { name: "Name", value: `Change the name of a role\n\`\`\`${prefix}role name [role] [roleName]\`\`\``}
     )
     .setFooter('The Bot of WithersWorld')
 msg.channel.send(channelInfo);
     }
 
     if (args[0] == "add") {
-        user
+        let user = msg.mentions.members.first();
+
     }
 }
 module.exports = {
-    name: "channel",
+    name: "role",
     description: "Get info on any channel of a server!",
-    example: prefix + "channelInfo [channelName]",
+    example: prefix + "role",
     execute(msg, args) {
         cInfo(msg, args);
     }

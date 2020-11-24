@@ -6,7 +6,7 @@ function bcalculator(msg, args) {
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription(`Command: calc`)
-        .addFields({ name: "Command:", value: `${prefix}calc [equation]`})
+        .addFields({ name: "Command:", value: `\n\`\`\`${prefix}calc [equation]\`\`\``})
         .setFooter('WithersBot helps')
         msg.channel.send(noCalc);
         return;

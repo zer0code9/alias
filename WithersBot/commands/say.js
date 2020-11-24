@@ -9,7 +9,7 @@ function sayIt(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription(`Command: say`)
         .addFields(
-            { name: "Command:", value: `${prefix}say [word]`},
+            { name: "Command:", value: `\n\`\`\`$${prefix}say [word]\`\`\``},
             { name: "Only one word can be used", value: "More in the future :D"}
         )
         .setFooter('WithersBot helps')

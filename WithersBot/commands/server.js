@@ -10,9 +10,9 @@ function serverData(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription(`Hello ${msg.author}! and Welcome to ${guild}! I'm WithersBot and I'm here to help you throughout your time in the server!`)
         .addFields(
-            { name: "status", value: `get info on the server! - ${prefix}server`},
-            { name: "region", value: `Set/change the region of the server - ${prefix}server region [region]`},
-            { name: "name", value: `Set/change the name of the server - ${prefix}server name [name]`}
+            { name: "status", value: `get info on the server!\n\`\`\`${prefix}server\`\`\``},
+            { name: "region", value: `Set/change the region of the server\n\`\`\`${prefix}server region [region]\`\`\``},
+            { name: "name", value: `Set/change the name of the server\n\`\`\`${prefix}server name [name]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(welcomeServer); 
