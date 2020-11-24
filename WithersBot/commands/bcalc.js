@@ -1,4 +1,5 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const Discord = require("discord.js");
 function bcalculator(msg, args) {
     if (args.length == 0) {
         const noCalc = new Discord.MessageEmbed()
@@ -7,7 +8,6 @@ function bcalculator(msg, args) {
         .setDescription(`Command: calc`)
         .addFields({ name: "Command:", value: `${prefix}calc [equation]`})
         .setFooter('WithersBot helps')
-    msg.channel.send(noCalc);
         msg.channel.send(noCalc);
         return;
     }

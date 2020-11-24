@@ -4,18 +4,20 @@ const Discord = require("discord.js");
 function sayIt(msg, args) {
     const string = args.slice(1).join(" ");
     if (args == 0){
-        msg.channel.send("**How to use**\n```zsay + [word]```");
         const noSay = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription(`Command: say`)
-        .addFields({ name: "Command:", value: `${prefix}say + [word]`})
+        .addFields(
+            { name: "Command:", value: `${prefix}say [word]`},
+            { name: "Only one word can be used", value: "More in the future :D"}
+        )
         .setFooter('WithersBot helps')
     msg.channel.send(noSay);
         return;
     }else {
-        if (args == "+") {
-        msg.channel.send(`${string}`);
+        if (args == "do") {
+        msg.channel.send(`${args}`);
         msg.delete();
         }
     }
@@ -24,7 +26,7 @@ function sayIt(msg, args) {
 module.exports = {
     name: "say",
     description: "Make WithersBot say something",
-    example: prefix + "say + [word]",
+    example: prefix + "say [word]",
     execute(msg, args){
         sayIt(msg, args)
     }
