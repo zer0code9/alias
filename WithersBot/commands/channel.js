@@ -7,7 +7,7 @@ function cInfo(msg, args) {
     .setTitle(`WithersBot Commands`)
     .setDescription('Command: channel')
     .addFields(
-        { name: "state", value: `get info on any channel\n\`\`\`${prefix}channel state [channel]\`\`\``},
+        { name: "Info", value: `Get info on a channel\n\`\`\`${prefix}channel info [channel]\`\`\``},
         { name: "Create", value: `Create a channel\n\`\`\`${prefix}channel create [channel]\`\`\``},
         { name: "Delete", value: `Delete a channel\n\`\`\`${prefix}channel delete [channel]\`\`\``},
         { name: "Name", value: `Change the name of a channel\n\`\`\`${prefix}channel name [channel] [channnelName]\`\`\``}
@@ -15,7 +15,7 @@ function cInfo(msg, args) {
     .setFooter('WithersBot helps')
 msg.channel.send(channelInfo);
     } else {
-        if (args == "state") {
+        if (args[0] == "info") {
             const channelInfo = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`Info on`)

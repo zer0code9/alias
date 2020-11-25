@@ -14,6 +14,8 @@ function sayIt(msg, args) {
         )
         .setFooter('WithersBot helps')
     msg.channel.send(noSay);
+    msg.channel.send(`${args}`);
+    msg.delete();
         return;
     }else {
         if (args == "do") {
