@@ -5,7 +5,9 @@ function kickUser(msg, args) {
   let guild = msg.guild;
   const taggedUser = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
-    if (!msg.member.permissions.has(KICK_MEMBERS)) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
+
+    if (!msg.member.permissions.has("KICK_MEMBERS")) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
+
     if (msg.mentions.users.size) {
         taggedUser.kick();
         const kicked = new Discord.MessageEmbed()
@@ -19,7 +21,9 @@ function kickUser(msg, args) {
         )
         .setFooter("WithersBot helps")
         msg.channel.send(kicked);
+
       } else {
+
         if (!msg.mentions.users.size) {
           msg.channel.send(`I need a tag in order to kick someone.\n\ **Only use "kick" when someone has a bad behavior**`)
           const noTag = new Discord.MessageEmbed()
@@ -32,6 +36,7 @@ function kickUser(msg, args) {
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
+        
         } else {
           msg.reply(`I don't know that person`);
         }
@@ -43,6 +48,7 @@ module.exports = {
     name: "kick",
     description: "Only use it when someone has a bad behavior",
     example: prefix + "kick [@username]",
+    type: "moderation",
     execute(msg, args){
         kickUser(msg, args);
     }

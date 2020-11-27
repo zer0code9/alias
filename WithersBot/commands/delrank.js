@@ -1,15 +1,29 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
-    const lo = new Discord.MessageEmbed()
+    if (args == 0) {
+    const noDelete = new Discord.MessageEmbed()
     .setColor("RANDOM")
-    .setTitle()
-    .setDescription()
+    .setTitle("WithersBot Commands")
+    .setDescription("Command: delrank")
     .addFields(
-        { name: "here", value: `here`}
+        { name: "Command:", value: `Delete a role\n\`\`\`${prefix}delrank [role]\`\`\``}
     )
     .setFooter("WithersBot helps")
-msg.channel.send(lo)
+    msg.channel.send(noDelete);
+    } else {
+        if (args !=0 ) {
+            const remove = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("WithersBot Commands")
+            .setDescription("Command: ")
+            .addFields(
+                { name: "A role has been deleted", value: `Deleted role: ${args}`}
+            )
+            .setFooter("WithersBot helps")
+            msg.channel.send(remove);
+        }
+    }
 }
 
 module.exports = {

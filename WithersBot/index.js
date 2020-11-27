@@ -58,8 +58,8 @@ bot.on("message" , msg=>{
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
-    if (args[1] == 0)
-        const lo = new Discord.MessageEmbed()
+    if (args == 0) {
+        const no = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: ")
@@ -67,7 +67,19 @@ function la(msg, args) {
             { name: "here", value: `here\n\`\`\`${}\`\`\``}
         )
         .setFooter("WithersBot helps")
-        msg.channel.send(lo);
+        msg.channel.send(no);
+    } else {
+        if (args !=0) {
+            const  = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("WithersBot Commands")
+            .setDescription("Command: ")
+            .addFields(
+                { name: "here", value: `here`}
+            )
+            .setFooter("WithersBot helps")
+            msg.channel.send();
+        }
     }
 }
 
