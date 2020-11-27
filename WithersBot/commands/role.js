@@ -10,7 +10,6 @@ function cInfo(msg, args) {
     .setDescription('WithersBot Commands:')
     .addFields(
         { name: "Info", value: `Get info on a role\n\`\`\`${prefix}role info [role]\`\`\``},
-        { name: "Add", value: `Add a permission to a role\n\`\`\`${prefix}role add [role] [permission]\`\`\`` },
         { name: "Remove", value: `Remove a permission of a role\n\`\`\`${prefix}role remove [role] [permission]\`\`\``},
         { name: "Create", value: `Create a role\n\`\`\`${prefix}role create [role]\`\`\``},
         { name: "Delete", value: `Delete a role\n\`\`\`${prefix}role delete [role]\`\`\``},

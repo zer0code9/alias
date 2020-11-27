@@ -1,13 +1,16 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
+    if (args[1] == 0) {
     const lolo = new Discord.MessageEmbed()
     .setColor("RANDOM")
-    .setTitle()
-    .setDescription()
+    .setTitle("WithersBot Commands")
+    .setDescription("Command: addrank")
     .addFields(
-        { name: "here", value: `here`}
+        { name: "", value: `here`}
     )
+    .setFooter("WithersBot helps")
+    }
 }
 
 module.exports = {
