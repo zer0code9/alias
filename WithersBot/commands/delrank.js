@@ -1,6 +1,6 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
-function la(msg, args) {
+function del(msg, args) {
     if (args == 0) {
     const noDelete = new Discord.MessageEmbed()
     .setColor("RANDOM")
@@ -12,18 +12,30 @@ function la(msg, args) {
     .setFooter("WithersBot helps")
     msg.channel.send(noDelete);
     } else {
-        if (args !=0 ) {
+        if (args == msg.guild.roles.name) {
             const remove = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
-            .setDescription("Command: ")
+            .setDescription("Command: delrank")
             .addFields(
                 { name: "A role has been deleted", value: `Deleted role: ${args}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(remove);
+        } else {
+            if (args != msg.guild.channels.name) {
+            const noRemove = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle(`WithersBot Commands`)
+            .setDescription('Commands: delrank')
+            .addFields(
+                { name: "Can't delete role", value: `There is no role ${args}` }
+            )
+            .setFooter('WithersBot helps')
+            msg.channel.send(noRemove);
         }
     }
+}
 }
 
 module.exports = {
@@ -32,6 +44,6 @@ module.exports = {
     example: prefix + "delrank [role]",
     type: "rank",
     execute(msg, args) {
-        la(msg, args)
+        del(msg, args)
     }
 }

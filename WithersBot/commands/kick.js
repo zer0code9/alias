@@ -25,7 +25,7 @@ function kickUser(msg, args) {
       } else {
 
         if (!msg.mentions.users.size) {
-          const noTag = new Discord.MessageEmbed()
+        const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: kick")
