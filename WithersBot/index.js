@@ -54,4 +54,30 @@ bot.on("message" , msg=>{
 // if(command === ""){bot.command.get("").execute(msg, args);}
 // \n\`\`\`${}\`\`\`
 
+/*
+const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const Discord = require("discord.js");
+function la(msg, args) {
+    const lo = new Discord.MessageEmbed()
+    .setColor("RANDOM")
+    .setTitle()
+    .setDescription()
+    .addFields(
+        { name: "here", value: `here`}
+    )
+    .setFooter("WithersBot helps")
+msg.channel.send(lo)
+}
+
+module.exports = {
+    name: "",
+    description: "",
+    example: prefix + "",
+    type: "",
+    execute(msg, args) {
+        la(msg, args)
+    }
+}
+*/
+
 bot.login(token);
