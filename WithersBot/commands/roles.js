@@ -2,7 +2,6 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function cInfo(msg, args) {
     let user = msg.mentions.members.first();
-    let rolei = args.slice(1).join(" ");
     if (args == 0){
     const channelInfo = new Discord.MessageEmbed()
     .setColor('RANDOM')

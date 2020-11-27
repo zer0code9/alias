@@ -1,7 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function bcalculator(msg, args) {
-    if (args.length == 0) {
+    if (args == 0) {
         const noCalc = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")

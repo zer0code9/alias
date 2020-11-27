@@ -30,43 +30,11 @@ function serverData(msg, args) {
   { name: 'Owner', value: `${guild.owner}`},
   { name: "Verified?", value: `${guild.verified}`},
   { name: "Description", value: `${guild.description}`},
-  { name: "Roles", value: `${guild.roles}`}
+  { name: "Roles", value: `${guild.roles.size}`}
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);
 return;
-    }
-    if (args == "banner") {
-        msg.channel.send(`${guild.banner}`);
-        return;
-    }
-    if (args == "test") {
-        let argss = args.slice(args.length).join(" ");
-        try {
-            msg.channel.send(`${args}`, `${argss}`);
-        } catch (error) {
-            msg.reply(`${error}`);
-        }
-    }
-if (`${msg.author}` !== `${guild.owner}`) {msg.channel.send(`You are not the owner, ${msg.author}`); return;} else {
-    if (args == "region") {
-        if (`${string}` > 0) {
-            guild.edit({
-                region: `${string}`
-            })
-            msg.channel.send(`${guild}'s region is now ${string}`);
-        }
-            return;
-    }
-        if (args == "name"){
-            if (`${string}` > 0) {
-                guild.edit({
-                    name: `${string}`
-                })
-                msg.channel.send(`${guild}'s name is now ${string}`);
-        }
-            return;
-        }
     }
 }
 }
@@ -75,6 +43,7 @@ module.exports = {
     name: "server",
     description: "WithersWorld to WithersBot",
     example: prefix + "server [data-on-server]",
+    type: "info",
     execute(msg, args){
         serverData(msg, args);
     }

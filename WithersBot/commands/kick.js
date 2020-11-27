@@ -25,7 +25,6 @@ function kickUser(msg, args) {
       } else {
 
         if (!msg.mentions.users.size) {
-          msg.channel.send(`I need a tag in order to kick someone.\n\ **Only use "kick" when someone has a bad behavior**`)
           const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
@@ -36,7 +35,7 @@ function kickUser(msg, args) {
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
-        
+
         } else {
           msg.reply(`I don't know that person`);
         }
