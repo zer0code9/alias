@@ -1,6 +1,6 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
-function cInfo(msg, args) {
+function roles(msg, args) {
     let user = msg.mentions.members.first();
     if (args == 0){
     const channelInfo = new Discord.MessageEmbed()
@@ -10,7 +10,7 @@ function cInfo(msg, args) {
     .addFields(
         { name: "Roles", value: `${msg.guild.roles}`}
     )
-    .setFooter('The Bot of WithersWorld')
+    .setFooter('WithersBot')
 msg.channel.send(channelInfo);
 }
 }
@@ -18,7 +18,8 @@ module.exports = {
     name: "roles",
     description: "Get a embed message with all the roles of the server",
     example: prefix + "roles",
+    type: "rank",
     execute(msg, args) {
-        cInfo(msg, args);
+        roles(msg, args);
     }
 }

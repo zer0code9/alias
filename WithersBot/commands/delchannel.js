@@ -41,6 +41,7 @@ module.exports = {
     name: "delchannel",
     description: "Delete a channel",
     example: prefix + "delchannel [channel]",
+    type: "channel",
     execute(msg, args) {
         cdel(msg, args);
     }
