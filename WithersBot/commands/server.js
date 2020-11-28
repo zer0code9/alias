@@ -7,17 +7,18 @@ function serverData(msg, args) {
     if(args == 0){
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
- .setTitle(`Server infomation of ${guild.name}`)
- .setDescription(`Hello and welcome to ${guild.name} :D`)
+ .setTitle(`WithersBot Commands`)
+ .setDescription(`Command: server`)
  .addFields(
+  { name: "Name", value: `${guild.name}`},
+  { name: "Id", value: `${guild.id}` },
+  { name: "Create on", value: `${guild.createdAt}` },
   { name: 'Members', value: `${guild.memberCount}` },
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
   { name: "Verified?", value: `${guild.verified}` },
   { name: "Channels", value: `${guild.channels}` },
-  { name: "Roles", value: `${guild.roles}` },
-  { name: "Create on", value: `${guild.createdAt}` },
-  { name: "Id", value: `${guild.id}` }
+  { name: "Roles", value: `${guild.roles}` }
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);

@@ -20,10 +20,10 @@ function userInfo(msg, args) {
             .setDescription("Command: user")
             .addFields(
                 { name: "Username", value: `${user.username}`},
-                { name: "Tag", value: `${user.tag}`},
                 { name : "Id", value: `${user.id}`},
-                { name: "Bot?", value: `${user.bot}`},
-                { name: "Created on", value: `${user.createdAt}`}
+                { name: "Created on", value: `${user.createdAt}`},
+                { name: "Tag", value: `${user.tag}`},
+                { name: "Bot?", value: `${user.bot}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(userOn);

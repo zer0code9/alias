@@ -21,7 +21,9 @@ function la(msg, args) {
             .addFields(
                 { name: "Name", value: `${channel.name}` },
                 { name: "Id", value: `${channel.id}` },
-                { name: "Created on", value: `${channel.createdAt}` }
+                { name: "Created on", value: `${channel.createdAt}` },
+                { name: "Type", value: `${channel.type}`},
+                { name: "Category", value: `${channel.parent}` }
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);
