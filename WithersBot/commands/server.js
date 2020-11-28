@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 function serverData(msg, args) {
     let guild = msg.guild;
     const member = msg.mentions.members.first();
-    //const string = args.slice(1).join(" ");
 
     if(args == 0){
         const ServerInfo = new Discord.MessageEmbed()
@@ -14,10 +13,11 @@ function serverData(msg, args) {
   { name: 'Members', value: `${guild.memberCount}` },
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
-  { name: "Verified?", value: `${guild.verified}`},
-  { name: "Channels", value: `${guild.channels.size}`},
-  { name: "Roles", value: `${guild.roles.size}`},
-  { name: "Create on", value: `${guild.createdAt}`}
+  { name: "Verified?", value: `${guild.verified}` },
+  { name: "Channels", value: `${guild.channels}` },
+  { name: "Roles", value: `${guild.roles}` },
+  { name: "Create on", value: `${guild.createdAt}` },
+  { name: "Id", value: `${guild.id}` }
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);

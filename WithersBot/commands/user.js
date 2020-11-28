@@ -21,7 +21,9 @@ function userInfo(msg, args) {
             .addFields(
                 { name: "Username", value: `${user.username}`},
                 { name: "Tag", value: `${user.tag}`},
-                { name: "Joined on", value: `${user.joinedOn}`}
+                { name : "Id", value: `${user.id}`},
+                { name: "Bot?", value: `${user.bot}`},
+                { name: "Created on", value: `${user.createdAt}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(userOn);
