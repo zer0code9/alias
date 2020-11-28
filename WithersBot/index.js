@@ -69,7 +69,7 @@ function la(msg, args) {
         msg.channel.send(no);
     } else {
         if (args !=0) {
-            const  = new Discord.MessageEmbed()
+            const yes = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
             .setDescription("Command: ")

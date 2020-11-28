@@ -1,6 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function cdel(msg, args) {
+    const channel = msg.mentions.channels.first();
     if (args == 0){
     const noDelete = new Discord.MessageEmbed()
     .setColor('RANDOM')
@@ -13,6 +14,7 @@ function cdel(msg, args) {
 msg.channel.send(noDelete);
     } else {
         if (args == msg.guild.channels.name) {
+            channel.delete();
             const remove = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`WithersBot Commands`)

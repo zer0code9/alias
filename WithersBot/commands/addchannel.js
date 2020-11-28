@@ -1,26 +1,26 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
-    const role = msg.mentions.roles.first();
+    const channel = msg.mentions.channels.first();
     if (args == 0) {
     const noAdd = new Discord.MessageEmbed()
     .setColor("RANDOM")
     .setTitle("WithersBot Commands")
-    .setDescription("Command: addrank")
+    .setDescription("Command: addchannel")
     .addFields(
-        { name: "Command:", value: `Create a new rank\n\`\`\`${prefix}addrank [name]\`\`\``}
+        { name: "Command:", value: `Create a new channel\n\`\`\`${prefix}addchannel [name]\`\`\``}
     )
     .setFooter("WithersBot helps")
     msg.channel.send(noAdd);
     } else {
         if (args != 0) {
-        let addrole = msg.guild.roles.create({ data: { name: `${args}` } });
+        let addchannel = msg.guild.channels.create({ data: { name: `${args}` } });
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
-        .setDescription("Command: addrank")
+        .setDescription("Command: addchannel")
         .addFields(
-            { name: "A new role has been added", value: `New role name: ${args}`}
+            { name: "A new channel has been added", value: `New channel name: ${args}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);
@@ -29,10 +29,10 @@ function lala(msg, args) {
 }
 
 module.exports = {
-    name: "addrank",
-    description: "Create a new role",
-    example: prefix + "addrank [name]",
-    type: "rank",
+    name: "addchannel",
+    description: "Create a new channel",
+    example: prefix + "addchannel [name]",
+    type: "channel",
     execute(msg, args) {
         lala(msg, args)
     }

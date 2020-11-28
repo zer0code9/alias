@@ -1,6 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function del(msg, args) {
+    const role = msg.mentions.roles.first();
     if (args == 0) {
     const noDelete = new Discord.MessageEmbed()
     .setColor("RANDOM")
@@ -13,6 +14,7 @@ function del(msg, args) {
     msg.channel.send(noDelete);
     } else {
         if (args == msg.guild.roles.name) {
+            role.delete();
             const remove = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
@@ -23,7 +25,6 @@ function del(msg, args) {
             .setFooter("WithersBot helps")
             msg.channel.send(remove);
         } else {
-            if (args != msg.guild.channels.name) {
             const noRemove = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`WithersBot Commands`)
@@ -33,7 +34,6 @@ function del(msg, args) {
             )
             .setFooter('WithersBot helps')
             msg.channel.send(noRemove);
-        }
     }
 }
 }
