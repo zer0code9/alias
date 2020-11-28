@@ -15,7 +15,7 @@ function serverData(msg, args) {
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
   { name: "Verified?", value: `${guild.verified}`},
-  { name: "Description", value: `${guild.description}`},
+  { name: "Channels", value: `${guild.channels.size}`},
   { name: "Roles", value: `${guild.roles.size}`},
   { name: "Create on", value: `${guild.createdAt}`}
  )

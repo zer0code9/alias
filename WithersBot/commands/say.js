@@ -18,7 +18,7 @@ function sayIt(msg, args) {
     msg.delete();
         return;
     }else {
-        if (args == "do") {
+        if (args != 0) {
         msg.channel.send(`${args}`);
         msg.delete();
         }

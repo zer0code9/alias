@@ -17,7 +17,7 @@ function banUser(msg, args) {
         .addFields(
           { name: "Successful", value: `${taggedUser.username} has been successfully banned.` },
           { name: "Reason:", value: `${reason}`},
-          { name: `**NOTE**`, value: `**Only use "ban" when someone has a rally really bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "ban" when someone has a really really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(banned);
@@ -31,7 +31,7 @@ function banUser(msg, args) {
         .setDescription("Command: ban")
         .addFields(
           { name: "No User", value: `I need an username in order to ban someone.` },
-          { name: `**NOTE**`, value: `**Only use "ban" when someone has a rally really bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "ban" when someone has a really really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
