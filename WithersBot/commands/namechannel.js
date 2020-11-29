@@ -8,7 +8,7 @@ function lala(msg, args) {
     .setTitle("WithersBot Commands")
     .setDescription("Command: namechannel")
     .addFields(
-        { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namechannel [role] [name]\`\`\``}
+        { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namechannel [channel] [name]\`\`\``}
     )
     .setFooter("WithersBot helps")
     msg.channel.send(noName);
@@ -20,7 +20,7 @@ function lala(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: namechannel")
         .addFields(
-            { name: `The name of the channel ${role}`, value: `The new name: ${args[1]}`}
+            { name: `The name of the channel ${channel.name}`, value: `The new name: ${args[1]}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(name);

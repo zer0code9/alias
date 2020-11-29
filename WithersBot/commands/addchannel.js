@@ -14,7 +14,7 @@ function lala(msg, args) {
     msg.channel.send(noAdd);
     } else {
         if (args != 0) {
-        let addchannel = msg.guild.channels.create({ data: { name: `${args}` } });
+        let addchannel = msg.guild.channels.create({ name: `${args}` });
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
