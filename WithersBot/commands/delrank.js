@@ -1,6 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function del(msg, args) {
+    if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
     const role = msg.mentions.roles.first();
     if (args == 0) {
     const noDelete = new Discord.MessageEmbed()
@@ -35,6 +36,7 @@ function del(msg, args) {
             .setFooter('WithersBot helps')
             msg.channel.send(noRemove);
     }
+}
 }
 }
 

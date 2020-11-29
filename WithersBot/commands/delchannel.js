@@ -1,6 +1,7 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function cdel(msg, args) {
+    if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
     if (args == 0){
     const noDelete = new Discord.MessageEmbed()
@@ -38,6 +39,7 @@ msg.channel.send(noDelete);
             }
         }
     }
+}
 }
 module.exports = {
     name: "delchannel",

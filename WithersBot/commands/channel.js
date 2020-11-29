@@ -23,7 +23,8 @@ function la(msg, args) {
                 { name: "Id", value: `${channel.id}` },
                 { name: "Created on", value: `${channel.createdAt}` },
                 { name: "Type", value: `${channel.type}`},
-                { name: "Category", value: `${channel.parent}` }
+                { name: "Category", value: `${channel.parent}` },
+                { name: "Topic", value: `${channel.topic}` }
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);
