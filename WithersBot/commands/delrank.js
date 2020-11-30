@@ -14,8 +14,8 @@ function del(msg, args) {
     .setFooter("WithersBot helps")
     msg.channel.send(noDelete);
     } else {
-        if (args == role) {
-            role.delete();
+        if (args[0] == role) {
+            role.remove();
             const remove = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
