@@ -13,7 +13,10 @@ function la(msg, args) {
         msg.channel.send(noChannel);
     } else {
         if (args !=0) {
+            var to;
             const channel = msg.mentions.channels.first();
+            var cre = channel.createdAt;
+            if (channel.topic == "null" || "undefined") {to = "No topic"} else {to = `${channel.topic}`}
             const channelInfo = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
@@ -21,10 +24,10 @@ function la(msg, args) {
             .addFields(
                 { name: "Name", value: `${channel.name}` },
                 { name: "Id", value: `${channel.id}` },
-                { name: "Created on", value: `${channel.createdAt}` },
+                { name: "Created on", value: `${cre.toDateString()}` },
                 { name: "Type", value: `${channel.type}`},
                 { name: "Category", value: `${channel.parent}` },
-                { name: "Topic", value: `${channel.topic}` }
+                { name: "Topic", value: `${to}` }
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);

@@ -14,8 +14,8 @@ function cdel(msg, args) {
     .setFooter('WithersBot helps')
 msg.channel.send(noDelete);
     } else {
-        if (args == channel) {
-            channel.delete();
+        if (args[0] == channel) {
+            msg.guild.channels.delete(channel);
             const remove = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`WithersBot Commands`)

@@ -3,12 +3,14 @@ const Discord = require("discord.js");
 function serverData(msg, args) {
     let guild = msg.guild;
     const member = msg.mentions.members.first();
-
+    var cre = guild.createdAt;
     if(args == 0){
         var rc;
         var ve;
+        var sc;
         if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
-        if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.systemChannel}` }
+        if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel}` }
+        if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.rulesChannel}` }
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
  .setTitle(`WithersBot Commands`)
@@ -16,7 +18,7 @@ function serverData(msg, args) {
  .addFields(
   { name: "Name", value: `${guild.name}`},
   { name: "Id", value: `${guild.id}` },
-  { name: "Create on", value: `${guild.createdAt}` },
+  { name: "Create on", value: `${cre.toDateString()}` },
   { name: 'Members', value: `${guild.memberCount}` },
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},

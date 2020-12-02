@@ -14,6 +14,7 @@ function la(msg, args) {
     } else {
         if (args !=0) {
             const role = msg.mentions.roles.first();
+            var cre = role.createdAt;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
@@ -21,7 +22,7 @@ function la(msg, args) {
             .addFields(
                 { name: "Name", value: `${role.name}` },
                 { name: "Id", value: `${role.id}` },
-                { name: "Created on", value: `${role.createdAt}` },
+                { name: "Created on", value: `${cre.toDateString()}` },
                 { name: "Members with role", value: `${role.members}` }
             )
             .setFooter("WithersBot helps")

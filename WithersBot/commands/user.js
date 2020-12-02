@@ -1,6 +1,8 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function userInfo(msg, args) {
+    const user = msg.mentions.users.first();
+    var cre = user.createdAt;
     var bo;
     if (args == 0) {
         const noUser = new Discord.MessageEmbed()
@@ -14,7 +16,6 @@ function userInfo(msg, args) {
         msg.channel.send(noUser);
     } else {
         if (args !=0) {
-            const user = msg.mentions.users.first();
             if (user.bot = "false") { bo = `${user.username} is not a bot` } else { if (user.bot = "true") { bo = `${user.username} is a bot` }}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")
@@ -23,7 +24,7 @@ function userInfo(msg, args) {
             .addFields(
                 { name: "Username", value: `${user.username}`},
                 { name : "Id", value: `${user.id}`},
-                { name: "Created on", value: `${user.createdAt}`},
+                { name: "Created on", value: `${cre.toDateString()}`},
                 { name: "Tag", value: `${user.tag}`},
                 { name: "Bot?", value: `${bo}`}
             )
