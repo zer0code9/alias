@@ -50,6 +50,17 @@ bot.on("message" , msg=>{
     return;
 });
 
+bot.on("guildCreate", guild=>{
+    const guildEvent = new Discord.MessageEmbed()
+    .setColor("RANDOM")
+    .setTitle(`Nice to meet you ${guild.owner}`)
+    
+    guild.sendMessage(`Wow, I got Invited in a new server, so cool! Hey ${guild.owner}`)
+});
+bot.on("channelCreate" , chnl=>{
+    const channelEvent = new Discord.MessageEmbed()
+    .setColor("RANDOM")
+})
 // if(command === ""){bot.command.get("").execute(msg, args);}
 // \n\`\`\`${}\`\`\`
 

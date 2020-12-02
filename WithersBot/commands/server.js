@@ -5,6 +5,10 @@ function serverData(msg, args) {
     const member = msg.mentions.members.first();
 
     if(args == 0){
+        var rc;
+        var ve;
+        if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
+        if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.systemChannel}` }
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
  .setTitle(`WithersBot Commands`)
@@ -16,9 +20,10 @@ function serverData(msg, args) {
   { name: 'Members', value: `${guild.memberCount}` },
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
-  { name: "Verified?", value: `${guild.verified}` },
+  { name: "Verified?", value: `${ve}` },
   { name: "Channels", value: `${guild.channels}` },
-  { name: "Roles", value: `${guild.roles}` }
+  { name: "Roles", value: `${guild.roles}` },
+  { name: "System", value: `${guild.systemChannel}`}, { name: "Rule", value: `${rc}`}
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);
