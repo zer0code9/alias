@@ -67,14 +67,14 @@ bot.on("channelCreate" , chnl=>{
 /*
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
-function la(msg, args) {
+function abc(msg, args) {
     if (args == 0) {
         const no = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: ")
         .addFields(
-            { name: "here", value: `here\n\`\`\`${}\`\`\``}
+            { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(no);
@@ -88,7 +88,7 @@ function la(msg, args) {
                 { name: "here", value: `here`}
             )
             .setFooter("WithersBot helps")
-            msg.channel.send();
+            msg.channel.send(yes);
         }
     }
 }
@@ -99,7 +99,7 @@ module.exports = {
     example: prefix + "",
     type: "",
     execute(msg, args) {
-        la(msg, args);
+        abc(msg, args);
     }
 }
 */
