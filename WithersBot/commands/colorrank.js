@@ -28,10 +28,10 @@ function abc(msg, args) {
 }
 
 module.exports = {
-    name: "",
-    description: "",
-    example: prefix + "",
-    type: "",
+    name: "colorrank",
+    description: "Change the color of a role",
+    example: prefix + "colorrank [role] [color]",
+    type: "rank",
     execute(msg, args) {
         abc(msg, args);
     }
