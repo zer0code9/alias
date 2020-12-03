@@ -8,6 +8,9 @@ function serverData(msg, args) {
         var rc;
         var ve;
         var sc;
+        const total = msg.guild.memberCount;
+	    const bots = msg.guild.members.filter(m => m.user.bot).size;
+	    const humans = total - bots;
         if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
         if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel}` }
         if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.rulesChannel}` }
@@ -19,7 +22,7 @@ function serverData(msg, args) {
   { name: "Name", value: `${guild.name}`},
   { name: "Id", value: `${guild.id}` },
   { name: "Create on", value: `${cre.toDateString()}` },
-  { name: 'Members', value: `${guild.memberCount}` },
+  { name: 'Members', value: `Total: ${total} \nMembers: ${humans} \n Bots: ${bots}` },
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
   { name: "Verified?", value: `${ve}` },

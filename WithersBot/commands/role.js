@@ -7,7 +7,7 @@ function la(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: role")
         .addFields(
-            { name: "Command", value: `here\n\`\`\`${prefix}role [role]\`\`\``}
+            { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noRole);
@@ -18,7 +18,7 @@ function la(msg, args) {
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
-            .setDescription("Command: ")
+            .setDescription("Command: role")
             .addFields(
                 { name: "Name", value: `${role.name}` },
                 { name: "Id", value: `${role.id}` },

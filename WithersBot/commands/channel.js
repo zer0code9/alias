@@ -7,7 +7,7 @@ function la(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: channel")
         .addFields(
-            { name: "Command", value: `here\n\`\`\`${prefix}channel [channel]\`\`\``}
+            { name: "Command", value: `Get info on a channel\n\`\`\`${prefix}channel [channel]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noChannel);

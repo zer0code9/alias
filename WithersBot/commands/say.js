@@ -19,7 +19,8 @@ function sayIt(msg, args) {
         return;
     }else {
         if (args != 0) {
-        msg.channel.send(`${args}`);
+        const message = args.join(" ");
+        msg.channel.send(`${message}`);
         msg.delete();
         }
     }

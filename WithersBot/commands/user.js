@@ -15,7 +15,7 @@ function userInfo(msg, args) {
         .setFooter("WithersBot helps")
         msg.channel.send(noUser);
     } else {
-        if (args !=0) {
+        if (args[0] !=0) {
             if (user.bot = "false") { bo = `${user.username} is not a bot` } else { if (user.bot = "true") { bo = `${user.username} is a bot` }}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")
