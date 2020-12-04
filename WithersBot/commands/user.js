@@ -2,20 +2,26 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function userInfo(msg, args) {
     const user = msg.mentions.users.first();
-    var cre = user.createdAt;
     var bo;
     if (args == 0) {
+        const author = msg.author;
+        var cre = author.createdAt;
         const noUser = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: user")
         .addFields(
-            { name: "Command: ", value: `Get info on an user\n\`\`\`${prefix}user [user]\`\`\``}
+            { name: "Username", value: `${author.username}`},
+            { name : "Id", value: `${author.id}`},
+            { name: "Created on", value: `${cre.toDateString()}`},
+            { name: "Tag", value: `${author.tag}`},
+            { name: "Bot?", value: `Not a bot`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noUser);
     } else {
         if (args[0] !=0) {
+            var cre = user.createdAt;
             if (user.bot = "false") { bo = `${user.username} is not a bot` } else { if (user.bot = "true") { bo = `${user.username} is a bot` }}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")

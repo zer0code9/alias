@@ -6,11 +6,11 @@ module.exports = {
     example: "still in progress",
     execute(msg, args){
         if (!msg.mentions.users.size) {
-			return msg.channel.send(`Your avatar: <${msg.author.displayAvatarURL}>`);
+			return msg.channel.send(`Your avatar: <${msg.author.avatarURL()}>`);
 		}
 
 		const avatarList = msg.mentions.users.map(user => {
-			return `${user.username}'s avatar: <${user.displayAvatarURL}>`;
+			return `${user.username}'s avatar: <${user.avatarURL()}>`;
 		});
 
 		msg.channel.send(avatarList); 

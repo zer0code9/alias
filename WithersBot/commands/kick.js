@@ -3,13 +3,13 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function kickUser(msg, args) {
   let guild = msg.guild;
-  const taggedUser = msg.mentions.users.first();
+  const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
 
     if (!msg.member.permissions.has("KICK_MEMBERS")) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
 
     if (msg.mentions.users.size) {
-        taggedUser.kick();
+        msg.guild.kick(user);
         const kicked = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")

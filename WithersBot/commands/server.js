@@ -8,8 +8,9 @@ function serverData(msg, args) {
         var rc;
         var ve;
         var sc;
+        var ro = guild.roles;
         const total = msg.guild.memberCount;
-	    const bots = msg.guild.members.filter(m => m.user.bot).size;
+	    const bots = 2;
 	    const humans = total - bots;
         if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
         if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel}` }
@@ -26,8 +27,8 @@ function serverData(msg, args) {
   { name: 'Region', value: `${guild.region}` },
   { name: 'Owner', value: `${guild.owner}`},
   { name: "Verified?", value: `${ve}` },
-  { name: "Channels", value: `${guild.channels}` },
-  { name: "Roles", value: `${guild.roles}` },
+  { name: "Channels", value: `${guild.channels.cache.size}` },
+  { name: "Roles", value: `Highest: ${ro.highest} \n Number of roles: ${guild.roles.cache.size}` },
   { name: "System", value: `${guild.systemChannel}`}, { name: "Rule", value: `${rc}`}
  )
  .setFooter('WithersBot helps')

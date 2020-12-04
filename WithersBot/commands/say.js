@@ -3,6 +3,9 @@ const Discord = require("discord.js");
 
 function sayIt(msg, args) {
     const string = args.slice(1).join(" ");
+    var enable;
+    if (args[0] == "diasble"){enble == false; msg.channel.send("Disabled")} else {if (args[0] == "enable"){enable == true; msg.channel.send("Disabled")}}
+    if (enable == false) {msg.channel.send("The command 'say' has been disable")} else
     if (args == 0){
         const noSay = new Discord.MessageEmbed()
         .setColor("RANDOM")
