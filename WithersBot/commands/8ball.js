@@ -1,8 +1,8 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
-    var types = ["no", "yes", "maybe", "sometimes", "never"];
-    var answer = types.random();
+    var answer;
+    answer.random("no", "yes", "maybe", "sometimes", "never");
     msg.channel.reply(answer);
     /*if (args == 0) {
         const no = new Discord.MessageEmbed()
