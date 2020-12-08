@@ -10,8 +10,8 @@ function serverData(msg, args) {
         var sc;
         var ro = guild.roles;
         const total = msg.guild.memberCount;
-	    const bots = 2;
-	    const humans = total - bots;
+	    const bots = msg.guild.members.cache.filter(member => member.user.bot).size;
+	    const humans = msg.guild.members.cache.filter(member => !member.user.bot).size;
         if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
         if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel}` }
         if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.rulesChannel}` }

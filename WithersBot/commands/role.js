@@ -14,6 +14,8 @@ function la(msg, args) {
     } else {
         if (args !=0) {
             const role = msg.mentions.roles.first();
+            var memberWithRole;
+            if (role.members.size == "0") {memberWithRole = "No members with this role"} else {if (role.members.size >= "1"){memberWithRole = `${role.members.size} members have this role`}}
             var cre = role.createdAt;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
@@ -23,7 +25,7 @@ function la(msg, args) {
                 { name: "Name", value: `${role.name}` },
                 { name: "Id", value: `${role.id}` },
                 { name: "Created on", value: `${cre.toDateString()}` },
-                { name: "Members with role", value: `${role.members}` }
+                { name: "Members with role", value: `${memberWithRole}` }
             )
             .setFooter("WithersBot helps")
             msg.channel.send(roleInfo);
