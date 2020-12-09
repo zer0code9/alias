@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { NOTFOUND } = require("dns");
-const bot = new Discord.Client();
+const bot = new Discord.Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const fs = require("fs");
 const server = require("./commands/server");
 
@@ -43,7 +43,7 @@ bot.on("message" , msg=>{
         msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);
     } else
     try {
-        bot.commands.get(command).execute(msg, args, cmds);
+        bot.commands.get(command).execute(msg, args, cmds, bot);
     } catch (error) {
         msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }

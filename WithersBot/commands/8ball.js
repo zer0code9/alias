@@ -1,9 +1,14 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
+    var num = Math.floor(Math.random() * 5) + 1;
     var answer;
-    answer.random("no", "yes", "maybe", "sometimes", "never");
-    msg.channel.reply(answer);
+    if (num == 1){answer = "no"}
+    if (num == 2){answer = "yes"}
+    if (num == 3){answer = "maybe"}
+    if (num == 4){answer = "sometimes"}
+    if (num == 5){answer = "never"}
+    msg.channel.send(answer);
     /*if (args == 0) {
         const no = new Discord.MessageEmbed()
         .setColor("RANDOM")
