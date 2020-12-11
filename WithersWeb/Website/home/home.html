@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fontawesome.com/v4.7.0/icons/">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lax.js" ></script>
     <script src="home.js"></script>
     <link rel="stylesheet" href="home.css" />
     <title>WithersWebsite</title>
@@ -17,7 +18,7 @@
     <div id="top" style="text-align: center;">
         <div id="topItems" class="w3-xxxlarge w3-padding">
             <a id="sideButton" class="fa fa-bars" onclick="openNav()"></a>
-            <a style="text-align: center;" id="myNeButton" class="fa fa-home animate__animated animate__tada animate__infinite tab" onclick="openTab(event, 'myNe')"></a>
+            <a style="text-align: center;" id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')"></a>
             <a style="text-align: center;" id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
             <a class="tab" onclick="openTab(event, 'bot')">Bot</a>
         </div>
@@ -40,23 +41,43 @@
         }
         </script>
     </div>
-    <nav id="links-wsw" class="w3-large w3-padding">
-        <div>
-            <a href="https://www.youtube.com/channel/UCEhaRtTBEpzq3655QVpsOlQ" class="w3-text-red"><i class="fa fa-youtube-play"></i><span>Subscribe!</span></a>
-            <a href="https://twitter.com/WitherzWorld" class="w3-text-blue"><i class="fa fa-twitter"></i><span>Follow!</span></a>
-        </div>
-    </nav>
 
-<div id="homeCon" class="tabCon">
+<div id="home" class="tabCon">
     <div id="welcome">
-        <div id="welcome1" class="animate__animated animate__rubberBand">WithersWorld</div>
+        <div id="welcome1" class="animate__animated animate__rubberBand"><b>WithersWorld</b></div>
         <div id="welcome2" class="welcome">Welcome to Wither's world!</div>
         <div class="fa fa-cog w3-spin"></div>
     </div>
+    <div id="table">
+        <p style="font-size: 40px;" class="lax lax_preset_fadeIn-50-100 lax_preset_spin">Here you can find things easier:</p>
+        <ul>
+            <li>WithersApps</li>
+            <li>WithersStore</li>
+            <li>WithersBot</li>
+            <li>WebyHow</li>
+        </ul>
+    </div>
+    <div id="WithersApps">
+        <a href="#" class="card" style="color: red;">
+            <div class="fa fa-youtube-play icon"></div>
+            <br>
+            <div>Youtube</div>
+        </a>
+        <a class="card" style="color: lightskyblue;">
+            <div class="fa fa-twitter icon"></div>
+            <br>
+            <div>Twitter</div>
+        </a>
+    </div>
 </div>
-<div id="shopCon" class="tabCon">
+<div id="shop" class="tabCon">
     <div id="shop">
         <div>Hello</div>
+    </div>
+</div>
+<div id="bot" class="tabCon">
+    <div>
+        <div>Bot here</div>
     </div>
 </div>
 <script>
@@ -71,8 +92,11 @@
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       document.getElementById(tabName).style.display = "block";
+      $("#"+tagName+"Button").css({"animation": "tada",
+                          "--animate-repeat": "infinite"});
       evt.currentTarget.className += " active";
     }
+    document.getElementById("homeButton").click();
 </script>
 </body>
 </html>
