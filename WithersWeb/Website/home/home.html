@@ -14,10 +14,31 @@
     <title>WithersWebsite</title>
 </head>
 <body>
-    <div id="top" class="w3-light-gray" style="text-align: center;">
-        <div class="w3-xxxlarge w3-padding">
-            <a style="text-align: center;" id="myNeButton" class="fa fa-home animate__animated animate__tada animate__infinite"><span style="font-family: Arial, Helvetica, sans-serif;"> myNe</span></a>
+    <div id="top" style="text-align: center;">
+        <div id="topItems" class="w3-xxxlarge w3-padding">
+            <a id="sideButton" class="fa fa-bars" onclick="openNav()"></a>
+            <a style="text-align: center;" id="myNeButton" class="fa fa-home animate__animated animate__tada animate__infinite tab" onclick="openTab(event, 'myNe')"></a>
+            <a style="text-align: center;" id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
+            <a class="tab" onclick="openTab(event, 'bot')">Bot</a>
         </div>
+    </div>
+    <div>
+        <div id="side" class="side">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Account</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+        </div>
+        <script>
+        function openNav() {
+          document.getElementById("side").style.width = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("side").style.width = "0";
+        }
+        </script>
     </div>
     <nav id="links-wsw" class="w3-large w3-padding">
         <div>
@@ -26,26 +47,32 @@
         </div>
     </nav>
 
-<div id="content" style="text-align: center;font-size: 50px;">
+<div id="homeCon" class="tabCon">
     <div id="welcome">
-        <div id="welcome1" class="animate__animated animate__rubberBand" style="font-size: 70px;">WithersWorld</div>
+        <div id="welcome1" class="animate__animated animate__rubberBand">WithersWorld</div>
         <div id="welcome2" class="welcome">Welcome to Wither's world!</div>
         <div class="fa fa-cog w3-spin"></div>
     </div>
-    
-    <div id="settings">
-        <div>
-            <a class="btn btn-danger"><i id="account" class="fa fa-user"></i> Account</a>
-            <br>
-            <a class="btn btn-danger"><i id="shop" class="fa fa-cart-plus"></i> Shop</a>
-        </div>
-    </div>
-
-    <div id="joinUS"> <span style="font-size: 60px;">Join ...</span>
-        <div>
-            <a id="DiscordJoin"><a>Discord</a></a>
-        </div>
+</div>
+<div id="shopCon" class="tabCon">
+    <div id="shop">
+        <div>Hello</div>
     </div>
 </div>
+<script>
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabCon");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tab");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+</script>
 </body>
 </html>
