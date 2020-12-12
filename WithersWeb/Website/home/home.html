@@ -16,11 +16,12 @@
 </head>
 <body>
     <div id="top" style="text-align: center;">
-        <div id="topItems" class="w3-xxxlarge w3-padding">
+        <div id="topItems" class="w3-xxxlarge w3-padding" style="text-align: center;">
             <a id="sideButton" class="fa fa-bars" onclick="openNav()"></a>
-            <a style="text-align: center;" id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')"></a>
-            <a style="text-align: center;" id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
-            <a class="tab" onclick="openTab(event, 'bot')">Bot</a>
+            <a id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')"></a>
+            <a id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
+            <a id="botButton" class="fa fa-plug tab" onclick="openTab(event, 'bot')"></a>
+            <a class="fa fa-question tab"></a> |
         </div>
     </div>
     <div>
@@ -43,14 +44,14 @@
     </div>
 
 <div id="home" class="tabCon">
-    <div id="welcome">
-        <div id="welcome1" class="animate__animated animate__rubberBand"><b>WithersWorld</b></div>
+    <div id="homeWelcome">
+        <div id="welcome1" class="withers"><b>WithersWorld</b></div>
         <div id="welcome2" class="welcome">Welcome to Wither's world!</div>
         <div class="fa fa-cog w3-spin"></div>
     </div>
-    <div id="table">
-        <p style="font-size: 40px;" class="lax lax_preset_fadeIn-50-100 lax_preset_spin">Here you can find things easier:</p>
-        <ul>
+    <div id="whattf">
+        <p id="findEase" style="font-size: 40px;">Here you can find things easier:</p>
+        <ul id="table">
             <li>WithersApps</li>
             <li>WithersStore</li>
             <li>WithersBot</li>
@@ -63,21 +64,26 @@
             <br>
             <div>Youtube</div>
         </a>
-        <a class="card" style="color: lightskyblue;">
+        <a href="#" class="card" style="color: lightskyblue;">
             <div class="fa fa-twitter icon"></div>
             <br>
             <div>Twitter</div>
         </a>
+        <a href="#" class="card" style="color: orange">
+            <div class="fa fa-reddit-alien"></div>
+            <br>
+            <div>Reddit</div>
+        </a>
     </div>
 </div>
 <div id="shop" class="tabCon">
-    <div id="shop">
-        <div>Hello</div>
+    <div id="shopWelcome" style="text-align: center;">
+        <div class="withers"><b>WitherShop</b></div>
     </div>
 </div>
 <div id="bot" class="tabCon">
-    <div>
-        <div>Bot here</div>
+    <div id="botWelcome" style="text-align: center;">
+        <div class="withers"><b>WithersBot</b></div>
     </div>
 </div>
 <script>
@@ -92,8 +98,6 @@
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       document.getElementById(tabName).style.display = "block";
-      $("#"+tagName+"Button").css({"animation": "tada",
-                          "--animate-repeat": "infinite"});
       evt.currentTarget.className += " active";
     }
     document.getElementById("homeButton").click();

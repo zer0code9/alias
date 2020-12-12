@@ -5,6 +5,7 @@
 #top {
     background: rgb(0, 0, 0);
     width: 100vw;
+    height: 80px;
     color: white;
 }
 #topItems {
@@ -14,7 +15,16 @@
     max-width: 900px;
     margin: auto;
 }
-#welcome {
+::selection {
+    color: black;
+    background-color: darkred;
+}
+.withers {
+    font-size: 60px;
+    animation: rubberBand;
+    animation-duration: 1.5s;
+}
+#homeWelcome {
     font-size: 50px;
     display: flex;
     flex-direction: column;
@@ -23,14 +33,16 @@
     width: 100vw;
     height: 100vh;
 }
+#whattf {
+    font-size: 30px;
+    background-color: black;
+    color: white;
+}
 #table {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
-    background-color: black;
-    color: white;
 }
 #WithersApps {
     display: flex;
@@ -50,13 +62,14 @@
     text-decoration: none;
     color: inherit;
     transform: rotate(30);
+    border-radius: 60px;
 }
 #WithersApps .card .icon{
     font-size: 100px;
 }
-#WithersApps.card:hover {
+.card:hover {
+    border-radius: 60px;
     background-color: black;
-    color: red;
 }
 /*Side nav*/
 .side {
