@@ -23,3 +23,8 @@
         }
     })
   }
+  $(document).ready(function() {
+    $("#signin").click(function() {
+        $("#accsign").toggle();
+    });
+});
