@@ -28,17 +28,27 @@
       text-shadow: 0 0 20px red 0 0 30px red, 0 0 40px red, 0 0 50px red, 0 0 60px red, 0 0 70px red, 0 0 80px red;
     }
 }
+#accsignin {
+  background-color: transparent;
+}
+#accsign {
+  border: black 1px solid;
+  padding: 50px;
+  background-color: darkgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .withers {
     font-size: 60px;
     animation: rubberBand 1.5s;
     animation: glow 1s ease-in-out infinite alternate;
-}
-#accsign {
-  background-color: black;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 #homeWelcome {
     font-size: 50px;

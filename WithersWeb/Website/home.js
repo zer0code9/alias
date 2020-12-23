@@ -1,3 +1,4 @@
+
   window.onload = function () {
     lax.init()
 
@@ -25,6 +26,6 @@
   }
   $(document).ready(function() {
     $("#signin").click(function() {
-        $("#accsign").toggle();
+        $("#accsignin").toggle();
     });
-});
+  });
