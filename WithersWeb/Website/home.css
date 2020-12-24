@@ -45,6 +45,13 @@
   justify-content: center;
   align-items: center;
 }
+#notif {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: yellow;
+}
 .withers {
     font-size: 60px;
     animation: rubberBand 1.5s;

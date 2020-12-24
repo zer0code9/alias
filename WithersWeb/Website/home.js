@@ -29,3 +29,9 @@
         $("#accsignin").toggle();
     });
   });
+$(function() {
+    $('#notif').slideDown();
+    $('#closeNotif').click(function() {
+        $('#notif').slideUp();
+    })
+})
