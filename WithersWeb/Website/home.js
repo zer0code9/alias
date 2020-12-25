@@ -2,6 +2,7 @@
   window.onload = function () {
     lax.init()
 
+    // Text + Font changer
     var now = new Date();
     var hours = now.getHours();
     var type = '';
@@ -39,7 +40,30 @@
     } else {
         $('#homeWelcome').css('font-family', 'Arial');
     }
+    
+    // SHOP
+    // Shop Items
+    function shopItem(name, cost) {
+        $('#shopItems').append(`<div class="itemShop"><div class="itemName">`+name+`</div>
+                            <div class="itemCost"> Costs: $`+cost+`</div>
+                            </div>`);
+    }
+    shopItem('cookie', 40);
+    shopItem('Sweater', 150);
+    shopItem('new', 30000);
+    shopItem('mmm', 0);
+    $('.itemShop').css({'background-color': '#808080',
+                        'border': '2px #000000 solid',
+                        'padding': '10px',
+                        'width': '500px',
+                        'height': '400px',
+                        'font-size': '60px',
+                        'display': 'flex',
+                        'align-items': 'center',
+                        'flex-direction': 'column'});
 
+
+    // Animations
     lax.addDriver('scrollY', function () {
       return window.scrollY
     })
