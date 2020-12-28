@@ -61,6 +61,7 @@
                         'display': 'flex',
                         'align-items': 'center',
                         'flex-direction': 'column'});
+    
 
 
     // Animations
@@ -85,15 +86,17 @@
             ]
         }
     })
+var modal = document.getElementById('id01');
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
-  $(document).ready(function() {
-    $("#signin").click(function() {
-        $("#accsignin").toggle();
-    });
-  });
-$(function() {
+}
+  };
+  $(function() {
     $('#notif').slideDown();
     $('#closeNotif').click(function() {
         $('#notif').slideUp();
     });
-});
+  });
