@@ -7,8 +7,7 @@
     
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fontawesome.com/v4.7.0/icons/">
+    <script src="https://kit.fontawesome.com/acf35067e0.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lax.js" ></script>
     <script src="home.js"></script>
@@ -18,7 +17,7 @@
 <body>
     <div id="id01" class="modal">
   
-        <form class="modal-content animate" action="/action_page.php" method="post">
+        <form class="modal-content animate" action="https://myne.com/sign.php" method="post">
           <div class="imgcontainer">
             <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
           </div>
@@ -29,18 +28,20 @@
                 <input type="text" name="username" placeholder="Username" maxlength="15" required="required">
             </div>
 
-            <div class="accitem"> 
+            <div class="accitem">
                 <span><i class="fa fa-key fa-fw"></i></span>
                 <input type="password" name="password" placeholder="Password" maxlength="20" required="required">
             </div>
-            <button type="submit">Login</button>
             <label>
                 <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
+              </label>
+            <button type="submit">Login</button>
+          </div>
       
           <div class="container">
             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
+            <span><a href="#">Don't have an account?</a></span>
+            <span class="psw"><a href="#">Forgot password?</a></span>
           </div>
         </form>
       </div>
@@ -93,10 +94,10 @@
     <div id="whattf">
         <p id="findEase" style="font-size: 40px;">Here you can find things easier:</p>
         <ul id="table">
-            <li>WithersApps</li>
-            <li>WithersStore</li>
-            <li>WithersBot</li>
-            <li>WebyHow</li>
+            <li><a href="#WithersApps">WithersApps</a></li>
+            <li><a href="#shop">WithersStore</a></li>
+            <li><a>WithersBot</a></li>
+            <li><a>WebyHow</a></li>
         </ul>
     </div>
     <div id="WithersApps">
