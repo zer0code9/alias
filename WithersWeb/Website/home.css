@@ -169,6 +169,7 @@
   }
   .tab {
     color: white;
+    text-decoration: none;
   }
   .current {
     color: darkred;
