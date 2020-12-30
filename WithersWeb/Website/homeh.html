@@ -1,0 +1,74 @@
+<div id="containor">
+    <div id="home" class="tabCon">
+        <div id="homeWelcome">
+            <div id="good"></div>
+            <div id="welcome1" class="withers"><b>WithersWorld</b></div>
+            <div id="welcome2" class="welcome">Welcome to Wither's website!</div>
+        </div>
+        <div id="whattf">
+            <p id="findEase" style="font-size: 40px;">Here you can find things easier:</p>
+            <ul id="table">
+                <li><a href="#WithersApps">WithersApps</a></li>
+                <li><a href="#shop">WithersStore</a></li>
+                <li><a>WithersBot</a></li>
+                <li><a>WebyHow</a></li>
+            </ul>
+        </div>
+        <div id="WithersApps">
+            <a href="#" class="cards" style="color: red;">
+                <div class="fa fa-youtube-play icon"></div>
+                <br>
+                <div>Youtube</div>
+            </a>
+            <a href="#" class="cards" style="color: lightskyblue;">
+                <div class="fa fa-twitter icon"></div>
+                <br>
+                <div>Twitter</div>
+            </a>
+            <a href="#" class="cards" style="color: orange">
+                <div class="fa fa-reddit-alien icon"></div>
+                <br>
+                <div>Reddit</div>
+            </a>
+        </div>
+        <script>
+            var now = new Date();
+    var hours = now.getHours();
+    var type = '';
+    var ft = now.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+    });
+    if (hours >= 5 && hours < 8) {
+        type = 'Moorning';
+    };
+    if (hours >= 8 && hours < 13) {
+        type = 'Morning';
+    };
+    if (hours >= 13 && hours < 17) {
+        type = 'Afternoon';
+    };
+    if (17 <= hours && hours < 21) {
+        type = 'Evening';
+    };
+    if (21 <= hours && hours < 5) {
+        type = 'Night';
+    };
+    document.getElementById("good").innerHTML = `Good ${type}`;
+
+    var months = now.getMonth();
+    console.log(months);
+    if (months = 3 || 10 || 12) {
+        if (months = 12) {
+            $('#homeWelcome').css('font-family', 'Mountains of Christmas');
+        }
+        if (months = 10) {
+            $('#homeWelcome').css('font-family', 'Butcherman');
+        }
+    } else {
+        $('#homeWelcome').css('font-family', 'Arial');
+    }
+        </script>
+    </div>
+</div>

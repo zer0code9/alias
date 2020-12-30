@@ -167,6 +167,12 @@
       font-size: 60px;
       cursor: pointer;
   }
+  .tab {
+    color: white;
+  }
+  .current {
+    color: darkred;
+  }
 
   input[type=text], input[type=password] {
     width: 100%;

@@ -48,9 +48,9 @@
     <div id="top" style="text-align: center;">
         <div id="topItems" class="w3-xxxlarge w3-padding" style="text-align: center;">
             <a id="sideButton" class="fa fa-bars" onclick="openNav()"></a>
-            <a id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')"></a>
-            <a id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
-            <a id="botButton" class="fa fa-plug tab" onclick="openTab(event, 'bot')"></a>
+            <a id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')" href="homeh.html"></a>
+            <a id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')" href="shop.html"></a>
+            <a id="botButton" class="fa fa-plug tab" onclick="openTab(event, 'bot')" href="bot.html"></a>
             <a class="fa fa-question tab"></a> |
             <a class="fa fa-sign-in" id="signin" onclick="document.getElementById('id01').style.display='block'"></a>
         </div>
@@ -83,55 +83,14 @@
         }
         </script>
     </div>
+    <section id="content">
+        <div id="container">
 
-<div id="home" class="tabCon">
-    <div id="homeWelcome">
-        <div id="good"></div>
-        <div id="welcome1" class="withers"><b>WithersWorld</b></div>
-        <div id="welcome2" class="welcome">Welcome to Wither's website!</div>
-        <div id="loaderHome"></div>
-    </div>
-    <div id="whattf">
-        <p id="findEase" style="font-size: 40px;">Here you can find things easier:</p>
-        <ul id="table">
-            <li><a href="#WithersApps">WithersApps</a></li>
-            <li><a href="#shop">WithersStore</a></li>
-            <li><a>WithersBot</a></li>
-            <li><a>WebyHow</a></li>
-        </ul>
-    </div>
-    <div id="WithersApps">
-        <a href="#" class="cards" style="color: red;">
-            <div class="fa fa-youtube-play icon"></div>
-            <br>
-            <div>Youtube</div>
-        </a>
-        <a href="#" class="cards" style="color: lightskyblue;">
-            <div class="fa fa-twitter icon"></div>
-            <br>
-            <div>Twitter</div>
-        </a>
-        <a href="#" class="cards" style="color: orange">
-            <div class="fa fa-reddit-alien icon"></div>
-            <br>
-            <div>Reddit</div>
-        </a>
-    </div>
-</div>
-<div id="shop" class="tabCon">
-    <div id="shopWelcome" style="text-align: center;">
-        <div class="withers"><b>WithersShop</b></div>
-    </div>
-    <div id="shopItems">
+        </div>
+    </section>
 
-    </div>
-</div>
-<div id="bot" class="tabCon">
-    <div id="botWelcome" style="text-align: center;">
-        <div class="withers"><b>WithersBot</b></div>
-    </div>
-</div>
 <script>
+    /*
     function openTab(evt, tabName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabCon");
@@ -146,6 +105,7 @@
       evt.currentTarget.className += " active";
     }
     document.getElementById("homeButton").click();
+    */
 </script>
 </body>
 </html>
