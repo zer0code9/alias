@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Butcherman&display=swap');
+/*Christmas: Mountains of Christmas */
+/*Halloween: Butcherman */
 
 .intro {
     text-align: center;
@@ -51,6 +53,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
+    font-family: Mountains of Christmas;
 }
 #loaderHome {
     border: 16px solid #f3f3f3;
@@ -97,8 +100,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    justify-content: space-between;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
     align-items: center;
     height: 50vh;
 }
@@ -110,6 +112,7 @@
     text-decoration: none;
     color: inherit;
     border-radius: 60px;
+    margin: 20px;
 }
 #WithersApps .cards .icon{
     font-size: 100px;

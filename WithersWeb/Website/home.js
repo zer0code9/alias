@@ -28,10 +28,7 @@
         minute: "numeric",
         hour12: true
     });
-    if (hours >= 5 && hours < 8) {
-        type = 'Moorning';
-    };
-    if (hours >= 8 && hours < 13) {
+    if (hours >= 5 && hours < 13) {
         type = 'Morning';
     };
     if (hours >= 13 && hours < 17) {
@@ -44,20 +41,6 @@
         type = 'Night';
     };
     document.getElementById("good").innerHTML = `Good ${type}`;
-
-    var months = now.getMonth();
-    var month = months - 1;
-    console.log(months);
-    if (month = 3 || 10 || 12) {
-        if (month = 12) {
-            $('#homeWelcome').css('font-family', 'Mountains of Christmas');
-        }
-        if (month = 10) {
-            $('#homeWelcome').css('font-family', 'Butcherman');
-        }
-    } else {
-        $('#homeWelcome').css('font-family', 'Arial');
-    }
 
     // Animations
     lax.addDriver('scrollY', function () {
