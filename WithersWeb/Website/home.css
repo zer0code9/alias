@@ -2,7 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Butcherman&display=swap');
 /*Christmas: Mountains of Christmas */
 /*Halloween: Butcherman */
-
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .intro {
     text-align: center;
     font-size: 80px;
@@ -19,6 +21,31 @@
     align-items: center;
     max-width: 900px;
     margin: auto;
+}
+/*Tabs*/
+.tab:hover {
+  color: red;
+  font-size: 60px;
+  cursor: pointer;
+}
+.tab {
+color: white;
+text-decoration: none;
+}
+.current {
+color: darkred;
+}
+[title] {
+  background-color: black;
+  color: white;
+}
+footer {
+  background-color: black;
+  color: white;
+}
+.footerItems {
+  display: flex;
+  flex-direction: column;
 }
 ::selection {
     color: black;
@@ -162,9 +189,6 @@
     .side a {font-size: 18px;}
   }
   /*Tabs*/
-  .top .topItems .tab.active {
-    color: rgb(99, 9, 9);
-  }
   .tab:hover {
       color: red;
       font-size: 60px;
@@ -209,11 +233,6 @@
   button:hover {
     opacity: 0.8;
   }
-  .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-  }
   .imgcontainer {
     text-align: center;
     margin: 24px 0 12px 0;
@@ -251,13 +270,13 @@
     position: absolute;
     right: 25px;
     top: 0;
-    color: #000;
     font-size: 35px;
     font-weight: bold;
+    color: red;
   }
   .close:hover,
   .close:focus {
-    color: red;
+    opacity: 0.8;
     cursor: pointer;
   }
   .animate {
@@ -276,8 +295,5 @@
     span.psw {
        display: block;
        float: none;
-    }
-    .cancelbtn {
-       width: 100%;
     }
   } 

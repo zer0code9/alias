@@ -19,7 +19,7 @@
   
         <form class="modal-content animate" action="https://myne.com/sign.php" method="post">
           <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <span onclick="document.getElementById('id01').style.display='none'" class="close">&times;</span>
           </div>
       
           <div class="container">
@@ -39,22 +39,21 @@
           </div>
       
           <div class="container">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
             <span><a href="#">Don't have an account?</a></span>
             <span class="psw"><a href="#">Forgot password?</a></span>
           </div>
         </form>
       </div>
-    <div id="top" style="text-align: center;">
+    <nav id="top" style="text-align: center;">
         <div id="topItems" class="w3-xxxlarge w3-padding" style="text-align: center;">
             <a id="sideButton" class="fa fa-bars" onclick="openNav()"></a>
-            <a id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')"></a>
-            <a id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')"></a>
-            <a id="botButton" class="fa fa-plug tab" onclick="openTab(event, 'bot')"></a>
+            <a id="homeButton" class="fa fa-home tab" onclick="openTab(event, 'home')" ></a>
+            <a id="shopButton" class="fa fa-shopping-cart tab" onclick="openTab(event, 'shop')" title="WithersShop"></a>
+            <a id="botButton" class="fa fa-plug tab" onclick="openTab(event, 'bot')" title="WithersBot"></a>
             <a class="fa fa-question tab"></a> |
             <a class="fa fa-sign-in" id="signin" onclick="document.getElementById('id01').style.display='block'"></a>
         </div>
-    </div>
+    </nav>
     <div id="notif">
         <span>
             <div id="notif1">Sign up or sign in to have a better time!</div>
@@ -92,11 +91,18 @@
             <div id="whattf">
                 <p id="findEase" style="font-size: 40px;">Here you can find things easier:</p>
                 <ul id="table">
-                    <li><a href="#WithersApps">WithersApps</a></li>
-                    <li><a href="#shop">WithersStore</a></li>
-                    <li><a>WithersBot</a></li>
-                    <li><a>WebyHow</a></li>
+                    <li><a>WithersApps</a></li>
+                    <li><a onclick="gostore()">WithersStore</a></li>
+                    <li><a onclick="gobot()">WithersBot</a></li>
                 </ul>
+                <script>
+                    function gostore() {
+                        $("#shopButton").click();
+                    }
+                    function gobot() {
+                        $("#botButton").click();
+                    }
+                </script>
             </div>
             <div id="WithersApps">
                 <a href="#" class="cards" style="color: red;">
@@ -149,5 +155,13 @@
     }
     document.getElementById("homeButton").click();
 </script>
+<footer>
+    <div class="footerItems">
+        <h2>Other apps</h2>
+        <a>myNe</a>
+        <a>WebyHow</a>
+        <a>WebyHelp</a>
+    </div>
+</footer>
 </body>
 </html>
