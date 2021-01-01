@@ -64,13 +64,6 @@
             ]
         }
     })
-    $('.tab').on('click', function(e) {
-        e.preventDefault();
-
-        $('.tab.current').removeClass('current');
-        $(this).addClass('current');
-    });
-    document.getElementById("homeButton").click();
   };
   $(function() {
     $('#notif').slideDown();

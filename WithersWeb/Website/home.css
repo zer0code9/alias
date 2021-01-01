@@ -39,13 +39,25 @@ color: darkred;
   background-color: black;
   color: white;
 }
-footer {
+#footer {
   background-color: black;
   color: white;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
 }
 .footerItems {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  padding: 10px;
+}
+#about {
+  background-color: gray;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
 }
 ::selection {
     color: black;
@@ -169,11 +181,6 @@ footer {
     display: block;
     transition: 0.3s;
   }
-  .side #sideFooter {
-      position: absolute;
-      bottom: 0%;
-      color: red;
-  }
   .side a:hover {
     color: red;
   }
@@ -188,30 +195,8 @@ footer {
     .side {padding-top: 15px;}
     .side a {font-size: 18px;}
   }
-  /*Tabs*/
-  .tab:hover {
-      color: red;
-      font-size: 60px;
-      cursor: pointer;
-  }
-  .tab {
-    color: white;
-    text-decoration: none;
-  }
-  .current {
-    color: darkred;
-  }
 
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-
-  input[type=text], input[type=password] {
+  .input {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

@@ -25,12 +25,12 @@
           <div class="container">
             <div class="accitem">
                 <span><i class="fa fa-user fa-fw"></i></span>
-                <input type="text" name="username" placeholder="Username" maxlength="15" required="required">
+                <input class="input" type="text" name="username" placeholder="Username" maxlength="15" required="required">
             </div>
 
             <div class="accitem">
                 <span><i class="fa fa-key fa-fw"></i></span>
-                <input type="password" name="password" placeholder="Password" maxlength="20" required="required">
+                <input class="input" type="password" name="password" placeholder="Password" maxlength="20" required="required">
             </div>
             <label>
                 <input type="checkbox" checked="checked" name="remember"> Remember me
@@ -67,10 +67,6 @@
         <a href="#">Services</a>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
-        <div id="sideFooter">
-            <div>Created by myne & Weby</div>
-            <div>Powered by myNe</div>
-        </div>
         </div>
         <script>
         function openNav() {
@@ -148,19 +144,39 @@
       }
       tablinks = document.getElementsByClassName("tab");
       for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        //tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " active";
+      //evt.currentTarget.className += " active";
     }
+    $('.tab').on('click', function(e) {
+        e.preventDefault();
+
+        $('.tab.current').removeClass('current');
+        $(this).addClass('current');
+    });
     document.getElementById("homeButton").click();
 </script>
 <footer>
-    <div class="footerItems">
-        <h2>Other apps</h2>
-        <a>myNe</a>
-        <a>WebyHow</a>
-        <a>WebyHelp</a>
+    <div id="footer">
+        <div class="footerItems">
+            <h2>Other apps</h2>
+            <a>myNe</a>
+            <a>WebyHow</a>
+            <a>WebyHelp</a>
+        </div>
+        <div class="footerItems">
+            <h2>Company</h2>
+            <a>About myNe</a>
+            <a>Wither</a>
+        </div>
+    </div>
+    <div id="about">
+        <span>
+            <div>Created by myNe & Weby</div>
+            <div>Powered by myNe</div>
+        </span>
+        <span>&copy; myNe, Inc.</span>
     </div>
 </footer>
 </body>
