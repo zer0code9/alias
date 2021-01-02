@@ -4,10 +4,7 @@
 /*Halloween: Butcherman */
 body {
   font-family: Arial, Helvetica, sans-serif;
-}
-.intro {
-    text-align: center;
-    font-size: 80px;
+  background-color: #383c41;
 }
 #top {
     background: rgb(0, 0, 0);
@@ -282,3 +279,49 @@ color: darkred;
        float: none;
     }
   } 
+
+/*WithersBot*/
+#botCon {
+  display: flex;
+  color: white;
+  font-size: 30px;
+}
+#botCommandCon {
+  width: 85vw;
+  height: 120vh;
+  overflow: scroll;
+}
+.botCommands {
+  background-color: black;
+  color: white;
+  width: 75vw;
+  height: auto;
+  margin: 10px;
+}
+.commandClassName {
+  background-color: red;
+  color: black;
+  padding: 10px;
+  width: 75vw;
+  margin-left: 10px;
+}
+.sip {color: red;}
+.ncy {color: orange;}
+th {
+  border-bottom: 2px solid white;
+}
+td {
+  border-bottom: 1px solid white;
+}
+tr:hover {
+  background-color: rgb(41, 38, 38);
+}
+
+#botSettingCon {
+  background-color: #484b4e;
+  padding: 20px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}

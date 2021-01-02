@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="">
+    <meta name="description" content="The Website of Wither">
+    <meta name="keywords" content="withersworld, shop, wither, withersbot">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script src="https://kit.fontawesome.com/acf35067e0.js" crossorigin="anonymous"></script>
@@ -132,6 +133,136 @@
             <div id="botWelcome" style="text-align: center;">
                 <div class="withers"><b>WithersBot</b></div>
             </div>
+            <div id="botCon">
+                <div id="botCommandCon">
+                <div style="background-color: black;width: 50%;">
+                    <span>Table of content:</span>
+                    <span class="sip">Still in progress</span> | 
+                    <span class="ncy">Not created yet</span>
+                </div>
+                <table id="moderationCon" class="botCommands">
+                    <thead>
+                        <div class="commandClassName">Moderation</div>
+                        <tr class="commandHead">
+                            <th>Command</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="sip">
+                            <td>kick</td>
+                            <td>Kick a member</td>
+                            <td>zkick [member]</td>
+                        </tr>
+                        <tr class="sip">
+                            <td>ban</td>
+                            <td>Ban a member</td>
+                            <td>zban [member]</td>
+                        </tr>
+                        <tr class="ncy">
+                            <td>unban</td>
+                            <td>Unban someone</td>
+                            <td>zunban [nameTag]</td>
+                        </tr>
+                        <tr class="ncy">
+                            <td>mute</td>
+                            <td>Mute a member</td>
+                            <td>zmute [member]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table id="infoCon" class="botCommands">
+                    <thead>
+                        <div class="commandClassName">Info</div>
+                        <tr class="commandHead">
+                            <th>Command</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>server</td>
+                            <td>Get info on the server</td>
+                            <td>zserver</td>
+                        </tr>
+                        <tr>
+                            <td>user</td>
+                            <td>Get info on the server</td>
+                            <td>zserver [member]</td>
+                        </tr>
+                        <tr>
+                            <td>today</td>
+                            <td>Get info on today</td>
+                            <td>ztoday</td>
+                        </tr>
+                        <tr>
+                            <td>channel</td>
+                            <td>Get info on a channel</td>
+                            <td>zchannel [channel]</td>
+                        </tr>
+                        <tr>
+                            <td>role</td>
+                            <td>Get info on a role</td>
+                            <td>zrole [role]</td>
+                        </tr>
+                        <tr class="sip">
+                            <td>bot</td>
+                            <td>Get info on WithersBot</td>
+                            <td>zbot</td>
+                        </tr>
+                        <tr class="ncy">
+                            <td>weather</td>
+                            <td>Get info on the weather of a city</td>
+                            <td>zmeteo [city]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table id="rankCon" class="botCommands">
+                    <thead>
+                        <div class="commandClassName">Rank</div>
+                        <tr class="commandHead">
+                            <th>Command</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>addrank</td>
+                            <td>Create a new role</td>
+                            <td>zaddrank [name]</td>
+                        </tr>
+                        <tr>
+                            <td>delrank</td>
+                            <td>Remove a role</td>
+                            <td>zdelrank [role]</td>
+                        </tr>
+                        <tr>
+                            <td>namerank</td>
+                            <td>Change the name of a role</td>
+                            <td>znamerank [role] [name]</td>
+                        </tr>
+                        <tr>
+                            <td>colorrank</td>
+                            <td>Change the color of a rank</td>
+                            <td>zcolorrank [role] [color:hex]</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div id="botSettingCon">
+                    <a href="#moderationCon">Moderation</a>
+                    <a href="#infoCon">Info</a>
+                    <a>Rank</a>
+                    <a>Channel</a>
+                    <a class="ncy">Count</a>
+                </div>
+            </div>
         </div>
 
 <script>
@@ -143,19 +274,16 @@
         tabcontent[i].style.display = "none";
       }
       tablinks = document.getElementsByClassName("tab");
-      for (i = 0; i < tablinks.length; i++) {
-        //tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
+      
       document.getElementById(tabName).style.display = "block";
-      //evt.currentTarget.className += " active";
     }
-    $('.tab').on('click', function(e) {
+    $('.tab').on('click', function openTab(e, tabName) {
         e.preventDefault();
 
         $('.tab.current').removeClass('current');
         $(this).addClass('current');
     });
-    document.getElementById("homeButton").click();
+    document.getElementById("botButton").click();
 </script>
 <footer>
     <div id="footer">
