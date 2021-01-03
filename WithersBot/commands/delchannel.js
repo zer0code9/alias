@@ -15,7 +15,7 @@ function cdel(msg, args) {
 msg.channel.send(noDelete);
     } else {
         if (args[0] == channel) {
-            msg.guild.channels.delete(channel);
+            channel.delete();
             const remove = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`WithersBot Commands`)

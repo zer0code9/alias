@@ -29,10 +29,12 @@ function userInfo(msg, args) {
             .setDescription("Command: user")
             .addFields(
                 { name: "Username", value: `${user.username}`},
-                { name : "Id", value: `${user.id}`},
+                { name: "Id", value: `${user.id}`},
                 { name: "Created on", value: `${cre.toDateString()}`},
                 { name: "Tag", value: `${user.tag}`},
-                { name: "Bot?", value: `${bo}`}
+                { name: "Nickname", value: `${user.nickname}`},
+                { name: "Bot?", value: `${bo}`},
+                { name: "Number of roles", value: `${user.roles}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(userOn);

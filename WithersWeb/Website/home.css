@@ -32,10 +32,6 @@ text-decoration: none;
 .current {
 color: darkred;
 }
-[title] {
-  background-color: black;
-  color: white;
-}
 #footer {
   background-color: black;
   color: white;
@@ -281,22 +277,22 @@ color: darkred;
   } 
 
 /*WithersBot*/
-#botCon {
+#BotCon {
   display: flex;
   color: white;
   font-size: 30px;
 }
 #botCommandCon {
   width: 85vw;
-  height: 120vh;
-  overflow: scroll;
+  height: auto;
 }
 .botCommands {
   background-color: black;
   color: white;
   width: 75vw;
   height: auto;
-  margin: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 .commandClassName {
   background-color: red;
@@ -322,6 +318,8 @@ tr:hover {
   padding: 20px;
   margin-top: 50px;
   display: flex;
+  height: auto;
   flex-direction: column;
-  text-decoration: none;
+  position: sticky;
+  left: 0px;
 }
