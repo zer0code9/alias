@@ -12,7 +12,7 @@ function sayIt(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription(`Command: say`)
         .addFields(
-            { name: "Command:", value: `\n\`\`\`$${prefix}say [sentence]\`\`\``}
+            { name: "Command:", value: `\n\`\`\`${prefix}say [sentence]\`\`\``}
         )
         .setFooter('WithersBot helps')
     msg.channel.send(noSay);
