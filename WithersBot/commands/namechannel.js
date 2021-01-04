@@ -4,7 +4,7 @@ function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
     if (channel) {
-        if (args[1] !=  "undefined") {
+        if (args[1] != "undefined" || args[1] == "null" || args[1] == 0) {
             channel.setName(`${args[1]}`)
             const name = new Discord.MessageEmbed()
             .setColor("RANDOM")

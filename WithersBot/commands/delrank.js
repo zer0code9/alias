@@ -3,40 +3,29 @@ const Discord = require("discord.js");
 function del(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
     const role = msg.mentions.roles.first();
-    if (args == 0) {
-    const noDelete = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle("WithersBot Commands")
-    .setDescription("Command: delrank")
-    .addFields(
-        { name: "Command:", value: `Delete a role\n\`\`\`${prefix}delrank [role]\`\`\``}
-    )
-    .setFooter("WithersBot helps")
-    msg.channel.send(noDelete);
+    if (role) {
+        role.delete();
+        const remove = new Discord.MessageEmbed()
+        .setColor('RANDOM')
+        .setTitle(`WithersBot Commands`)
+        .setDescription('Commands: delchannel')
+        .addFields(
+            { name: "A channel has been deleted", value: `Deleted channel: #${args}` }
+        )
+        .setFooter('WithersBot helps')
+        msg.channel.send(remove);
     } else {
-        if (args[0] == role) {
-            msg.guild.roles.remove(role);
-            const remove = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: delrank")
-            .addFields(
-                { name: "A role has been deleted", value: `Deleted role: ${args}`}
-            )
-            .setFooter("WithersBot helps")
-            msg.channel.send(remove);
-        } else {
-            const noRemove = new Discord.MessageEmbed()
-            .setColor('RANDOM')
-            .setTitle(`WithersBot Commands`)
-            .setDescription('Commands: delrank')
-            .addFields(
-                { name: "Can't delete role", value: `There is no role ${args}` }
-            )
-            .setFooter('WithersBot helps')
-            msg.channel.send(noRemove);
+        const noDelete = new Discord.MessageEmbed()
+        .setColor('RANDOM')
+        .setTitle(`WithersBot Commands`)
+        .setDescription('Command: delchannel')
+        .addFields(
+            { name: "No Channel", value: `I need a channel in order to delete it`},
+            { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
+        )
+        .setFooter('WithersBot helps')
+        msg.channel.send(noDelete);
     }
-}
 }
 }
 

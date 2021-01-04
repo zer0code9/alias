@@ -5,7 +5,7 @@ function lala(msg, args) {
     const channel = msg.mentions.channels.first();
     const string = args.slice(1).join(" ");
     if (channel) {
-        if (string == 0 || string == "undefined") {
+        if (string == 0 || string == "undefined" || string == "null") {
             const noTopic = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
@@ -36,7 +36,7 @@ function lala(msg, args) {
         .setDescription("Command: topicchannel")
         .addFields(
             { name: "No channel", value: `I need a channel in order to change its topic`},
-            { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${string}`}
+            { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noChannel);

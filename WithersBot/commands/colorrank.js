@@ -4,7 +4,7 @@ function abc(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
         const role = msg.mentions.roles.first();
     if (role) {
-        if (args[1] == 0 || !args[1].startsWith('#')) {
+        if (args[1] == 0 || !args[1].startsWith('#') || args[1] == "null") {
             const noColor = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
