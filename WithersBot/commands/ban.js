@@ -7,36 +7,47 @@ function banUser(msg, args) {
 
     if (!msg.member.permissions.has("BAN_MEMBERS")) {msg.channel.send(`You don't have the permission to ban members, ${msg.author}`); return;} else {
 
-    if (user) {
-        user.ban();
+      if (user) {
+        const member = msg.guild.member(user);
+        if (member) {
+        //member.ban()
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: ban")
         .addFields(
-          { name: "Successful", value: `${taggedUser.username} has been successfully banned.` },
+          { name: "Successful", value: `${user.username} has been successfully banned from ${msg.guild.name}.` },
           { name: "Reason:", value: `${reason}`},
           { name: `**NOTE**`, value: `**Only use "ban" when someone has a really really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(banned);
+        } else {
+          const noMember = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: ban")
+        .addFields(
+          { name: "No Member", value: `I don't know that member` },
+          { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really really bad behavior**`}
+        )
+        .setFooter("WithersBot helps")
+        msg.channel.send(noMember);
+        }
 
       } else {
-
-        if (!user) {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: ban")
         .addFields(
-          { name: "No User", value: `I need an username in order to ban someone.` },
+          { name: "No User", value: `I need an username in order to kick someone.` },
           { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "ban" when someone has a really really bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
-
-        }
       }
 }
 }

@@ -5,25 +5,38 @@ function kickUser(msg, args) {
   const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
 
-    if (!msg.member.permissions.has("KICK_MEMBERS")) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
+  if (!msg.member.permissions.has("KICK_MEMBERS")) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
 
     if (user) {
-        //user.kick()
+        const member = msg.guild.member(user);
+        if (member) {
+        //member.kick()
         const kicked = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: kick")
         .addFields(
-          { name: "Successful", value: `${user.username} has been successfully kicked.` },
+          { name: "Successful", value: `${user.username} has been successfully kicked from ${msg.guild.name}.` },
           { name: "Reason:", value: `${reason}`},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(kicked);
+        } else {
+          const noMember = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: kick")
+        .addFields(
+          { name: "No Member", value: `I don't know that member` },
+          { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+        )
+        .setFooter("WithersBot helps")
+        msg.channel.send(noMember);
+        }
 
       } else {
-
-        if (!user) {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
@@ -31,14 +44,12 @@ function kickUser(msg, args) {
         .addFields(
           { name: "No User", value: `I need an username in order to kick someone.` },
           { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
-
-        }
       }
-}
+  }
 }
 
 module.exports = {
