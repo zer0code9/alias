@@ -7,21 +7,22 @@ function lala(msg, args) {
     const noName = new Discord.MessageEmbed()
     .setColor("RANDOM")
     .setTitle("WithersBot Commands")
-    .setDescription("Command: namechannel")
+    .setDescription("Command: movechannel")
     .addFields(
-        { name: "Command:", value: `Change the name of a channel\n\`\`\`${prefix}namechannel [channel] [name]\`\`\``}
+        { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
     )
     .setFooter("WithersBot helps")
     msg.channel.send(noName);
     } else {
         if (args != 0) {
-        channel.setName(`${args[1]}`)
+        const string = args.slice(1).join(" ");
+        channel.setTopic(`${string}`)
         const name = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
-        .setDescription("Command: namechannel")
+        .setDescription("Command: topicchannel")
         .addFields(
-            { name: `The name of the channel ${channel.name} has changed`, value: `The new name: ${args[1]}`}
+            { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${string}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(name);
@@ -31,9 +32,9 @@ function lala(msg, args) {
 }
 
 module.exports = {
-    name: "namechannel",
-    description: "Change the name of a channel",
-    example: prefix + "namechannel [channel] [name]",
+    name: "topicchannel",
+    description: "Change the topic of a channel",
+    example: prefix + "topicchannel [channel] [topic]",
     type: "channel",
     execute(msg, args) {
         lala(msg, args)

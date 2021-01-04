@@ -14,7 +14,7 @@ function cdel(msg, args) {
     .setFooter('WithersBot helps')
 msg.channel.send(noDelete);
     } else {
-        if (args[0] == channel) {
+        if (channel) {
             channel.delete();
             const remove = new Discord.MessageEmbed()
             .setColor('RANDOM')
@@ -26,7 +26,7 @@ msg.channel.send(noDelete);
             .setFooter('WithersBot helps')
          msg.channel.send(remove);
         } else {
-            if (args != msg.guild.channels.name) {
+            if (!channel) {
             const noRemove = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`WithersBot Commands`)
