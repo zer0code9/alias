@@ -16,7 +16,7 @@ msg.channel.send(channelInfo);
 }
 module.exports = {
     name: "roles",
-    description: "Get a embed message with all the roles of the server",
+    description: "Get a list of all the roles of the server",
     example: prefix + "roles",
     type: "rank",
     execute(msg, args) {

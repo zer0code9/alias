@@ -15,13 +15,13 @@ function lala(msg, args) {
     msg.channel.send(noName);
     } else {
         if (args != 0) {
-        channel.edit({ name: `${args[1]}` })
+        channel.setName(`${args[1]}`)
         const name = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: namechannel")
         .addFields(
-            { name: `The name of the channel ${channel.name}`, value: `The new name: ${args[1]}`}
+            { name: `The name of the channel ${channel.name} has changed`, value: `The new name: ${args[1]}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(name);
