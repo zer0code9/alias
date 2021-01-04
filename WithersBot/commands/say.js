@@ -12,8 +12,7 @@ function sayIt(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription(`Command: say`)
         .addFields(
-            { name: "Command:", value: `\n\`\`\`$${prefix}say [word]\`\`\``},
-            { name: "Only one word can be used", value: "More in the future :D"}
+            { name: "Command:", value: `\n\`\`\`$${prefix}say [sentence]\`\`\``}
         )
         .setFooter('WithersBot helps')
     msg.channel.send(noSay);
@@ -30,7 +29,7 @@ function sayIt(msg, args) {
 module.exports = {
     name: "say",
     description: "Make WithersBot say something",
-    example: prefix + "say [word]",
+    example: prefix + "say [sentence]",
     type: "info",
     execute(msg, args){
         sayIt(msg, args)

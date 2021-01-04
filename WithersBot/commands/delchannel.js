@@ -3,6 +3,43 @@ const Discord = require("discord.js");
 function cdel(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
+    if (channel) {
+        if (channel) {
+            channel.delete();
+            const remove = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle(`WithersBot Commands`)
+            .setDescription('Commands: delchannel')
+            .addFields(
+                { name: "A channel has been deleted", value: `Deleted channel: #${args}` }
+            )
+            .setFooter('WithersBot helps')
+            msg.channel.send(remove);
+        } else {
+            const noRemove = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle(`WithersBot Commands`)
+            .setDescription('Commands: delchannel')
+            .addFields(
+                { name: "Can't delete channel", value: `There is no channel ${args}` },
+                { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
+            )
+            .setFooter('WithersBot helps')
+            msg.channel.send(noRemove);
+        }
+    } else {
+    const noDelete = new Discord.MessageEmbed()
+    .setColor('RANDOM')
+    .setTitle(`WithersBot Commands`)
+    .setDescription('Command: delchannel')
+    .addFields(
+        { name: "No Channel", value: `I need a channel in order to delete it`},
+        { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
+    )
+    .setFooter('WithersBot helps')
+    msg.channel.send(noDelete);
+    }
+    /*
     if (args == 0){
     const noDelete = new Discord.MessageEmbed()
     .setColor('RANDOM')
@@ -12,7 +49,7 @@ function cdel(msg, args) {
         { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
     )
     .setFooter('WithersBot helps')
-msg.channel.send(noDelete);
+    msg.channel.send(noDelete);
     } else {
         if (channel) {
             channel.delete();
@@ -24,7 +61,7 @@ msg.channel.send(noDelete);
                 { name: "A channel has been deleted", value: `Deleted channel: ${args}` }
             )
             .setFooter('WithersBot helps')
-         msg.channel.send(remove);
+            msg.channel.send(remove);
         } else {
             if (!channel) {
             const noRemove = new Discord.MessageEmbed()
@@ -39,7 +76,9 @@ msg.channel.send(noDelete);
             }
         }
     }
+    */
 }
+
 }
 module.exports = {
     name: "delchannel",
