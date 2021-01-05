@@ -1,17 +1,23 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function roles(msg, args) {
-    let user = msg.mentions.members.first();
+    const role = msg.mentions.roles.first();
     if (args == 0){
-    const channelInfo = new Discord.MessageEmbed()
+        let rolemap = msg.guild.roles.cache
+            .sort((a, b) => b.position - a.position)
+            .map(r => r)
+            .join(",");
+            if (rolemap.length > 1024) rolemap = "To many roles to display";
+            if (!rolemap) rolemap = "No roles";
+    const roles = new Discord.MessageEmbed()
     .setColor('RANDOM')
     .setTitle(`WithersBot Commands`)
     .setDescription('Commands: roles')
     .addFields(
-        { name: "Roles", value: `${msg.guild.roles}`}
+        { name: `All Roles of ${msg.guild}`, value: `${rolemap}`}
     )
-    .setFooter('WithersBot')
-msg.channel.send(channelInfo);
+    .setFooter('WithersBot helps')
+    msg.channel.send(roles);
 }
 }
 module.exports = {

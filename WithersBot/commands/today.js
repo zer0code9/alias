@@ -19,8 +19,8 @@ function today(msg, args) {
         .setDescription(`Command: today`)
         .addFields(
             { name: "Date:", value: `${dates}`},
-            { name: "Computer Date:", value: `${day} ${month} ${date} ${year}`},
-            { name: "Time:", value: `${hour}:${minute}:${second}:${msecond}`}
+            { name: "Computer Date:", value: `Day: ${day}, Month: ${month}, Date: ${date}, Year: ${year}`},
+            { name: "Time:", value: `${hour}:${minute}.${second}`}
         )
         .setFooter('WithersBot helps')
     msg.channel.send(todayDate);
@@ -29,7 +29,7 @@ function today(msg, args) {
 }
 module.exports = {
     name: "today",
-    description: "Get the time and day of today",
+    description: "Get info on today",
     example: prefix + "today",
     execute(msg, args) {
         today(msg, args)

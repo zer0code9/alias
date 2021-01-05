@@ -277,6 +277,14 @@ color: darkred;
   } 
 
 /*WithersBot*/
+#join {
+  background-color: blue;
+  color: white;
+  font-size: 50px;
+  width: 360px;
+  padding: 20px;
+  cursor: pointer;
+}
 #BotCon {
   display: flex;
   color: white;
