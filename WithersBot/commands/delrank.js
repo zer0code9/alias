@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 function del(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
     const role = msg.mentions.roles.first();
+    const reason = args.slice(1).join(" ");
     if (role) {
         role.delete();
         const remove = new Discord.MessageEmbed()
@@ -10,7 +11,8 @@ function del(msg, args) {
         .setTitle(`WithersBot Commands`)
         .setDescription('Commands: delchannel')
         .addFields(
-            { name: "A channel has been deleted", value: `Deleted channel: #${args}` }
+            { name: "A channel has been deleted", value: `Deleted role: ${args}` },
+            { name: "Reason", value: `${reason}`}
         )
         .setFooter('WithersBot helps')
         msg.channel.send(remove);

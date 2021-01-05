@@ -21,7 +21,7 @@ function lala(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: addchannel")
         .addFields(
-            { name: "A new channel has been added", value: `New channel name: ${args}`}
+            { name: "A new channel has been created", value: `New channel name: ${args}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);

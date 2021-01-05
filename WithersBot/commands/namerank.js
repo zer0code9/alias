@@ -3,8 +3,9 @@ const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
     const role = msg.mentions.roles.first();
+    const name = args.slice(1).join(" ");
     if (role) {
-            if (args[1] == "undefined" || args[1] == 0 || args[1] == "null") {
+            if (name == "undefined" || name == 0 || name == "null") {
                 const noName = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle("WithersBot Commands")
@@ -16,8 +17,8 @@ function lala(msg, args) {
                 .setFooter("WithersBot helps")
                 msg.channel.send(noName);
             } else {
-                role.setName(`${args[1]}`)
-                const name = new Discord.MessageEmbed()
+                role.setName(`${name}`)
+                const change = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle("WithersBot Commands")
                 .setDescription("Command: namerank")
@@ -25,7 +26,7 @@ function lala(msg, args) {
                     { name: `The name of the role ${role.name} has changed`, value: `The new name: ${args[1]}`}
                 )
                 .setFooter("WithersBot helps")
-                msg.channel.send(name);
+                msg.channel.send(change);
             }
     } else {
         const noRole = new Discord.MessageEmbed()

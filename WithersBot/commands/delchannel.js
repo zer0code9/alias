@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 function cdel(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
+    const reason = args.slice(1).join(" ");
     if (channel) {
         channel.delete();
         const remove = new Discord.MessageEmbed()
@@ -10,7 +11,8 @@ function cdel(msg, args) {
         .setTitle(`WithersBot Commands`)
         .setDescription('Commands: delchannel')
         .addFields(
-            { name: "A channel has been deleted", value: `Deleted channel: #${args}` }
+            { name: "A channel has been deleted", value: `Deleted channel: #${args}` },
+            { name: "Reason", value: `${reason}`}
         )
         .setFooter('WithersBot helps')
         msg.channel.send(remove);
@@ -26,44 +28,6 @@ function cdel(msg, args) {
         .setFooter('WithersBot helps')
         msg.channel.send(noDelete);
     }
-    /*
-    if (args == 0){
-    const noDelete = new Discord.MessageEmbed()
-    .setColor('RANDOM')
-    .setTitle(`WithersBot Commands`)
-    .setDescription('Command: delchannel')
-    .addFields(
-        { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
-    )
-    .setFooter('WithersBot helps')
-    msg.channel.send(noDelete);
-    } else {
-        if (channel) {
-            channel.delete();
-            const remove = new Discord.MessageEmbed()
-            .setColor('RANDOM')
-            .setTitle(`WithersBot Commands`)
-            .setDescription('Commands: delchannel')
-            .addFields(
-                { name: "A channel has been deleted", value: `Deleted channel: ${args}` }
-            )
-            .setFooter('WithersBot helps')
-            msg.channel.send(remove);
-        } else {
-            if (!channel) {
-            const noRemove = new Discord.MessageEmbed()
-            .setColor('RANDOM')
-            .setTitle(`WithersBot Commands`)
-            .setDescription('Commands: delchannel')
-            .addFields(
-                { name: "Can't delete channel", value: `There is no channel ${args}` }
-            )
-            .setFooter('WithersBot helps')
-            msg.channel.send(noRemove);
-            }
-        }
-    }
-    */
 }
 
 }

@@ -3,8 +3,9 @@ const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
         const role = msg.mentions.roles.first();
+        const color = args.slice(1).join(" ");
     if (role) {
-        if (args[1] == 0 || !args[1].startsWith('#') || args[1] == "null") {
+        if (color == 0 || !color.startsWith('#') || color == "null") {
             const noColor = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
@@ -16,16 +17,16 @@ function abc(msg, args) {
             .setFooter("WithersBot helps")
             msg.channel.send(noColor);
         } else {
-            role.setColor(`${args[1]}`);
-            const yes = new Discord.MessageEmbed()
+            role.setColor(`${color}`);
+            const change = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
             .setDescription("Command: colorrank")
             .addFields(
-                { name: `The color of the role ${role.hexColor}`, value: `The new color ${args[1]}`}
+                { name: `The color of the role ${role.name}`, value: `The new color ${args[1]}`}
             )
             .setFooter("WithersBot helps")
-            msg.channel.send(yes);
+            msg.channel.send(change);
         }
         
     } else {

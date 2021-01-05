@@ -3,9 +3,9 @@ const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
-    const string = args.slice(1).join(" ");
+    const topic = args.slice(1).join(" ");
     if (channel) {
-        if (string == 0 || string == "undefined" || string == "null") {
+        if (topic == 0 || topic == "undefined" || topic == "null") {
             const noTopic = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
@@ -17,8 +17,8 @@ function lala(msg, args) {
             .setFooter("WithersBot helps")
             msg.channel.send(noTopic);
         } else {
-            channel.setTopic(`${string}`)
-            const topic = new Discord.MessageEmbed()
+            channel.setTopic(`${topic}`)
+            const change = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
             .setDescription("Command: topicchannel")
@@ -26,7 +26,7 @@ function lala(msg, args) {
                 { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${string}`}
             )
             .setFooter("WithersBot helps")
-            msg.channel.send(topic);
+            msg.channel.send(change);
         }
     } else {
 
