@@ -3,9 +3,10 @@ const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
-    const name = args.join(" ");
+    const type = args[1];
+    const name = args.slice(1).join(" ");
     if (name) {
-        msg.guild.channels.create(`${name}`);
+        msg.guild.channels.create(`${name}`, {type: `${type}`});
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
