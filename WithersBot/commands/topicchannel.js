@@ -5,18 +5,7 @@ function lala(msg, args) {
     const channel = msg.mentions.channels.first();
     const topic = args.slice(1).join(" ");
     if (channel) {
-        if (topic == 0 || topic == "undefined" || topic == "null") {
-            const noTopic = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: movechannel")
-            .addFields(
-                { name: "No topic", value: `I need a topic in order to change the topic of the channel`},
-                { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
-            )
-            .setFooter("WithersBot helps")
-            msg.channel.send(noTopic);
-        } else {
+        if (topic) {
             channel.setTopic(`${topic}`)
             const change = new Discord.MessageEmbed()
             .setColor("RANDOM")
@@ -27,6 +16,17 @@ function lala(msg, args) {
             )
             .setFooter("WithersBot helps")
             msg.channel.send(change);
+        } else {
+            const noTopic = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("WithersBot Commands")
+            .setDescription("Command: movechannel")
+            .addFields(
+                { name: "No topic", value: `I need a topic in order to change the topic of the channel`},
+                { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
+            )
+            .setFooter("WithersBot helps")
+            msg.channel.send(noTopic);
         }
     } else {
 

@@ -5,18 +5,7 @@ function lala(msg, args) {
     const role = msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
     if (role) {
-            if (name == "undefined" || name == 0 || name == "null") {
-                const noName = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("WithersBot Commands")
-                .setDescription("Command: namerank")
-                .addFields(
-                    { name: "No name", value: `I need a name in order to rename the role`},
-                    { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namerank [role] [name]\`\`\``}
-                )
-                .setFooter("WithersBot helps")
-                msg.channel.send(noName);
-            } else {
+            if (name) {
                 role.setName(`${name}`)
                 const change = new Discord.MessageEmbed()
                 .setColor("RANDOM")
@@ -27,6 +16,17 @@ function lala(msg, args) {
                 )
                 .setFooter("WithersBot helps")
                 msg.channel.send(change);
+            } else {
+                const noName = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("WithersBot Commands")
+                .setDescription("Command: namerank")
+                .addFields(
+                    { name: "No name", value: `I need a name in order to rename the role`},
+                    { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namerank [role] [name]\`\`\``}
+                )
+                .setFooter("WithersBot helps")
+                msg.channel.send(noName);
             }
     } else {
         const noRole = new Discord.MessageEmbed()

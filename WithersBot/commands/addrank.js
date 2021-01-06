@@ -3,32 +3,33 @@ const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
     const role = msg.mentions.roles.first();
-    if (args == 0) {
-    const noAdd = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle("WithersBot Commands")
-    .setDescription("Command: addrank")
-    .addFields(
-        { name: "Command:", value: `Create a new rank\n\`\`\`${prefix}addrank [name]\`\`\``}
-    )
-    .setFooter("WithersBot helps")
-    msg.channel.send(noAdd);
-    } else {
-        if (args != 0) {
-        let addrole = msg.guild.roles.create({ data: { name: `${args}` } });
+    const name = args.join(" ");
+    if (name) {
+        msg.guild.roles.create({ data: { name: `${name}` } });
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: addrank")
         .addFields(
-            { name: "A new role has been created", value: `New role name: ${args}`}
+            { name: "A new role has been created", value: `New role name: ${name}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);
-        }
+    } else {
+        const noAdd = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: addrank")
+        .addFields(
+            { name: "No Name", value: `I need a name in order to create a new role`},
+            { name: "Command:", value: `Create a new rank\n\`\`\`${prefix}addrank [name]\`\`\``}
+        )
+        .setFooter("WithersBot helps")
+        msg.channel.send(noAdd);
+    }
     }
 }
-}
+
 
 module.exports = {
     name: "addrank",

@@ -3,32 +3,33 @@ const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
     const channel = msg.mentions.channels.first();
-    if (args == 0) {
-    const noAdd = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle("WithersBot Commands")
-    .setDescription("Command: addchannel")
-    .addFields(
-        { name: "Command:", value: `Create a new channel\n\`\`\`${prefix}addchannel [name]\`\`\``}
-    )
-    .setFooter("WithersBot helps")
-    msg.channel.send(noAdd);
-    } else {
-        if (args != 0) {
-        msg.guild.channels.create(`${args}`);
+    const name = args.join(" ");
+    if (name) {
+        msg.guild.channels.create(`${name}`);
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: addchannel")
         .addFields(
-            { name: "A new channel has been created", value: `New channel name: ${args}`}
+            { name: "A new channel has been created", value: `New channel name: ${name}`}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);
-        }
+    } else {
+        const noAdd = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: addchannel")
+        .addFields(
+            { name: "No Name", value: `I need a name in order to create a new channel`},
+            { name: "Command:", value: `Create a new channel\n\`\`\`${prefix}addchannel [name]\`\`\``}
+        )
+        .setFooter("WithersBot helps")
+        msg.channel.send(noAdd);
+    }
     }
 }
-}
+
 
 module.exports = {
     name: "addchannel",
