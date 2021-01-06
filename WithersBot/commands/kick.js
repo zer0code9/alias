@@ -5,9 +5,10 @@ function kickUser(msg, args) {
   const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
 
-  if (!msg.member.permissions.has("KICK_MEMBERS")) {msg.channel.send(`You don't have the permission to kick members, ${msg.author}`); return;} else {
+  if (!msg.member.permissions.has("KICK_MEMBERS")) {return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`);} else {
 
     if (user) {
+      if (!msg.guild.member(user).kickable) return msg.channel.send(`I cant kick ${user}`);
         const member = msg.guild.member(user);
         if (member) {
         //member.kick()

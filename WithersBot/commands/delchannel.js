@@ -11,7 +11,7 @@ function cdel(msg, args) {
         .setTitle(`WithersBot Commands`)
         .setDescription('Commands: delchannel')
         .addFields(
-            { name: "A channel has been deleted", value: `Deleted channel: #${args}` },
+            { name: "A channel has been deleted", value: `Deleted channel: ${args}` },
             { name: "Reason", value: `${reason}`}
         )
         .setFooter('WithersBot helps')

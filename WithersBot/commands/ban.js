@@ -5,9 +5,10 @@ function banUser(msg, args) {
   const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
 
-    if (!msg.member.permissions.has("BAN_MEMBERS")) {msg.channel.send(`You don't have the permission to ban members, ${msg.author}`); return;} else {
+    if (!msg.member.permissions.has("BAN_MEMBERS")) { return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`);} else {
 
       if (user) {
+        if (!msg.guild.member(user).bannable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
         if (member) {
         //member.ban()
