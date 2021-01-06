@@ -18,6 +18,7 @@ function serverData(msg, args) {
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
  .setTitle(`WithersBot Commands`)
+ .setThumbnail(`${guild.iconURL()}`)
  .setDescription(`Command: server`)
  .addFields(
   { name: "Name", value: `${guild.name}`},

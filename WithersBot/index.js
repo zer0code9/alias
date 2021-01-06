@@ -68,7 +68,8 @@ bot.on("channelCreate" , chnl=>{
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
-    if (args == 0) {
+    const name = args.slice(1).join(" ");
+    if (name) {
         const no = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
@@ -79,7 +80,6 @@ function abc(msg, args) {
         .setFooter("WithersBot helps")
         msg.channel.send(no);
     } else {
-        if (args !=0) {
             const yes = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
@@ -89,7 +89,6 @@ function abc(msg, args) {
             )
             .setFooter("WithersBot helps")
             msg.channel.send(yes);
-        }
     }
 }
 
