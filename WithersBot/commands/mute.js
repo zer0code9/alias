@@ -10,7 +10,7 @@ function kickUser(msg, args) {
       if (!msg.guild.member(user).mutable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
         if (member) {
-        member.mute()
+        //member.mute()
         const muted = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")

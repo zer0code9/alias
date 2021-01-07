@@ -28,10 +28,10 @@ function abc(msg, args) {
 }
 
 module.exports = {
-    name: "",
-    description: "",
-    example: prefix + "",
-    type: "",
+    name: "pokemon",
+    description: "Get info on any pokemon",
+    example: prefix + "pokemon [pokemon]",
+    type: "fun",
     execute(msg, args) {
         abc(msg, args);
     }
