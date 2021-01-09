@@ -1,21 +1,10 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
-    if (args == 0) {
-        const noChannel = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: channel")
-        .addFields(
-            { name: "Command", value: `Get info on a channel\n\`\`\`${prefix}channel [channel]\`\`\``}
-        )
-        .setFooter("WithersBot helps")
-        msg.channel.send(noChannel);
-    } else {
-        if (args !=0) {
-            var to;
-            const channel = msg.mentions.channels.first();
+    const channel = msg.mentions.channels.first();
+    if (channel) {
             var cre = channel.createdAt;
+            var to;
             if (channel.topic == "null" || "undefined") {to = "No topic"} else {to = `${channel.topic}`}
             const channelInfo = new Discord.MessageEmbed()
             .setColor("RANDOM")
@@ -31,6 +20,38 @@ function la(msg, args) {
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);
+    } else {
+        const id = args.join(" ");
+        if (id) {
+            const ID = msg.guild.channels.find(channel => channel.id === `${id}`);
+            var cre = ID.createdAt;
+            var to;
+            if (ID.topic == "null" || "undefined") {to = "No topic"} else {to = `${ID.topic}`}
+            const channelInfo = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("WithersBot Commands")
+            .setDescription("Command: channel")
+            .addFields(
+                { name: "Name", value: `${ID.name}` },
+                { name: "Id", value: `${ID.id}` },
+                { name: "Created on", value: `${cre.toDateString()}` },
+                { name: "Type", value: `${ID.type}`},
+                { name: "Category", value: `${ID.parent}` },
+                { name: "Topic", value: `${to}` }
+            )
+            .setFooter("WithersBot helps")
+            msg.channel.send(channelInfo);
+        } else {
+            const noChannel = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: channel")
+        .addFields(
+            { name: "No Channel", value: `I need a channel in order to return info about it`},
+            { name: "Command", value: `Get info on a channel\n\`\`\`${prefix}channel [channel]\`\`\``}
+        )
+        .setFooter("WithersBot helps")
+        msg.channel.send(noChannel);
         }
     }
 }
