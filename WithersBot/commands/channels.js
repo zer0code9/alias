@@ -6,7 +6,7 @@ function channels(msg, args) {
         let channelmap = msg.guild.channels.cache
             //.sort((a, b) => b.position - a.position)
             .map(c => c)
-            .join(",");
+            .join(`\n`);
             if (channelmap.length > 1024) channelmap = "To many channels to display";
             if (!channelmap) rolemap = "No channels";
     const channels = new Discord.MessageEmbed()
