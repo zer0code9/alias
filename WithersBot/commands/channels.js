@@ -8,7 +8,7 @@ function channels(msg, args) {
             .map(c => c)
             .join(`\n`);
             if (channelmap.length > 1024) channelmap = "To many channels to display";
-            if (!channelmap) rolemap = "No channels";
+            if (!channelmap) rolemap = "No channels"; 
     const channels = new Discord.MessageEmbed()
     .setColor('RANDOM')
     .setTitle(`WithersBot Commands`)
