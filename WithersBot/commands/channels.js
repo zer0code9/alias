@@ -4,7 +4,7 @@ function channels(msg, args) {
     const channel = msg.mentions.channels.first();
     if (args == 0){
         let channelmap = msg.guild.channels.cache
-            //.sort((a, b) => b.position - a.position)
+            .sort((a, b) => b.position - a.position)
             .map(c => c)
             .join(`\n`);
             if (channelmap.length > 1024) channelmap = "To many channels to display";
