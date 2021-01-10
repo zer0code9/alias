@@ -16,7 +16,7 @@ function la(msg, args) {
                 { name: "Created on", value: `${cre.toDateString()}` },
                 { name: "Color", value: `${role.hexColor}`},
                 { name: "Members with role", value: `${memberWithRole}` },
-                { name: "Number of persmissions", value: `${role.permissions.length}`}
+                { name: "Number of persmissions", value: `${role.permissions}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(roleInfo);
