@@ -25,7 +25,7 @@ bot.on("ready", () => {
             type: 'WATCHING'
         }
     })
-    console.log("The best bot is ON!");
+    console.log("The best bot is now ON!");
 });
 
 bot.on("message" , msg=>{
