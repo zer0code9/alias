@@ -11,7 +11,7 @@ for(const file of commandFiles){
 
     commands.set(command.name, command); 
 }
-bot.commands = commands;
+bot.commands = commands; 
 
 const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
 const { prefix } = require("./config.json");
