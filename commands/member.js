@@ -3,19 +3,18 @@ const Discord = require("discord.js");
 function la(msg, args) {
     const role = msg.mentions.roles.first();
     if (role) {
-            var memberWithRole;
-            if (role.members.size == "0") {memberWithRole = "No members with this role"} else {if (role.members.size >= "1"){memberWithRole = `${role.members.size} members have this role`}}
-            var cre = role.createdAt;
+            let membermap = role.members
+                .sort((a, b) => b.position - a.position)
+                .map(m => m)
+                .join(`\n`);
+                if (membermap.length > 1024) membermap = "To many roles to display";
+                if (!membermap) membermap = `No member with role ${role}`;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
-            .setDescription("Command: role")
+            .setDescription("Command: member")
             .addFields(
-                { name: "Name", value: `${role.name}` },
-                { name: "Id", value: `${role.id}` },
-                { name: "Created on", value: `${cre.toDateString()}` },
-                { name: "Color", value: `${role.hexColor}`},
-                { name: "Members with role", value: `${memberWithRole}` }
+                { name: `All Members with ${role.name}`, value: `${membermap}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(roleInfo);
@@ -23,10 +22,10 @@ function la(msg, args) {
             const noRole = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
-            .setDescription("Command: role")
+            .setDescription("Command: member")
             .addFields(
                 { name: "No Role", value: `I need a role in order to return info about it`},
-                { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
+                { name: "Command", value: `Get the names of members that have a certain role\n\`\`\`${prefix}member [role]\`\`\``}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(noRole);
@@ -34,9 +33,9 @@ function la(msg, args) {
 }
 
 module.exports = {
-    name: "role",
-    description: "Get info on a role",
-    example: prefix + "role [role]",
+    name: "member",
+    description: "Get the names of members that have a certain role",
+    example: prefix + "member [role]",
     type: "info",
     execute(msg, args) {
         la(msg, args);
