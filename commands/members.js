@@ -33,9 +33,9 @@ function la(msg, args) {
 }
 
 module.exports = {
-    name: "member",
+    name: "members",
     description: "Get the names of members that have a certain role",
-    example: prefix + "member [role]",
+    example: prefix + "members [role]",
     type: "info",
     execute(msg, args) {
         la(msg, args);
