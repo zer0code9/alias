@@ -7,7 +7,7 @@ function la(msg, args) {
                 .sort((a, b) => b.position - a.position)
                 .map(m => m)
                 .join(`\n`);
-                if (membermap.length > 1024) membermap = "To many roles to display";
+                if (membermap.length > 1024) membermap = "To many members to display";
                 if (!membermap) membermap = `No member with role ${role}`;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)

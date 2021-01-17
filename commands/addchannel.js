@@ -1,12 +1,12 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
-    if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
+    if (!msg.member.permissions.has("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
-    const type = args[1];
-    const name = args.slice(1).join(" ");
+    const name = args.join(" ");
     if (name) {
-        msg.guild.channels.create(`${name}`, {type: `${type}`});
+        msg.guild.channels.create(`${name}`);
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
@@ -28,9 +28,7 @@ function lala(msg, args) {
         .setFooter("WithersBot helps")
         msg.channel.send(noAdd);
     }
-    }
 }
-
 
 module.exports = {
     name: "addchannel",

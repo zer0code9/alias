@@ -1,12 +1,10 @@
-const { DiscordAPIError } = require("discord.js");
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function banUser(msg, args) {
-  const user = msg.mentions.users.first();
-  const reason = args.slice(1).join(" ");
+  const user = args.slice(1).join(" ");
 
-    if (!msg.member.permissions.has("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permissions to ban members, ${msg.author}`)
+    if (!msg.member.permissions.has("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to unban someone, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permissions to unban someone, ${msg.author}`)
       if (user) {
         if (!msg.guild.member(user).bannable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
@@ -53,9 +51,9 @@ function banUser(msg, args) {
 }
 
 module.exports = {
-    name: "ban",
-    description: "Ban a member",
-    example: prefix + "ban [member] [reason]",
+    name: "unban",
+    description: "Unban someone",
+    example: prefix + "unban [id]",
     type: "moderation",
     execute(msg, args){
         banUser(msg, args);
