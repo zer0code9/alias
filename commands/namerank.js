@@ -2,7 +2,7 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
     if (role) {
@@ -13,7 +13,7 @@ function lala(msg, args) {
                 .setTitle("WithersBot Commands")
                 .setDescription("Command: namerank")
                 .addFields(
-                    { name: `The name of the role ${role.name} has changed`, value: `The new name: ${args[1]}`}
+                    { name: `The name of the role ${role.name} has changed`, value: `The new name: ${name}`}
                 )
                 .setFooter("WithersBot helps")
                 msg.channel.send(change);

@@ -5,12 +5,24 @@ function kickUser(msg, args) {
   const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
 
-  if (!msg.member.permissions.has("KICK_MEMBERS")) {return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`);} else {
-
+  if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
+  if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
     if (user) {
       if (!msg.guild.member(user).kickable) return msg.channel.send(`I cant kick ${user}`);
         const member = msg.guild.member(user);
         if (member) {
+        const noReason = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: kick")
+        .addFields(
+          { name: "No Reason", value: `I need a reason in order to kick someone`},
+          { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+        )
+        .setFooter("WithersBot helps")
+        if(!reason) return msg.channel.send(noReason)
+        
         //member.kick()
         const kicked = new Discord.MessageEmbed()
         .setColor("RANDOM")
@@ -50,7 +62,6 @@ function kickUser(msg, args) {
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
       }
-  }
 }
 
 module.exports = {

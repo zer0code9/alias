@@ -6,11 +6,23 @@ function banUser(msg, args) {
   const reason = args.slice(1).join(" ");
 
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permissions to ban members, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
       if (user) {
         if (!msg.guild.member(user).bannable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
         if (member) {
+        const noReason = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("WithersBot Commands")
+        .setDescription("Command: ban")
+        .addFields(
+          { name: "No Reason", value: `I need a reason in order to ban someone`},
+          { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
+          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+        )
+        .setFooter("WithersBot helps")
+        if(!reason) return msg.channel.send(noReason)
+        
         //member.ban()
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")

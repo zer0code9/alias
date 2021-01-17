@@ -6,6 +6,7 @@ function cdel(msg, args) {
     const channel = msg.mentions.channels.first();
     const reason = args.slice(1).join(" ");
     if (channel) {
+        if (!reason) return reason = "No reason"
         channel.delete();
         const remove = new Discord.MessageEmbed()
         .setColor('RANDOM')

@@ -6,6 +6,7 @@ function del(msg, args) {
     const role = msg.mentions.roles.first();
     const reason = args.slice(1).join(" ");
     if (role) {
+        if (!reason) return reason = "No reason"
         role.delete();
         const remove = new Discord.MessageEmbed()
         .setColor('RANDOM')
@@ -21,10 +22,10 @@ function del(msg, args) {
         const noDelete = new Discord.MessageEmbed()
         .setColor('RANDOM')
         .setTitle(`WithersBot Commands`)
-        .setDescription('Command: delchannel')
+        .setDescription('Command: delrank')
         .addFields(
             { name: "No Channel", value: `I need a channel in order to delete it`},
-            { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
+            { name: "Command:", value: `Delete a role\n\`\`\`${prefix}delrank [role]\`\`\``}
         )
         .setFooter('WithersBot helps')
         msg.channel.send(noDelete);
