@@ -12,7 +12,7 @@ function la(msg, args) {
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
-            .setDescription("Command: member")
+            .setDescription("Command: members")
             .addFields(
                 { name: `All Members with ${role.name}`, value: `${membermap}`}
             )
@@ -22,7 +22,7 @@ function la(msg, args) {
             const noRole = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
-            .setDescription("Command: member")
+            .setDescription("Command: members")
             .addFields(
                 { name: "No Role", value: `I need a role in order to return info about it`},
                 { name: "Command", value: `Get the names of members that have a certain role\n\`\`\`${prefix}member [role]\`\`\``}
