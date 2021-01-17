@@ -1,7 +1,8 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function del(msg, args) {
-    if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
+    if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
     const reason = args.slice(1).join(" ");
     if (role) {
@@ -28,7 +29,6 @@ function del(msg, args) {
         .setFooter('WithersBot helps')
         msg.channel.send(noDelete);
     }
-}
 }
 
 module.exports = {

@@ -1,9 +1,10 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
-    if (!msg.member.permissions.has("MANAGE_ROLES")) {msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`); return;} else {
-        const role = msg.mentions.roles.first();
-        const color = args.slice(1).join(" ");
+    if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+    const role = msg.mentions.roles.first();
+    const color = args.slice(1).join(" ");
     if (role) {
         if (color) {
             role.setColor(`${color}`);
@@ -40,7 +41,6 @@ function abc(msg, args) {
             )
             .setFooter("WithersBot helps")
             msg.channel.send(yes);
-        }
     }
 }
 
