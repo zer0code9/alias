@@ -1,7 +1,8 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
-    if (!msg.member.permissions.has("MANAGE_CHANNELS")) {msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`); return;} else {
+    if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     const category = args[1];
     const position = args[2];
@@ -56,7 +57,6 @@ function abc(msg, args) {
         .setFooter("WithersBot helps")
         msg.channel.send(noChannel);
     }
-}
 }
 
 module.exports = {
