@@ -6,31 +6,35 @@ function serverData(msg, args) {
     var cre = guild.createdAt;
     if(args == 0){
         var rc;
-        var ve;
         var sc;
         var ro = guild.roles;
+
         const total = msg.guild.memberCount;
 	    const bots = msg.guild.members.cache.filter(member => member.user.bot).size;
-	    const humans = msg.guild.members.cache.filter(member => !member.user.bot).size;
-        if (guild.verified = "false") { ve = "Not verified" } else { ve = `${guild.verified}` }
-        if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel}` }
-        if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.rulesChannel}` }
+	    const users = msg.guild.members.cache.filter(member => !member.user.bot).size;
+        if (guild.systemChannel = "null" || "undefined") { sc = "No system channel" } else { sc = `${guild.systemChannel.name}` }
+        if (guild.rulesChannel = "null" || "undefined") { rc = "No rule channel" } else { rc = `${guild.rulesChannel.name}` }
+
+        const categoryChannels = guild.channels.cache.filter(channel => channel.type === "category").size;
+        const textChannels = guild.channels.cache.filter(channel => channel.type === "text").size;
+        const voiceChannels = guild.channels.cache.filter(channel => channel.type === "voice").size;
+        const newsChannels = guild.channels.cache.filter(channel => channel.type === "news").size;
+        const storeChannels = guild.channels.cache.filter(channel => channel.type === "store").size;
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
  .setTitle(`WithersBot Commands`)
  .setThumbnail(`${guild.iconURL()}`)
  .setDescription(`Command: server`)
  .addFields(
-  { name: "Name", value: `${guild.name}`},
-  { name: "Id", value: `${guild.id}` },
-  { name: "Create on", value: `${cre.toDateString()}` },
-  { name: 'Members', value: `Total: ${total} \nMembers: ${humans} \n Bots: ${bots}` },
-  { name: 'Region', value: `${guild.region}` },
-  { name: 'Owner', value: `${guild.owner}`},
-  { name: "Verified?", value: `${ve}` },
-  { name: "Channels", value: `${guild.channels.cache.size}` },
-  { name: "Roles", value: `Highest: ${ro.highest} \n Number of roles: ${guild.roles.cache.size}` },
-  { name: "System", value: `${guild.systemChannel}`}, { name: "Rule", value: `${rc}`}
+  { name: "Server Name", value: `\`\`\`${guild.name}\`\`\``},
+  { name: "Server Id", value: `\`\`\`${guild.id}\`\`\`` },
+  { name: "Create on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+  { name: `Server Members [${total}]`, value: `\`\`\`Members: ${users} | Bots: ${bots}\`\`\`` },
+  { name: 'Server Region', value: `\`\`\`${guild.region}\`\`\`` },
+  { name: 'Server Owner', value: `\`\`\`${guild.owner.username}\`\`\``},
+  { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nAnnouncement: ${newsChannels} | Store: ${storeChannels}\`\`\`` },
+  { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${ro.highest.name}\`\`\`` },
+  { name: "System", value: `\`\`\`${sc}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);

@@ -12,10 +12,10 @@ function userInfo(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: user")
         .addFields(
-            { name: "Username", value: `${author.username}`},
-            { name : "Id", value: `${author.id}`},
-            { name: "Created on", value: `${cre.toDateString()}`},
-            { name: "Tag", value: `${author.tag}`},
+            { name: "Username", value: `\`\`\`${author.username}\`\`\``},
+            { name : "Id", value: `\`\`\`${author.id}\`\`\``},
+            { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\``},
+            { name: "Tag", value: `\`\`\`${author.tag}\`\`\``},
             { name: "Bot?", value: `Not a bot`}
         )
         .setFooter("WithersBot helps")
@@ -24,19 +24,18 @@ function userInfo(msg, args) {
         if (args[0] !=0) {
             var cre = user.createdAt;
             if (user.bot = false) { bo = `${user.username} is not a bot` } else { if (user.bot = true) { bo = `${user.username} is a bot` }}
-            if (user.nickname == "undifined" || "null") { ni = `${user.username} doesn't have a nickname`} else { ni = `${user.nickname}`}
+            if (user.nickname == "undifined" || "null") { ni = `No nickname`} else { ni = `${user.nickname}`}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
             .setDescription("Command: user")
             .addFields(
-                { name: "Username", value: `${user.username}`},
-                { name: "Id", value: `${user.id}`},
-                { name: "Created on", value: `${cre.toDateString()}`},
-                { name: "Tag", value: `${user.tag}`},
-                { name: "Nickname", value: `${user.nickname}`},
-                { name: "Bot?", value: `${bo}`},
-                { name: "Number of roles", value: `${user.roles}`}
+                { name: "Username", value: `\`\`\`${user.tag}\`\`\``},
+                { name: "User Id", value: `\`\`\`${user.id}\`\`\``},
+                { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\``},
+                { name: "User Nickname", value: `\`\`\`${ni}\`\`\``},
+                { name: "Bot?", value: `\`\`\`${bo}\`\`\``},
+                { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(userOn);

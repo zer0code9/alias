@@ -3,19 +3,20 @@ const Discord = require("discord.js");
 function la(msg, args) {
     const role = msg.mentions.roles.first();
     if (role) {
-            var memberWithRole;
-            if (role.members.size == "0") {memberWithRole = "No members with this role"} else {if (role.members.size >= "1"){memberWithRole = `${role.members.size} members have this role`}}
+        var pe
+        if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
             var cre = role.createdAt;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
             .setTitle("WithersBot Commands")
             .setDescription("Command: role")
             .addFields(
-                { name: "Name", value: `${role.name}` },
-                { name: "Id", value: `${role.id}` },
-                { name: "Created on", value: `${cre.toDateString()}` },
-                { name: "Color", value: `${role.hexColor}`},
-                { name: "Members with role", value: `${memberWithRole}` }
+                { name: "Role Name", value: `\`\`\`${role.name}\`\`\`` },
+                { name: "Role Id", value: `\`\`\`${role.id}\`\`\`` },
+                { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+                { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``},
+                { name: "Members", value: `\`\`\`${role.members.size}\`\`\`` },
+                { name: "Position", value: `\`\`\`${role.position}\`\`\``}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(roleInfo);

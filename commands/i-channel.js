@@ -11,12 +11,12 @@ function la(msg, args) {
             .setTitle("WithersBot Commands")
             .setDescription("Command: channel")
             .addFields(
-                { name: "Name", value: `${channel.name}` },
-                { name: "Id", value: `${channel.id}` },
-                { name: "Created on", value: `${cre.toDateString()}` },
-                { name: "Type", value: `${channel.type}`},
-                { name: "Category", value: `${channel.parent}` },
-                { name: "Topic", value: `${to}` }
+                { name: "Channel Name", value: `\`\`\`${channel.name}\`\`\`` },
+                { name: "Channel Id", value: `\`\`\`${channel.id}\`\`\`` },
+                { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+                { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``},
+                { name: "Category", value: `\`\`\`${channel.parent.name}\`\`\`` },
+                { name: "Channel Topic", value: `\`\`\`${to}\`\`\`` }
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);
