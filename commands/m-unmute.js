@@ -1,25 +1,23 @@
 const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
 const Discord = require("discord.js");
-function kickUser(msg, args) {
+function unmuteUser(msg, args) {
   const user = msg.mentions.users.first();
 
-  if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
+  if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to unmute members, ${msg.author}`)
   if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to unmute someone, ${msg.author}`)
-
     if (user) {
-      if (!msg.guild.member(user).mutable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
         if (member) {
         //member.mute()
-        const muted = new Discord.MessageEmbed()
+        const unmuted = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
-        .setDescription("Command: mute")
+        .setDescription("Command: unmute")
         .addFields(
-          { name: "Successful", value: `${user.username} has been successfully muted on ${msg.channel.name}.` }
+          { name: "Successful", value: `${user.username} has been successfully unmuted on ${msg.channel.name}.` }
         )
         .setFooter("WithersBot helps")
-        msg.channel.send(muted);
+        msg.channel.send(unmuted);
         } else {
           const noMember = new Discord.MessageEmbed()
         .setColor("RANDOM")
@@ -53,6 +51,6 @@ module.exports = {
     example: prefix + "unmute [member]",
     type: "moderation",
     execute(msg, args){
-        kickUser(msg, args);
+        unmuteUser(msg, args);
     }
 }
