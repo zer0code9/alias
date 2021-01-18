@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { NOTFOUND } = require("dns");
 const bot = new Discord.Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const fs = require("fs");
-const server = require("./commands/server");
+const server = require("./commands/i-server");
 
 let commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));

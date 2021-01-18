@@ -25,7 +25,7 @@ function la(msg, args) {
             .setDescription("Command: members")
             .addFields(
                 { name: "No Role", value: `I need a role in order to return info about it`},
-                { name: "Command", value: `Get the names of members that have a certain role\n\`\`\`${prefix}member [role]\`\`\``}
+                { name: "Command", value: `Get the names of members that have a certain role\n\`\`\`${prefix}members [role]\`\`\``}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(noRole);

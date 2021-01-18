@@ -2,9 +2,8 @@ const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld
 const Discord = require("discord.js");
 function kickUser(msg, args) {
   const user = msg.mentions.users.first();
-  const reason = args.slice(1).join(" ");
 
-  if (!msg.member.permissions.has("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
+  if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
   if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to unmute someone, ${msg.author}`)
 
     if (user) {
@@ -17,9 +16,7 @@ function kickUser(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: mute")
         .addFields(
-          { name: "Successful", value: `${user.username} has been successfully muted on ${msg.channel.name}.` },
-          { name: "Reason:", value: `${reason}`},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+          { name: "Successful", value: `${user.username} has been successfully muted on ${msg.channel.name}.` }
         )
         .setFooter("WithersBot helps")
         msg.channel.send(muted);
@@ -27,11 +24,10 @@ function kickUser(msg, args) {
           const noMember = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
-        .setDescription("Command: mute")
+        .setDescription("Command: unmute")
         .addFields(
           { name: "No Member", value: `I don't know that member` },
-          { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+          { name: "Command", value: `Unmute a member\n\`\`\`${prefix}unmute [member]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noMember);
@@ -41,11 +37,10 @@ function kickUser(msg, args) {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
-        .setDescription("Command: mute")
+        .setDescription("Command: unmute")
         .addFields(
-          { name: "No User", value: `I need an username in order to mute someone.` },
-          { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+          { name: "No User", value: `I need an username in order to unmute someone.` },
+          { name: "Command", value: `Unmute a member\n\`\`\`${prefix}unmute [member]\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(noTag);
@@ -53,9 +48,9 @@ function kickUser(msg, args) {
 }
 
 module.exports = {
-    name: "mute",
-    description: "Mute a member",
-    example: prefix + "mute [member] [reason]",
+    name: "unmute",
+    description: "Unmute a member",
+    example: prefix + "unmute [member]",
     type: "moderation",
     execute(msg, args){
         kickUser(msg, args);
