@@ -5,6 +5,7 @@ function lala(msg, args) {
     if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
     const user = msg.mentions.users.first();
     const role = msg.mentions.roles.first();
+    const member = msg.guild.member(user);
     if (user) {
         if (role) {
             user.add(`${role}`)

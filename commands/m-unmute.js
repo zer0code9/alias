@@ -8,7 +8,7 @@ function unmuteUser(msg, args) {
     if (user) {
         const member = msg.guild.member(user);
         if (member) {
-        //member.mute()
+        //member.unmute()
         const unmuted = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
