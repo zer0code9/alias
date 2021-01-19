@@ -10,11 +10,11 @@ function del(msg, args) {
         role.delete();
         const remove = new Discord.MessageEmbed()
         .setColor('RANDOM')
-        .setTitle(`WithersBot Commands`)
-        .setDescription('Commands: delchannel')
+        .setTitle(`DELETED ROLE :label::heavy_minus_sign:`)
+        .setDescription('Rank')
         .addFields(
-            { name: "A channel has been deleted", value: `Deleted role: ${args}` },
-            { name: "Reason", value: `${reason}`}
+            { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
+            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
         )
         .setFooter('WithersBot helps')
         msg.channel.send(remove);

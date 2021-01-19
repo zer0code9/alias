@@ -13,7 +13,7 @@ function banUser(msg, args) {
         if (member) {
         const noReason = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle("BANNED MEMBER :bust_in_silhouette::no_entry_sign:")
         .setDescription("Command: ban")
         .addFields(
           { name: "No Reason", value: `I need a reason in order to ban someone`},

@@ -10,10 +10,10 @@ function lala(msg, args) {
                 role.setName(`${name}`)
                 const change = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle("WithersBot Commands")
-                .setDescription("Command: namerank")
+                .setTitle("RENAMED ROLE :label::pencil2:")
+                .setDescription("Rank")
                 .addFields(
-                    { name: `The name of the role ${role.name} has changed`, value: `The new name: ${name}`}
+                    { name: `The name of the role ${role.name} has changed`, value: `\`\`\`New role name: ${name}\`\`\``}
                 )
                 .setFooter("WithersBot helps")
                 msg.channel.send(change);

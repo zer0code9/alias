@@ -12,7 +12,7 @@ function lala(msg, args) {
         .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
         .setDescription("Channel")
         .addFields(
-            { name: "A new channel has been created", value: `New channel name: ${name}`}
+            { name: "A new channel has been created", value: `\`\`\`New channel name: ${name}\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);

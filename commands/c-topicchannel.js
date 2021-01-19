@@ -10,10 +10,10 @@ function lala(msg, args) {
             channel.setTopic(`${topic}`)
             const change = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle("CHANGED TOPIC :file_folder::pencil:")
             .setDescription("Command: topicchannel")
             .addFields(
-                { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${string}`}
+                { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${topic}`}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(change);

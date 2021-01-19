@@ -9,10 +9,10 @@ function lala(msg, args) {
         msg.guild.roles.create({ data: { name: `${name}` } });
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: addrank")
+        .setTitle("CREATED ROLE :label::heavy_plus_sign:")
+        .setDescription("Rank")
         .addFields(
-            { name: "A new role has been created", value: `New role name: ${name}`}
+            { name: "A new role has been created", value: `\`\`\`New role name: ${name}\`\`\``}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(add);

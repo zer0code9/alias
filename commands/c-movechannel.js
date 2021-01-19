@@ -16,7 +16,7 @@ function abc(msg, args) {
                 .setTitle("MOVED CHANNEL :file_folder::arrow_heading_up:")
                 .setDescription("Channel")
                 .addFields(
-                    { name: "New category", value: `Category id: ${category}`}
+                    { name: `The channel has changed places`, value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
                 )
                 .setFooter("WithersBot helps")
                 msg.channel.send(yes);

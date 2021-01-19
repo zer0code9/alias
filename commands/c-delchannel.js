@@ -4,7 +4,7 @@ function cdel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
     if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
-    const reason = args.slice(1).join(" ");
+    var reason = args.slice(1).join(" ");
     if (channel) {
         if (!reason) return reason = "No reason"
         channel.delete();
@@ -13,8 +13,8 @@ function cdel(msg, args) {
         .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
         .setDescription('Channel')
         .addFields(
-            { name: "A channel has been deleted", value: `Deleted channel: ${args}` },
-            { name: "Reason", value: `${reason}`}
+            { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
+            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
         )
         .setFooter('WithersBot helps')
         msg.channel.send(remove);

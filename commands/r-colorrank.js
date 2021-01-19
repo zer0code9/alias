@@ -10,10 +10,10 @@ function abc(msg, args) {
             role.setColor(`${color}`);
             const change = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: colorrank")
+            .setTitle("CHANGED COLOR :label::paintbrush:")
+            .setDescription("Rank")
             .addFields(
-                { name: `The color of the role ${role.name} has changed`, value: `The new color ${color}`}
+                { name: `The color of the role ${role.name} has changed`, value: `\`\`\`Color of the role: ${color}\`\`\``}
             )
             .setFooter("WithersBot helps")
             msg.channel.send(change);
