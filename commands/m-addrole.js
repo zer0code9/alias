@@ -11,8 +11,8 @@ function lala(msg, args) {
             user.add(`${role}`)
             const add = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: addrole")
+            .setTitle("ADDED ROLE :bust_in_silhouette::heavy_plus_sign:")
+            .setDescription("Moderation")
             .addFields(
                 { name: `Added role to ${user.username}`, value: `Added role: ${role.name}`}
             )

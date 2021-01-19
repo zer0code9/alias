@@ -13,8 +13,8 @@ function muteUser(msg, args) {
         if (member) {
           const noReason = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: ban")
+        .setTitle("MUTED MEMBER :bust_in_silhouette::mute:")
+        .setDescription("Moderation")
         .addFields(
           { name: "No Reason", value: `I need a reason in order to ban someone`},
           { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},

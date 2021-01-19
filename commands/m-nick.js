@@ -11,8 +11,8 @@ function abc(msg, args) {
         user.setNickname(`${name}`)
             const change = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: nick")
+            .setTitle("CHANGED NICKNAME")
+            .setDescription("Moderation")
             .addFields(
                 { name: `New Nickname for ${user.username}`, value: `New nickname: ${name}`}
             )

@@ -11,8 +11,8 @@ function lala(msg, args) {
             user.remove(`${role}`)
             const remove = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: revrole")
+            .setTitle("REMOVED ROLE :bust_in_silhouette::heavy_minus_sign:")
+            .setDescription("Moderation")
             .addFields(
                 { name: `Removed role from ${user.username}`, value: `Removed role: ${role.name}`}
             )

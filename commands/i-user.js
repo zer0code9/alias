@@ -9,8 +9,8 @@ function userInfo(msg, args) {
         var cre = author.createdAt;
         const noUser = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: user")
+        .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
+        .setDescription("Info")
         .addFields(
             { name: "Username", value: `\`\`\`${author.username}\`\`\``},
             { name : "Id", value: `\`\`\`${author.id}\`\`\``},
@@ -27,15 +27,19 @@ function userInfo(msg, args) {
             if (user.nickname == "undifined" || "null") { ni = `No nickname`} else { ni = `${user.nickname}`}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: user")
+            .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
+            .setDescription("Info")
             .addFields(
-                { name: "Username", value: `\`\`\`${user.tag}\`\`\``},
-                { name: "User Id", value: `\`\`\`${user.id}\`\`\``},
+                [
+                    { name: "Username", value: `\`\`\`${user.tag}\`\`\``, inline: true},
+                    { name: "User Id", value: `\`\`\`${user.id}\`\`\``, inline: true},
+                ],
                 { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\``},
-                { name: "User Nickname", value: `\`\`\`${ni}\`\`\``},
-                { name: "Bot?", value: `\`\`\`${bo}\`\`\``},
-                { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``}
+                [
+                    { name: "User Nickname", value: `\`\`\`${ni}\`\`\``, inline: true},
+                    { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},
+                    { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``, inline: true}
+                ]
             )
             .setFooter("WithersBot helps")
             msg.channel.send(userOn);

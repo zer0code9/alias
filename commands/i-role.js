@@ -4,19 +4,24 @@ function la(msg, args) {
     const role = msg.mentions.roles.first();
     if (role) {
         var pe
-        if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
+        //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
             var cre = role.createdAt;
             const roleInfo = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: role")
+            .setTitle(":label: ROLE INFO :label:")
+            .setDescription("Info")
             .addFields(
-                { name: "Role Name", value: `\`\`\`${role.name}\`\`\`` },
-                { name: "Role Id", value: `\`\`\`${role.id}\`\`\`` },
+                [
+                    { name: "Role Name", value: `\`\`\`${role.name}\`\`\``, inline: true},
+                    { name: "Role Id", value: `\`\`\`${role.id}\`\`\``, inline: true },
+                ],
                 { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
-                { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``},
-                { name: "Members", value: `\`\`\`${role.members.size}\`\`\`` },
-                { name: "Position", value: `\`\`\`${role.position}\`\`\``}
+                [
+                    { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
+                    { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
+                    { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
+                ]
+                
             )
             .setFooter("WithersBot helps")
             msg.channel.send(roleInfo);

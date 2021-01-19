@@ -13,10 +13,10 @@ function abc(msg, args) {
                 channel.setPosition(`${position}`);
                 const yes = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle("WithersBot Commands")
-                .setDescription("Command: movechannel")
+                .setTitle("MOVED CHANNEL :file_folder::arrow_heading_up:")
+                .setDescription("Channel")
                 .addFields(
-                    { name: "New category", value: `Category id${category}`}
+                    { name: "New category", value: `Category id: ${category}`}
                 )
                 .setFooter("WithersBot helps")
                 msg.channel.send(yes);

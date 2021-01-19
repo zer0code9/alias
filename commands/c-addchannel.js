@@ -9,8 +9,8 @@ function lala(msg, args) {
         msg.guild.channels.create(`${name}`);
         const add = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: addchannel")
+        .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
+        .setDescription("Channel")
         .addFields(
             { name: "A new channel has been created", value: `New channel name: ${name}`}
         )

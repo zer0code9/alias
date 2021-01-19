@@ -22,19 +22,21 @@ function serverData(msg, args) {
         const storeChannels = guild.channels.cache.filter(channel => channel.type === "store").size;
         const ServerInfo = new Discord.MessageEmbed()
  .setColor('RANDOM')
- .setTitle(`WithersBot Commands`)
+ .setTitle(`:desktop: SERVER INFO :desktop:`)
  .setThumbnail(`${guild.iconURL()}`)
- .setDescription(`Command: server`)
+ .setDescription(`Info`)
  .addFields(
-  { name: "Server Name", value: `\`\`\`${guild.name}\`\`\``},
-  { name: "Server Id", value: `\`\`\`${guild.id}\`\`\`` },
+     [
+        { name: "Server Name", value: `\`\`\`${guild.name}\`\`\``, inline: true},
+        { name: "Server Id", value: `\`\`\`${guild.id}\`\`\`` , inline: true},
+     ],
   { name: "Create on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
   { name: `Server Members [${total}]`, value: `\`\`\`Members: ${users} | Bots: ${bots}\`\`\`` },
   { name: 'Server Region', value: `\`\`\`${guild.region}\`\`\`` },
-  { name: 'Server Owner', value: `\`\`\`${guild.owner.username}\`\`\``},
+  { name: 'Server Owner', value: `${guild.owner}`},
   { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nAnnouncement: ${newsChannels} | Store: ${storeChannels}\`\`\`` },
   { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${ro.highest.name}\`\`\`` },
-  { name: "System", value: `\`\`\`${sc}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}
+  { name: "System", value: `\`\`\`${guild.systemChannel.name}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}
  )
  .setFooter('WithersBot helps')
 msg.channel.send(ServerInfo);

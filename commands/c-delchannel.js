@@ -10,8 +10,8 @@ function cdel(msg, args) {
         channel.delete();
         const remove = new Discord.MessageEmbed()
         .setColor('RANDOM')
-        .setTitle(`WithersBot Commands`)
-        .setDescription('Commands: delchannel')
+        .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
+        .setDescription('Channel')
         .addFields(
             { name: "A channel has been deleted", value: `Deleted channel: ${args}` },
             { name: "Reason", value: `${reason}`}

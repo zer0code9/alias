@@ -11,8 +11,8 @@ function unmuteUser(msg, args) {
         //member.unmute()
         const unmuted = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: unmute")
+        .setTitle("UNMUTED MEMBER :bust_in_silhouette::speaker:")
+        .setDescription("Moderation")
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully unmuted on ${msg.channel.name}.` }
         )

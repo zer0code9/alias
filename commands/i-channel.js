@@ -8,15 +8,20 @@ function la(msg, args) {
             if (channel.topic == "null" || "undefined") {to = "No topic"} else {to = `${channel.topic}`}
             const channelInfo = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: channel")
+            .setTitle(":file_folder: CHANNEL INFO :file_folder:")
+            .setDescription("Info")
             .addFields(
-                { name: "Channel Name", value: `\`\`\`${channel.name}\`\`\`` },
-                { name: "Channel Id", value: `\`\`\`${channel.id}\`\`\`` },
+                [
+                    { name: "Channel Name", value: `\`\`\`${channel.name}\`\`\``, inline: true},
+                    { name: "Channel Id", value: `\`\`\`${channel.id}\`\`\``, inline: true },
+                ],
                 { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
-                { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``},
-                { name: "Category", value: `\`\`\`${channel.parent.name}\`\`\`` },
-                { name: "Channel Topic", value: `\`\`\`${to}\`\`\`` }
+                [
+                    { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``, inline: true},
+                    { name: "Category", value: `\`\`\`${channel.parent.name}\`\`\``, inline: true },
+                    { name: "Channel Topic", value: `\`\`\`${to}\`\`\``, inline: true }
+                ]
+                
             )
             .setFooter("WithersBot helps")
             msg.channel.send(channelInfo);
