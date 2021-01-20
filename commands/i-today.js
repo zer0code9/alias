@@ -15,12 +15,12 @@ function today(msg, args) {
 
     const todayDate = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription(`Command: today`)
+        .setTitle(":clock12: TIME INFO :clock12:")
+        .setDescription(`Info`)
         .addFields(
-            { name: "Date:", value: `${dates}`},
-            { name: "Computer Date:", value: `Day: ${day}, Month: ${month}, Date: ${date}, Year: ${year}`},
-            { name: "Time:", value: `${hour}:${minute}.${second}`}
+            { name: "Date:", value: `\`\`\`${dates}\`\`\``},
+            { name: "Computer Date:", value: `\`\`\`Day: ${day} | Month: ${month} | Date: ${date} | Year: ${year}\`\`\``},
+            { name: "Time:", value: `\`\`\`${hour}:${minute}.${second}\`\`\``}
         )
         .setFooter('WithersBot helps')
     msg.channel.send(todayDate);

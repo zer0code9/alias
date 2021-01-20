@@ -4,7 +4,7 @@ function del(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
     if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
-    const reason = args.slice(1).join(" ");
+    var reason = args.slice(1).join(" ");
     if (role) {
         if (!reason) return reason = "No reason"
         role.delete();
