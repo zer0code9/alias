@@ -70,7 +70,7 @@ const Discord = require("discord.js");
 function abc(msg, args) {
     const name = args.slice(1).join(" ");
     if (name) {
-        const no = new Discord.MessageEmbed()
+        const change = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle("WithersBot Commands")
         .setDescription("Command: ")
@@ -78,9 +78,9 @@ function abc(msg, args) {
             { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
         )
         .setFooter("WithersBot helps")
-        msg.channel.send(no);
+        msg.channel.send(change);
     } else {
-            const yes = new Discord.MessageEmbed()
+            const no = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
             .setDescription("Command: ")
@@ -88,7 +88,7 @@ function abc(msg, args) {
                 { name: "here", value: `here`}
             )
             .setFooter("WithersBot helps")
-            msg.channel.send(yes);
+            msg.channel.send(no);
     }
 }
 
