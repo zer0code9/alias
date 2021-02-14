@@ -6,25 +6,26 @@ async function abc(msg, args) {
         .setTitle("WithersBot Commands")
         .setDescription("Command: test")
         .addFields(
-            { name: "Test", value: `test`}
+            { name: "Test", value: `test`},
+            { name: "Ok", value: "ok"}
         )
         .setFooter("WithersBot helps")
         msg.channel.send(test);
-        setTimeout(function() {
-            
-        })
-    const name = await args.slice(1).join(" ");
-    if (name) {
-        const change = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: ")
-        .addFields(
-            { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
-        )
-        .setFooter("WithersBot helps")
-        msg.channel.send(change);
-    } else {
+        
+    const option = args;
+    switch (option) {
+        case "test":
+            const change = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("WithersBot Commands")
+            .setDescription("Command: ")
+            .addFields(
+                { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
+            )
+            .setFooter("WithersBot helps")
+            msg.channel.send(change);
+            break;
+        case "ok":
             const no = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle("WithersBot Commands")
