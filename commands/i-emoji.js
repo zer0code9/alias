@@ -22,8 +22,10 @@ function userInfo(msg, args) {
             .setTitle("WithersBot Commands")
             .setDescription("Command: emoji")
             .addFields(
-                { name: "Username", value: `${emoji.name}`},
-                { name: "Id", value: `${emoji.id}`},
+                [
+                    { name: "Username", value: `\`\`\`${emoji.name}\`\`\``, inline: true},
+                    { name: "Id", value: `\`\`\`${emoji.id}\`\`\``, inline: true},
+                ],
                 { name: "Created on", value: `${cre.toDateString()}`},
                 { name: "Author", value: `${emoji.author}`},
                 { name: "Identifier", value: `${emoji.identifier}`},

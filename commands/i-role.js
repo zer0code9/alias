@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 function la(msg, args) {
     const role = msg.mentions.roles.first();
     if (role) {
-        var pe
+        var pe;
         //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
             var cre = role.createdAt;
             const roleInfo = new Discord.MessageEmbed()
