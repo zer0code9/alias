@@ -6,7 +6,7 @@ function abc(msg, args) {
     if (user) {
 
         if (!msg.member.hasPermission("MANAGE_NICKNAMES")) return msg.channel.send(`You don't have the permission to nickname of someone, ${msg.author}`)
-        const name = args.slice(1).join(" ");
+        var name = args.slice(2).join(" ");
         if (!name) return name = `${user.username}`
         user.setNickname(`${name}`)
             const change = new Discord.MessageEmbed()
@@ -22,7 +22,7 @@ function abc(msg, args) {
     } else {
 
         if (!msg.member.hasPermission("CHANGE_NICKNAME")) return msg.channel.send(`You don't have the permission to change your own nickname, ${msg.author}`)
-        const name = args.join(" ");
+        var name = args.join(" ");
         if (!name) return name = `${msg.author.name}`
         msg.member.setNickname(`${name}`)
             const newName = new Discord.MessageEmbed()
