@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.permissions.has("CREATE_INSTANT_INVITE")) {msg.channel.send(`You don't have the permission to create an invitation, ${msg.author}`); return;} else {
@@ -6,12 +6,12 @@ function abc(msg, args) {
             const invite = msg.channel.invite;
             const yes = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle("SplashBot Commands")
             .setDescription("Command: invite")
             .addFields(
                 { name: "Guild", value: `${invite.guild}`}
             )
-            .setFooter("WithersBot helps")
+            .setFooter("SplashBot helps")
             msg.channel.send(yes);
         }
     }

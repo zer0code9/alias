@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix } = require("./../config.json");
 
 module.exports = {
     name: "avatar",
