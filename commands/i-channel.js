@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
     const channel = msg.mentions.channels.first();
@@ -23,7 +23,7 @@ function la(msg, args) {
                 { name: "Channel Topic", value: `\`\`\`${to}\`\`\``, inline: true }
             ]
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(channelInfo);
     } else if (id) {
         const ID = msg.guild.channels.find(channel => channel.id === `${id}`);
@@ -32,7 +32,7 @@ function la(msg, args) {
         if (ID.topic == "null" || "undefined") {to = "No topic"} else {to = `${ID.topic}`}
         const channelInfo = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: channel")
         .addFields(
             { name: "Name", value: `${ID.name}` },
@@ -42,18 +42,18 @@ function la(msg, args) {
             { name: "Category", value: `${ID.parent}` },
             { name: "Topic", value: `${to}` }
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(channelInfo);
     } else {
         const noChannel = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: channel")
         .addFields(
             { name: "No Channel", value: `I need a channel in order to return info about it`},
             { name: "Command", value: `Get info on a channel\n\`\`\`${prefix}channel [channel]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noChannel);
     }
 }

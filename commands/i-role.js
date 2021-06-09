@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
     const role = msg.mentions.roles.first();
@@ -23,18 +23,18 @@ function la(msg, args) {
                 ]
                 
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(roleInfo);
     } else {
             const noRole = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: role")
             .addFields(
                 { name: "No Role", value: `I need a role in order to return info about it`},
                 { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(noRole);
     }
 }

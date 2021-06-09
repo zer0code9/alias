@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json")
+const { prefix, by } = require("./../config.json")
 const Discord = require("discord.js");
 function userInfo(msg, args) {
     const emoji = msg.guild.emojis.cache.first();
@@ -6,12 +6,12 @@ function userInfo(msg, args) {
     if (args == 0) {
         const noUser = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: emoji")
         .addFields(
             { name: "Command", value: `Get info on an emoji\n\`\`\`${prefix}emoji [emoji]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noUser);
     } else {
         if (args[0] !=0) {
@@ -19,7 +19,7 @@ function userInfo(msg, args) {
             if (emoji.animated = false) { an = `${emoji.name} is not animated` } else { if (emoji.animated = true) { an = `${emoji.name} is an animated emoji` }}
             const userOn = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Comamnds`)
             .setDescription("Command: emoji")
             .addFields(
                 [
@@ -32,7 +32,7 @@ function userInfo(msg, args) {
                 { name: "Animated?", value: `${an}`},
                 { name: "URL", value: `${emoji.url}`}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(userOn);
         }
     }

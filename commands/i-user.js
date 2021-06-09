@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function userInfo(msg, args) {
     const user = msg.mentions.users.first();
@@ -18,7 +18,7 @@ function userInfo(msg, args) {
             { name: "Tag", value: `\`\`\`${author.tag}\`\`\``},
             { name: "Bot?", value: `Not a bot`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noUser);
     } else {
         if (args[0] !=0) {
@@ -41,7 +41,7 @@ function userInfo(msg, args) {
                     { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``, inline: true}
                 ]
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(userOn);
         }
     }

@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function today(msg, args) {
     let tdy = new Date();
@@ -22,7 +22,7 @@ function today(msg, args) {
             { name: "Computer Date:", value: `\`\`\`Day: ${day} | Month: ${month} | Date: ${date} | Year: ${year}\`\`\``},
             { name: "Time:", value: `\`\`\`${hour}:${minute}.${second}\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
     msg.channel.send(todayDate);
 
 
