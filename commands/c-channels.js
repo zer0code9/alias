@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function channels(msg, args) {
     const channel = msg.mentions.channels.first();
@@ -11,12 +11,12 @@ function channels(msg, args) {
             if (!channelmap) rolemap = "No channels"; 
     const channels = new Discord.MessageEmbed()
     .setColor('RANDOM')
-    .setTitle(`WithersBot Commands`)
+    .setTitle(`${by} Commands`)
     .setDescription('Commands: channels')
     .addFields(
         { name: `All Channels of ${msg.guild}`, value: `${channelmap}`}
     )
-    .setFooter('WithersBot helps')
+    .setFooter(`${by} helps`)
     msg.channel.send(channels);
 }
 }

@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function serverData(msg, args) {
     let guild = msg.guild;
@@ -38,7 +38,7 @@ function serverData(msg, args) {
   { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${ro.highest.name}\`\`\`` },
   { name: "System", value: `\`\`\`${guild.systemChannel.name}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}
  )
- .setFooter('WithersBot helps')
+ .setFooter(`${by} helps`)
 msg.channel.send(ServerInfo);
 return;
     }

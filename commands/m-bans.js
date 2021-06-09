@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to see ban users, ${msg.author}`)

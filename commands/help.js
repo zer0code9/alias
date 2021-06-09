@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function sendHelp(msg, args, cmds){
     let docs = [];
@@ -11,10 +11,10 @@ function sendHelp(msg, args, cmds){
     if (args.length == 0) {
         const help = new Discord.MessageEmbed()
         .setColor('RANDOM')
-        .setTitle(`WithersBot`)
-        .setDescription('**WithersBot Commands:**')
+        .setTitle(`${by}`)
+        .setDescription(`**${by} Commands:**`)
         .addFields(docs)
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
     msg.channel.send(help);
     } else {
 
@@ -26,19 +26,19 @@ function sendHelp(msg, args, cmds){
         if (typeof selected == "undefined") {
                 const helpSelected = new Discord.MessageEmbed()
                 .setColor("#922B21")
-                .setTitle(`WithersBot`)
+                .setTitle(`${by}`)
                 .setDescription(`**❌ ERROR**`)
                 .addFields({ name: "I can't find the command you're looking for.", value: "See all my commands by typing:\n```zhelp```" })
-                .setFooter('WithersBot helps')
+                .setFooter(`${by} helps`)
                 msg.channel.send(helpSelected);
         } else {
             if (typeof selected == cmds) {
                 const helpSelected = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle(`WithersBot`)
-                .setDescription(`**WithersBot Command:**`)
+                .setTitle(`${by}`)
+                .setDescription(`**${by} Command:**`)
                 .addFields(docs.filter(cmds => cmds.name === args[0]))
-                .setFooter('WithersBot helps')
+                .setFooter(`${by} helps`)
                 msg.channel.send(helpSelected);
             }
         }

@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
 //const pokeAPI = require('https://pokeapi.co/api/v2/pokemon/')
 function abc(msg, args) {

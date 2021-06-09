@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function cdel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
@@ -16,18 +16,18 @@ function cdel(msg, args) {
             { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
         msg.channel.send(remove);
     } else {
         const noDelete = new Discord.MessageEmbed()
         .setColor('RANDOM')
-        .setTitle(`WithersBot Commands`)
+        .setTitle(`${by} Commands`)
         .setDescription('Command: delchannel')
         .addFields(
             { name: "No Channel", value: `I need a channel in order to delete it`},
             { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
         msg.channel.send(noDelete);
     }
 }

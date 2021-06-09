@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if(!msg.guild.me.hasPermission("MANAGE_NICKNAMES")) return msg.channel.send(`I dont have the permission to change the nickname of someone, ${msg.author}`)

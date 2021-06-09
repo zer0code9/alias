@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     var num = Math.floor(Math.random() * 5) + 1;

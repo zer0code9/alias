@@ -1,15 +1,15 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function botUser(msg, args) {
     if (args == 0) {
         const botInfo = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ")
         .addFields(
             { name: "Guilds on", value: `${bot.guilds}`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(botInfo);
     } 
 }

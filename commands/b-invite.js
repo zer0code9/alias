@@ -6,12 +6,12 @@ function abc(msg, args) {
             const invite = msg.channel.invite;
             const yes = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("SplashBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: invite")
             .addFields(
                 { name: "Guild", value: `${invite.guild}`}
             )
-            .setFooter("SplashBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(yes);
         }
     }

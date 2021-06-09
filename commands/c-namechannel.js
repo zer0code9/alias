@@ -1,4 +1,4 @@
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
+const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
@@ -15,7 +15,7 @@ function lala(msg, args) {
             .addFields(
                 { name: `The name of the channel ${channel.name} has changed`, value: `\`\`\`New channel name: ${name}\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(change);
         } else {
             const noName = new Discord.MessageEmbed()
@@ -26,7 +26,7 @@ function lala(msg, args) {
                 { name: "No name", value: `I need a name in order to rename the channel`},
                 { name: "Command:", value: `Change the name of a channel\n\`\`\`${prefix}namechannel [channel] [name]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(noName);
         }
 } else {
@@ -38,7 +38,7 @@ function lala(msg, args) {
         { name: `No channel`, value: `I need a channel in order to rename it`},
         { name: "Command:", value: `Change the name of a channel\n\`\`\`${prefix}namechannel [channel] [name]\`\`\`` }
     )
-    .setFooter("WithersBot helps")
+    .setFooter(`${by} helps`)
     msg.channel.send(noRole);
 }
 }
