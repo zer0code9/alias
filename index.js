@@ -21,11 +21,11 @@ bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: ' servers | zhelp',
+            name: ' servers',
             type: 'WATCHING'
         }
     })
-    console.log("The best bot is now ON!");
+    console.log("SplashBot is ON!");
 });
 
 bot.on("message" , msg=>{

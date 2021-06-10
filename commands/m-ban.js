@@ -7,7 +7,7 @@ function banUser(msg, args) {
 
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
     if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
-      if (user) {
+    if (user) {
         if (!msg.guild.member(user).bannable) return msg.channel.send(`I cant ban ${user}`);
         const member = msg.guild.member(user);
         if (member) {
@@ -48,7 +48,7 @@ function banUser(msg, args) {
         .setFooter(`${by} helps`)
         msg.channel.send(noMember);
         }
-
+        
       } else {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")

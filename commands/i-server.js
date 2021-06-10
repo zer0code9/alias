@@ -33,7 +33,7 @@ function serverData(msg, args) {
   { name: "Create on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
   { name: `Server Members [${total}]`, value: `\`\`\`Members: ${users} | Bots: ${bots}\`\`\`` },
   { name: 'Server Region', value: `\`\`\`${guild.region}\`\`\`` },
-  { name: 'Server Owner', value: `${guild.owner}`},
+  { name: 'Server Owner', value: `\`\`\`${guild.owner.user.username}\`\`\``},
   { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nAnnouncement: ${newsChannels} | Store: ${storeChannels}\`\`\`` },
   { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${ro.highest.name}\`\`\`` },
   { name: "System", value: `\`\`\`${guild.systemChannel.name}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}

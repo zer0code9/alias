@@ -4,6 +4,20 @@ function userInfo(msg, args) {
     const user = msg.mentions.users.first();
     var bo;
     var ni;
+    const member = msg.guild.member(user);
+    if (!member) {
+        const noMember = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by} Commands`)
+        .setDescription("Command: ban")
+        .addFields(
+          { name: "No Member", value: `I don't know that member` },
+          { name: "Command", value: `Get info on a user\n\`\`\`${prefix}user [member]\`\`\``}
+        )
+        .setFooter(`${by} helps`)
+        msg.channel.send(noMember);
+        return;
+    }
     if (args == 0) {
         const author = msg.author;
         var cre = author.createdAt;
@@ -49,7 +63,7 @@ function userInfo(msg, args) {
 
 module.exports = {
     name: "user",
-    description: "Get info on an user",
+    description: "Get info on a user",
     example: prefix + "user [user]",
     type: "info",
     execute(msg, args) {

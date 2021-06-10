@@ -1,5 +1,5 @@
 const { DiscordAPIError } = require("discord.js");
-const { prefix, by } = require("./../config.jsonn");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function kickUser(msg, args) {
   const user = msg.mentions.users.first();
