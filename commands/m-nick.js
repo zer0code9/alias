@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if(!msg.guild.me.hasPermission("MANAGE_NICKNAMES")) return msg.channel.send(`I dont have the permission to change the nickname of someone, ${msg.author}`)
@@ -16,7 +16,7 @@ function abc(msg, args) {
             .addFields(
                 { name: `New Nickname for ${user.username}`, value: `New nickname: ${name}`}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(change);
 
     } else {
@@ -27,12 +27,12 @@ function abc(msg, args) {
         msg.member.setNickname(`${name}`)
             const newName = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: nick")
             .addFields(
                 { name: "New Nickname", value: `New nickname: ${name}`}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(newName);
     }
 }

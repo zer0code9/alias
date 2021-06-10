@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
@@ -15,31 +15,31 @@ function abc(msg, args) {
             .addFields(
                 { name: `The color of the role ${role.name} has changed`, value: `\`\`\`Color of the role: ${color}\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(change);
         } else {
             const noColor = new Discord.MessageEmbed()
             .setColor(`${role.hexColor}`)
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: colorrank")
             .addFields(
                 { name: "No color", value: `I need a color in hex in order to recolor the role`},
                 { name: "Command", value: `Change the color of a role\n\`\`\`${prefix}colorrank [role] [color:hex]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(noColor);
         }
         
     } else {
             const yes = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: colorrank")
             .addFields(
                 { name: `No role`, value: `I need a role in order to recolor it`},
                 { name: "Command", value: `Change the color of a role\n\`\`\`${prefix}colorrank [role] [color:hex]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(yes);
     }
 }

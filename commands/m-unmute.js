@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function unmuteUser(msg, args) {
   const user = msg.mentions.users.first();
@@ -16,31 +16,31 @@ function unmuteUser(msg, args) {
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully unmuted on ${msg.channel.name}.` }
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(unmuted);
         } else {
           const noMember = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: unmute")
         .addFields(
           { name: "No Member", value: `I don't know that member` },
           { name: "Command", value: `Unmute a member\n\`\`\`${prefix}unmute [member]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noMember);
         }
 
       } else {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: unmute")
         .addFields(
           { name: "No User", value: `I need an username in order to unmute someone.` },
           { name: "Command", value: `Unmute a member\n\`\`\`${prefix}unmute [member]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noTag);
       }
 }

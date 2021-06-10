@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
@@ -19,54 +19,54 @@ function lala(msg, args) {
                     .addFields(
                         { name: `Added role to ${user.username}`, value: `Added role: ${role.name}`}
                     )
-                    .setFooter("WithersBot helps")
+                    .setFooter(`${by} helps`)
                     msg.channel.send(add);
                 } else {
                     const hasRole = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setTitle("WithersBot Commands")
+                    .setTitle(`${by} Commands`)
                     .setDescription("Command: addrole")
                     .addFields(
                         { name: "Has Role", value: `The member ${user} already has the role ${role}`},
                         { name: "Command:", value: `Add a role to a member\n\`\`\`${prefix}addrole [member] [role]\`\`\``}
                     )
-                    .setFooter("WithersBot helps")
+                    .setFooter(`${by} helps`)
                     msg.channel.send(hasRole);
                 }
             } else {
                 const noRole = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle("WithersBot Commands")
+                .setTitle(`${by} Commands`)
                 .setDescription("Command: addrole")
                 .addFields(
                     { name: "No Role", value: `I need a role in order to add that role to the member`},
                     { name: "Command:", value: `Add a role to a member\n\`\`\`${prefix}addrole [member] [role]\`\`\``}
                 )
-                .setFooter("WithersBot helps")
+                .setFooter(`${by} helps`)
                 msg.channel.send(noRole);
             }
         } else {
             const noMember = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: addrole")
             .addFields(
                 { name: "No Member", value: `The user ${user} is not a member`},
                 { name: "Command:", value: `Add a role to a member\n\`\`\`${prefix}addrole [member] [role]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(noRole);
         }
     } else {
         const noUser = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: addrole")
         .addFields(
             { name: "No User", value: `I need an user in order to add the role to that member`},
             { name: "Command:", value: `Add a role to a member\n\`\`\`${prefix}addrole [member] [role]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noUser);
     }
 }

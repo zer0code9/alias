@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function lala(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
@@ -16,30 +16,30 @@ function lala(msg, args) {
             .addFields(
                 { name: `Removed role from ${user.username}`, value: `Removed role: ${role.name}`}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(remove);
         } else {
             const noRole = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
+            .setTitle(`${by} Commands`)
             .setDescription("Command: revrole")
             .addFields(
                 { name: "No Role", value: `I need a role in order to remove that role from the member`},
                 { name: "Command:", value: `Remove a role from a member\n\`\`\`${prefix}revrole [member] [role]\`\`\``}
             )
-            .setFooter("WithersBot helps")
+            .setFooter(`${by} helps`)
             msg.channel.send(noRole);
         }
     } else {
         const noUser = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: revrole")
         .addFields(
             { name: "No User", value: `I need an user in order to remove the role from that member`},
             { name: "Command:", value: `Remove a role from a member\n\`\`\`${prefix}revrole [member] [role]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noUser);
     }
 }

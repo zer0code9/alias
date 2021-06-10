@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function roles(msg, args) {
     const role = msg.mentions.roles.first();
@@ -11,12 +11,12 @@ function roles(msg, args) {
             if (!rolemap) rolemap = "No roles";
     const roles = new Discord.MessageEmbed()
     .setColor('RANDOM')
-    .setTitle(`WithersBot Commands`)
+    .setTitle(`${by} Commands`)
     .setDescription('Commands: roles')
     .addFields(
         { name: `All Roles of ${msg.guild}`, value: `${rolemap}`}
     )
-    .setFooter('WithersBot helps')
+    .setFooter(`${by} helps`)
     msg.channel.send(roles);
 }
 }

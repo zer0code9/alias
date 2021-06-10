@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 
 function sayIt(msg, args) {
@@ -9,12 +9,12 @@ function sayIt(msg, args) {
     if (args == 0){
         const noSay = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription(`Command: say`)
         .addFields(
             { name: "Command:", value: `\n\`\`\`${prefix}say [sentence]\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
     msg.channel.send(noSay);
         return;
     }else {

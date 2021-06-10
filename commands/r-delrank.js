@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function del(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
@@ -16,18 +16,18 @@ function del(msg, args) {
             { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
         msg.channel.send(remove);
     } else {
         const noDelete = new Discord.MessageEmbed()
         .setColor('RANDOM')
-        .setTitle(`WithersBot Commands`)
+        .setTitle(`${by} Commands`)
         .setDescription('Command: delrank')
         .addFields(
             { name: "No Channel", value: `I need a channel in order to delete it`},
             { name: "Command:", value: `Delete a role\n\`\`\`${prefix}delrank [role]\`\`\``}
         )
-        .setFooter('WithersBot helps')
+        .setFooter(`${by} helps`)
         msg.channel.send(noDelete);
     }
 }

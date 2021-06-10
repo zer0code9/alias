@@ -1,5 +1,5 @@
 const { DiscordAPIError } = require("discord.js");
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.jsonn");
 const Discord = require("discord.js");
 function kickUser(msg, args) {
   const user = msg.mentions.users.first();
@@ -13,53 +13,53 @@ function kickUser(msg, args) {
         if (member) {
         const noReason = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
           { name: "No Reason", value: `I need a reason in order to kick someone`},
           { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         if(!reason) return msg.channel.send(noReason)
 
         //member.kick()
         const kicked = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully kicked from ${msg.guild.name}.` },
           { name: "Reason:", value: `${reason}`},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(kicked);
         } else {
           const noMember = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
           { name: "No Member", value: `I don't know that member` },
           { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noMember);
         }
 
       } else {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
           { name: "No User", value: `I need an username in order to kick someone.` },
           { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noTag);
       }
 }

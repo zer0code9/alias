@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function unbanUser(msg, args) {
   const user = args.slice(1).join(" ");
@@ -9,24 +9,24 @@ function unbanUser(msg, args) {
         msg.guild.members.unban(`${user}`)
         const unbanned = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully unbanned from ${msg.guild.name}.` },
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(unbanned);
 
       } else {
         const noId = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
           { name: "No Id", value: `I need a valid id in order to unban someone.` },
           { name: "Command", value: `Unban someone\n\`\`\`${prefix}unban [id]\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noId);
       }
 }

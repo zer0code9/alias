@@ -1,5 +1,5 @@
 const { DiscordAPIError } = require("discord.js");
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function banUser(msg, args) {
   const user = msg.mentions.users.first();
@@ -18,48 +18,48 @@ function banUser(msg, args) {
         .addFields(
           { name: "No Reason", value: `I need a reason in order to ban someone`},
           { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+          { name: `**NOTE**`, value: `**Only use "ban" when someone has a really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         if(!reason) return msg.channel.send(noReason)
         
         //member.ban()
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully banned from ${msg.guild.name}.` },
           { name: "Reason:", value: `${reason}`},
           { name: `**NOTE**`, value: `**Only use "ban" when someone has a really really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(banned);
         } else {
           const noMember = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
           { name: "No Member", value: `I don't know that member` },
           { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noMember);
         }
 
       } else {
         const noTag = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
           { name: "No User", value: `I need an username in order to kick someone.` },
           { name: "Command", value: `Ban a member\n\`\`\`${prefix}ban [member] [reason]\`\`\``},
           { name: `**NOTE**`, value: `**Only use "kick" when someone has a really really bad behavior**`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(noTag);
       }
 }

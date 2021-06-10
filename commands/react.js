@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 async function abc(msg, args, bot) {
     var reactions = "";
@@ -7,12 +7,12 @@ async function abc(msg, args, bot) {
     if (args == 0) {
         const no = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Commands`)
         .setDescription("Command: react")
         .addFields(
             { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(no);
     } else
                 reactions = `${args[1]}`
@@ -20,12 +20,12 @@ async function abc(msg, args, bot) {
                 roles = `${role}`
                 const embed = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle("WithersBot Commands")
+                .setTitle(`${by} Commands`)
                 .setDescription("Command: react")
                 .addFields(
                     { name: "Command", value: `Geth the role ${role}`}
                 )
-                .setFooter("WithersBot helps")
+                .setFooter(`${by} helps`)
                 let message = await msg.channel.send(embed);
                 message.react(`${reactions}`);
 

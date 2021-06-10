@@ -1,4 +1,4 @@
-const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
+const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to see ban users, ${msg.author}`)
@@ -10,12 +10,12 @@ function abc(msg, args) {
     if (msg.member.hasPermission("BAN_MEMBERS")) {
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
+        .setTitle(`${by} Comamnds`)
         .setDescription("Command: bans")
         .addFields(
             { name: `Banned members (${num})`, value: `${bans}`}
         )
-        .setFooter("WithersBot helps")
+        .setFooter(`${by} helps`)
         msg.channel.send(banned);
     }
 }
