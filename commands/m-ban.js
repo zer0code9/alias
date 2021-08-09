@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 function banUser(msg, args) {
   const user = msg.mentions.users.first();
   const reason = args.slice(1).join(" ");
+  const days = 1;
 
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
     if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
@@ -23,7 +24,7 @@ function banUser(msg, args) {
         .setFooter(`${by} helps`)
         if(!reason) return msg.channel.send(noReason)
         
-        //member.ban()
+        member.ban({ days, reason: `${reason}`})
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
