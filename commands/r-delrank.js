@@ -49,61 +49,60 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: delrank")
         .addFields(
-          { name: "Role Name", value: `I need a role's name to continue` }
+            { name: "Role Name", value: `I need a role's name to continue` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Role).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 })
-          .then(collected1 => {
-            const response1 = collected1.first();
-            const role = response1.mentions.roles.first();
-            let roleN = role;
-              if (!Role) {
-                const noRole = new Discord.MessageEmbed()
+            msg.channel.awaitMessages(filter1, { max: 1 })
+            .then(collected1 => {
+                const response1 = collected1.first();
+                const role = response1.mentions.roles.first();
+                let roleN = role;
+                if (!Role) {
+                    const noRole = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(`${by} Commands`)
+                    .setDescription("Command: delrank")
+                    .addFields(
+                        { name: "No Role", value: `I need a valid role name` },
+                        { name: "Canceled", value: `Wrong answer`}
+                    )
+                    .setFooter(`${by} helps`)
+                    return msg.channel.send(noRole);
+                }
+      
+                const filter2 = response2 => { return response2.author.id === authorid; }
+    
+                const Reason = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: delrank")
+                .setDescription("Command: delchannel")
                 .addFields(
-                  { name: "No Role", value: `I need a valid role name` },
-                  { name: "Canceled", value: `Wrong answer`}
+                    { name: "Reason", value: `I need a reason to continue` }
                 )
                 .setFooter(`${by} helps`)
-                return msg.channel.send(noRole);
-              }
       
-            const filter2 = response2 => { return response2.author.id === authorid; }
-    
-            const Reason = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: delchannel")
-            .addFields(
-              { name: "Reason", value: `I need a reason to continue` }
-            )
-            .setFooter(`${by} helps`)
-      
-            msg.channel.send(Reason).then(() => {
-              msg.channel.awaitMessages(filter2, { max: 1 })
-              .then(collected2 => {
-                const response2 = collected2.first();
-                const reason = response2.content;
+                msg.channel.send(Reason).then(() => {
+                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    .then(collected2 => {
+                        const response2 = collected2.first();
+                        const reason = response2.content;
         
-                role.delete();
-                const Remove = new Discord.MessageEmbed()
-                .setColor('RANDOM')
-                .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
-                .setDescription('Channel')
-                .addFields(
-                    { name: "A channel has been deleted", value: `\`\`\`${roleN}\`\`\`` },
-                    { name: "Reason", value: `\`\`\`${reason}\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Remove);
-              });
-            })
-            
-          });
+                        role.delete();
+                        const Remove = new Discord.MessageEmbed()
+                        .setColor('RANDOM')
+                        .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
+                        .setDescription('Channel')
+                        .addFields(
+                            { name: "A channel has been deleted", value: `\`\`\`${roleN}\`\`\`` },
+                            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Remove);
+                    });
+                })
+            });
         })
     }
 }

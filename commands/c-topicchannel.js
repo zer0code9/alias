@@ -61,60 +61,59 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: topicchannel")
         .addFields(
-          { name: "Channel Name", value: `I need a channel's name to continue` }
+            { name: "Channel Name", value: `I need a channel's name to continue` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 })
-          .then(collected1 => {
-            const response1 = collected1.first();
-            const channel = response1.mentions.channels.first();
-              if (!channel) {
-                const noChannel = new Discord.MessageEmbed()
+            msg.channel.awaitMessages(filter1, { max: 1 })
+            .then(collected1 => {
+                const response1 = collected1.first();
+                const channel = response1.mentions.channels.first();
+                if (!channel) {
+                    const noChannel = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(`${by} Commands`)
+                    .setDescription("Command: namechannel")
+                    .addFields(
+                    { name: "No Channel", value: `I need a valid channel name` },
+                    { name: "Canceled", value: `Wrong answer`}
+                    )
+                    .setFooter(`${by} helps`)
+                    return msg.channel.send(noChannel);
+                }
+      
+                const filter2 = response2 => { return response2.author.id === authorid; }
+    
+                const Topic = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: namechannel")
+                .setDescription("Command: topicchannel")
                 .addFields(
-                  { name: "No Channel", value: `I need a valid channel name` },
-                  { name: "Canceled", value: `Wrong answer`}
+                { name: "Name", value: `I need a topic sentence to continue` }
                 )
                 .setFooter(`${by} helps`)
-                return msg.channel.send(noChannel);
-              }
       
-            const filter2 = response2 => { return response2.author.id === authorid; }
-    
-            const Topic = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: topicchannel")
-            .addFields(
-              { name: "Name", value: `I need a topic sentence to continue` }
-            )
-            .setFooter(`${by} helps`)
-      
-            msg.channel.send(Topic).then(() => {
-              msg.channel.awaitMessages(filter2, { max: 1 })
-              .then(collected2 => {
-                const response2 = collected2.first();
-                const topic = response2.content;
+                msg.channel.send(Topic).then(() => {
+                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    .then(collected2 => {
+                        const response2 = collected2.first();
+                        const topic = response2.content;
         
-                channel.setTopic(`${topic}`)
-                const Topic = new Discord.MessageEmbed()
-                .setColor('RANDOM')
-                .setTitle(`CHANGED CHANNEL TOPIC :file_folder::pencil:`)
-                .setDescription('Channel')
-                .addFields(
-                    { name: "A channel has been changed its topic", value: `\`\`\`${channel}\`\`\`` },
-                    { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Topic);
-              });
-            })
-            
-          });
+                        channel.setTopic(`${topic}`)
+                        const Topic = new Discord.MessageEmbed()
+                        .setColor('RANDOM')
+                        .setTitle(`CHANGED CHANNEL TOPIC :file_folder::pencil:`)
+                        .setDescription('Channel')
+                        .addFields(
+                            { name: "A channel has been changed its topic", value: `\`\`\`${channel}\`\`\`` },
+                            { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Topic);
+                    });
+                })
+            });
         })
     }
 }

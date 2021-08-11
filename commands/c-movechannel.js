@@ -76,79 +76,78 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: movechannel")
         .addFields(
-          { name: "Channel Name", value: `I need a channel's name to continue` }
+            { name: "Channel Name", value: `I need a channel's name to continue` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 })
-          .then(collected1 => {
-            const response1 = collected1.first();
-            const channel = response1.mentions.channels.first();
-              if (!channel) {
-                const noChannel = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by} Commands`)
-                .setDescription("Command: movechannel")
-                .addFields(
-                  { name: "No Channel", value: `I need a valid channel name` },
-                  { name: "Canceled", value: `Wrong answer`}
-                )
-                .setFooter(`${by} helps`)
-                return msg.channel.send(noChannel);
-              }
+            msg.channel.awaitMessages(filter1, { max: 1 })
+            .then(collected1 => {
+                const response1 = collected1.first();
+                const channel = response1.mentions.channels.first();
+                if (!channel) {
+                    const noChannel = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(`${by} Commands`)
+                    .setDescription("Command: movechannel")
+                    .addFields(
+                        { name: "No Channel", value: `I need a valid channel name` },
+                        { name: "Canceled", value: `Wrong answer`}
+                    )
+                    .setFooter(`${by} helps`)
+                    return msg.channel.send(noChannel);
+                }
       
-            const filter2 = response2 => { return response2.author.id === authorid; }
+                const filter2 = response2 => { return response2.author.id === authorid; }
     
-            const Category = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: movechannel")
-            .addFields(
-              { name: "Reason", value: `I need a reason to continue` }
-            )
-            .setFooter(`${by} helps`)
-      
-            msg.channel.send(Category).then(() => {
-              msg.channel.awaitMessages(filter2, { max: 1 })
-              .then(collected2 => {
-                const response2 = collected2.first();
-                const category = response2.content;
-
-                const filter2 = response3 => { return response3.author.id === authorid; }
-        
-                const Position = new Discord.MessageEmbed()
+                const Category = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: movechannel")
                 .addFields(
-                  { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Reason", value: `I need a reason to continue` }
                 )
                 .setFooter(`${by} helps`)
-
-                msg.channel.send(Position).then(() => {
+      
+                msg.channel.send(Category).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 })
-                    .then(collected3 => {
-                      const response3 = collected3.first();
-                      const position = response3.content;
+                    .then(collected2 => {
+                        const response2 = collected2.first();
+                        const category = response2.content;
 
-                      channel.setParent(`${category}`);
-                      channel.setPosition(`${position}`);
-                      const move = new Discord.MessageEmbed()
-                      .setColor("RANDOM")
-                      .setTitle("MOVED CHANNEL :file_folder::arrow_up_down:")
-                      .setDescription("Channel")
-                      .addFields(
-                          { name: `The channel has changed places`, value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
-                      )
-                      .setFooter(`${by} helps`)
-                      msg.channel.send(move);
+                        const filter2 = response3 => { return response3.author.id === authorid; }
+        
+                        const Position = new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setTitle(`${by} Commands`)
+                        .setDescription("Command: movechannel")
+                        .addFields(
+                            { name: "Reason", value: `I need a reason to continue` }
+                        )
+                        .setFooter(`${by} helps`)
+
+                        msg.channel.send(Position).then(() => {
+                            msg.channel.awaitMessages(filter2, { max: 1 })
+                            .then(collected3 => {
+                                const response3 = collected3.first();
+                                const position = response3.content;
+
+                                channel.setParent(`${category}`);
+                                channel.setPosition(`${position}`);
+                                const move = new Discord.MessageEmbed()
+                                .setColor("RANDOM")
+                                .setTitle("MOVED CHANNEL :file_folder::arrow_up_down:")
+                                .setDescription("Channel")
+                                .addFields(
+                                    { name: `The channel has changed places`, value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
+                                )
+                                .setFooter(`${by} helps`)
+                                msg.channel.send(move);
+                            });
+                        })
                     });
                 })
-            
-              });
             })
         })
-})
     }
 }

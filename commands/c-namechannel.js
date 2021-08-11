@@ -60,61 +60,60 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: namechannel")
         .addFields(
-          { name: "Channel Name", value: `I need a channel's name to continue` }
+            { name: "Channel Name", value: `I need a channel's name to continue` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 })
-          .then(collected1 => {
-            const response1 = collected1.first();
-            const channel = response1.mentions.channels.first();
-            let channelN = channel;
-              if (!channel) {
-                const noChannel = new Discord.MessageEmbed()
+            msg.channel.awaitMessages(filter1, { max: 1 })
+            .then(collected1 => {
+                const response1 = collected1.first();
+                const channel = response1.mentions.channels.first();
+                let channelN = channel;
+                if (!channel) {
+                    const noChannel = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(`${by} Commands`)
+                    .setDescription("Command: namechannel")
+                    .addFields(
+                        { name: "No Channel", value: `I need a valid channel name` },
+                        { name: "Canceled", value: `Wrong answer`}
+                    )
+                    .setFooter(`${by} helps`)
+                    return msg.channel.send(noChannel);
+                }
+      
+                const filter2 = response2 => { return response2.author.id === authorid; }
+    
+                const Name = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: namechannel")
                 .addFields(
-                  { name: "No Channel", value: `I need a valid channel name` },
-                  { name: "Canceled", value: `Wrong answer`}
+                    { name: "Name", value: `I need a name to continue` }
                 )
                 .setFooter(`${by} helps`)
-                return msg.channel.send(noChannel);
-              }
       
-            const filter2 = response2 => { return response2.author.id === authorid; }
-    
-            const Name = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: namechannel")
-            .addFields(
-              { name: "Name", value: `I need a name to continue` }
-            )
-            .setFooter(`${by} helps`)
-      
-            msg.channel.send(Name).then(() => {
-              msg.channel.awaitMessages(filter2, { max: 1 })
-              .then(collected2 => {
-                const response2 = collected2.first();
-                const name = response2.content;
+                msg.channel.send(Name).then(() => {
+                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    .then(collected2 => {
+                        const response2 = collected2.first();
+                        const name = response2.content;
         
-                channel.setName(`${name}`)
-                const Name = new Discord.MessageEmbed()
-                .setColor('RANDOM')
-                .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
-                .setDescription('Channel')
-                .addFields(
-                    { name: "A channel has been renamed", value: `\`\`\`${channelN}\`\`\`` },
-                    { name: "Name", value: `\`\`\`${name}\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Name);
-              });
-            })
-            
-          });
+                        channel.setName(`${name}`)
+                        const Name = new Discord.MessageEmbed()
+                        .setColor('RANDOM')
+                        .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
+                        .setDescription('Channel')
+                        .addFields(
+                            { name: "A channel has been renamed", value: `\`\`\`${channelN}\`\`\`` },
+                            { name: "Name", value: `\`\`\`${name}\`\`\``}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Name);
+                    });
+                })
+            });
         })
     }
 }
