@@ -62,11 +62,10 @@ module.exports = {
                 if (!Role) {
                     const noRole = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setTitle(`${by} Commands`)
-                    .setDescription("Command: delrank")
+                    .setTitle(`Canceled`)
                     .addFields(
                         { name: "No Role", value: `I need a valid role name` },
-                        { name: "Canceled", value: `Wrong answer`}
+                        { name: "Command Canceled", value: `Wrong answer cancelation`}
                     )
                     .setFooter(`${by} helps`)
                     return msg.channel.send(noRole);
@@ -100,8 +99,26 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Remove);
+                    }).catch(error => {
+                        const Error = new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setTitle("Canceled")
+                        .addFields(
+                            { name: "Command Canceled", value: `Automatic cancelation`}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Error);  
                     });
                 })
+            }).catch(error => {
+                const Error = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Canceled")
+                .addFields(
+                    { name: "Command Canceled", value: `Automatic cancelation`}
+                )
+                .setFooter(`${by} helps`)
+                msg.channel.send(Error);  
             });
         })
     }

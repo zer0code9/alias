@@ -73,11 +73,10 @@ module.exports = {
                 if (!channel) {
                     const noChannel = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setTitle(`${by} Commands`)
-                    .setDescription("Command: namechannel")
+                    .setTitle(`Canceled`)
                     .addFields(
                     { name: "No Channel", value: `I need a valid channel name` },
-                    { name: "Canceled", value: `Wrong answer`}
+                    { name: "Command Canceled", value: `Wrong answer cancelation`}
                     )
                     .setFooter(`${by} helps`)
                     return msg.channel.send(noChannel);
@@ -111,8 +110,26 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Topic);
+                    }).catch(error => {
+                        const Error = new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setTitle("Canceled")
+                        .addFields(
+                            { name: "Command Canceled", value: `Automatic cancelation`}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Error);  
                     });
                 })
+            }).catch(error => {
+                const Error = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Canceled")
+                .addFields(
+                    { name: "Command Canceled", value: `Automatic cancelation`}
+                )
+                .setFooter(`${by} helps`)
+                msg.channel.send(Error);  
             });
         })
     }

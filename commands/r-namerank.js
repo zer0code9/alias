@@ -49,6 +49,88 @@ module.exports = {
     example: prefix + "namerank [role] [name]",
     type: "rank",
     execute(msg, args) {
-        lala(msg, args)
+        if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
+        if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
+        let authorid = msg.author.id;
+
+        const filter1 = response1 => { return response1.author.id === authorid; }
+    
+        const Role = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by} Commands`)
+        .setDescription("Command: namerole")
+        .addFields(
+            { name: "Role Name", value: `I need a role's name to continue` }
+        )
+        .setFooter(`${by} helps`)
+    
+        msg.channel.send(Role).then(() => {
+            msg.channel.awaitMessages(filter1, { max: 1 })
+            .then(collected1 => {
+                const response1 = collected1.first();
+                const role = response1.mentions.roles.first();
+                let roleN = role;
+                if (!role) {
+                    const noRole = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(`Canceled`)
+                    .addFields(
+                        { name: "No Role", value: `I need a valid role name` },
+                        { name: "Command Canceled", value: `Wrong answer cancelation`}
+                    )
+                    .setFooter(`${by} helps`)
+                    return msg.channel.send(noRole);
+                }
+      
+                const filter2 = response2 => { return response2.author.id === authorid; }
+    
+                const Name = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle(`${by} Commands`)
+                .setDescription("Command: namechannel")
+                .addFields(
+                    { name: "Name", value: `I need a name to continue` }
+                )
+                .setFooter(`${by} helps`)
+      
+                msg.channel.send(Name).then(() => {
+                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    .then(collected2 => {
+                        const response2 = collected2.first();
+                        const name = response2.content;
+        
+                        channel.setName(`${name}`)
+                        const Name = new Discord.MessageEmbed()
+                        .setColor('RANDOM')
+                        .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
+                        .setDescription('Channel')
+                        .addFields(
+                            { name: "A channel has been renamed", value: `\`\`\`${channelN}\`\`\`` },
+                            { name: "Name", value: `\`\`\`${name}\`\`\``}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Name);
+                    }).catch(error => {
+                        const Error = new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setTitle("Canceled")
+                        .addFields(
+                            { name: "Command Canceled", value: `Automatic cancelation`}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Error);  
+                    });
+                })
+            }).catch(error => {
+                const Error = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Canceled")
+                .addFields(
+                    { name: "Command Canceled", value: `Automatic cancelation`}
+                )
+                .setFooter(`${by} helps`)
+                msg.channel.send(Error);  
+            });
+        })
     }
 }

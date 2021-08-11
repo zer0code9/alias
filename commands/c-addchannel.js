@@ -74,7 +74,7 @@ module.exports = {
                     { name: "Command Canceled", value: `Automatic cancelation`}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(Add);  
+                msg.channel.send(Error);  
             });
         })
     }

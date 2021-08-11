@@ -66,6 +66,15 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Add);
+            }).catch(error => {
+                const Error = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Canceled")
+                .addFields(
+                    { name: "Command Canceled", value: `Automatic cancelation`}
+                )
+                .setFooter(`${by} helps`)
+                msg.channel.send(Error);  
             });
         })
     }
