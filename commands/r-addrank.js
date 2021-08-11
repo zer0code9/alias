@@ -52,21 +52,21 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send(Name).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 })
-          .then(collected1 => {
-            const name = collected1.first();
-            msg.guild.roles.create({ data: { name: `${name}` } });
+                msg.channel.awaitMessages(filter1, { max: 1 })
+                .then(collected1 => {
+                    const name = collected1.first();
+                    msg.guild.roles.create({ data: { name: `${name}` } });
 
-            const Add = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("CREATED CHANNEL :label::heavy_plus_sign:")
-            .setDescription("Rank")
-            .addFields(
-                { name: "A new role has been created", value: `\`\`\`${name}\`\`\``}
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(Add);
-          });
+                    const Add = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle("CREATED CHANNEL :label::heavy_plus_sign:")
+                    .setDescription("Rank")
+                    .addFields(
+                        { name: "A new role has been created", value: `\`\`\`${name}\`\`\``}
+                    )
+                    .setFooter(`${by} helps`)
+                    msg.channel.send(Add);
+                });
         })
     }
 }
