@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-function lala(msg, args) {
+function addChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
     if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
@@ -36,6 +36,37 @@ module.exports = {
     example: prefix + "addchannel [name]",
     type: "channel",
     execute(msg, args) {
-        lala(msg, args)
+        if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
+        if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
+        let authorid = msg.author.id;
+
+        const filter1 = response1 => { return response1.author.id === authorid; }
+
+        const name = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by} Commands`)
+        .setDescription("Command: addchannel")
+        .addFields(
+          { name: "Name", value: `I need a name to continue` }
+        )
+        .setFooter(`${by} helps`)
+    
+        msg.channel.send(name).then(() => {
+          msg.channel.awaitMessages(filter1, { max: 1 })
+          .then(collected1 => {
+            const name = collected1.first();
+            msg.guild.channels.create(`${name}`);
+
+            const add = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
+            .setDescription("Channel")
+            .addFields(
+                { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``}
+            )
+            .setFooter(`${by} helps`)
+            msg.channel.send(add);       
+          });
+        })
     }
 }

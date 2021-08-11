@@ -70,6 +70,77 @@ module.exports = {
     example: prefix + "mute [member] [reason]",
     type: "moderation",
     execute(msg, args){
-        muteUser(msg, args);
+        //muteUser(msg, args);
+    if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to unmute someone, ${msg.author}`)
+    let authorid = msg.author.id;
+
+    const filter1 = response1 => { return response1.author.id === authorid; }
+
+    const user = new Discord.MessageEmbed()
+    .setColor("RANDOM")
+    .setTitle(`${by} Commands`)
+    .setDescription("Command: mute")
+    .addFields(
+      { name: "Username", value: `I need a member's username to continue` },
+      { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+
+    msg.channel.send(user).then(() => {
+      msg.channel.awaitMessages(filter1, { max: 1 })
+      .then(collected1 => {
+        const response1 = collected1.first();
+        let User = msg.guild.member(response1.mentions.users.first());
+          if (!User) {
+            const noMember = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle(`${by} Commands`)
+            .setDescription("Command: mute")
+            .addFields(
+              { name: "No Member", value: `I need a valid member username.` },
+              { name: "Canceled", value: `Wrong answer`},
+              { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+            )
+            .setFooter(`${by} helps`)
+            msg.channel.send(noMember);
+          }
+  
+        const filter2 = response2 => { return response2.author.id === authorid; }
+
+        const reason = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by} Commands`)
+        .setDescription("Command: mute")
+        .addFields(
+          { name: "Reason", value: `I need a reason to continue` },
+          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+        )
+        .setFooter(`${by} helps`)
+  
+        msg.channel.send(reason).then(() => {
+          msg.channel.awaitMessages(filter2, { max: 1 })
+          .then(collected2 => {
+            const response2 = collected2.first();
+            let Reason = response2.content;
+    
+            //User.mute(Reason);
+
+            const muted = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle(`${by} Commands`)
+            .setDescription("Command: mute")
+            .addFields(
+              { name: "Muted Member", value: `${User}` },
+              { name: "Reason", value: `${Reason}`},
+              { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+            )
+            .setFooter(`${by} helps`)
+            msg.channel.send(muted)
+          });
+        })
+        
+      });
+    })
     }
 }
