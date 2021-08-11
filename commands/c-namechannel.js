@@ -55,7 +55,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const channel = new Discord.MessageEmbed()
+        const Channel = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: namechannel")
@@ -64,13 +64,13 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(channel).then(() => {
+        msg.channel.send(Channel).then(() => {
           msg.channel.awaitMessages(filter1, { max: 1 })
           .then(collected1 => {
             const response1 = collected1.first();
-            let Channel = response1.mentions.channels.first();
-            let ChannelN = Channel;
-              if (!Channel) {
+            const channel = response1.mentions.channels.first();
+            let channelN = channel;
+              if (!channel) {
                 const noChannel = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
@@ -85,7 +85,7 @@ module.exports = {
       
             const filter2 = response2 => { return response2.author.id === authorid; }
     
-            const name = new Discord.MessageEmbed()
+            const Name = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle(`${by} Commands`)
             .setDescription("Command: namechannel")
@@ -94,23 +94,23 @@ module.exports = {
             )
             .setFooter(`${by} helps`)
       
-            msg.channel.send(name).then(() => {
+            msg.channel.send(Name).then(() => {
               msg.channel.awaitMessages(filter2, { max: 1 })
               .then(collected2 => {
                 const response2 = collected2.first();
-                let Name = response2.content;
+                const name = response2.content;
         
-                Channel.setName(`${Name}`)
-                const name = new Discord.MessageEmbed()
+                channel.setName(`${name}`)
+                const Name = new Discord.MessageEmbed()
                 .setColor('RANDOM')
                 .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
                 .setDescription('Channel')
                 .addFields(
-                    { name: "A channel has been renamed", value: `\`\`\`${ChannelN}\`\`\`` },
-                    { name: "Name", value: `\`\`\`${Name}\`\`\``}
+                    { name: "A channel has been renamed", value: `\`\`\`${channelN}\`\`\`` },
+                    { name: "Name", value: `\`\`\`${name}\`\`\``}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(name);
+                msg.channel.send(Name);
               });
             })
             

@@ -56,7 +56,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const channel = new Discord.MessageEmbed()
+        const Channel = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: topicchannel")
@@ -65,12 +65,12 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(channel).then(() => {
+        msg.channel.send(Channel).then(() => {
           msg.channel.awaitMessages(filter1, { max: 1 })
           .then(collected1 => {
             const response1 = collected1.first();
-            let Channel = response1.mentions.channels.first();
-              if (!Channel) {
+            const channel = response1.mentions.channels.first();
+              if (!channel) {
                 const noChannel = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
@@ -85,7 +85,7 @@ module.exports = {
       
             const filter2 = response2 => { return response2.author.id === authorid; }
     
-            const topic = new Discord.MessageEmbed()
+            const Topic = new Discord.MessageEmbed()
             .setColor("RANDOM")
             .setTitle(`${by} Commands`)
             .setDescription("Command: topicchannel")
@@ -94,23 +94,23 @@ module.exports = {
             )
             .setFooter(`${by} helps`)
       
-            msg.channel.send(topic).then(() => {
+            msg.channel.send(Topic).then(() => {
               msg.channel.awaitMessages(filter2, { max: 1 })
               .then(collected2 => {
                 const response2 = collected2.first();
-                let Topic = response2.content;
+                const topic = response2.content;
         
-                Channel.setTopic(`${Topic}`)
-                const topic = new Discord.MessageEmbed()
+                channel.setTopic(`${topic}`)
+                const Topic = new Discord.MessageEmbed()
                 .setColor('RANDOM')
-                .setTitle(`DELETED CHANNEL :file_folder::pencil:`)
+                .setTitle(`CHANGED CHANNEL TOPIC :file_folder::pencil:`)
                 .setDescription('Channel')
                 .addFields(
-                    { name: "A channel has been changed its topic", value: `\`\`\`${Channel}\`\`\`` },
-                    { name: "Topic sentence", value: `\`\`\`${Topic}\`\`\``}
+                    { name: "A channel has been changed its topic", value: `\`\`\`${channel}\`\`\`` },
+                    { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(topic);
+                msg.channel.send(Topic);
               });
             })
             

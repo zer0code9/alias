@@ -8,48 +8,6 @@ module.exports = {
     example: prefix + "channel",
     type: "info",
     execute(msg, args) {
-        
-
-        function channelName() {
-            const nameChannel = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("CHANGED EDIT :pencil:")
-                .setDescription("Command: channel")
-                .addFields(
-                    { name: `Name`, value: `Type a channel name`},
-                )
-                .setFooter(`${by} helps`)
-                let filterName = m => m.author.id === msg.author.id
-            msg.channel.send(nameChannel).then(() => {
-                msg.channel.awaitMessages(filterName, {
-                    max: 1,
-                    time: 30000,
-                    errors: ['time']
-                })
-            })
-            .then(msgN => {
-                const channelN = msgN.first();
-                let channel = msgN.guild.channels(channelN.mentions.channels.first())
-                if (!channel) {
-                    const noAdd = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle(`${by} Commands`)
-                        .setDescription("Command: addchannel")
-                        .addFields(
-                            { name: "Canceled", value: `Wrong answer cancelation`},
-                            { name: "No Name", value: `I need a name in order to create a new channel`}
-                        )
-                        .setFooter(`${by} helps`)
-                    msg.channel.send(noAdd);
-                    return false;
-                } else {
-                    return true;
-                }
-            })
-            .catch(error => {
-                msg.channel.send("Canceled" + ` ${error}`)
-            })
-        }
 
         function channelAdd() {
             if (channelName()) {

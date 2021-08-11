@@ -59,7 +59,7 @@ function la(msg, args) {
 }
 
 module.exports = {
-    name: "channel",
+    name: "infochannel",
     description: "Get info on a channel",
     example: prefix + "channel [channel]",
     type: "info",
