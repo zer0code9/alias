@@ -71,8 +71,8 @@ module.exports = {
                 const channel = response1.mentions.channels.first();
                 if (!channel) {
                     const noChannel = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(`Canceled`)
+                    .setColor("#ff0000")
+                    .setTitle(`:warning: CANCELED :warning:`)
                     .addFields(
                         { name: "No Channel", value: `I need a valid channel name` },
                         { name: "Command Canceled", value: `Wrong answer cancelation`}
@@ -100,8 +100,8 @@ module.exports = {
         
                         channel.setName(`${name}`)
                         const Name = new Discord.MessageEmbed()
-                        .setColor('RANDOM')
-                        .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
+                        .setColor('#00ff00')
+                        .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
                         .setDescription('Channel')
                         .addFields(
                             { name: "A channel has been renamed", value: `\`\`\`${channel.name}\`\`\`` },
@@ -109,26 +109,27 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Name);
+
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle("Canceled")
+                        .setColor("#ff0000")
+                        .setTitle(":x: CANCELED :x:")
                         .addFields(
-                            { name: "Command Canceled", value: `Automatic cancelation`}
+                            { name: "Command Canceled", value: `Timeout cancelation`}
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send(Error);  
+                        msg.channel.send(Error);
                     });
                 })
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                msg.channel.send(Error);
             });
         })
     }

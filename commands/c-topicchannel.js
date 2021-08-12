@@ -50,6 +50,7 @@ module.exports = {
     example: prefix + "topicchannel [channel] [topic]",
     type: "channel",
     execute(msg, args) {
+        if (args[0]) {return topicChannel(msg, args)}
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
         if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
         let authorid = msg.author.id;
@@ -72,8 +73,8 @@ module.exports = {
                 const channel = response1.mentions.channels.first();
                 if (!channel) {
                     const noChannel = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(`Canceled`)
+                    .setColor("#ff0000")
+                    .setTitle(`:warning: CANCELED :warning:`)
                     .addFields(
                     { name: "No Channel", value: `I need a valid channel name` },
                     { name: "Command Canceled", value: `Wrong answer cancelation`}
@@ -101,8 +102,8 @@ module.exports = {
         
                         channel.setTopic(`${topic}`)
                         const Topic = new Discord.MessageEmbed()
-                        .setColor('RANDOM')
-                        .setTitle(`CHANGED CHANNEL TOPIC :file_folder::pencil:`)
+                        .setColor('#00ff00')
+                        .setTitle(`:white_check_mark: CHANGED CHANNEL TOPIC :file_folder::pencil:`)
                         .setDescription('Channel')
                         .addFields(
                             { name: "A channel has been changed its topic", value: `\`\`\`${channel.name}\`\`\`` },
@@ -110,12 +111,13 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Topic);
+
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle("Canceled")
+                        .setColor("#ff0000")
+                        .setTitle(":x: CANCELED :x:")
                         .addFields(
-                            { name: "Command Canceled", value: `Automatic cancelation`}
+                            { name: "Command Canceled", value: `Timeout cancelation`}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Error);  
@@ -123,10 +125,10 @@ module.exports = {
                 })
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  

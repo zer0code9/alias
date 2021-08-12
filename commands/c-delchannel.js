@@ -6,14 +6,14 @@ function delChannel(msg, args) {
     const channel = msg.mentions.channels.first();
     var reason = args.slice(1).join(" ");
     if (channel) {
-        if (!reason) return reason = "No reason"
+        if (!reason) {return reason = "No reason";}
         channel.delete();
         const remove = new Discord.MessageEmbed()
         .setColor('RANDOM')
         .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
         .setDescription('Channel')
         .addFields(
-            { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
+            { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
         )
         .setFooter(`${by} helps`)
@@ -37,6 +37,7 @@ module.exports = {
     example: prefix + "delchannel [channel]",
     type: "channel",
     execute(msg, args) {
+        if (args[0]) {return delChannel(msg, args)}
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
         if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
         let authorid = msg.author.id;
@@ -60,8 +61,8 @@ module.exports = {
                 let channelN = channel.name;
                 if (!channel) {
                     const noChannel = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(`Canceled`)
+                    .setColor("#ff0000")
+                    .setTitle(`:warning: CANCELED :warning:`)
                     .addFields(
                     { name: "No Channel", value: `I need a valid channel name` },
                     { name: "Command Canceled", value: `Wrong answer cancelation`}
@@ -89,8 +90,8 @@ module.exports = {
         
                         channel.delete();
                         const Remove = new Discord.MessageEmbed()
-                        .setColor('RANDOM')
-                        .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
+                        .setColor('#00ff00')
+                        .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
                         .setDescription('Channel')
                         .addFields(
                             { name: "A channel has been deleted", value: `\`\`\`${channelN}\`\`\`` },
@@ -98,12 +99,13 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Remove);
+
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle("Canceled")
+                        .setColor("#ff0000")
+                        .setTitle(":x: CANCELED :x:")
                         .addFields(
-                            { name: "Command Canceled", value: `Automatic cancelation`}
+                            { name: "Command Canceled", value: `Timeout cancelation`}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Error);  
@@ -111,10 +113,10 @@ module.exports = {
                 })
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  

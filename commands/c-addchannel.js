@@ -36,6 +36,7 @@ module.exports = {
     example: prefix + "addchannel [name]",
     type: "channel",
     execute(msg, args) {
+        if (args[0]) {return addChannel(msg, args);}
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
         if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
         let authorid = msg.author.id;
@@ -58,8 +59,8 @@ module.exports = {
                 msg.guild.channels.create(`${name}`);
 
                 const Add = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
+                .setColor("#00ff00")
+                .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
                 .setDescription("Channel")
                 .addFields(
                     { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
@@ -69,10 +70,10 @@ module.exports = {
                 msg.channel.send(Add);       
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  
