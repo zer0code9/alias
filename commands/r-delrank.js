@@ -54,11 +54,11 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send(Role).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 })
+            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 const role = response1.mentions.roles.first();
-                let roleN = role;
+                let roleN = role.name;
                 if (!Role) {
                     const noRole = new Discord.MessageEmbed()
                     .setColor("RANDOM")
@@ -76,14 +76,14 @@ module.exports = {
                 const Reason = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: delchannel")
+                .setDescription("Command: delrank")
                 .addFields(
                     { name: "Reason", value: `I need a reason to continue` }
                 )
                 .setFooter(`${by} helps`)
       
                 msg.channel.send(Reason).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         const reason = response2.content;
@@ -91,10 +91,10 @@ module.exports = {
                         role.delete();
                         const Remove = new Discord.MessageEmbed()
                         .setColor('RANDOM')
-                        .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
-                        .setDescription('Channel')
+                        .setTitle(`DELETED ROLE :label::heavy_minus_sign:`)
+                        .setDescription('Rank')
                         .addFields(
-                            { name: "A channel has been deleted", value: `\`\`\`${roleN}\`\`\`` },
+                            { name: "A role has been deleted", value: `\`\`\`${roleN}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

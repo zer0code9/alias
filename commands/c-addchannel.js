@@ -62,7 +62,8 @@ module.exports = {
                 .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
                 .setDescription("Channel")
                 .addFields(
-                    { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``}
+                    { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
+                    { name: "To change channel position:", value: `Use \`\`\`zmovechannel\`\`\``}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Add);       

@@ -66,7 +66,7 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 })
+            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 const channel = response1.mentions.channels.first();
@@ -94,7 +94,7 @@ module.exports = {
                 .setFooter(`${by} helps`)
       
                 msg.channel.send(Topic).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         const topic = response2.content;
@@ -105,7 +105,7 @@ module.exports = {
                         .setTitle(`CHANGED CHANNEL TOPIC :file_folder::pencil:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been changed its topic", value: `\`\`\`${channel}\`\`\`` },
+                            { name: "A channel has been changed its topic", value: `\`\`\`${channel.name}\`\`\`` },
                             { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

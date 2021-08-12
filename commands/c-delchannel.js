@@ -53,11 +53,11 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 })
+            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 const channel = response1.mentions.channels.first();
-                let channelN = channel;
+                let channelN = channel.name;
                 if (!channel) {
                     const noChannel = new Discord.MessageEmbed()
                     .setColor("RANDOM")
@@ -82,7 +82,7 @@ module.exports = {
                 .setFooter(`${by} helps`)
       
                 msg.channel.send(Reason).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         const reason = response2.content;

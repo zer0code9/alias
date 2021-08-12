@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-function lala(msg, args) {
+function nameRank(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
     if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
@@ -58,18 +58,17 @@ module.exports = {
         const Role = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
-        .setDescription("Command: namerole")
+        .setDescription("Command: namerank")
         .addFields(
             { name: "Role Name", value: `I need a role's name to continue` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Role).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 })
+            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 const role = response1.mentions.roles.first();
-                let roleN = role;
                 if (!role) {
                     const noRole = new Discord.MessageEmbed()
                     .setColor("RANDOM")
@@ -87,25 +86,25 @@ module.exports = {
                 const Name = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: namechannel")
+                .setDescription("Command: namerank")
                 .addFields(
                     { name: "Name", value: `I need a name to continue` }
                 )
                 .setFooter(`${by} helps`)
       
                 msg.channel.send(Name).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         const name = response2.content;
         
-                        channel.setName(`${name}`)
+                        role.setName(`${name}`)
                         const Name = new Discord.MessageEmbed()
                         .setColor('RANDOM')
-                        .setTitle(`RENAMED CHANNEL :file_folder::pencil2:`)
-                        .setDescription('Channel')
+                        .setTitle(`RENAMED ROLE :label::pencil2:`)
+                        .setDescription('Rank')
                         .addFields(
-                            { name: "A channel has been renamed", value: `\`\`\`${channelN}\`\`\`` },
+                            { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
                             { name: "Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

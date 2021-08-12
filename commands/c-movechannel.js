@@ -81,7 +81,7 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send(Channel).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 })
+            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 const channel = response1.mentions.channels.first();
@@ -105,12 +105,12 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: movechannel")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Category", value: `I need a category id to continue` }
                 )
                 .setFooter(`${by} helps`)
       
                 msg.channel.send(Category).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 })
+                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         const category = response2.content;
@@ -122,12 +122,12 @@ module.exports = {
                         .setTitle(`${by} Commands`)
                         .setDescription("Command: movechannel")
                         .addFields(
-                            { name: "Reason", value: `I need a reason to continue` }
+                            { name: "Position", value: `I need a number to continue` }
                         )
                         .setFooter(`${by} helps`)
 
                         msg.channel.send(Position).then(() => {
-                            msg.channel.awaitMessages(filter2, { max: 1 })
+                            msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();
                                 const position = response3.content;
@@ -139,15 +139,43 @@ module.exports = {
                                 .setTitle("MOVED CHANNEL :file_folder::arrow_up_down:")
                                 .setDescription("Channel")
                                 .addFields(
-                                    { name: `The channel has changed places`, value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
+                                    { name: `A channel has changed place`, value: `\`\`\`${channel.name}\`\`\``},
+                                    { name: "New placement", value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
                                 )
                                 .setFooter(`${by} helps`)
                                 msg.channel.send(move);
+                            }).catch(error => {
+                                const Error = new Discord.MessageEmbed()
+                                .setColor("RANDOM")
+                                .setTitle("Canceled")
+                                .addFields(
+                                    { name: "Command Canceled", value: `Automatic cancelation`}
+                                )
+                                .setFooter(`${by} helps`)
+                                msg.channel.send(Error);
                             });
                         })
+                    }).catch(error => {
+                        const Error = new Discord.MessageEmbed()
+                        .setColor("RANDOM")
+                        .setTitle("Canceled")
+                        .addFields(
+                            { name: "Command Canceled", value: `Automatic cancelation`}
+                        )
+                        .setFooter(`${by} helps`)
+                        msg.channel.send(Error);
                     });
                 })
-            })
+            }).catch(error => {
+                const Error = new Discord.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Canceled")
+                .addFields(
+                    { name: "Command Canceled", value: `Automatic cancelation`}
+                )
+                .setFooter(`${by} helps`)
+                msg.channel.send(Error);
+            });
         })
     }
 }
