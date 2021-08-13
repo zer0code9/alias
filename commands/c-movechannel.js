@@ -2,61 +2,53 @@ const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/
 const Discord = require("discord.js");
 function moveChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     const category = args[1];
     const position = args[2];
-    if (channel) {
-        if (category) {
-            if (position) {
-                channel.setParent(`${category}`);
-                channel.setPosition(`${position}`);
-                const yes = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("MOVED CHANNEL :file_folder::arrow_heading_up:")
-                .setDescription("Channel")
-                .addFields(
-                    { name: `The channel has changed places`, value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(yes);
-            } else {
-                const noPosition = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by} Commands`)
-                .setDescription("Command: movechannel")
-                .addFields(
-                    { name: "No Position", value: `I need a position in order to move the channel`},
-                    { name: "Command", value: `Move the channel to a different place\n\`\`\`${prefix}movechannel [channel] [category:id] [place]\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(noPosition);
-            }
-        } else {
-            const noCategory = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: movechannel")
-            .addFields(
-                { name: "No Category", value: `I need a category in order to move the channel`},
-                { name: "Command", value: `Move the channel to a different place\n\`\`\`${prefix}movechannel [channel] [category:id] [place]\`\`\``}
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(noCategory);
-        }
-    } else {
-            
-        const noChannel = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: movechannel")
-        .addFields(
-            { name: "No Channel", value: `I need a channel in order to move it`},
-            { name: "Command", value: `Move the channel to a different place\n\`\`\`${prefix}movechannel [channel] [category:id] [place]\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noChannel);
-    }
+
+    const noChannel = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Channel", value: `I need a channel in order to move it`},
+        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!channel) return msg.channel.send(noChannel);
+
+    const noCategory = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Category", value: `I need a category in order to move the channel`},
+        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!category) return msg.channel.send(noCategory);
+
+    const noPosition = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Position", value: `I need a position in order to move the channel`},
+        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!position) return msg.channel.send(noPosition);
+
+    channel.setParent(`${category}`);
+    channel.setPosition(`${position}`);
+    const yes = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(":white_check_mark: :MOVED CHANNEL :file_folder::arrow_heading_up:")
+    .setDescription("Channel")
+    .addFields(
+        { name: `A channel has changed place`, value: `\`\`\`${channel.name}\`\`\``},
+        { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(yes);
 }
 
 module.exports = {
@@ -140,7 +132,7 @@ module.exports = {
                                 .setDescription("Channel")
                                 .addFields(
                                     { name: `A channel has changed place`, value: `\`\`\`${channel.name}\`\`\``},
-                                    { name: "New placement", value: `\`\`\`Category: ${category} Position: ${position}\`\`\``}
+                                    { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
                                 )
                                 .setFooter(`${by} helps`)
                                 msg.channel.send(move);

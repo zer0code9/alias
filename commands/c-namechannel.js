@@ -2,45 +2,41 @@ const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/
 const Discord = require("discord.js");
 function nameChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     const name = args.slice(1).join(" ");
-    if (channel) {
-        if (name) {
-            channel.setName(`${name}`)
-            const change = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("RENAMED CHANNEL :file_folder::pencil2:")
-            .setDescription("Channel")
-            .addFields(
-                { name: `The name of the channel ${channel.name} has changed`, value: `\`\`\`New channel name: ${name}\`\`\``}
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(change);
-        } else {
-            const noName = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: namechannel")
-            .addFields(
-                { name: "No name", value: `I need a name in order to rename the channel`},
-                { name: "Command:", value: `Change the name of a channel\n\`\`\`${prefix}namechannel [channel] [name]\`\`\``}
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(noName);
-        }
-} else {
-    const noRole = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle("WithersBot Commands")
-    .setDescription("Command: namechannel")
+
+    const noChannel = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(":warning: CANCELED :warning:")
     .addFields(
         { name: `No channel`, value: `I need a channel in order to rename it`},
-        { name: "Command:", value: `Change the name of a channel\n\`\`\`${prefix}namechannel [channel] [name]\`\`\`` }
+        { name: "Command:", value: `\`${prefix}namechannel [channel] [name]\`` }
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(noRole);
-}
+    if (!channel) return msg.channel.send(noChannel);
+
+    const noName = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(":warning: CANCELED :warning:")
+    .addFields(
+        { name: "No name", value: `I need a name in order to rename the channel`},
+        { name: "Command:", value: `\`${prefix}namechannel [channel] [name]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!name) return msg.channel.send(noName);
+
+    channel.setName(`${name}`)
+    const Name = new Discord.MessageEmbed()
+    .setColor('#00ff00')
+    .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
+    .setDescription('Channel')
+    .addFields(
+        { name: "A channel has been renamed", value: `\`\`\`${channel}\`\`\`` },
+        { name: "New Name", value: `\`\`\`${name}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(Name);
 }
 
 module.exports = {
@@ -49,6 +45,7 @@ module.exports = {
     example: prefix + "namechannel [channel] [name]",
     type: "channel",
     execute(msg, args) {
+        if (args[0]) {return nameChannel(msg, args)}
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
         if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
         let authorid = msg.author.id;
@@ -104,7 +101,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been renamed", value: `\`\`\`${channel.name}\`\`\`` },
+                            { name: "A channel has been renamed", value: `\`\`\`${channel}\`\`\`` },
                             { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

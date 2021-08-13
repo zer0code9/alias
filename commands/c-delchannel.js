@@ -2,34 +2,33 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function delChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     var reason = args.slice(1).join(" ");
-    if (channel) {
-        if (!reason) {return reason = "No reason";}
-        channel.delete();
-        const remove = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTitle(`DELETED CHANNEL :file_folder::heavy_minus_sign:`)
-        .setDescription('Channel')
-        .addFields(
-            { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
-            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(remove);
-    } else {
-        const noDelete = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTitle(`${by} Commands`)
-        .setDescription('Command: delchannel')
-        .addFields(
-            { name: "No Channel", value: `I need a channel in order to delete it`},
-            { name: "Command:", value: `Delete a channel\n\`\`\`${prefix}delchannel [channel]\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noDelete);
-    }
+
+    const noDelete = new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Channel", value: `I need a channel in order to delete it`},
+        { name: "Command:", value: `\`${prefix}delchannel [channel]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!channel) return msg.channel.send(noDelete);
+
+    if (!reason) reason = "No reason";
+
+    channel.delete();
+    const remove = new Discord.MessageEmbed()
+    .setColor('#00ff00')
+    .setTitle(`:white_check_mark: :DELETED CHANNEL :file_folder::heavy_sminus_sign:`)
+    .setDescription('Channel')
+    .addFields(
+        { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
+        { name: "Reason", value: `\`\`\`${reason}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(remove);
 }
 module.exports = {
     name: "delchannel",

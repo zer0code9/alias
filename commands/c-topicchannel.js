@@ -2,46 +2,41 @@ const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/
 const Discord = require("discord.js");
 function topicChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     const topic = args.slice(1).join(" ");
-    if (channel) {
-        if (topic) {
-            channel.setTopic(`${topic}`)
-            const change = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("CHANGED TOPIC :file_folder::pencil:")
-            .setDescription("Command: topicchannel")
-            .addFields(
-                { name: `The topic of the channel ${channel.name} has changed`, value: `The new topic: ${topic}`}
-            )
-            .setFooter("WithersBot helps")
-            msg.channel.send(change);
-        } else {
-            const noTopic = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: movechannel")
-            .addFields(
-                { name: "No topic", value: `I need a topic in order to change the topic of the channel`},
-                { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
-            )
-            .setFooter("WithersBot helps")
-            msg.channel.send(noTopic);
-        }
-    } else {
 
-        const noChannel = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: topicchannel")
-        .addFields(
-            { name: "No channel", value: `I need a channel in order to change its topic`},
-            { name: "Command:", value: `Change the topic of a channel\n\`\`\`${prefix}topicchannel [channel] [topic]\`\`\``}
-        )
-        .setFooter("WithersBot helps")
-        msg.channel.send(noChannel);
-    }
+    const noChannel = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No channel", value: `I need a channel in order to change its topic`},
+        { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!channel) return msg.channel.send(noChannel);
+
+    const noTopic = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No topic", value: `I need a topic in order to change the topic of the channel`},
+        { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!topic) return msg.channel.send(noTopic);
+
+    channel.setTopic(`${topic}`)
+    const Topic = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(":white_check_mark: CHANGED TOPIC :file_folder::pencil:")
+    .setDescription("Channel")
+    .addFields(
+        { name: "A channel has been changed its topic", value: `\`\`\`${channel.name}\`\`\`` },
+        { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(Topic);
 }
 
 module.exports = {

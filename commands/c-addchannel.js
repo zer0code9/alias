@@ -2,32 +2,31 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function addChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
     const name = args.join(" ");
-    if (name) {
-        msg.guild.channels.create(`${name}`);
-        const add = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("CREATED CHANNEL :file_folder::heavy_plus_sign:")
-        .setDescription("Channel")
-        .addFields(
-            { name: "A new channel has been created", value: `\`\`\`New channel name: ${name}\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(add);
-    } else {
-        const noAdd = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: addchannel")
-        .addFields(
-            { name: "No Name", value: `I need a name in order to create a new channel`},
-            { name: "Command:", value: `Create a new channel\n\`\`\`${prefix}addchannel [name]\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noAdd);
-    }
+
+    const noAdd = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Name", value: `I need a name in order to create a new channel`},
+        { name: "Command:", value: `\`${prefix}addchannel [name]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!name) return msg.channel.send(noAdd);
+
+    //msg.guild.channels.create(`${name}`);
+    const Add = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
+    .setDescription("Channel")
+    .addFields(
+        { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
+        { name: "To change channel position:", value: `Use \`\`\`zmovechannel\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(Add);
 }
 
 module.exports = {
@@ -64,7 +63,7 @@ module.exports = {
                 .setDescription("Channel")
                 .addFields(
                     { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
-                    { name: "To change channel position:", value: `Use \`\`\`zmovechannel\`\`\``}
+                    { name: "To change channel position:", value: `Use \`zmovechannel\``}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Add);       

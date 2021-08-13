@@ -1,67 +1,70 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function muteUser(msg, args) {
-  const user = msg.mentions.users.first();
-  const reason = args.slice(1).join(" ");
+    if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
+    if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to unmute someone, ${msg.author}`)
+    const user = msg.mentions.users.first();
+    const reason = args.slice(1).join(" ");
 
-  if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
-  if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to unmute someone, ${msg.author}`)
+    const noTag = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No User", value: `I need an username in order to mute someone.` },
+        { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
+        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+    if (!user) return msg.channel.send(noTag);
 
-    if (user) {
-      if (!msg.guild.member(user).manageable) return msg.channel.send(`I cant mute ${user}`);
-        const member = msg.guild.member(user);
-        if (member) {
-          const noReason = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("MUTED MEMBER :bust_in_silhouette::mute:")
-        .setDescription("Moderation")
-        .addFields(
-          { name: "No Reason", value: `I need a reason in order to mute someone`},
-          { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        if(!reason) return msg.channel.send(noReason)
+    const member = msg.guild.member(user);
 
-        //member.mute()
-        const muted = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: mute")
-        .addFields(
-          { name: "Successful", value: `${user.username} has been successfully muted on ${msg.channel.name}.` },
-          { name: "Reason:", value: `${reason}`},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(muted);
-        } else {
-          const noMember = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: mute")
-        .addFields(
-          { name: "No Member", value: `I don't know that member` },
-          { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noMember);
-        }
+    const noMute = new Discord.MessageEmbed()
+    .setColor("#ffa500")
+    .setTitle(`CANCELED`)
+    .addFields(
+        { name: "Not Manageable", value: `The user you are trying to mute is not manageable.` },
+        { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
+        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+    if (!member.manageable) return msg.channel.send(noMute);
 
-      } else {
-        const noTag = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: mute")
-        .addFields(
-          { name: "No User", value: `I need an username in order to mute someone.` },
-          { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noTag);
-      }
+    const noMember = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Member", value: `I don't know that member` },
+        { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
+        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+    if (!member) return msg.channel.send(noMember);
+
+    const noReason = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Reason", value: `I need a reason in order to mute someone`},
+        { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
+        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+    if(!reason) return msg.channel.send(noReason);
+
+    member.setMute(true, reason);
+    const muted = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(":white_check_mark: MUTED MEMBER :bust_in_silhouette::mute:")
+    .setDescription("Moderation")
+    .addFields(
+        { name: "A member has been muted", value: `\`\`\`${user.username}\`\`\`` },
+        { name: "On Channel:", value: `\`\`\`${msg.channel.name}\`\`\``},
+        { name: "Reason:", value: `\`\`\`${reason}\`\`\``},
+        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(muted);
 }
 
 module.exports = {
@@ -91,9 +94,10 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                const user = msg.guild.member(response1.mentions.users.first());
-                if (!user.manageable) return msg.channel.send(`I cant mute ${user}`);
-                if (!user) {
+                const user = response1.mentions.users.first()
+                const member = msg.guild.member(user);
+                if (!member.manageable) return msg.channel.send(`I cant mute ${user}`);
+                if (!member) {
                     const noMember = new Discord.MessageEmbed()
                     .setColor("#ff0000")
                     .setTitle(`:warning: CANCELED :warning:`)
@@ -124,13 +128,13 @@ module.exports = {
                         const response2 = collected2.first();
                         const reason = response2.content;
     
-                      //user.mute(reason);
+                      //member.mute(reason);
                       const mute = new Discord.MessageEmbed()
                       .setColor("#00ff00")
                       .setTitle(`:white_check_mark: MUTED MEMBER :bust_in_silhouette::mute:`)
                       .setDescription("Moderation")
                       .addFields(
-                          { name: "Muted Member", value: `\`\`\`${user.tag}\`\`\`` },
+                          { name: "Muted Member", value: `\`\`\`${user.username}\`\`\`` },
                           { name: "Reason", value: `\`\`\`${reason}\`\`\``},
                           { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
                       )
