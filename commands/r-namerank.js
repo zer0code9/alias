@@ -5,42 +5,38 @@ function nameRank(msg, args) {
     if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
-    if (role) {
-            if (name) {
-                role.setName(`${name}`)
-                const change = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("RENAMED ROLE :label::pencil2:")
-                .setDescription("Rank")
-                .addFields(
-                    { name: `The name of the role ${role.name} has changed`, value: `\`\`\`New role name: ${name}\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(change);
-            } else {
-                const noName = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by} Commands`)
-                .setDescription("Command: namerank")
-                .addFields(
-                    { name: "No name", value: `I need a name in order to rename the role`},
-                    { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namerank [role] [name]\`\`\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(noName);
-            }
-    } else {
-        const noRole = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: namerank")
-        .addFields(
-            { name: `No role`, value: `I need a role in order to rename it`},
-            { name: "Command:", value: `Change the name of a role\n\`\`\`${prefix}namerank [role] [name]\`\`\`` }
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noRole);
-    }
+
+    const noRole = new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: `No role`, value: `I need a role in order to rename it`},
+        { name: "Command:", value: `\`${prefix}namerank [role] [name]\`` }
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(noRole);
+
+    const noName = new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No name", value: `I need a name in order to rename the role`},
+        { name: "Command:", value: `\`${prefix}namerank [role] [name]\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(noName);
+
+    role.setName(`${name}`)
+    const Name = new Discord.MessageEmbed()
+    .setColor('#00ff00')
+    .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
+    .setDescription('Rank')
+    .addFields(
+        { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
+        { name: "Name", value: `\`\`\`${name}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(Name);
 }
 
 module.exports = {
@@ -100,8 +96,8 @@ module.exports = {
         
                         role.setName(`${name}`)
                         const Name = new Discord.MessageEmbed()
-                        .setColor('RANDOM')
-                        .setTitle(`RENAMED ROLE :label::pencil2:`)
+                        .setColor('#00ff00')
+                        .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
                         .setDescription('Rank')
                         .addFields(
                             { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
@@ -111,10 +107,10 @@ module.exports = {
                         msg.channel.send(Name);
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle("Canceled")
+                        .setColor("#ff0000")
+                        .setTitle(`:warning: CANCELED :warning:`)
                         .addFields(
-                            { name: "Command Canceled", value: `Automatic cancelation`}
+                            { name: "Command Canceled", value: `Timeout cancelation`}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Error);  
@@ -122,10 +118,10 @@ module.exports = {
                 })
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(`:warning: CANCELED :warning:`)
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  

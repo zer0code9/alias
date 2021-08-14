@@ -2,44 +2,43 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function delRank(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
-    var reason = args.slice(1).join(" ");
-    if (role) {
-        if (!reason) return reason = "No reason"
-        role.delete();
-        const remove = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTitle(`DELETED ROLE :label::heavy_minus_sign:`)
-        .setDescription('Rank')
-        .addFields(
-            { name: "A channel has been deleted", value: `\`\`\`${args}\`\`\`` },
-            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(remove);
-    } else {
-        const noDelete = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTitle(`${by} Commands`)
-        .setDescription('Command: delrank')
-        .addFields(
-            { name: "No Channel", value: `I need a channel in order to delete it`},
-            { name: "Command:", value: `Delete a role\n\`\`\`${prefix}delrank [role]\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noDelete);
-    }
+    let reason = args.slice(1).join(" ");
+
+    const noDelete = new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Role", value: `I need a role in order to delete it`},
+        { name: "Command:", value: `\`${prefix}delrank [role] [reason]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!role) return msg.channel.send(noDelete);
+
+    if (!reason) reason = "No reason";
+
+    role.delete();
+    const remove = new Discord.MessageEmbed()
+    .setColor('#00ff00')
+    .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
+    .setDescription('Rank')
+    .addFields(
+        { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
+        { name: "Reason", value: `\`\`\`${reason}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(remove);
 }
 
 module.exports = {
     name: "delrank",
     description: "Delete a role",
-    example: prefix + "delrank [role]",
+    example: prefix + "delrank [role] [reason]",
     type: "rank",
     execute(msg, args) {
         if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-        if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -61,8 +60,8 @@ module.exports = {
                 let roleN = role.name;
                 if (!Role) {
                     const noRole = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(`Canceled`)
+                    .setColor("#ff0000")
+                    .setTitle(`:warning: CANCELED :warning:`)
                     .addFields(
                         { name: "No Role", value: `I need a valid role name` },
                         { name: "Command Canceled", value: `Wrong answer cancelation`}
@@ -90,8 +89,8 @@ module.exports = {
         
                         role.delete();
                         const Remove = new Discord.MessageEmbed()
-                        .setColor('RANDOM')
-                        .setTitle(`DELETED ROLE :label::heavy_minus_sign:`)
+                        .setColor('#00ff00')
+                        .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
                         .setDescription('Rank')
                         .addFields(
                             { name: "A role has been deleted", value: `\`\`\`${roleN}\`\`\`` },
@@ -101,10 +100,10 @@ module.exports = {
                         msg.channel.send(Remove);
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle("Canceled")
+                        .setColor("#ff0000")
+                        .setTitle(":x: CANCELED :x:")
                         .addFields(
-                            { name: "Command Canceled", value: `Automatic cancelation`}
+                            { name: "Command Canceled", value: `Timeout cancelation`}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Error);  
@@ -112,10 +111,10 @@ module.exports = {
                 })
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  

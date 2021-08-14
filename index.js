@@ -39,7 +39,7 @@ bot.on("message" , msg=>{
     const member = msg.mentions.members.first();
 
     if (!bot.commands.has(command)){
-        msg.reply(`I don't know the command ${command}. Try zhelp for more commands!`);
+        msg.reply(`I don't know the command ${command}.`);
     } else
     try {
         bot.commands.get(command).execute(msg, args, cmds, bot);

@@ -4,9 +4,9 @@ function delChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
     const channel = msg.mentions.channels.first();
-    var reason = args.slice(1).join(" ");
+    let reason = args.slice(1).join(" ");
 
-    const noDelete = new Discord.MessageEmbed()
+    const noChannel = new Discord.MessageEmbed()
     .setColor('#ff0000')
     .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
@@ -14,12 +14,12 @@ function delChannel(msg, args) {
         { name: "Command:", value: `\`${prefix}delchannel [channel]\``}
     )
     .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noDelete);
+    if (!channel) return msg.channel.send(noChannel);
 
     if (!reason) reason = "No reason";
 
     channel.delete();
-    const remove = new Discord.MessageEmbed()
+    const Remove = new Discord.MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: :DELETED CHANNEL :file_folder::heavy_sminus_sign:`)
     .setDescription('Channel')
@@ -28,7 +28,7 @@ function delChannel(msg, args) {
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(remove);
+    msg.channel.send(Remove);
 }
 module.exports = {
     name: "delchannel",

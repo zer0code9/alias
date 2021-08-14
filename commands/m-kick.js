@@ -3,66 +3,65 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 
 function kickUser(msg, args) {
-  const user = msg.mentions.users.first();
-  const reason = args.slice(1).join(" ");
+    if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
+    const user = msg.mentions.users.first();
+    const reason = args.slice(1).join(" ");
 
-  if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
-  if(!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
-    if (user) {
-      if (!msg.guild.member(user).kickable) return msg.channel.send(`I cant kick ${user}`);
-        const member = msg.guild.member(user);
-        if (member) {
-        const noReason = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: kick")
-        .addFields(
-          { name: "No Reason", value: `I need a reason in order to kick someone`},
-          { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        if(!reason) return msg.channel.send(noReason)
+    const noTag = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No User", value: `I need an username in order to kick someone.` },
+        { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(noTag);
 
-        //member.kick()
-        const kicked = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: kick")
-        .addFields(
-          { name: "Successful", value: `${user.username} has been successfully kicked from ${msg.guild.name}.` },
-          { name: "Reason:", value: `${reason}`},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(kicked);
-        } else {
-          const noMember = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: kick")
-        .addFields(
-          { name: "No Member", value: `I don't know that member` },
-          { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noMember);
-        }
+    const member = msg.guild.member(user);
 
-      } else {
-        const noTag = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: kick")
-        .addFields(
-          { name: "No User", value: `I need an username in order to kick someone.` },
-          { name: "Command", value: `Kick a member\n\`\`\`${prefix}kick [member] [reason]\`\`\``},
-          { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noTag);
-      }
+    const noKick = new Discord.MessageEmbed()
+    .setColor("#ffa500")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "Not Kickable", value: `The user you are trying to mute is not kickable.` },
+        { name: "Command:", value: `\`${prefix}kick [member] [reason]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!member.kickable) return msg.channel.send(noKick);
+
+    const noMember = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Member", value: `I don't know that member` },
+        { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!member) return msg.channel.send(noMember);
+
+    const noReason = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+      { name: "No Reason", value: `I need a reason in order to kick someone`},
+      { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
+    )
+    .setFooter(`${by} helps`)
+    if(!reason) return msg.channel.send(noReason);
+
+    //member.kick(reason)
+    const Kick = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
+    .setDescription("Moderation")
+    .addFields(
+        { name: "Kicked Member", value: `\`\`\`${user.tag}\`\`\`` },
+        { name: "Reason", value: `\`\`\`${reason}\`\`\``},
+        { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(Kick);
 }
 
 module.exports = {
@@ -83,8 +82,7 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
-            { name: "Username", value: `I need a member's username to continue` },
-            { name: `**NOTE**`, value: `**Only use "kick" when someone has a bad behavior**`}
+            { name: "Username", value: `I need a member's username to continue` }
         )
         .setFooter(`${by} helps`)
 
@@ -101,8 +99,7 @@ module.exports = {
                     .setTitle(`:warning: CANCELED :warning:`)
                     .addFields(
                         { name: "No Member", value: `I need a valid member username.` },
-                        { name: "Command Canceled", value: `Wrong answer concelation`},
-                        { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+                        { name: "Command Canceled", value: `Wrong answer concelation`}
                     )
                     .setFooter(`${by} helps`)
                     msg.channel.send(noMember);
@@ -115,8 +112,7 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: kick")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` },
-                    { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+                    { name: "Reason", value: `I need a reason to continue` }
                 )
                 .setFooter(`${by} helps`)
 
@@ -133,8 +129,7 @@ module.exports = {
                         .setDescription("Moderation")
                         .addFields(
                             { name: "Kicked Member", value: `\`\`\`${user.tag}\`\`\`` },
-                            { name: "Reason", value: `\`\`\`${reason}\`\`\``},
-                            { name: `**NOTE**`, value: `**Only use "kick" when someone has a really bad behavior**`}
+                            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Kick)

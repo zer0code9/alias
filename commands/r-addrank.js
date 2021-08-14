@@ -2,32 +2,31 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function addRank(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
     const role = msg.mentions.roles.first();
     const name = args.join(" ");
-    if (name) {
-        msg.guild.roles.create({ data: { name: `${name}` } });
-        const add = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("CREATED ROLE :label::heavy_plus_sign:")
-        .setDescription("Rank")
-        .addFields(
-            { name: "A new role has been created", value: `\`\`\`New role name: ${name}\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(add);
-    } else {
-        const noAdd = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: addrank")
-        .addFields(
-            { name: "No Name", value: `I need a name in order to create a new role`},
-            { name: "Command:", value: `Create a new rank\n\`\`\`${prefix}addrank [name]\`\`\``}
-        )
-        .setFooter(`${by} helps`)
-        msg.channel.send(noAdd);
-    }
+
+    const noAdd = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Name", value: `I need a name in order to create a new role`},
+        { name: "Command:", value: `\`${prefix}addrank [name]\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!name) return msg.channel.send(noAdd);
+
+    msg.guild.roles.create({ data: { name: `${name}` } });
+    const add = new Discord.MessageEmbed()
+    .setColor("#00ff00")
+    .setTitle(":white_check_mark: CREATED CHANNEL :label::heavy_plus_sign:")
+    .setDescription("Rank")
+    .addFields(
+        { name: "A new role has been created", value: `\`\`\`${name}\`\`\``},
+        { name: "To change role color:", value: `Use \`zcolorrank\``}
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(add);
 }
 
 module.exports = {
@@ -36,8 +35,9 @@ module.exports = {
     example: prefix + "addrank [name]",
     type: "rank",
     execute(msg, args) {
+        if (args[0]) {return addRank(msg, args)}
         if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-        if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -55,24 +55,24 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const name = collected1.first();
-                msg.guild.roles.create({ data: { name: `${name}` } });
 
+                msg.guild.roles.create({ data: { name: `${name}` } });
                 const Add = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("CREATED CHANNEL :label::heavy_plus_sign:")
+                .setColor("#00ff00")
+                .setTitle(":white_check_mark: CREATED CHANNEL :label::heavy_plus_sign:")
                 .setDescription("Rank")
                 .addFields(
                     { name: "A new role has been created", value: `\`\`\`${name}\`\`\``},
-                    { name: "To change role color:", value: `Use \`\`\`zcolorrank\`\`\``}
+                    { name: "To change role color:", value: `Use \`zcolorrank\``}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Add);
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Canceled")
+                .setColor("#ff0000")
+                .setTitle(":x: CANCELED :x:")
                 .addFields(
-                    { name: "Command Canceled", value: `Automatic cancelation`}
+                    { name: "Command Canceled", value: `Timeout cancelation`}
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Error);  

@@ -5,8 +5,8 @@ function banUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
     if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
     const user = msg.mentions.users.first();
-    const reason = args.slice(2).join(" ");
     let days = args[1];
+    let reason = args.slice(2).join(" ");
 
     const noTag = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -22,7 +22,7 @@ function banUser(msg, args) {
 
     const noBan = new Discord.MessageEmbed()
     .setColor("#ffa500")
-    .setTitle(`CANCELED`)
+    .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
         { name: "Not Manageable", value: `The user you are trying to mute is not manageable.` },
         { name: "Command:", value: `\`${prefix}ban [member] [days] [reason]\``}
@@ -50,10 +50,10 @@ function banUser(msg, args) {
     .setFooter(`${by} helps`)
     if (!reason) return msg.channel.send(noReason);
 
-    if (!days) days = 1;
+    if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
 
     //member.ban({ days, reason: `${reason}`})
-    const ban = new Discord.MessageEmbed()
+    const Ban = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
     .setDescription("Moderation")
@@ -61,10 +61,10 @@ function banUser(msg, args) {
         { name: "Banned Member", value: `\`\`\`${user.tag}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``},
         { name: "Days Banned", value: `\`\`\`${days}\`\`\``},
-        { name: "By", value: `\`\`\`${msg.author}\`\`\``}
+        { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(ban);
+    msg.channel.send(Ban);
 }
 
 module.exports = {
@@ -150,7 +150,8 @@ module.exports = {
                             .addFields(
                                 { name: "Banned Member", value: `\`\`\`${user.tag}\`\`\`` },
                                 { name: "Reason", value: `\`\`\`${reason}\`\`\``},
-                                { name: "Days Banned", value: `\`\`\`${days}\`\`\``}
+                                { name: "Days Banned", value: `\`\`\`${days}\`\`\``},
+                                { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
                             )
                             .setFooter(`${by} helps`)
                             msg.channel.send(Ban)

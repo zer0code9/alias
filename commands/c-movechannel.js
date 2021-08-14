@@ -39,7 +39,7 @@ function moveChannel(msg, args) {
 
     channel.setParent(`${category}`);
     channel.setPosition(`${position}`);
-    const yes = new Discord.MessageEmbed()
+    const Move = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: :MOVED CHANNEL :file_folder::arrow_heading_up:")
     .setDescription("Channel")
@@ -48,7 +48,7 @@ function moveChannel(msg, args) {
         { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(yes);
+    msg.channel.send(Move);
 }
 
 module.exports = {

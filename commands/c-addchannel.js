@@ -6,7 +6,7 @@ function addChannel(msg, args) {
     const channel = msg.mentions.channels.first();
     const name = args.join(" ");
 
-    const noAdd = new Discord.MessageEmbed()
+    const noName = new Discord.MessageEmbed()
     .setColor("#ff0000")
     .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
@@ -14,7 +14,7 @@ function addChannel(msg, args) {
         { name: "Command:", value: `\`${prefix}addchannel [name]\``}
     )
     .setFooter(`${by} helps`)
-    if (!name) return msg.channel.send(noAdd);
+    if (!name) return msg.channel.send(noName);
 
     //msg.guild.channels.create(`${name}`);
     const Add = new Discord.MessageEmbed()
@@ -23,7 +23,7 @@ function addChannel(msg, args) {
     .setDescription("Channel")
     .addFields(
         { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
-        { name: "To change channel position:", value: `Use \`\`\`zmovechannel\`\`\``}
+        { name: "To change channel position:", value: `Use \`zmovechannel\``}
     )
     .setFooter(`${by} helps`)
     msg.channel.send(Add);
@@ -66,7 +66,8 @@ module.exports = {
                     { name: "To change channel position:", value: `Use \`zmovechannel\``}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(Add);       
+                msg.channel.send(Add);
+                    
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
                 .setColor("#ff0000")
