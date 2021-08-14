@@ -67,6 +67,7 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
                 msg.channel.send(Add);
+                
             }).catch(error => {
                 const Error = new Discord.MessageEmbed()
                 .setColor("#ff0000")

@@ -72,7 +72,7 @@ module.exports = {
     execute(msg, args){
         if (args[0]) {return kickUser(msg, args)}
         if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
-        if(!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
+        if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -133,6 +133,7 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Kick)
+                        
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
                         .setColor("#ff0000")
