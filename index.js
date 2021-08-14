@@ -42,7 +42,7 @@ bot.on("message" , msg=>{
         msg.reply(`I don't know the command ${command}.`);
     } else
     try {
-        bot.commands.get(command).execute(msg, args, cmds, bot);
+        bot.commands.get(command).execute(msg, args, bot);
     } catch (error) {
         msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }

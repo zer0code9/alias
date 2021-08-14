@@ -32,7 +32,7 @@ function nameChannel(msg, args) {
     .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
     .setDescription('Channel')
     .addFields(
-        { name: "A channel has been renamed", value: `\`\`\`${channel}\`\`\`` },
+        { name: "A channel has been renamed", value: `\`\`\`${channel.name}\`\`\`` },
         { name: "New Name", value: `\`\`\`${name}\`\`\``}
     )
     .setFooter(`${by} helps`)
@@ -101,7 +101,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been renamed", value: `\`\`\`${channel}\`\`\`` },
+                            { name: "A channel has been renamed", value: `\`\`\`${channel.name}\`\`\`` },
                             { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

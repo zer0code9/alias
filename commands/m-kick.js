@@ -16,7 +16,7 @@ function kickUser(msg, args) {
         { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(noTag);
+    if (!user) return msg.channel.send(noTag);
 
     const member = msg.guild.member(user);
 
@@ -133,7 +133,7 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send(Kick)
-                        
+
                     }).catch(error => {
                         const Error = new Discord.MessageEmbed()
                         .setColor("#ff0000")
