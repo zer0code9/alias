@@ -20,9 +20,9 @@ function membersRole(msg, args) {
     if (membermap.length > 1024) membermap = "To many members to display";
     if (!membermap) membermap = `No member with role ${role}`;
     const roleInfo = new Discord.MessageEmbed()
-    .setColor(`${role.hexColor}`)
+    .setColor(`#00ff00`)
     .setTitle(`${by} Commands`)
-    .setDescription("Command: members")
+    .setDescription("Info")
     .addFields(
         { name: `All Members with ${role.name}`, value: `${membermap}`}
     )  

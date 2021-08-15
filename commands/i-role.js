@@ -2,41 +2,39 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function la(msg, args) {
     const role = msg.mentions.roles.first();
-    if (role) {
-        var pe;
-        //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
-            var cre = role.createdAt;
-            const roleInfo = new Discord.MessageEmbed()
-            .setColor(`${role.hexColor}`)
-            .setTitle(":label: ROLE INFO :label:")
-            .setDescription("Info")
-            .addFields(
-                [
-                    { name: "Role Name", value: `\`\`\`${role.name}\`\`\``, inline: true},
-                    { name: "Role Id", value: `\`\`\`${role.id}\`\`\``, inline: true },
-                ],
-                { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
-                [
-                    { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
-                    { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
-                    { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
-                ]
-                
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(roleInfo);
-    } else {
-            const noRole = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle(`${by} Commands`)
-            .setDescription("Command: role")
-            .addFields(
-                { name: "No Role", value: `I need a role in order to return info about it`},
-                { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
-            )
-            .setFooter(`${by} helps`)
-            msg.channel.send(noRole);
-    }
+
+    const noRole = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:warning: CANCELED :warning:`)
+    .addFields(
+        { name: "No Role", value: `I need a role in order to return info about it`},
+        { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
+    )
+    .setFooter(`${by} helps`)
+    if (!role) return msg.channel.send(noRole);
+
+    var pe;
+    //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
+    var cre = role.createdAt;
+    const roleInfo = new Discord.MessageEmbed()
+    .setColor(`#00ff00`)
+    .setTitle(":label: ROLE INFO :label:")
+    .setDescription("Info")
+    .addFields(
+        [
+            { name: "Role Name", value: `\`\`\`${role.name}\`\`\``, inline: true},
+            { name: "Role Id", value: `\`\`\`${role.id}\`\`\``, inline: true },
+        ],
+        { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+        [
+            { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
+            { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
+            { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
+        ]
+        
+    )
+    .setFooter(`${by} helps`)
+    msg.channel.send(roleInfo);
 }
 
 module.exports = {

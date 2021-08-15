@@ -14,7 +14,7 @@ function today(msg, args) {
     let dates = tdy.toDateString();
 
     const todayDate = new Discord.MessageEmbed()
-        .setColor("RANDOM")
+        .setColor("#00ff00")
         .setTitle(":clock12: TIME INFO :clock12:")
         .setDescription(`Info`)
         .addFields(
