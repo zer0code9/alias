@@ -52,7 +52,7 @@ function banUser(msg, args) {
 
     if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
 
-    //member.ban({ days, reason: `${reason}`})
+    member.ban({ days, reason: `${reason}`})
     const Ban = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
@@ -142,7 +142,7 @@ module.exports = {
                             const response3 = collected3.first();
                             const days = response3.content;
 
-                            //member.ban({ days, reason: `${reason}`})
+                            member.ban({ days, reason: `${reason}`})
                             const Ban = new Discord.MessageEmbed()
                             .setColor("#00ff00")
                             .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)

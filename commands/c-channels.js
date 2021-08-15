@@ -10,11 +10,11 @@ function channels(msg, args) {
             if (channelmap.length > 1024) channelmap = "To many channels to display";
             if (!channelmap) rolemap = "No channels"; 
     const channels = new Discord.MessageEmbed()
-    .setColor('RANDOM')
-    .setTitle(`${by} Commands`)
-    .setDescription('Commands: channels')
+    .setColor('#00ff00')
+    .setTitle(`:file_folder: CHANNEL INFO :file_folder: `)
+    .setDescription('Channel')
     .addFields(
-        { name: `All Channels of ${msg.guild}`, value: `${channelmap}`}
+        { name: `All Channels of ${msg.guild.name}`, value: `${channelmap}`}
     )
     .setFooter(`${by} helps`)
     msg.channel.send(channels);
@@ -24,7 +24,7 @@ module.exports = {
     name: "channels",
     description: "Get a list of all the channels of the server",
     example: prefix + "channels",
-    type: "rank",
+    type: "Channel",
     execute(msg, args) {
         channels(msg, args);
     }

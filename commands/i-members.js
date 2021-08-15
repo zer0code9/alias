@@ -8,7 +8,7 @@ function membersRole(msg, args) {
     .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
         { name: "No Role", value: `I need a role in order to return info about it`},
-        { name: "Command", value: `Get the names of members that have a certain role\n\`\`\`${prefix}members [role]\`\`\``}
+        { name: "Command", value: `\`${prefix}members [role]\``}
     )
     .setFooter(`${by} helps`)
     if (!role) return msg.channel.send(noRole);

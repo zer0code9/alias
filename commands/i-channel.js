@@ -9,9 +9,10 @@ function channel(msg, args) {
     .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
         { name: "No Channel", value: `I need a channel in order to return info about it`},
-        { name: "Command", value: `Get info on a channel\n\`\`\`${prefix}channel [channel]\`\`\``}
+        { name: "Command", value: `\`${prefix}channel [channel]\``}
     )
     .setFooter(`${by} helps`)
+    if (!channel) return msg.channel.send(noChannel);
     //if (!channel) id = args.join(" ");    
 
     /*
@@ -38,7 +39,7 @@ function channel(msg, args) {
 
     var cre = channel.createdAt;
     var to;
-    if (channel.topic == "null" || "undefined") {to = "No topic"} else {to = `${channel.topic}`}
+    if (!channel.topic) {to = "No topic"} else {to = `${channel.topic}`}
     const Info = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":file_folder: CHANNEL INFO :file_folder:")

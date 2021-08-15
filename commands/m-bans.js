@@ -2,18 +2,17 @@ const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to see ban users, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to see ban users, ${msg.author}`)
-    var num;
-    var bans = msg.guild.fetchBans();
-    if (!bans) {num = "0", bans = "Nobody was banned"}
-    if (bans) return num = bans.length
+    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to see ban users, ${msg.author}`)
+    var guild = msg.guild;
+    //var bans = guild.bans.fetch();
+    //if (!bans) {bans = "Nobody was banned"}
     if (msg.member.hasPermission("BAN_MEMBERS")) {
         const banned = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Comamnds`)
         .setDescription("Command: bans")
         .addFields(
-            { name: `Banned members (${num})`, value: `${bans}`}
+            { name: `Banned members (${guild.fetchBans().size})`, value: `${guild.name}`}
         )
         .setFooter(`${by} helps`)
         msg.channel.send(banned);

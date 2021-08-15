@@ -26,7 +26,7 @@ function unbanUser(msg, args) {
     .setFooter(`${by} helps`)
     if (!reason) return msg.channel.send(noReason);
 
-    //msg.guild.members.unban(user, `${reason}`)
+    msg.guild.members.unban(user, `${reason}`)
     const Unban = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: UNBANNED MEMBER :bust_in_silhouette::o:`)

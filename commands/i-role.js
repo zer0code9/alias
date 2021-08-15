@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-function la(msg, args) {
+function role(msg, args) {
     const role = msg.mentions.roles.first();
 
     const noRole = new Discord.MessageEmbed()
@@ -8,7 +8,7 @@ function la(msg, args) {
     .setTitle(`:warning: CANCELED :warning:`)
     .addFields(
         { name: "No Role", value: `I need a role in order to return info about it`},
-        { name: "Command", value: `Get info on a role\n\`\`\`${prefix}role [role]\`\`\``}
+        { name: "Command", value: `\`${prefix}role [role]\``}
     )
     .setFooter(`${by} helps`)
     if (!role) return msg.channel.send(noRole);
@@ -43,6 +43,6 @@ module.exports = {
     example: prefix + "role [role]",
     type: "info",
     execute(msg, args) {
-        la(msg, args);
+        role(msg, args);
     }
 }
