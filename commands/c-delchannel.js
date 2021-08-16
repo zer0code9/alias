@@ -1,5 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Wronganswer, Cancel } = require("../errors");
 function delChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permission to manage channels, ${msg.author}`)
@@ -21,7 +22,7 @@ function delChannel(msg, args) {
     channel.delete();
     const Remove = new Discord.MessageEmbed()
     .setColor('#00ff00')
-    .setTitle(`:white_check_mark: :DELETED CHANNEL :file_folder::heavy_sminus_sign:`)
+    .setTitle(`:white_check_mark: :DELETED CHANNEL :file_folder::heavy_minus_sign:`)
     .setDescription('Channel')
     .addFields(
         { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
@@ -48,7 +49,8 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: delchannel")
         .addFields(
-            { name: "Channel Name", value: `I need a channel's name to continue` }
+            { name: "Channel Name", value: `I need a channel's name to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
@@ -56,19 +58,10 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
+                if (response1 == `cancel`) return Cancel(msg);
                 const channel = response1.mentions.channels.first();
                 let channelN = channel.name;
-                if (!channel) {
-                    const noChannel = new Discord.MessageEmbed()
-                    .setColor("#ff0000")
-                    .setTitle(`:warning: CANCELED :warning:`)
-                    .addFields(
-                    { name: "No Channel", value: `I need a valid channel name` },
-                    { name: "Command Canceled", value: `Wrong answer cancelation`}
-                    )
-                    .setFooter(`${by} helps`)
-                    return msg.channel.send(noChannel);
-                }
+                if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
@@ -77,7 +70,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: delchannel")
                 .addFields(
-                { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Reason", value: `I need a reason to continue` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
       
@@ -85,6 +79,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
+                        if (response2 == `cancel`) return Cancel(msg);
                         const reason = response2.content;
         
                         channel.delete();
@@ -100,25 +95,11 @@ module.exports = {
                         msg.channel.send(Remove);
 
                     }).catch(error => {
-                        const Error = new Discord.MessageEmbed()
-                        .setColor("#ff0000")
-                        .setTitle(":x: CANCELED :x:")
-                        .addFields(
-                            { name: "Command Canceled", value: `Timeout cancelation`}
-                        )
-                        .setFooter(`${by} helps`)
-                        msg.channel.send(Error);  
+                        Timeout(msg);
                     });
                 })
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(":x: CANCELED :x:")
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                Timeout(msg);
             });
         })
     }

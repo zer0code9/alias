@@ -1,5 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Cancel } = require("../errors");
 function addChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`You don't have the permission to manage channels, ${msg.author}`)
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return msg.channel.send(`I dont have the permissions to manage channels, ${msg.author}`)
@@ -47,14 +48,17 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: addchannel")
         .addFields(
-            { name: "Name", value: `I need a name to continue` }
+            { name: "Name", value: `I need a name to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Name).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
-                const name = collected1.first();
+                const response1 = collected1.first();
+                if (response1 === `cancel`) return Cancel(msg);
+                const name = response1;
                 msg.guild.channels.create(`${name}`);
 
                 const Add = new Discord.MessageEmbed()
@@ -69,14 +73,7 @@ module.exports = {
                 msg.channel.send(Add);
 
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(":x: CANCELED :x:")
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                Timeout(msg);
             });
         })
     }
