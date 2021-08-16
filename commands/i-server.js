@@ -30,9 +30,9 @@ function server(msg, args) {
                 { name: "Server Id", value: `\`\`\`${guild.id}\`\`\`` , inline: true},
             ],
                 { name: "Create on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
-                { name: `Server Members [${total}]`, value: `\`\`\`Users: ${users} | Bots: ${bots}\`\`\`` },
                 { name: 'Server Region', value: `\`\`\`${guild.region}\`\`\`` },
                 { name: 'Server Owner', value: `\`\`\`${guild.owner.user.username}\`\`\``},
+                { name: `Server Members [${total}]`, value: `\`\`\`Users: ${users} | Bots: ${bots}\`\`\`` },
                 { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nAnnouncement: ${newsChannels} | Store: ${storeChannels}\`\`\`` },
                 { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${guild.roles.highest.name}\`\`\`` },
                 { name: "System", value: `\`\`\`${sc}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}

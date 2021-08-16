@@ -1,5 +1,6 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
+const { Timeout, Wronganswer, Cancel } = require("../errors");
 const Discord = require("discord.js");
 function banUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
@@ -96,17 +97,16 @@ module.exports = {
               const user = response1.mentions.users.first()
               const member = msg.guild.member(user);
               if (!member.manageable) return msg.channel.send(`I cant ban ${user}`);
-              if (!member) {
-                  const noMember = new Discord.MessageEmbed()
-                  .setColor("RANDOM")
-                  .setTitle(`:warning: CANCELED :warning:`)
-                  .addFields(
-                      { name: "No Member", value: `I need a valid member username.` },
-                      { name: "Command Canceled", value: `Wrong answer concelation`}
-                  )
-                  .setFooter(`${by} helps`)
-                  msg.channel.send(noMember);
-              }
+
+              const noMember = new Discord.MessageEmbed()
+              .setColor("#ff0000")
+              .setTitle(`:warning: CANCELED :warning:`)
+              .addFields(
+                  { name: "No Member", value: `I need a valid member username.` },
+                  { name: "Command Canceled", value: `Wrong answer concelation`}
+              )
+              .setFooter(`${by} helps`)
+              if (!member) return msg.channel.send(noMember);
 
               const filter2 = response2 => { return response2.author.id === authorid; }
 

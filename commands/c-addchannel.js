@@ -16,7 +16,7 @@ function addChannel(msg, args) {
     .setFooter(`${by} helps`)
     if (!name) return msg.channel.send(noName);
 
-    //msg.guild.channels.create(`${name}`);
+    msg.guild.channels.create(`${name}`);
     const Add = new Discord.MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
