@@ -59,7 +59,8 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
         .addFields(
-            { name: "User Id", value: `I need a member's id to continue` }
+            { name: "User Id", value: `I need a member's id to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
 
@@ -77,7 +78,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: ban")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Reason", value: `I need a reason to continue` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
 
@@ -99,7 +101,7 @@ module.exports = {
                       )
                       .setFooter(`${by} helps`)
                       msg.channel.send(Unban);
-                      
+
                     }).catch(error => {
                         Timeout(msg);
                     });
