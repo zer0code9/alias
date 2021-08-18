@@ -1,10 +1,10 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
-const { Timeout, Wronganswer, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
 const Discord = require("discord.js");
 function banUser(msg, args) {
-    if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
-    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
+    if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
+    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I dont have the permission to ban members`);
     const user = msg.mentions.users.first();
     let days = args[1];
     let reason = args.slice(2).join(" ");
@@ -75,8 +75,8 @@ module.exports = {
     type: "moderation",
     execute(msg, args){
       if (args[0]) {return banUser(msg, args)}
-      if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to ban members, ${msg.author}`)
-      if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to ban members, ${msg.author}`)
+      if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
+      if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I dont have the permission to ban members`);
       let authorid = msg.author.id;
 
       const filter1 = response1 => { return response1.author.id === authorid; }
@@ -94,19 +94,12 @@ module.exports = {
           msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
           .then(collected1 => {
               const response1 = collected1.first();
-              const user = response1.mentions.users.first()
+              if (response1.toLowerCase() == `cancel`) return Cancel(msg);
+              const user = response1.mentions.users.first();
               const member = msg.guild.member(user);
-              if (!member.manageable) return msg.channel.send(`I cant ban ${user}`);
+              if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
 
-              const noMember = new Discord.MessageEmbed()
-              .setColor("#ff0000")
-              .setTitle(`:warning: CANCELED :warning:`)
-              .addFields(
-                  { name: "No Member", value: `I need a valid member username.` },
-                  { name: "Command Canceled", value: `Wrong answer concelation`}
-              )
-              .setFooter(`${by} helps`)
-              if (!member) return msg.channel.send(noMember);
+              if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
 
               const filter2 = response2 => { return response2.author.id === authorid; }
 
@@ -123,6 +116,7 @@ module.exports = {
                   msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                   .then(collected2 => {
                       const response2 = collected2.first();
+                      if (response2.toLowerCase() == `cancel`) return Cancel(msg);
                       const reason = response2.content;
 
                       const filter3 = response3 => { return response3.author.id === authorid; }
@@ -140,6 +134,7 @@ module.exports = {
                           msg.channel.awaitMessages(filter3, { max: 1 , time: 30000, errors: ['time']})
                           .then(collected3 => {
                             const response3 = collected3.first();
+                            if (response3.toLowerCase() == `cancel`) return Cancel(msg);
                             const days = response3.content;
 
                             member.ban({ days, reason: `${reason}`})
@@ -157,36 +152,15 @@ module.exports = {
                             msg.channel.send(Ban)
 
                           }).catch(error => {
-                              const Error = new Discord.MessageEmbed()
-                              .setColor("#ff0000")
-                              .setTitle(":x: CANCELED :x:")
-                              .addFields(
-                                  { name: "Command Canceled", value: `Timeout cancelation`}
-                              )
-                              .setFooter(`${by} helps`)
-                              msg.channel.send(Error);
+                            Timeout(msg);
                           });
                       })
                   }).catch(error => {
-                      const Error = new Discord.MessageEmbed()
-                      .setColor("#ff0000")
-                      .setTitle(":x: CANCELED :x:")
-                      .addFields(
-                          { name: "Command Canceled", value: `Timeout cancelation`}
-                      )
-                      .setFooter(`${by} helps`)
-                      msg.channel.send(Error);  
+                    Timeout(msg); 
                   });
               })
           }).catch(error => {
-              const Error = new Discord.MessageEmbed()
-              .setColor("#ff0000")
-              .setTitle(":x: CANCELED :x:")
-              .addFields(
-                  { name: "Command Canceled", value: `Timeout cancelation`}
-              )
-              .setFooter(`${by} helps`)
-              msg.channel.send(Error);  
+              Timeout(msg);
           });
       })
     }

@@ -21,6 +21,17 @@ function Wronganswer(msg, name, value) {
     .setFooter(`${by} helps`)
     return msg.channel.send(Wrong);
 }
+function Perm(msg, name, value) {
+    var Permission = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(":no_entry_sign: CANCELED :no_entry_sign:")
+    .addFields(
+        { name: `${name}`, value: `${value}`},
+        { name: "Command Canceled", value: `Invalid Permission cancelation`}
+    )
+    .setFooter(`${by} helps`)
+    return msg.channel.send(Permission);
+}
 function Cancel(msg) {
     var Cancel = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -31,4 +42,4 @@ function Cancel(msg) {
     .setFooter(`${by} helps`)
     return msg.channel.send(Cancel);
 }
-module.exports = {Timeout, Wronganswer, Cancel}
+module.exports = {Timeout, Wronganswer, Perm, Cancel}
