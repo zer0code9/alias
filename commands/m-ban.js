@@ -94,7 +94,7 @@ module.exports = {
           msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
           .then(collected1 => {
               const response1 = collected1.first();
-              if (response1.toLowerCase() == `cancel`) return Cancel(msg);
+              if (response1 == `cancel`) return Cancel(msg);
               const user = response1.mentions.users.first();
               const member = msg.guild.member(user);
               if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
@@ -137,7 +137,7 @@ module.exports = {
                             if (response3.toLowerCase() == `cancel`) return Cancel(msg);
                             const days = response3.content;
 
-                            member.ban({ days, reason: `${reason}`})
+                            //member.ban({ days, reason: `${reason}`})
                             const Ban = new Discord.MessageEmbed()
                             .setColor("#00ff00")
                             .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
@@ -161,6 +161,7 @@ module.exports = {
               })
           }).catch(error => {
               Timeout(msg);
+              console.log(error)
           });
       })
     }

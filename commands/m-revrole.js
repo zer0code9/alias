@@ -1,5 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
 function lala(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
     if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)

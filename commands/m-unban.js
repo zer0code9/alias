@@ -1,8 +1,9 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
 function unbanUser(msg, args) {
-    if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to unban someone, ${msg.author}`)
-    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return msg.channel.send(`I dont have the permission to unban someone, ${msg.author}`)
+    if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
+    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
     const user = args[0];
     const reason = args.slice(1).join(" ");
 
