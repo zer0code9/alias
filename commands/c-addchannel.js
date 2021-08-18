@@ -57,7 +57,7 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1.toLowerCase() == `cancel`) return Cancel(msg);
+                if (response1 == `cancel`) return Cancel(msg);
                 const name = response1;
                 msg.guild.channels.create(`${name}`);
 

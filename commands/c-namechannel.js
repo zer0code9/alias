@@ -67,7 +67,7 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1.toLowerCase() == `cancel`) return Cancel(msg);
+                if (response1 == `cancel`) return Cancel(msg);
                 const channel = response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`)
       
@@ -87,7 +87,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
-                        if (response2.toLowerCase() == `cancel`) return Cancel(msg);
+                        if (response2 == `cancel`) return Cancel(msg);
                         const name = response2.content;
         
                         channel.setName(`${name}`)
