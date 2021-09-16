@@ -28,7 +28,7 @@ function sayIt(msg, args) {
 
 module.exports = {
     name: "say",
-    description: "Make WithersBot say something",
+    description: "Make the bot say something say something",
     example: prefix + "say [sentence]",
     type: "info",
     execute(msg, args){
