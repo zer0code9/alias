@@ -97,6 +97,26 @@ module.exports = {
     example: prefix + "unmute [member]",
     type: "moderation",
     execute(msg, args){
-        unmuteUser(msg, args);
+        if (args[0]) {return unmuteUser(msg, args)}
+        let authorid = msg.author.id;
+
+        const filter1 = response1 => { return response1.author.id === authorid; }
+
+        const User = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by} Commands`)
+        .setDescription("Command: mute")
+        .addFields(
+            { name: "Username", value: `I need a member's username to continue` },
+            { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+        )
+        .setFooter(`${by} helps`)
+        
+        msg.channel.send(User).then(() => {
+          msg.channel.awaitMessages(filter1, { max: 1, time: 3000, errors: ['time']})
+          .then(collected1 => {
+            const response1 = collected1.first();
+          })
+        })
     }
 }
