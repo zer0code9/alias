@@ -15,7 +15,7 @@ function topicChannel(msg, args) {
         { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
     )
     .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noChannel);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to change its topic`, `topicchannel [channel] [topic]`);
 
     const noTopic = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -25,7 +25,7 @@ function topicChannel(msg, args) {
         { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
     )
     .setFooter(`${by} helps`)
-    if (!topic) return msg.channel.send(noTopic);
+    if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `topicchannel [channel] [topic]`);
 
     channel.setTopic(`${topic}`)
     const Topic = new Discord.MessageEmbed()

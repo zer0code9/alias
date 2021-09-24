@@ -42,4 +42,15 @@ function Cancel(msg) {
     .setFooter(`${by} helps`)
     return msg.channel.send(Cancel);
 }
-module.exports = {Timeout, Wronganswer, Perm, Cancel}
+function Invalid(msg, name, value, use) {
+    var Invalid = new Discord.MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(":warning: CANCELED :warning:")
+    .addFields(
+        { name: `${name}`, value: `${value}`},
+        {name: "Command:", value: `\`${prefix}${use}\``}
+    )
+    .setFooter(`${by} helps`)
+    return msg.channel.send(Invalid);
+}
+module.exports = {Timeout, Wronganswer, Perm, Cancel, Invalid}

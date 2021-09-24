@@ -1,9 +1,9 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function addRole(msg, args) {
-    if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`)
-    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`)
+    if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const user = msg.mentions.users.first();
     const role = msg.mentions.roles.first();
     const member = msg.guild.member(user);
@@ -68,8 +68,8 @@ module.exports = {
     type: "moderation",
     execute(msg, args) {
         if (args[0]) {return addRole(msg, args)}
-        if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`)
-        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`)
+        if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }

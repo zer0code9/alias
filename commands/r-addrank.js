@@ -1,20 +1,13 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function addRank(msg, args) {
-    if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+    if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
     const name = args.join(" ");
 
-    const noAdd = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Name", value: `I need a name in order to create a new role`},
-        { name: "Command:", value: `\`${prefix}addrank [name]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!name) return msg.channel.send(noAdd);
+    if (!name) return Invalid(msg, `No Name`, `I need a name in order to create a new role`, `addrank [name]`);
 
     msg.guild.roles.create({ data: { name: `${name}` } });
     const add = new Discord.MessageEmbed()
@@ -35,9 +28,9 @@ module.exports = {
     example: prefix + "addrank [name]",
     type: "rank",
     execute(msg, args) {
-        if (args[0]) {return addRank(msg, args)}
-        if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permissions to manage roles, ${msg.author}`)
+        if (args[0]) {return addRank(msg, args);}
+        if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -47,14 +40,17 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: addrank")
         .addFields(
-            { name: "Name", value: `I need a name to continue` }
+            { name: "Name", value: `I need a name to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
         msg.channel.send(Name).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
-                const name = collected1.first();
+                const response1 = collected1.first();
+                if (response1 == `cancel`) return Cancel(msg);
+                const name = response1;
 
                 msg.guild.roles.create({ data: { name: `${name}` } });
                 const Add = new Discord.MessageEmbed()
@@ -69,14 +65,7 @@ module.exports = {
                 msg.channel.send(Add);
                 
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(":x: CANCELED :x:")
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                Timeout(msg);
             });
         })
     }

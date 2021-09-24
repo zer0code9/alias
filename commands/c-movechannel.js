@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function moveChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
@@ -8,35 +8,11 @@ function moveChannel(msg, args) {
     const category = args[1];
     const position = args[2];
 
-    const noChannel = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Channel", value: `I need a channel in order to move it`},
-        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noChannel);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `movechannel [channel] [category:id] [place]`);
 
-    const noCategory = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Category", value: `I need a category in order to move the channel`},
-        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!category) return msg.channel.send(noCategory);
+    if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `movechannel [channel] [category:id] [place]`);
 
-    const noPosition = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Position", value: `I need a position in order to move the channel`},
-        { name: "Command", value: `\`${prefix}movechannel [channel] [category:id] [place]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!position) return msg.channel.send(noPosition);
+    if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `movechannel [channel] [category:id] [place]`);
 
     channel.setParent(`${category}`);
     channel.setPosition(`${position}`);

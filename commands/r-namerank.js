@@ -1,30 +1,15 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function nameRank(msg, args) {
-    if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-    if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
+    if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+    if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
 
-    const noRole = new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: `No role`, value: `I need a role in order to rename it`},
-        { name: "Command:", value: `\`${prefix}namerank [role] [name]\`` }
-    )
-    .setFooter(`${by} helps`)
-    msg.channel.send(noRole);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `namerank [role] [name]`);
 
-    const noName = new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No name", value: `I need a name in order to rename the role`},
-        { name: "Command:", value: `\`${prefix}namerank [role] [name]\``}
-    )
-    .setFooter(`${by} helps`)
-    msg.channel.send(noName);
+    if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role`, `namerank [role] [name]`);
 
     role.setName(`${name}`)
     const Name = new Discord.MessageEmbed()
@@ -45,8 +30,9 @@ module.exports = {
     example: prefix + "namerank [role] [name]",
     type: "rank",
     execute(msg, args) {
-        if (!msg.member.hasPermission("MANAGE_ROLES")) return msg.channel.send(`You don't have the permission to manage roles, ${msg.author}`)
-        if(!msg.guild.me.hasPermission("MANAGE_ROLES")) return msg.channel.send(`I dont have the permission to manage roles, ${msg.author}`)
+        if (args[0]) {return nameRank(msg, args);}
+        if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -65,17 +51,8 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 const role = response1.mentions.roles.first();
-                if (!role) {
-                    const noRole = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(`Canceled`)
-                    .addFields(
-                        { name: "No Role", value: `I need a valid role name` },
-                        { name: "Command Canceled", value: `Wrong answer cancelation`}
-                    )
-                    .setFooter(`${by} helps`)
-                    return msg.channel.send(noRole);
-                }
+
+                if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
@@ -107,25 +84,11 @@ module.exports = {
                         msg.channel.send(Name);
                         
                     }).catch(error => {
-                        const Error = new Discord.MessageEmbed()
-                        .setColor("#ff0000")
-                        .setTitle(`:warning: CANCELED :warning:`)
-                        .addFields(
-                            { name: "Command Canceled", value: `Timeout cancelation`}
-                        )
-                        .setFooter(`${by} helps`)
-                        msg.channel.send(Error);  
+                        Timeout(msg);
                     });
                 })
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(`:warning: CANCELED :warning:`)
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                Timeout(msg); 
             });
         })
     }

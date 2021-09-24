@@ -1,21 +1,13 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Cancel, Perm } = require("../errors");
+const { Timeout, Wronganswer, Cancel, Perm, Invalid } = require("../errors");
 function addChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const name = args.join(" ");
 
-    const noName = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Name", value: `I need a name in order to create a new channel`},
-        { name: "Command:", value: `\`${prefix}addchannel [name]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!name) return msg.channel.send(noName);
+    if (!name) return Invalid(msg, `No name`, `I need a name in order to create a new channel`, `addchannel [name]`);
 
     msg.guild.channels.create(`${name}`);
     const Add = new Discord.MessageEmbed()

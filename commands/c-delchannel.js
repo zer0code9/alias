@@ -1,22 +1,14 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function delChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     let reason = args.slice(1).join(" ");
 
-    const noChannel = new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Channel", value: `I need a channel in order to delete it`},
-        { name: "Command:", value: `\`${prefix}delchannel [channel]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noChannel);
-
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `delchannel [channel] [reason]`);
+    
     if (!reason) reason = "No reason";
 
     channel.delete();

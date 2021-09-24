@@ -1,31 +1,15 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function nameChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const name = args.slice(1).join(" ");
 
-    const noChannel = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(":warning: CANCELED :warning:")
-    .addFields(
-        { name: `No channel`, value: `I need a channel in order to rename it`},
-        { name: "Command:", value: `\`${prefix}namechannel [channel] [name]\`` }
-    )
-    .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noChannel);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to rename it`, `namechannel [channel] [name]`);
 
-    const noName = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(":warning: CANCELED :warning:")
-    .addFields(
-        { name: "No name", value: `I need a name in order to rename the channel`},
-        { name: "Command:", value: `\`${prefix}namechannel [channel] [name]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!name) return msg.channel.send(noName);
+    if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the channel`, `namechannel [channel] [name]`);
 
     channel.setName(`${name}`)
     const Name = new Discord.MessageEmbed()
