@@ -104,7 +104,7 @@ module.exports = {
                     .addFields(
                         { name: "No Member", value: `I need a valid member username.` },
                         { name: "Command Canceled", value: `Wrong answer concelation`},
-                        { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+                        { name: `Type \`cancel\` to cancel the command` }
                     )
                     .setFooter(`${by} helps`)
                     msg.channel.send(noMember);
@@ -118,7 +118,7 @@ module.exports = {
                 .setDescription("Command: mute")
                 .addFields(
                     { name: "Reason", value: `I need a reason to continue` },
-                    { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
   
@@ -136,7 +136,7 @@ module.exports = {
                       .addFields(
                           { name: "Muted Member", value: `\`\`\`${user.username}\`\`\`` },
                           { name: "Reason", value: `\`\`\`${reason}\`\`\``},
-                          { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
+                          { name: `Type \`cancel\` to cancel the command` }
                       )
                       .setFooter(`${by} helps`)
                       msg.channel.send(mute)
