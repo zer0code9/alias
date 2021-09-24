@@ -70,11 +70,9 @@ module.exports = {
                     { name: "To change channel position:", value: `Use \`zmovechannel\``}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(Add);
+                
 
-            }).catch(error => {
-                Timeout(msg);
-            });
+            })
         })
     }
 }
