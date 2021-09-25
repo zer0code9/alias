@@ -62,7 +62,6 @@ module.exports = {
                 if (response1 == 'cancel') return Cancel(msg)
                 const user = response1.mentions.users.first();
                 const member = msg.guild.member(user);
-
                 if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
       
                 const filter2 = response2 => { return response2.author.id === authorid; }

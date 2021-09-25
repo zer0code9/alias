@@ -52,8 +52,8 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1 == `cancel`) return Cancel(msg);
                 const channel = response1.mentions.channels.first();
-                let channelN = channel.name;
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
+                let channelN = channel.name;
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
@@ -91,7 +91,7 @@ module.exports = {
                     });
                 })
             }).catch(error => {
-                Timeout(msg);
+                Timeout(msg, error);
             });
         })
     }

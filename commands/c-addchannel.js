@@ -51,8 +51,8 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1 == `cancel`) return Cancel(msg);
                 const name = response1;
-                msg.guild.channels.create(`${name}`);
 
+                msg.guild.channels.create(`${name}`);
                 const Add = new Discord.MessageEmbed()
                 .setColor("#00ff00")
                 .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
@@ -65,7 +65,7 @@ module.exports = {
                 msg.channel.send(Add);
 
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
             });
         })
     }
