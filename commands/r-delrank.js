@@ -42,7 +42,8 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: delrank")
         .addFields(
-            { name: "Role Name", value: `I need a role's name to continue` }
+            { name: "Role Name", value: `I need a role's name to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
@@ -62,7 +63,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: delrank")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Reason", value: `I need a reason to continue` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
       

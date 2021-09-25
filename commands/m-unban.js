@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 function unbanUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
     if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
@@ -15,7 +15,7 @@ function unbanUser(msg, args) {
         { name: "Command:", value: `\`${prefix}unban [id] [reason]\``}
     )
     .setFooter(`${by} helps`)
-    if (!user) return msg.channel.send(noId);
+    if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
 
     const noReason = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -25,7 +25,7 @@ function unbanUser(msg, args) {
         { name: "Command:", value: `\`${prefix}ban [id] [reason]\``}
     )
     .setFooter(`${by} helps`)
-    if (!reason) return msg.channel.send(noReason);
+    if (!reason) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
 
     msg.guild.members.unban(user, `${reason}`)
     const Unban = new Discord.MessageEmbed()

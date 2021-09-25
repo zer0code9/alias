@@ -48,6 +48,7 @@ module.exports = {
         msg.channel.send(Name).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
+                if (collected1 == `cancel`) return Cancel(msg);
                 const response1 = collected1.first();
                 if (response1 == `cancel`) return Cancel(msg);
                 const name = response1;

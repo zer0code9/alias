@@ -43,7 +43,8 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: colorrank")
         .addFields(
-            { name: "Role Name", value: `I need a role's name to continue` }
+            { name: "Role Name", value: `I need a role's name to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
@@ -51,6 +52,7 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
+                if (collected1 == `cancel`) return Cancel(msg);
                 const role = response1.mentions.roles.first();
                 
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
@@ -62,7 +64,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: colorrank")
                 .addFields(
-                    { name: "Color", value: `I need a color to continue: hex format` }
+                    { name: "Color", value: `I need a color to continue: hex format` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
       
