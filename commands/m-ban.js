@@ -1,6 +1,6 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
 const Discord = require("discord.js");
 function banUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
@@ -9,47 +9,15 @@ function banUser(msg, args) {
     let days = args[1];
     let reason = args.slice(2).join(" ");
 
-    const noTag = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No User", value: `I need an username in order to ban someone.` },
-        { name: "Command:", value: `\`${prefix}ban [member] [days] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!user) return msg.channel.send(noTag);
+    if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone`, `ban [member] [days] [reason]`);
 
     const member = msg.guild.member(user);
 
-    const noBan = new Discord.MessageEmbed()
-    .setColor("#ffa500")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "Not Manageable", value: `The user you are trying to mute is not manageable.` },
-        { name: "Command:", value: `\`${prefix}ban [member] [days] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member.manageable) return msg.channel.send(noBan);
+    if (!member.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `ban [member] [days] [reason]`);
 
-    const noMember = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Member", value: `I don't know that member` },
-        { name: "Command:", value: `\`${prefix}ban [member] [days] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member) return msg.channel.send(noMember);
+    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `ban [member] [days] [reason]`);
 
-    const noReason = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Reason", value: `I need a reason in order to ban someone`},
-        { name: "Command:", value: `\`${prefix}ban [member] [days] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!reason) return msg.channel.send(noReason);
+    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to ban someone`, `ban [member] [days] [reason]`);
 
     if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
 
