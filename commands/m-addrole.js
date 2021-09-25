@@ -6,47 +6,18 @@ function addRole(msg, args) {
     if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const user = msg.mentions.users.first();
     const role = msg.mentions.roles.first();
+
+    if (!user) return Invalid(msg, `No User`, `I need an user in order to add the role to that member`, `addrole [member] [role]`);
+
     const member = msg.guild.member(user);
 
-    const noUser = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No User", value: `I need an user in order to add the role to that member`},
-        { name: "Command:", value: `\`${prefix}addrole [member] [role]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!user) return msg.channel.send(noUser);
+    if (!member) return Invalid(msg, `No User`, `I need an user in order to add the role to that member`, `addrole [member] [role]`);
 
-    const noMember = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Member", value: `The user ${user} is not a member`},
-        { name: "Command:", value: `\`${prefix}addrole [member] [role]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member) return msg.channel.send(noMember);
+    if (!member.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to change is not manageable`, `addrole [member] [role]`);
 
-    const noRole = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Role", value: `I need a role in order to add that role to the member`},
-        { name: "Command:", value: `\`${prefix}addrole [member] [role]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!role) return msg.channel.send(noRole);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to add that role to the member`, `addrole [member] [role]`);
 
-    const hasRole = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "Has Role", value: `The member ${user} already has the role ${role}`},
-        { name: "Command:", value: `\`${prefix}addrole [member] [role]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (user.roles.cache.has(`${role.id}`)) return msg.channel.send(hasRole);
+    if (user.roles.cache.has(`${role.id}`)) return Invalid(msg, `Has Role`, `The member ${user} already has the role ${role}`, `addrole [member] [role]`);
 
     user.roles.add(`${role.id}`)
     const addRole = new Discord.MessageEmbed()
@@ -55,7 +26,7 @@ function addRole(msg, args) {
     .setDescription('Moderation')
     .addFields(
         { name: "A user has been given a new role", value: `\`\`\`${user.username}\`\`\`` },
-        { name: "New Role", value: `\`\`\`${role.name}\`\`\``}
+        { name: "Added Role", value: `\`\`\`${role.name}\`\`\``}
     )
     .setFooter(`${by} helps`)
     msg.channel.send(addRole);
