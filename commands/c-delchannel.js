@@ -71,7 +71,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
-                        if (response1.content == "cancel") return Cancel(msg);
+                        if (response2.content == "cancel") return Cancel(msg);
                         const reason = response2.content;
         
                         channel.delete();

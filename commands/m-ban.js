@@ -63,11 +63,10 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1 == `cancel`) return Cancel(msg);
+                if (response1.content == "cancel") return Cancel(msg);
                 const user = response1.mentions.users.first();
                 const member = msg.guild.member(user);
                 if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
-
                 if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
@@ -86,7 +85,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
-                        if (response2 == `cancel`) return Cancel(msg);
+                        if (response2.content == "cancel") return Cancel(msg);
                         const reason = response2.content;
 
                         const filter3 = response3 => { return response3.author.id === authorid; }
@@ -105,9 +104,8 @@ module.exports = {
                             msg.channel.awaitMessages(filter3, { max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();
-                                if (response3 == `cancel`) return Cancel(msg);
+                                if (response3.content == "cancel") return Cancel(msg);
                                 const days = response3.content;
-
                                 if (isNaN(days)) return Wronganswer(msg, `Not a number`, `The number of days must be a number`);
 
                                 //member.ban({ days, reason: `${reason}`})

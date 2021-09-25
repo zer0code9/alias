@@ -9,7 +9,7 @@ function unbanUser(msg, args) {
 
     if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
 
-    if (!reason) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
+    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to unban someone`, `unban [id] [reason]`);
 
     msg.guild.members.unban(user, `${reason}`)
     const Unban = new Discord.MessageEmbed()
@@ -52,7 +52,7 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1 == `cancel`) return Cancel(msg);
+                if (response1.content == "cancel") return Cancel(msg);
                 const user = response1;
                 const member = msg.guild.member(user);
                 if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
@@ -73,6 +73,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                       const response2 = collected2.first();
+                      if (response2.content == "cancel") return Cancel(msg);
                       const reason = response2;
 
                       msg.guild.members.unban(user, `${reason}`)
