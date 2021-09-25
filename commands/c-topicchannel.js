@@ -1,30 +1,14 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Unknown } = require("../errors");
 function topicChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const topic = args.slice(1).join(" ");
 
-    const noChannel = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No channel", value: `I need a channel in order to change its topic`},
-        { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
-    )
-    .setFooter(`${by} helps`)
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to change its topic`, `topicchannel [channel] [topic]`);
 
-    const noTopic = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No topic", value: `I need a topic in order to change the topic of the channel`},
-        { name: "Command:", value: `\`${prefix}topicchannel [channel] [topic]\``}
-    )
-    .setFooter(`${by} helps`)
     if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `topicchannel [channel] [topic]`);
 
     channel.setTopic(`${topic}`)
@@ -103,11 +87,13 @@ module.exports = {
                         msg.channel.send(Topic);
 
                     }).catch(error => {
-                        Timeout(msg);
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg);
                     });
                 })
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg);
             });
         })
     }

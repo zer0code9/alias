@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function moveChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
@@ -111,15 +111,18 @@ module.exports = {
                                 msg.channel.send(move);
 
                             }).catch(error => {
-                                Timeout(msg);
+                                if (error == '[object Map]') Timeout(msg);
+                                else Unknown(msg);
                             });
                         })
                     }).catch(error => {
-                        Timeout(msg);
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg);
                     });
                 })
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg);
             });
         })
     }

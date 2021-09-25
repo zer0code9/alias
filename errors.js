@@ -11,7 +11,7 @@ function Error(msg, name1, value1, name2, value2, emoji) {
     .setFooter(`${by} helps`)
     return msg.channel.send(Error);
 }
-function Timeout(msg, error) {
+function Timeout(msg) {
     const Error = new Discord.MessageEmbed()
     .setColor("#ff0000")
     .setTitle(":x: CANCELED :x:")
@@ -37,17 +37,10 @@ function Cancel(msg) {
     .setFooter(`${by} helps`)
     return msg.channel.send(Cancel);
 }
-function Unknown(msg) {
-    var Unknown = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(":stop_sign: CANCELED :stop_sign:")
-    .addFields(
-        { name: "Something went ", value: `Ordered cancelation`}
-    )
-    .setFooter(`${by} helps`)
-    return msg.channel.send(Unknown);
-}
 function Invalid(msg, name, value, use) {
     return Error(msg, `${name}`, `${value}`, `Command`, `\`${prefix}${use}\``, `warning`);
 }
-module.exports = {Timeout, Wronganswer, Perm, Cancel, Invalid}
+function Unknown(msg, error) {
+    Error(msg, `Something went wrong`, `\`\`\`${error}\`\`\``, `Command Canceled`, `Unknown Error cancelation`, `question_mark`);
+}
+module.exports = {Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown}

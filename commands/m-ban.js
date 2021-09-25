@@ -1,6 +1,6 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
-const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 const Discord = require("discord.js");
 function banUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
@@ -125,15 +125,18 @@ module.exports = {
                                 msg.channel.send(Ban)
 
                             }).catch(error => {
-                                Timeout(msg);
+                                if (error == '[object Map]') Timeout(msg);
+                                else Unknown(msg);
                             });
                         })
                     }).catch(error => {
-                        Timeout(msg); 
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg);
                     });
                 })
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg);
             });
         })
     }

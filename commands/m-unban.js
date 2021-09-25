@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function unbanUser(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
     if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
@@ -89,11 +89,13 @@ module.exports = {
                       msg.channel.send(Unban);
 
                     }).catch(error => {
-                        Timeout(msg);
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg);
                     });
                 })
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg);
             });
         })
     }
