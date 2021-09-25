@@ -19,7 +19,7 @@ function addRole(msg, args) {
 
     if (user.roles.cache.has(`${role.id}`)) return Invalid(msg, `Has Role`, `The member ${user} already has the role ${role}`, `addrole [member] [role]`);
 
-    user.roles.add(`${role.id}`)
+    user.roles.add(`${role.id}`);
     const addRole = new Discord.MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: ADDED ROLE :bust_in_silhouette::heavy_plus_sign:`)
@@ -88,7 +88,7 @@ module.exports = {
 
                         if (user.roles.cache.has(`${role.id}`)) return Wronganswer(msg, `Has Role`, `The member ${user.username} already has the role ${role.name}`);
         
-                        role.delete();
+                        user.roles.add(`${role.id}`);
                         const addRole = new Discord.MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: ADDED ROLE :bust_in_silhouette::heavy_plus_sign:`)
