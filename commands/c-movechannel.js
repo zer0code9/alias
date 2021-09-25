@@ -75,7 +75,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
-                        if (response2 == `cancel`) return Cancel(msg);
+                        if (response1.content == "cancel") return Cancel(msg);
                         const category = response2.content;
 
                         const filter2 = response3 => { return response3.author.id === authorid; }
@@ -94,7 +94,7 @@ module.exports = {
                             msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();
-                                if (response3 == `cancel`) return Cancel(msg);
+                                if (response1.content == "cancel") return Cancel(msg);
                                 const position = response3.content;
 
                                 channel.setParent(`${category}`);
