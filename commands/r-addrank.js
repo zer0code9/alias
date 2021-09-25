@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function addRank(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
@@ -48,9 +48,8 @@ module.exports = {
         msg.channel.send(Name).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
-                if (collected1 == `cancel`) return Cancel(msg);
                 const response1 = collected1.first();
-                if (response1 == `cancel`) return Cancel(msg);
+                if (response1.content == "cancel") return Cancel(msg);
                 const name = response1;
 
                 msg.guild.roles.create({ data: { name: `${name}` } });
@@ -66,7 +65,8 @@ module.exports = {
                 msg.channel.send(Add);
                 
             }).catch(error => {
-                Timeout(msg);
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg, error);
             });
         })
     }

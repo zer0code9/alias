@@ -1,6 +1,6 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-const { Timeout, Wronganswer, Perm, Cancel, Invalid } = require("../errors");
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function delRank(msg, args) {
     if (!msg.member.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.hasPermission("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
@@ -51,10 +51,10 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
+                if (response1.content == "cancel") return Cancel(msg);
                 const role = response1.mentions.roles.first();
+                if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
                 let roleN = role.name;
-
-                if (!Role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
@@ -72,6 +72,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
+                        if (response2.content == "cancel") return Cancel(msg);
                         const reason = response2.content;
         
                         role.delete();
@@ -87,11 +88,13 @@ module.exports = {
                         msg.channel.send(Remove);
                         
                     }).catch(error => {
-                        Timeout(msg);
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg, error);
                     });
                 })
             }).catch(error => {
-                Timeout(msg); 
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg, error);
             });
         })
     }

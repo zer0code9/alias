@@ -1,54 +1,22 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function kickUser(msg, args) {
-    if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
-    if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
+    if (!msg.member.hasPermission("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
+    if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
     const user = msg.mentions.users.first();
     const reason = args.slice(1).join(" ");
 
-    const noTag = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No User", value: `I need an username in order to kick someone.` },
-        { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!user) return msg.channel.send(noTag);
+    if (!user) return Invalid(msg, `No User`, `I need a username in order to kick them`, `Command`, `kick [member] [reason]`);
 
     const member = msg.guild.member(user);
 
-    const noKick = new Discord.MessageEmbed()
-    .setColor("#ffa500")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "Not Kickable", value: `The user you are trying to mute is not kickable.` },
-        { name: "Command:", value: `\`${prefix}kick [member] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member.kickable) return msg.channel.send(noKick);
+    if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to mute is not kickable`, `Command`, `kick [member] [reason]`);
 
-    const noMember = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Member", value: `I don't know that member` },
-        { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member) return msg.channel.send(noMember);
+    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `Command`, `kick [member] [reason]`);
 
-    const noReason = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-      { name: "No Reason", value: `I need a reason in order to kick someone`},
-      { name: "Command", value: `\`${prefix}kick [member] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
-    if(!reason) return msg.channel.send(noReason);
+    if(!reason) return Invalid(msg, `No Reason`, `I need a reason in order to kick someone`, `Command`, `kick [member] [reason]`);
 
     //member.kick(reason)
     const Kick = new Discord.MessageEmbed()
@@ -71,8 +39,8 @@ module.exports = {
     type: "moderation",
     execute(msg, args){
         if (args[0]) {return kickUser(msg, args)}
-        if (!msg.member.permissions.has("KICK_MEMBERS")) return msg.channel.send(`You don't have the permission to kick members, ${msg.author}`)
-        if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return msg.channel.send(`I dont have the permission to kick members, ${msg.author}`)
+        if (!msg.member.hasPermission("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
+        if (!msg.guild.me.hasPermission("KICK_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -82,7 +50,8 @@ module.exports = {
         .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
         .addFields(
-            { name: "Username", value: `I need a member's username to continue` }
+            { name: "Username", value: `I need a member's username to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
 
@@ -90,20 +59,11 @@ module.exports = {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
+                if (response1.content == "cancel") return Cancel(msg);
                 const user = response1.mentions.users.first()
                 const member = msg.guild.member(user);
-                if (!member.manageable) return msg.channel.send(`I cant kick ${user}`);
-                if (!member) {
-                    const noMember = new Discord.MessageEmbed()
-                    .setColor("#ff0000")
-                    .setTitle(`:warning: CANCELED :warning:`)
-                    .addFields(
-                        { name: "No Member", value: `I need a valid member username.` },
-                        { name: "Command Canceled", value: `Wrong answer concelation`}
-                    )
-                    .setFooter(`${by} helps`)
-                    msg.channel.send(noMember);
-                }
+                if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
+                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 
@@ -112,7 +72,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: kick")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` }
+                    { name: "Reason", value: `I need a reason to continue` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
 
@@ -120,6 +81,7 @@ module.exports = {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
+                        if (response1.content == "cancel") return Cancel(msg);
                         const reason = response2.content;
   
                         //member.kick(reason);
@@ -135,25 +97,13 @@ module.exports = {
                         msg.channel.send(Kick)
 
                     }).catch(error => {
-                        const Error = new Discord.MessageEmbed()
-                        .setColor("#ff0000")
-                        .setTitle(":x: CANCELED :x:")
-                        .addFields(
-                            { name: "Command Canceled", value: `Timeout cancelation`}
-                        )
-                        .setFooter(`${by} helps`)
-                        msg.channel.send(Error);  
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg, error);
                     });
                 })
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(":x: CANCELED :x:")
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg, error); 
             });
         })
     }

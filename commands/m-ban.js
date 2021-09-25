@@ -3,8 +3,8 @@ const { prefix, by } = require("./../config.json");
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 const Discord = require("discord.js");
 function banUser(msg, args) {
-    if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
-    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I dont have the permission to ban members`);
+    if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
+    if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
     const user = msg.mentions.users.first();
     let days = args[1];
     let reason = args.slice(2).join(" ");
@@ -43,8 +43,8 @@ module.exports = {
     type: "moderation",
     execute(msg, args){
         if (args[0]) {return banUser(msg, args)}
-        if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You dont have the permission to ban members`);
-        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I dont have the permission to ban members`);
+        if (!msg.member.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
+        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
         let authorid = msg.author.id;
 
         const filter1 = response1 => { return response1.author.id === authorid; }
@@ -124,17 +124,17 @@ module.exports = {
 
                             }).catch(error => {
                                 if (error == '[object Map]') Timeout(msg);
-                                else Unknown(msg);
+                                else Unknown(msg, error);
                             });
                         })
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);
-                        else Unknown(msg);
+                        else Unknown(msg, error);
                     });
                 })
             }).catch(error => {
                 if (error == '[object Map]') Timeout(msg);
-                else Unknown(msg);
+                else Unknown(msg, error);
             });
         })
     }

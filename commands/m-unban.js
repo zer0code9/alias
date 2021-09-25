@@ -91,12 +91,12 @@ module.exports = {
 
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);
-                        else Unknown(msg);
+                        else Unknown(msg, error);
                     });
                 })
             }).catch(error => {
                 if (error == '[object Map]') Timeout(msg);
-                else Unknown(msg);
+                else Unknown(msg, error);
             });
         })
     }
