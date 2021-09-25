@@ -7,24 +7,8 @@ function unbanUser(msg, args) {
     const user = args[0];
     const reason = args.slice(1).join(" ");
 
-    const noId = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Id", value: `I need a valid id in order to unban someone.` },
-        { name: "Command:", value: `\`${prefix}unban [id] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
     if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
 
-    const noReason = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Reason", value: `I need a reason in order to ban someone`},
-        { name: "Command:", value: `\`${prefix}ban [id] [reason]\``}
-    )
-    .setFooter(`${by} helps`)
     if (!reason) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
 
     msg.guild.members.unban(user, `${reason}`)
@@ -70,6 +54,8 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1 == `cancel`) return Cancel(msg);
                 const user = response1;
+                const member = msg.guild.member(user);
+                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 

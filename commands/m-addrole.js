@@ -88,7 +88,7 @@ module.exports = {
 
                         if (user.roles.cache.has(`${role.id}`)) return Wronganswer(msg, `Has Role`, `The member ${user.username} already has the role ${role.name}`);
         
-                        user.roles.add(`${role.id}`);
+                        member.roles.add(`${role.id}`);
                         const addRole = new Discord.MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: ADDED ROLE :bust_in_silhouette::heavy_plus_sign:`)
