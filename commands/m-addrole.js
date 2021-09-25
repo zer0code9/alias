@@ -22,7 +22,7 @@ function addRole(msg, args) {
     user.roles.add(`${role.id}`)
     const addRole = new Discord.MessageEmbed()
     .setColor('#00ff00')
-    .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
+    .setTitle(`:white_check_mark: ADDED ROLE :bust_in_silhouette::heavy_plus_sign:`)
     .setDescription('Moderation')
     .addFields(
         { name: "A user has been given a new role", value: `\`\`\`${user.username}\`\`\`` },
@@ -48,9 +48,10 @@ module.exports = {
         const User = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
-        .setDescription("Command: delrank")
+        .setDescription("Command: addrole")
         .addFields(
-            { name: "Role Name", value: `I need a username to continue` }
+            { name: "Username", value: `I need a username to continue` },
+            { name: `Type \`cancel\` to cancel the command` }
         )
         .setFooter(`${by} helps`)
     
@@ -62,7 +63,7 @@ module.exports = {
                 const user = response1.mentions.users.first();
                 const member = msg.guild.member(user);
 
-                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username.`);
+                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
@@ -71,7 +72,8 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: addrole")
                 .addFields(
-                    { name: "Role", value: `I need a role's name to continue` }
+                    { name: "Role", value: `I need a role's name to continue` },
+                    { name: `Type \`cancel\` to cancel the command` }
                 )
                 .setFooter(`${by} helps`)
       
@@ -82,22 +84,14 @@ module.exports = {
                         if (response2 == 'cancel') return Cancel(msg);
                         const role = response2.memtions.roles.first();
 
-                        if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name.`);
+                        if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
 
-                        const hasRole = new Discord.MessageEmbed()
-                        .setColor("#ff0000")
-                        .setTitle(`:warning: CANCELED :warning:`)
-                        .addFields(
-                            { name: "Has Role", value: `The member ${user.username} already has the role ${role.name}`},
-                            { name: "Command:", value: `\`${prefix}addrole [member] [role]\``}
-                        )
-                        .setFooter(`${by} helps`)
-                        if (user.roles.cache.has(`${role.id}`)) return msg.channel.send(hasRole);
+                        if (user.roles.cache.has(`${role.id}`)) return Wronganswer(msg, `Has Role`, `The member ${user.username} already has the role ${role.name}`);
         
                         role.delete();
                         const addRole = new Discord.MessageEmbed()
                         .setColor('#00ff00')
-                        .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
+                        .setTitle(`:white_check_mark: ADDED ROLE :bust_in_silhouette::heavy_plus_sign:`)
                         .setDescription('Moderation')
                         .addFields(
                             { name: "A user has been given a new role", value: `\`\`\`${user.username}\`\`\`` },
