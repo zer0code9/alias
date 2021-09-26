@@ -43,7 +43,7 @@ module.exports = {
         .setDescription("Command: topicchannel")
         .addFields(
             { name: "Channel Name", value: `I need a channel's name to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
     
@@ -63,7 +63,7 @@ module.exports = {
                 .setDescription("Command: topicchannel")
                 .addFields(
                     { name: "Name", value: `I need a topic sentence to continue` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
       

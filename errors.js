@@ -41,6 +41,6 @@ function Invalid(msg, name, value, use) {
     return Error(msg, `${name}`, `${value}`, `Command`, `\`${prefix}${use}\``, `warning`);
 }
 function Unknown(msg, error) {
-    Error(msg, `Something went wrong`, `\`\`\`${error}\`\`\``, `Command Canceled`, `Unknown Error cancelation`, `question_mark`);
+    Error(msg, `Something went wrong`, `\`\`\`${error}\`\`\``, `Command Canceled`, `Unknown Error cancelation`, `question`);
 }
 module.exports = {Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown}

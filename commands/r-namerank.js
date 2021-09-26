@@ -43,7 +43,7 @@ module.exports = {
         .setDescription("Command: namerank")
         .addFields(
             { name: "Role Name", value: `I need a role's name to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
     
@@ -63,7 +63,7 @@ module.exports = {
                 .setDescription("Command: namerank")
                 .addFields(
                     { name: "Name", value: `I need a name to continue` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
       

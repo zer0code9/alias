@@ -44,7 +44,7 @@ module.exports = {
         .setDescription("Command: colorrank")
         .addFields(
             { name: "Role Name", value: `I need a role's name to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
     
@@ -64,7 +64,7 @@ module.exports = {
                 .setDescription("Command: colorrank")
                 .addFields(
                     { name: "Color", value: `I need a color to continue: hex format` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
       

@@ -47,7 +47,7 @@ module.exports = {
         .setDescription("Command: movechannel")
         .addFields(
             { name: "Channel Name", value: `I need a channel's name to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
     
@@ -67,7 +67,7 @@ module.exports = {
                 .setDescription("Command: movechannel")
                 .addFields(
                     { name: "Category", value: `I need a category id to continue` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
       
@@ -86,7 +86,7 @@ module.exports = {
                         .setDescription("Command: movechannel")
                         .addFields(
                             { name: "Position", value: `I need a number to continue` },
-                            { name: `Type \`cancel\` to cancel the command` }
+                            { name: `Cancel Command`, value: `Type \`cancel\`` }
                         )
                         .setFooter(`${by} helps`)
 

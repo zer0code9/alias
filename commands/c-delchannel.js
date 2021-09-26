@@ -42,7 +42,7 @@ module.exports = {
         .setDescription("Command: delchannel")
         .addFields(
             { name: "Channel Name", value: `I need a channel's name to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
     
@@ -63,7 +63,7 @@ module.exports = {
                 .setDescription("Command: delchannel")
                 .addFields(
                     { name: "Reason", value: `I need a reason to continue` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
       

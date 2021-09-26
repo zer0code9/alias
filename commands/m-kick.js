@@ -51,7 +51,7 @@ module.exports = {
         .setDescription("Command: kick")
         .addFields(
             { name: "Username", value: `I need a member's username to continue` },
-            { name: `Type \`cancel\` to cancel the command` }
+            { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter(`${by} helps`)
 
@@ -73,7 +73,7 @@ module.exports = {
                 .setDescription("Command: kick")
                 .addFields(
                     { name: "Reason", value: `I need a reason to continue` },
-                    { name: `Type \`cancel\` to cancel the command` }
+                    { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter(`${by} helps`)
 
