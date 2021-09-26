@@ -52,17 +52,10 @@ module.exports = {
                 if (response1.content == "cancel") return Cancel(msg);
                 const name = response1;
 
-                msg.guild.channels.create(`${name}`);
-                const Add = new Discord.MessageEmbed()
-                .setColor("#00ff00")
-                .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
-                .setDescription("Channel")
-                .addFields(
-                    { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
-                    { name: "To change channel position:", value: `Use \`zmovechannel\``}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Add);
+                const filter2 = response2 => { return response2.author.id === authorid; }
+
+                const Type = new Discord.MessageEmbed()
+                
 
             }).catch(error => {
                 if (error == '[object Map]') Timeout(msg);
