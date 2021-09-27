@@ -4,14 +4,21 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function nameChannel(msg, args) {
     if (!msg.member.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
-    const channel = msg.mentions.channels.first();
+    let channel;
+    try {
+        channel = parseInt(args[0])
+        console.log(channel)
+        channel = msg.guild.channels.cache.find(c => c.id === channel)
+        console.log(channel)
+    } catch (error) {
+        channel = msg.mentions.channels.first();
+        if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to rename it`, `namechannel [channel] [name]`);
+    }
     const name = args.slice(1).join(" ");
-
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to rename it`, `namechannel [channel] [name]`);
 
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the channel`, `namechannel [channel] [name]`);
 
-    channel.setName(`${name}`)
+    channel.setName(`${name}`);
     const Name = new Discord.MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
