@@ -1,6 +1,6 @@
-const Discord = require("discord.js");
+const { Client, Intents } = require('discord.js');
 const { NOTFOUND } = require("dns");
-const bot = new Discord.Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
+const bot = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const fs = require("fs");
 const server = require("./commands/i-server");
 

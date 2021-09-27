@@ -1,7 +1,7 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { prefix, by } = require('./config.json');
 function Error(msg, name1, value1, name2, value2, emoji) {
-    const Error = new Discord.MessageEmbed()
+    const Error = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(`:${emoji}: CANCELED :${emoji}:`)
     .addFields(
@@ -12,7 +12,7 @@ function Error(msg, name1, value1, name2, value2, emoji) {
     return msg.channel.send(Error);
 }
 function Timeout(msg) {
-    const Error = new Discord.MessageEmbed()
+    const Error = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(":x: CANCELED :x:")
     .addFields(
@@ -28,7 +28,7 @@ function Perm(msg, name, value) {
     return Error(msg, `${name}`, `${value}`, `Command Canceled`, `Invalid Permission cancelation`, `no_entry_sign`);
 }
 function Cancel(msg) {
-    var Cancel = new Discord.MessageEmbed()
+    var Cancel = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(":stop_sign: CANCELED :stop_sign:")
     .addFields(
