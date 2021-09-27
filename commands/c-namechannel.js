@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function nameChannel(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
@@ -19,7 +19,7 @@ function nameChannel(msg, args) {
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the channel`, `namechannel [channel] [name]`);
 
     channel.setName(`${name}`);
-    const Name = new Discord.MessageEmbed()
+    const Name = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
     .setDescription('Channel')
@@ -44,7 +44,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const Channel = new Discord.MessageEmbed()
+        const Channel = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: namechannel")
@@ -64,7 +64,7 @@ module.exports = {
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
-                const Name = new Discord.MessageEmbed()
+                const Name = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: namechannel")
@@ -82,7 +82,7 @@ module.exports = {
                         const name = response2.content;
         
                         channel.setName(`${name}`)
-                        const Name = new Discord.MessageEmbed()
+                        const Name = new MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
                         .setDescription('Channel')

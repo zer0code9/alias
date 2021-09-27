@@ -55,7 +55,7 @@ module.exports = {
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 
-                const Type = new Discord.MessageEmbed()
+                const Type = new MessageEmbed()
                 .setColor("Random")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: addchannel")
@@ -76,7 +76,7 @@ module.exports = {
                         //if (type != "text" || "voice" || "store" || "category" || "news" || "stage") return Wronganswer(msg, `Unknown Type`, `${type} is not a channel type`)
 
                         msg.guild.channels.create(`${name}`, {type: `${type}`});
-                        const Add = new Discord.MessageEmbed()
+                        const Add = new MessageEmbed()
                         .setColor("#00ff00")
                         .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
                         .setDescription("Channel")

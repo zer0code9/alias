@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function unbanUser(msg, args) {
     if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
@@ -12,7 +12,7 @@ function unbanUser(msg, args) {
     if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to unban someone`, `unban [id] [reason]`);
 
     msg.guild.members.unban(user, `${reason}`)
-    const Unban = new Discord.MessageEmbed()
+    const Unban = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: UNBANNED MEMBER :bust_in_silhouette::o:`)
     .setDescription("Moderation")
@@ -38,7 +38,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
 
-        const User = new Discord.MessageEmbed()
+        const User = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
@@ -59,7 +59,7 @@ module.exports = {
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 
-                const Reason = new Discord.MessageEmbed()
+                const Reason = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: ban")
@@ -77,7 +77,7 @@ module.exports = {
                       const reason = response2;
 
                       msg.guild.members.unban(user, `${reason}`)
-                      const Unban = new Discord.MessageEmbed()
+                      const Unban = new MessageEmbed()
                       .setColor("#00ff00")
                       .setTitle(`:white_check_mark: UNBANNED MEMBER :bust_in_silhouette::o:`)
                       .setDescription("Moderation")

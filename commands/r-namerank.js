@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function nameRank(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
@@ -12,7 +12,7 @@ function nameRank(msg, args) {
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role`, `namerank [role] [name]`);
 
     role.setName(`${name}`)
-    const Name = new Discord.MessageEmbed()
+    const Name = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
     .setDescription('Rank')
@@ -37,7 +37,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const Role = new Discord.MessageEmbed()
+        const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: namerank")
@@ -57,7 +57,7 @@ module.exports = {
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
-                const Name = new Discord.MessageEmbed()
+                const Name = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: namerank")
@@ -75,7 +75,7 @@ module.exports = {
                         const name = response2.content;
         
                         role.setName(`${name}`)
-                        const Name = new Discord.MessageEmbed()
+                        const Name = new MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
                         .setDescription('Rank')

@@ -1,6 +1,5 @@
-const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function kickUser(msg, args) {
     if (!msg.member.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
@@ -19,7 +18,7 @@ function kickUser(msg, args) {
     if(!reason) return Invalid(msg, `No Reason`, `I need a reason in order to kick someone`, `Command`, `kick [member] [reason]`);
 
     //member.kick(reason)
-    const Kick = new Discord.MessageEmbed()
+    const Kick = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
     .setDescription("Moderation")
@@ -45,7 +44,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
 
-        const User = new Discord.MessageEmbed()
+        const User = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: kick")
@@ -67,7 +66,7 @@ module.exports = {
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 
-                const Reason = new Discord.MessageEmbed()
+                const Reason = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: kick")
@@ -85,7 +84,7 @@ module.exports = {
                         const reason = response2.content;
   
                         //member.kick(reason);
-                        const Kick = new Discord.MessageEmbed()
+                        const Kick = new MessageEmbed()
                         .setColor("#00ff00")
                         .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
                         .setDescription("Moderation")

@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function delRank(msg, args) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
@@ -12,7 +12,7 @@ function delRank(msg, args) {
     if (!reason) Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `colorrank [role] [color:hex]`);
 
     role.delete();
-    const remove = new Discord.MessageEmbed()
+    const remove = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
     .setDescription('Rank')
@@ -37,7 +37,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const Role = new Discord.MessageEmbed()
+        const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: delrank")
@@ -58,7 +58,7 @@ module.exports = {
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
-                const Reason = new Discord.MessageEmbed()
+                const Reason = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: delrank")
@@ -76,7 +76,7 @@ module.exports = {
                         const reason = response2.content;
         
                         role.delete();
-                        const Remove = new Discord.MessageEmbed()
+                        const Remove = new MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
                         .setDescription('Rank')

@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function moveChannel(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
@@ -16,7 +16,7 @@ function moveChannel(msg, args) {
 
     channel.setParent(`${category}`);
     channel.setPosition(`${position}`);
-    const Move = new Discord.MessageEmbed()
+    const Move = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: :MOVED CHANNEL :file_folder::arrow_heading_up:")
     .setDescription("Channel")
@@ -41,7 +41,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const Channel = new Discord.MessageEmbed()
+        const Channel = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: movechannel")
@@ -61,7 +61,7 @@ module.exports = {
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
-                const Category = new Discord.MessageEmbed()
+                const Category = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: movechannel")
@@ -80,7 +80,7 @@ module.exports = {
 
                         const filter2 = response3 => { return response3.author.id === authorid; }
         
-                        const Position = new Discord.MessageEmbed()
+                        const Position = new MessageEmbed()
                         .setColor("RANDOM")
                         .setTitle(`${by} Commands`)
                         .setDescription("Command: movechannel")
@@ -99,7 +99,7 @@ module.exports = {
 
                                 channel.setParent(`${category}`);
                                 channel.setPosition(`${position}`);
-                                const move = new Discord.MessageEmbed()
+                                const move = new MessageEmbed()
                                 .setColor("#00ff00")
                                 .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_up_down:")
                                 .setDescription("Channel")

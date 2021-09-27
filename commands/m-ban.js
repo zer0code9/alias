@@ -1,7 +1,7 @@
 const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-const Discord = require("discord.js");
 function banUser(msg, args) {
     if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
     if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
@@ -22,7 +22,7 @@ function banUser(msg, args) {
     if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
 
     member.ban({ days, reason: `${reason}`})
-    const Ban = new Discord.MessageEmbed()
+    const Ban = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
     .setDescription("Moderation")
@@ -49,7 +49,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
 
-        const User = new Discord.MessageEmbed()
+        const User = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: ban")
@@ -71,7 +71,7 @@ module.exports = {
 
                 const filter2 = response2 => { return response2.author.id === authorid; }
 
-                const Reason = new Discord.MessageEmbed()
+                const Reason = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: ban")
@@ -90,7 +90,7 @@ module.exports = {
 
                         const filter3 = response3 => { return response3.author.id === authorid; }
 
-                        const Day = new Discord.MessageEmbed()
+                        const Day = new MessageEmbed()
                         .setColor("RANDOM")
                         .setTitle(`${by} Commands`)
                         .setDescription("Command: ban")
@@ -109,7 +109,7 @@ module.exports = {
                                 if (isNaN(days)) return Wronganswer(msg, `Not a number`, `The number of days must be a number`);
 
                                 //member.ban({ days, reason: `${reason}`})
-                                const Ban = new Discord.MessageEmbed()
+                                const Ban = new MessageEmbed()
                                 .setColor("#00ff00")
                                 .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
                                 .setDescription("Moderation")

@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Unknown } = require("../errors");
 function topicChannel(msg, args) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
@@ -12,7 +12,7 @@ function topicChannel(msg, args) {
     if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `topicchannel [channel] [topic]`);
 
     channel.setTopic(`${topic}`)
-    const Topic = new Discord.MessageEmbed()
+    const Topic = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CHANGED TOPIC :file_folder::pencil:")
     .setDescription("Channel")
@@ -37,7 +37,7 @@ module.exports = {
 
         const filter1 = response1 => { return response1.author.id === authorid; }
     
-        const Channel = new Discord.MessageEmbed()
+        const Channel = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: topicchannel")
@@ -57,7 +57,7 @@ module.exports = {
       
                 const filter2 = response2 => { return response2.author.id === authorid; }
     
-                const Topic = new Discord.MessageEmbed()
+                const Topic = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: topicchannel")
@@ -75,7 +75,7 @@ module.exports = {
                         const topic = response2.content;
         
                         channel.setTopic(`${topic}`)
-                        const Topic = new Discord.MessageEmbed()
+                        const Topic = new MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: CHANGED CHANNEL TOPIC :file_folder::pencil:`)
                         .setDescription('Channel')
