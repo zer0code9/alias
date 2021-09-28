@@ -20,7 +20,7 @@ function addChannel(msg, args) {
         { name: "To change channel position:", value: `Use \`zmovechannel\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Add);
+    msg.channel.send({ embeds: [Add] });
 }
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
 
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter1 = (m) => m.author.id === authorid;
 
         const Name = new MessageEmbed()
         .setColor("RANDOM")
@@ -46,14 +46,14 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Name).then(() => {
+        msg.channel.send({ embeds: [Name] }).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1, time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const name = response1;
 
-                const filter2 = response2 => { return response2.author.id === authorid; }
+                const filter2 = (m) => m.author.id === authorid;
 
                 const Type = new MessageEmbed()
                 .setColor("Random")
@@ -66,7 +66,7 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
 
-                msg.channel.send(Type).then(() => {
+                msg.channel.send({ embeds: [Type] }).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1, time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
@@ -86,7 +86,7 @@ module.exports = {
                             { name: "To change channel position:", value: `Use \`zmovechannel\`` }
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send(Add);
+                        msg.channel.send({ embeds: [Add] });
 
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);

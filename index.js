@@ -1,10 +1,53 @@
-const { Client, Intents } = require('discord.js');
-const { NOTFOUND } = require("dns");
+const { Client, Intents, MessageEmbed, Collection } = require('discord.js');
 const bot = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const fs = require("fs");
-const server = require("./commands/i-server");
+const CONFIG = require('./config.json');
 
-let commands = new Discord.Collection();
+const prefix = CONFIG.prefix;
+const token = CONFIG.token;
+bot.botCommands = new Collection();
+
+//ERROR MESSAGE
+bot.error = (error_msg, channel) => {
+    if(!error_msg || !channel) return;
+    const errorEmbed = new MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`:x: CANCELED :x:`)
+    .addFields(
+        { name: `Error`, value: `Something went wrong` }
+    )
+    .setFooter(`${by} helps`)
+    return channel.send({ embeds: [errorEmbed] }).catch(e => channel.send(`Couldn't send error embed!\n${e}`))
+}
+
+//EVENT HANDLER
+fs.readdir('./events/', (error, files) => {
+    if (error) return console.error(error);
+    bot.removeAllListeners();
+    files.forEach(file => {
+        if(fs.lstatSync(`./events/${file}`).isDirectory()) return;
+        var event = require(`./events/${file}`);
+        var eventName = file.split(".")[0];
+        try{
+            bot.on(eventName, event.bind(null, bot));
+        } catch(e) {
+            console.log(e)
+        }
+    });
+});
+
+//COMMAND HANDLER
+fs.readdir('./commands/', (error, files) => {
+    if (error) return console.error(err);
+	var commandFiles = files.filter(fileName => fileName.endsWith(".js"));
+	commandFiles.forEach(file => {
+        const command = require(`./commands/${file}`);
+		bot.botCommands.set(command.name, command);
+    });
+});
+
+/*
+let commands = new Collection();
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
@@ -13,22 +56,18 @@ for(const file of commandFiles){
 }
 bot.commands = commands; 
 
-const token = "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE";
-const { prefix } = require("./config.json");
-var { version, versiondescription } = require("./config.json");
-
 bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
-        activity: {
+        activities: [{
             name: ' servers',
             type: 'WATCHING'
-        }
+        }]
     })
     console.log("SplashBot is ON!");
 });
 
-bot.on("message" , msg=>{
+bot.on("messageCreate" , msg=>{
     if(!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/);
@@ -42,64 +81,24 @@ bot.on("message" , msg=>{
         msg.reply(`I don't know the command ${command}.`);
     } else
     try {
-        bot.commands.get(command).execute(msg, args, cmds, bot);
+        bot.commands.get(command).execute(msg, args, inter, bot);
     } catch (error) {
         msg.reply(`Uh oh, something went wrong \n\`\`\`${error}\`\`\``);
     }
     return;
 });
+*/
 
 bot.on("guildCreate", guild=>{
-    const guildEvent = new Discord.MessageEmbed()
+    const guildEvent = new MessageEmbed()
     .setColor("RANDOM")
     .setTitle(`Nice to meet you ${guild.owner}`)
 
     guild.sendMessage(`Wow, I got Invited in a new server, so cool! Hey ${guild.owner}`)
 });
 bot.on("channelCreate" , chnl=>{
-    const channelEvent = new Discord.MessageEmbed()
+    const channelEvent = new MessageEmbed()
     .setColor("RANDOM")
 })
-// if(command === ""){bot.command.get("").execute(msg, args);}
-// \n\`\`\`${}\`\`\`
-
-/*
-const { prefix } = require("/home/asorinus/workspace/myFirstProject/WithersWorld/WithersBot/config.json");
-const Discord = require("discord.js");
-function abc(msg, args) {
-    const name = args.slice(1).join(" ");
-    if (name) {
-        const change = new Discord.MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("WithersBot Commands")
-        .setDescription("Command: ")
-        .addFields(
-            { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
-        )
-        .setFooter("WithersBot helps")
-        msg.channel.send(change);
-    } else {
-            const no = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("WithersBot Commands")
-            .setDescription("Command: ")
-            .addFields(
-                { name: "here", value: `here`}
-            )
-            .setFooter("WithersBot helps")
-            msg.channel.send(no);
-    }
-}
-
-module.exports = {
-    name: "",
-    description: "",
-    example: prefix + "",
-    type: "",
-    execute(msg, args) {
-        abc(msg, args);
-    }
-}
-*/
 
 bot.login(token);

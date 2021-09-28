@@ -9,7 +9,7 @@ function Error(msg, name1, value1, name2, value2, emoji) {
         { name: `${name2}`, value: `${value2}` }
     )
     .setFooter(`${by} helps`)
-    return msg.channel.send(Error);
+    return msg.channel.send({ embeds: [Error] });
 }
 function Timeout(msg) {
     const Error = new MessageEmbed()
@@ -19,7 +19,7 @@ function Timeout(msg) {
         { name: "Command Canceled", value: `Timeout cancelation`}
     )
     .setFooter(`${by} helps`)
-    return msg.channel.send(Error);
+    return msg.channel.send({ embeds: [Error] });
 }
 function Wronganswer(msg, name, value) {
     return Error(msg, `${name}`, `${value}`, `Command Canceled`, `Wrong Answer Cancelation`, `warning`);
@@ -35,7 +35,7 @@ function Cancel(msg) {
         { name: "Command Canceled", value: `Ordered cancelation`}
     )
     .setFooter(`${by} helps`)
-    return msg.channel.send(Cancel);
+    return msg.channel.send({ embeds: [Cancel] });
 }
 function Invalid(msg, name, value, use) {
     return Error(msg, `${name}`, `${value}`, `Command`, `\`${prefix}${use}\``, `warning`);

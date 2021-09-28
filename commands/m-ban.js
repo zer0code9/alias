@@ -1,4 +1,3 @@
-const { DiscordAPIError } = require("discord.js");
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
@@ -21,7 +20,7 @@ function banUser(msg, args) {
 
     if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
 
-    member.ban({ days, reason: `${reason}`})
+    //member.ban({ days, reason: `${reason}`})
     const Ban = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
@@ -33,7 +32,7 @@ function banUser(msg, args) {
         { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Ban);
+    msg.channel.send({ embeds: [Ban] });
 }
 
 module.exports = {
@@ -59,7 +58,7 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
 
-        msg.channel.send(User).then(() => {
+        msg.channel.send({ embeds: [User] }).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
@@ -81,7 +80,7 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
 
-                msg.channel.send(Reason).then(() => {
+                msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
@@ -100,7 +99,7 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
 
-                        msg.channel.send(Day).then(() => {
+                        msg.channel.send({ embeds: [Day] }).then(() => {
                             msg.channel.awaitMessages(filter3, { max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();

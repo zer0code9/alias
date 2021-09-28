@@ -25,7 +25,7 @@ function moveChannel(msg, args) {
         { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Move);
+    msg.channel.send({ embeds: [Move] });
 }
 
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Channel).then(() => {
+        msg.channel.send({ embeds: [Channel] }).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
@@ -71,7 +71,7 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
       
-                msg.channel.send(Category).then(() => {
+                msg.channel.send({ embeds: [Category] }).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
@@ -90,7 +90,7 @@ module.exports = {
                         )
                         .setFooter(`${by} helps`)
 
-                        msg.channel.send(Position).then(() => {
+                        msg.channel.send({ embeds: [Position] }).then(() => {
                             msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();
@@ -99,7 +99,7 @@ module.exports = {
 
                                 channel.setParent(`${category}`);
                                 channel.setPosition(`${position}`);
-                                const move = new MessageEmbed()
+                                const Move = new MessageEmbed()
                                 .setColor("#00ff00")
                                 .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_up_down:")
                                 .setDescription("Channel")
@@ -108,7 +108,7 @@ module.exports = {
                                     { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
                                 )
                                 .setFooter(`${by} helps`)
-                                msg.channel.send(move);
+                                msg.channel.send({ embeds: [Move] });
 
                             }).catch(error => {
                                 if (error == '[object Map]') Timeout(msg);

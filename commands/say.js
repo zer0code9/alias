@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-
 function sayIt(msg, args) {
+    if (!args) return;
     const string = args.slice(1).join(" ");
     var enable;
     if (args[0] == "diasble"){enble == false; msg.channel.send("Disabled")} else {if (args[0] == "enable"){enable == true; msg.channel.send("Disabled")}}

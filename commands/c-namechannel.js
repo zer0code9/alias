@@ -28,7 +28,7 @@ function nameChannel(msg, args) {
         { name: "New Name", value: `\`\`\`${name}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Name);
+    msg.channel.send({ embeds: [Name] });
 }
 
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Channel).then(() => {
+        msg.channel.send({ embeds: [Channel] }).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
@@ -74,7 +74,7 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
       
-                msg.channel.send(Name).then(() => {
+                msg.channel.send({ embeds: [Name] }).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
@@ -91,7 +91,7 @@ module.exports = {
                             { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send(Name);
+                        msg.channel.send({ embeds: [Name] });
 
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);
