@@ -26,7 +26,7 @@ const token = CONFIG.token;
 bot.botCommands = new Collection();
 bot.botInteractions = new Collection();
 
-/*
+
 //ERROR MESSAGE
 bot.error = (errorMsg, channel) => {
     if(!errorMsg || !channel) return;
@@ -55,6 +55,15 @@ fs.readdir('./events/', (error, files) => {
         }
     });
 });
+//COMMAND HANDLER
+fs.readdir('./commands/', (error, files) => {
+    if (error) return console.error(err);
+	var commandFiles = files.filter(fileName => fileName.endsWith(".js"));
+	commandFiles.forEach(file => {
+        const command = require(`./commands/${file}`);
+		bot.botCommands.set(command.name, command);
+    });
+});
 //INTERACTION HANDLER
 fs.readdir('./interactions/', (error, files) => {
     if (error) return console.error(err);
@@ -64,18 +73,9 @@ fs.readdir('./interactions/', (error, files) => {
 		bot.botInteractions.set(interaction.name, interaction);
     });
 });
-//COMMAND HANDLER
-fs.readdir('./commands/', (error, files) => {
-    if (error) return console.error(err);
-	var commandFiles = files.filter(fileName => fileName.endsWith(".js"));
-	commandFiles.forEach(file => {
-        const command = require(`./commands/${file}`);
-		bot.botCommands.set(command.name, command);
-    });
-    console.log("Done 1")
-});
-*/
 
+
+/*
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
@@ -86,7 +86,6 @@ for(const file of interactionFiles){
     const interaction = require(`./interactions/${file}`);
     bot.botInteractions.set(interaction.data.name, interaction); 
 }
-
 bot.on("ready", () => {
     bot.user.setPresence({
         status: 'online',
@@ -97,7 +96,6 @@ bot.on("ready", () => {
     })
     console.log("SplashBot is ON!");
 });
-
 bot.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 	const command = bot.botInteractions.get(interaction.commandName);
@@ -110,7 +108,6 @@ bot.on('interactionCreate', async interaction => {
 	}
     console.log("Interactions: OK")
 });
-
 bot.on("messageCreate" , msg=>{
     if(!msg.content.startsWith(prefix) || msg.author.bot) return;
     const args = msg.content.slice(prefix.length).split(/ +/);
@@ -138,5 +135,6 @@ bot.on("channelCreate" , chnl=>{
     const channelEvent = new MessageEmbed()
     .setColor("RANDOM")
 })
+*/
 
 bot.login(token);

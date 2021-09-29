@@ -47,7 +47,7 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send({ embeds: [Channel] }).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+            msg.channel.awaitMessages({filter1, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
@@ -68,7 +68,7 @@ module.exports = {
                 .setFooter(`${by} helps`)
       
                 msg.channel.send({ embeds: [Reason] }).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                    msg.channel.awaitMessages({filter2, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);

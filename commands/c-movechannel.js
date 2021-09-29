@@ -39,7 +39,7 @@ module.exports = {
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
 
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter1 = (m) => m.author.id === authorid;
     
         const Channel = new MessageEmbed()
         .setColor("RANDOM")
@@ -52,14 +52,14 @@ module.exports = {
         .setFooter(`${by} helps`)
     
         msg.channel.send({ embeds: [Channel] }).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+            msg.channel.awaitMessages({filter1, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1 == `cancel`) return Cancel(msg);
                 const channel = response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`)
       
-                const filter2 = response2 => { return response2.author.id === authorid; }
+                const filter2 = (m) => m.author.id === authorid;
     
                 const Category = new MessageEmbed()
                 .setColor("RANDOM")
@@ -72,13 +72,13 @@ module.exports = {
                 .setFooter(`${by} helps`)
       
                 msg.channel.send({ embeds: [Category] }).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                    msg.channel.awaitMessages({filter2, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
                         const category = response2.content;
 
-                        const filter2 = response3 => { return response3.author.id === authorid; }
+                        const filter2 = (m) => m.author.id === authorid;
         
                         const Position = new MessageEmbed()
                         .setColor("RANDOM")
@@ -91,7 +91,7 @@ module.exports = {
                         .setFooter(`${by} helps`)
 
                         msg.channel.send({ embeds: [Position] }).then(() => {
-                            msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                            msg.channel.awaitMessages({filter2, max: 1 , time: 30000, errors: ['time']})
                             .then(collected3 => {
                                 const response3 = collected3.first();
                                 if (response3.content == "cancel") return Cancel(msg);
