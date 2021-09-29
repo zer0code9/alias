@@ -84,7 +84,7 @@ for(const file of commandFiles){
 const interactionFiles = fs.readdirSync("./interactions/").filter(file => file.endsWith(".js"));
 for(const file of interactionFiles){
     const interaction = require(`./interactions/${file}`);
-    bot.botInteractions.set(interaction.name, interaction); 
+    bot.botInteractions.set(interaction.data.name, interaction); 
 }
 
 bot.on("ready", () => {
@@ -100,7 +100,7 @@ bot.on("ready", () => {
 
 bot.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
-	const command = bot.commands.get(interaction.commandName);
+	const command = bot.botInteractions.get(interaction.commandName);
 	if (!command) return;
 	try {
 		await command.execute(interaction);
