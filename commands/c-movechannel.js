@@ -1,18 +1,18 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function moveChannel(msg, args) {
+function moveChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const category = args[1];
     const position = args[2];
 
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `movechannel [channel] [category:id] [place]`);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `${example}`);
 
-    if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `movechannel [channel] [category:id] [place]`);
+    if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `${example}`);
 
-    if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `movechannel [channel] [category:id] [place]`);
+    if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `${example}`);
 
     channel.setParent(`${category}`);
     channel.setPosition(`${position}`);
@@ -34,7 +34,7 @@ module.exports = {
     example: prefix + "movechannel [channel] [category:id] [place]",
     type: "channel",
     execute(msg, args) {
-        if (args[0]) {return moveChannel(msg, args);}
+        if (args[0]) {return moveChannel(msg, args, this.example);}
         if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;

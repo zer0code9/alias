@@ -15,6 +15,6 @@ module.exports = (bot, msg) => {
     try {
         command.execute(msg, args, bot);
     } catch (error) {
-        return bot.error(error,msg.channel)
+        return bot.error(error, msg.channel)
     }
 }

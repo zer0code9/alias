@@ -1,13 +1,13 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function delChannel(msg, args) {
+function delChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     let reason = args.slice(1).join(" ");
 
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `delchannel [channel] [reason]`);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `${example}`);
     
     if (!reason) reason = "No reason";
 
@@ -29,7 +29,7 @@ module.exports = {
     example: prefix + "delchannel [channel]",
     type: "channel",
     execute(msg, args) {
-        if (args[0]) {return delChannel(msg, args)}
+        if (args[0]) {return delChannel(msg, args, this.example);}
         if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
