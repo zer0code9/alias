@@ -38,7 +38,7 @@ function Cancel(msg) {
     return msg.channel.send({ embeds: [Cancel] });
 }
 function Invalid(msg, name, value, use) {
-    return Error(msg, `${name}`, `${value}`, `Command`, `\`${prefix}${use}\``, `warning`);
+    return Error(msg, `${name}`, `${value}`, `Command`, `\`${use}\``, `warning`);
 }
 function Unknown(msg, error) {
     Error(msg, `Something went wrong`, `\`\`\`${error}\`\`\``, `Command Canceled`, `Unknown Error cancelation`, `question`);

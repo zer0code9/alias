@@ -1,15 +1,15 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function unbanUser(msg, args) {
+function unbanUser(msg, args, example) {
     if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
     if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
     const user = args[0];
     const reason = args.slice(1).join(" ");
 
-    if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `unban [id] [reason]`);
+    if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `${example}`);
 
-    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to unban someone`, `unban [id] [reason]`);
+    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to unban someone`, `${example}`);
 
     msg.guild.members.unban(user, `${reason}`)
     const Unban = new MessageEmbed()
@@ -22,7 +22,7 @@ function unbanUser(msg, args) {
         { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Unban);
+    msg.channel.send({ embeds: [Unban] });
 }
 
 module.exports = {
@@ -31,12 +31,11 @@ module.exports = {
     example: prefix + "unban [id] [reason]",
     type: "moderation",
     execute(msg, args){
-        if (args[0]) {return unbanUser(msg, args)}
+        if (args[0]) return unbanUser(msg, args, this.example);
         if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
         if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
         let authorid = msg.author.id;
-
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter = (m) => m.author.id === authorid;
 
         const User = new MessageEmbed()
         .setColor("RANDOM")
@@ -48,16 +47,14 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
 
-        msg.channel.send(User).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+        msg.channel.send({ embeds: [User] }).then(() => {
+            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const user = response1;
                 const member = msg.guild.member(user);
                 if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
-
-                const filter2 = response2 => { return response2.author.id === authorid; }
 
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -69,8 +66,8 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
 
-                msg.channel.send(Reason).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                msg.channel.send({ embeds: [Reason] }).then(() => {
+                    msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                       const response2 = collected2.first();
                       if (response2.content == "cancel") return Cancel(msg);
@@ -87,7 +84,7 @@ module.exports = {
                           { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
                       )
                       .setFooter(`${by} helps`)
-                      msg.channel.send(Unban);
+                      msg.channel.send({ embeds: [Unban] });
 
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);

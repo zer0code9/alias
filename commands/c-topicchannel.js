@@ -1,15 +1,15 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Unknown } = require("../errors");
-function topicChannel(msg, args) {
+function topicChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const topic = args.slice(1).join(" ");
 
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to change its topic`, `topicchannel [channel] [topic]`);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to change its topic`, `${example}`);
 
-    if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `topicchannel [channel] [topic]`);
+    if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `${example}`);
 
     channel.setTopic(`${topic}`)
     const Topic = new MessageEmbed()
@@ -21,7 +21,7 @@ function topicChannel(msg, args) {
         { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Topic);
+    msg.channel.send({ embeds: [Topic] });
 }
 
 module.exports = {
@@ -30,12 +30,11 @@ module.exports = {
     example: prefix + "topicchannel [channel] [topic]",
     type: "channel",
     execute(msg, args) {
-        if (args[0]) {return topicChannel(msg, args)}
+        if (args[0]) return topicChannel(msg, args, this.example);
         if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
-
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter = (m) => m.author.id === authorid;
     
         const Channel = new MessageEmbed()
         .setColor("RANDOM")
@@ -47,15 +46,13 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Channel).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+        msg.channel.send({ embeds: [Channel] }).then(() => {
+            msg.channel.awaitMessages(filter, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const channel = response1.mentions.channels.first();
-                if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`)
-      
-                const filter2 = response2 => { return response2.author.id === authorid; }
+                if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
     
                 const Topic = new MessageEmbed()
                 .setColor("RANDOM")
@@ -67,8 +64,8 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
       
-                msg.channel.send(Topic).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                msg.channel.send({ embeds: [Topic] }).then(() => {
+                    msg.channel.awaitMessages(filter, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
@@ -84,7 +81,7 @@ module.exports = {
                             { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send(Topic);
+                        msg.channel.send({ embeds: [Topic] });
 
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);

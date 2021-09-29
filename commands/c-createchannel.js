@@ -38,7 +38,7 @@ module.exports = {
         if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
 
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter1 = (m) => m.author.id === authorid;
 
         const Name = new Discord.MessageEmbed()
         .setColor("RANDOM")

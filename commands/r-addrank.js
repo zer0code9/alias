@@ -1,16 +1,16 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function addRank(msg, args) {
+function addRank(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
     const name = args.join(" ");
 
-    if (!name) return Invalid(msg, `No Name`, `I need a name in order to create a new role`, `addrank [name]`);
+    if (!name) return Invalid(msg, `No Name`, `I need a name in order to create a new role`, `${example}`);
 
     msg.guild.roles.create({ data: { name: `${name}` } });
-    const add = new MessageEmbed()
+    const Add = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED CHANNEL :label::heavy_plus_sign:")
     .setDescription("Rank")
@@ -19,7 +19,7 @@ function addRank(msg, args) {
         { name: "To change role color:", value: `Use \`zcolorrank\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(add);
+    msg.channel.send({ embeds: [Add] });
 }
 
 module.exports = {
@@ -28,12 +28,11 @@ module.exports = {
     example: prefix + "addrank [name]",
     type: "rank",
     execute(msg, args) {
-        if (args[0]) {return addRank(msg, args);}
+        if (args[0]) return addRank(msg, args, this.example);
         if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
-
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter = (m) => m.author.id === authorid;
 
         const Name = new MessageEmbed()
         .setColor("RANDOM")
@@ -45,8 +44,8 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Name).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+        msg.channel.send({ embeds: [Name] }).then(() => {
+            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
@@ -62,7 +61,7 @@ module.exports = {
                     { name: "To change role color:", value: `Use \`zcolorrank\``}
                 )
                 .setFooter(`${by} helps`)
-                msg.channel.send(Add);
+                msg.channel.send({ embeds: [Add] });
                 
             }).catch(error => {
                 if (error == '[object Map]') Timeout(msg);

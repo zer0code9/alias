@@ -1,18 +1,18 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function delRank(msg, args) {
+function delRank(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
     let reason = args.slice(1).join(" ");
 
-    if (!role) returnInvalid(msg, `No Role`, `I need a role in order to delete it`, `colorrank [role] [color:hex]`);
+    if (!role) returnInvalid(msg, `No Role`, `I need a role in order to delete it`, `${example}`);
 
-    if (!reason) Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `colorrank [role] [color:hex]`);
+    if (!reason) Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `${example}`);
 
     role.delete();
-    const remove = new MessageEmbed()
+    const Remove = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
     .setDescription('Rank')
@@ -21,7 +21,7 @@ function delRank(msg, args) {
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(remove);
+    msg.channel.send({ embeds: [Remove] });
 }
 
 module.exports = {
@@ -30,12 +30,11 @@ module.exports = {
     example: prefix + "delrank [role] [reason]",
     type: "rank",
     execute(msg, args) {
-        if (args[0]) {return delRank(msg, args);}
+        if (args[0]) return delRank(msg, args, this.example);
         if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
-
-        const filter1 = response1 => { return response1.author.id === authorid; }
+        const filter = (m) => m.author.id === authorid;
     
         const Role = new MessageEmbed()
         .setColor("RANDOM")
@@ -47,16 +46,14 @@ module.exports = {
         )
         .setFooter(`${by} helps`)
     
-        msg.channel.send(Role).then(() => {
-            msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+        msg.channel.send({ embeds: [Role] }).then(() => {
+            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const role = response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
                 let roleN = role.name;
-      
-                const filter2 = response2 => { return response2.author.id === authorid; }
     
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -68,8 +65,8 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
       
-                msg.channel.send(Reason).then(() => {
-                    msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
+                msg.channel.send({ embeds: [Reason] }).then(() => {
+                    msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
@@ -85,7 +82,7 @@ module.exports = {
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send(Remove);
+                        msg.channel.send({ embeds: [Remove] });
                         
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);
