@@ -9,7 +9,7 @@ function kickUser(msg, args, example) {
 
     if (!user) return Invalid(msg, `No User`, `I need a username in order to kick them`, `${example}`);
 
-    const member = msg.guild.member(user);
+    const member = msg.guild.members.cache.get(user.id);
 
     if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to mute is not kickable`, `${example}`);
 

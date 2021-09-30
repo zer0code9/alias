@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
-function user(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function userInfo(msg, args, example) {
     const user = msg.mentions.users.first();
 
     var bo;
@@ -9,7 +10,7 @@ function user(msg, args) {
     var cre = author.createdAt;
     if (!author.bot) { bo = `${author.nickname|| author.username} is not a bot` } else { if (author.bot) { bo = `${author.nickname || author.username} is a bot` }}
     if (!author.nickname) { ni = `No nickname`} else { ni = `${author.nickname}`}
-    const uUser = new Discord.MessageEmbed()
+    const meInfo = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
     .setDescription("Info")
@@ -26,23 +27,15 @@ function user(msg, args) {
         ]
     )
     .setFooter(`${by} helps`)
-    if (args == 0) return msg.channel.send(uUser);
+    if (args == 0) return msg.channel.send({ embeds: [meInfo] });
 
-    const member = msg.guild.member(user);
-    const noMember = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-      { name: "No Member", value: `I don't know that member` },
-      { name: "Command", value: `\`${prefix}user [member]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!member) return msg.channel.send(noMember);
+    const member = msg.guild.members.cache.get(user.id);
+    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
 
     var cre = user.createdAt;
     if (!user.bot) { bo = `${user.nickname|| user.username} is not a bot` } else { if (user.bot) { bo = `${user.nickname || user.username} is a bot` }}
     if (!user.nickname) { ni = `No nickname`} else { ni = `${user.nickname}`}
-    const Info = new Discord.MessageEmbed()
+    const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
     .setDescription("Info")
@@ -59,7 +52,7 @@ function user(msg, args) {
         ]
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Info);
+    msg.channel.send({ embeds: [Info] });
 }
 
 module.exports = {
@@ -68,6 +61,6 @@ module.exports = {
     example: prefix + "user [user]",
     type: "info",
     execute(msg, args) {
-        user(msg, args);
+        userInfo(msg, args, this.example);
     }
 }

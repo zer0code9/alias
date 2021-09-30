@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
-function server(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function serverInfo(msg, args) {
     let guild = msg.guild;
     const member = msg.mentions.members.first();
     var cre = guild.createdAt;
@@ -19,7 +20,7 @@ function server(msg, args) {
         const voiceChannels = guild.channels.cache.filter(channel => channel.type === "voice").size;
         const newsChannels = guild.channels.cache.filter(channel => channel.type === "news").size;
         const storeChannels = guild.channels.cache.filter(channel => channel.type === "store").size;
-        const ServerInfo = new Discord.MessageEmbed()
+        const Info = new MessageEmbed()
         .setColor('#00ff00')
         .setTitle(`:desktop: SERVER INFO :desktop:`)
         .setThumbnail(`${guild.iconURL()}`)
@@ -36,10 +37,9 @@ function server(msg, args) {
                 { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nAnnouncement: ${newsChannels} | Store: ${storeChannels}\`\`\`` },
                 { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${guild.roles.highest.name}\`\`\`` },
                 { name: "System", value: `\`\`\`${sc}\`\`\``}, { name: "Rule", value: `\`\`\`${rc}\`\`\``}
- )
- .setFooter(`${by} helps`)
-msg.channel.send(ServerInfo);
-return;
+        )
+        .setFooter(`${by} helps`)
+        msg.channel.send({ embeds: [Info] });
     }
 }
 
@@ -47,9 +47,9 @@ return;
 module.exports = {
     name: "server",
     description: "WithersWorld to WithersBot",
-    example: prefix + "server [data-on-server]",
+    example: prefix + "server",
     type: "info",
     execute(msg, args){
-        server(msg, args);
+        serverInfo(msg, args);
     }
 }

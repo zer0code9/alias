@@ -1,18 +1,11 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
-function channel(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function channelInfo(msg, args, example) {
     const channel = msg.mentions.channels.first();
     //let id;
 
-    const noChannel = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Channel", value: `I need a channel in order to return info about it`},
-        { name: "Command", value: `\`${prefix}channel [channel]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!channel) return msg.channel.send(noChannel);
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it`, `${example}`);
     //if (!channel) id = args.join(" ");    
 
     /*
@@ -40,7 +33,7 @@ function channel(msg, args) {
     var cre = channel.createdAt;
     var to;
     if (!channel.topic) {to = "No topic"} else {to = `${channel.topic}`}
-    const Info = new Discord.MessageEmbed()
+    const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":file_folder: CHANNEL INFO :file_folder:")
     .setDescription("Info")
@@ -57,7 +50,7 @@ function channel(msg, args) {
         ]
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Info);
+    msg.channel.send({ embeds: [Info] });
 }
 
 module.exports = {
@@ -66,6 +59,6 @@ module.exports = {
     example: prefix + "channel [channel]",
     type: "info",
     execute(msg, args) {
-        channel(msg, args);
+        channelInfo(msg, args, this.example);
     }
 }

@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
-function today(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function todayInfo(msg, args) {
     let tdy = new Date();
     let date = tdy.getDate();
     let day = tdy.getDay();
@@ -13,7 +14,7 @@ function today(msg, args) {
     let hour = tdy.getHours();
     let dates = tdy.toDateString();
 
-    const todayDate = new Discord.MessageEmbed()
+    const todayDate = new MessageEmbed()
         .setColor("#00ff00")
         .setTitle(":clock12: TIME INFO :clock12:")
         .setDescription(`Info`)
@@ -23,7 +24,7 @@ function today(msg, args) {
             { name: "Time:", value: `\`\`\`${hour}:${minute}.${second}\`\`\``}
         )
         .setFooter(`${by} helps`)
-    msg.channel.send(todayDate);
+    msg.channel.send({ embeds: [todayDate] });
 
 
 }
@@ -31,7 +32,8 @@ module.exports = {
     name: "today",
     description: "Get info on today",
     example: prefix + "today",
+    type: "info",
     execute(msg, args) {
-        today(msg, args)
+        todayInfo(msg, args)
     }
 }

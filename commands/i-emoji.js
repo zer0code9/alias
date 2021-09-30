@@ -1,22 +1,15 @@
 const { prefix, by } = require("./../config.json")
-const Discord = require("discord.js");
-function emojiInfo(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function emojiInfo(msg, args, example) {
     const emoji = msg.guild.emojis.cache.first();
 
-    const noEmoji = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle(`${by} Commands`)
-    .setDescription("Command: emoji")
-    .addFields(
-        { name: "Command", value: `Get info on an emoji\n\`\`\`${prefix}emoji [emoji]\`\`\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!emoji) return msg.channel.send(noEmoji);
+    if (!emoji) return Invalid(msg, `No Emoji`, `I need an emoji in order to return info about it`, `${example}`);
 
     var cre = emoji.createdAt;
     var an;
     if (emoji.animated = false) { an = `${emoji.name} is not animated` } else { if (emoji.animated = true) { an = `${emoji.name} is an animated emoji` }}
-    const Emoji = new Discord.MessageEmbed()
+    const Info = new MessageEmbed()
     .setColor("RANDOM")
     .setTitle(`${by} Comamnds`)
     .setDescription("Command: emoji")
@@ -32,7 +25,7 @@ function emojiInfo(msg, args) {
         { name: "URL", value: `${emoji.url}`}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(Emoji);
+    msg.channel.send({ embeds: [Info] });
 }
 
 module.exports = {
@@ -41,6 +34,6 @@ module.exports = {
     example: prefix + "emoji [emoji]",
     type: "info",
     execute(msg, args) {
-        emojiInfo(msg, args);
+        emojiInfo(msg, args, this.example);
     }
 }

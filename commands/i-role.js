@@ -1,22 +1,15 @@
 const { prefix, by } = require("./../config.json");
-const Discord = require("discord.js");
-function role(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Invalid } = require('../errors');
+function roleInfo(msg, args, example) {
     const role = msg.mentions.roles.first();
 
-    const noRole = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(`:warning: CANCELED :warning:`)
-    .addFields(
-        { name: "No Role", value: `I need a role in order to return info about it`},
-        { name: "Command", value: `\`${prefix}role [role]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!role) return msg.channel.send(noRole);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it`, `${example}`);
 
     var pe;
     //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
     var cre = role.createdAt;
-    const roleInfo = new Discord.MessageEmbed()
+    const Info = new MessageEmbed()
     .setColor(`#00ff00`)
     .setTitle(":label: ROLE INFO :label:")
     .setDescription("Info")
@@ -29,12 +22,12 @@ function role(msg, args) {
         [
             { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
             { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
-            { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
+            { name: "Position", value: `\`\`\`${(msg.guild.roles.size - role.position) + 1}\`\`\``, inline: true}
         ]
         
     )
     .setFooter(`${by} helps`)
-    msg.channel.send(roleInfo);
+    msg.channel.send({ embeds: [Info] });
 }
 
 module.exports = {
@@ -43,6 +36,6 @@ module.exports = {
     example: prefix + "role [role]",
     type: "info",
     execute(msg, args) {
-        role(msg, args);
+        roleInfo(msg, args, this.example);
     }
 }

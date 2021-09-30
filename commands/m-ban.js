@@ -10,7 +10,7 @@ function banUser(msg, args, example) {
 
     if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone`, `${example}`);
 
-    const member = msg.guild.member(user);
+    const member = msg.guild.members.cache.get(user.id);
 
     if (!member.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `${example}`);
 
