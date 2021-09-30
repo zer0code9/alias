@@ -1,17 +1,10 @@
 const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
-const Discord = require("discord.js");
-function bcalculator(msg, args) {
+const { MessageEmbed } = require("discord.js");
+const { Wronganswer, Invalid, Unknown } = require('../errors');
+function bcalculator(msg, args, example) {
     let equation = args.join(" ");
 
-    const noCalc = new Discord.MessageEmbed()
-    .setColor("#ff0000")
-    .setTitle(":warning: CANCELED :warning:")
-    .addFields(
-        { name: "No Equation", value: `I need an equation to solve it.`},
-        { name: "Command:", value: `\`${prefix}calc [equation]\``}
-    )
-    .setFooter(`${by} helps`)
-    if (!equation) return msg.channel.send(noCalc);
+    if (!equation) return Invalid(msg, `No Equation`, `I need an equation`, `${example}`);
 
     equation = equation
         .replace(/\n/g, "")
@@ -33,19 +26,18 @@ function bcalculator(msg, args) {
             }
         }
 
-        const Error = new Discord.MessageEmbed()
-        .setColor("#ff0000")
-        .setTitle(`:warning: CANCELED :warning:`)
-        .addFields(
-        { name: `You used \`${incorrect}\``, value: `I need a valid channel name` },
-        { name: "Command Canceled", value: `Wrong usage cancelation`}
-        )
-        .setFooter(`${by} helps`)
-        if (someError) return msg.channel.send(Error);
+        if (someError) return Wronganswer(msg, `You used \`${incorrect}\``, `This key can't be used`);
 
         answer = eval(equation);
         equation.replace("", " ");
-        msg.channel.send(`${equation} = \`${answer}\``);
+        const Calc = new MessageEmbed()
+        .setColor('#00ff00')
+        .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
+        .addFields(
+            { name: "Calculation:", value: `\`\`\`${equation} = ${answer}\`\`\`` }
+        )
+        .setFooter(`${by} helps`)
+        msg.channel.send({ embeds: [Calc] });
 
     } catch (error) {
         msg.channel.send(`Oh no, something went wrong\n\`\`\`${error}\`\`\``);
@@ -56,6 +48,6 @@ module.exports = {
     description: "Use the basic calculator on WithersBot",
     example: prefix + "calc [expression]",
     execute(msg, args){
-        bcalculator(msg, args);
+        bcalculator(msg, args, this.example);
     }
 }

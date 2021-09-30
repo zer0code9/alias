@@ -4,12 +4,10 @@ const { Invalid } = require('../errors');
 function userInfo(msg, args, example) {
     const user = msg.mentions.users.first();
 
-    var bo;
-    var ni;
+    //var ni;
     const author = msg.author;
-    var cre = author.createdAt;
-    if (!author.bot) { bo = `${author.nickname|| author.username} is not a bot` } else { if (author.bot) { bo = `${author.nickname || author.username} is a bot` }}
-    if (!author.nickname) { ni = `No nickname`} else { ni = `${author.nickname}`}
+    var bo = `${author.nickname || author.username} is not a bot` ?? `${author.nickname || author.username} is a bot`;
+    //if (!author.nickname) { ni = `No nickname`} else { ni = `${author.nickname}`}
     const meInfo = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
@@ -19,9 +17,9 @@ function userInfo(msg, args, example) {
             { name: "Username", value: `\`\`\`${author.tag}\`\`\``, inline: true},
             { name: "User Id", value: `\`\`\`${author.id}\`\`\``, inline: true},
         ],
-        { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\``},
+        { name: "Created on", value: `\`\`\`${author.createdAt.toDateString()}\`\`\``},
         [
-            { name: "User Nickname", value: `\`\`\`${ni}\`\`\``, inline: true},
+            { name: "User Nickname", value: `\`\`\`${author.nickname ?? `No nickname`}\`\`\``, inline: true},
             { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},
             { name: "Number of roles", value: `\`\`\`${author.roles}\`\`\``, inline: true}
         ]
@@ -32,9 +30,9 @@ function userInfo(msg, args, example) {
     const member = msg.guild.members.cache.get(user.id);
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
 
-    var cre = user.createdAt;
-    if (!user.bot) { bo = `${user.nickname|| user.username} is not a bot` } else { if (user.bot) { bo = `${user.nickname || user.username} is a bot` }}
-    if (!user.nickname) { ni = `No nickname`} else { ni = `${user.nickname}`}
+    //if (!user.bot) { bo = `${user.nickname|| user.username} is not a bot` } else { if (user.bot) { bo = `${user.nickname || user.username} is a bot` }}
+    bo = `${user.nickname || user.username} is not a bot` ?? `${user.nickname || user.username} is a bot`;
+    //if (!user.nickname) { ni = `No nickname`} else { ni = `${user.nickname}`}
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
@@ -44,9 +42,9 @@ function userInfo(msg, args, example) {
             { name: "Username", value: `\`\`\`${user.tag}\`\`\``, inline: true},
             { name: "User Id", value: `\`\`\`${user.id}\`\`\``, inline: true},
         ],
-        { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\``},
+        { name: "Created on", value: `\`\`\`${user.createdAt.toDateString()}\`\`\``},
         [
-            { name: "User Nickname", value: `\`\`\`${ni}\`\`\``, inline: true},
+            { name: "User Nickname", value: `\`\`\`${user.nickname ?? `No nickname`}\`\`\``, inline: true},
             { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},
             { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``, inline: true}
         ]

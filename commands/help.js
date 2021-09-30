@@ -1,56 +1,41 @@
 const { prefix, by } = require("./../config.json");
 const Discord = require("discord.js");
-function sendHelp(msg, args, cmds){
+const { Wronganswer, Invalid, Unknown } = require('../errors');
+function sendHelp(msg, args, bot, example){
+    var cmds = bot.botCommands;
     let docs = [];
-    for (const [name, description] of cmds) {
+    for (const [name, description, type] of cmds) {
         docs.push({
-            name: prefix + name,
+            name: prefix + name + " [" + type + "]",
             value: description.description + '```' + description.example + '```'
         });
     }
-    if (args.length == 0) {
-        const help = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTitle(`${by}`)
-        .setDescription(`**${by} Commands:**`)
-        .addFields(docs)
-        .setFooter(`${by} helps`)
-    msg.channel.send(help);
-    } else {
-
-    
-    if (args.length > 0) {
-
+    const Help = new Discord.MessageEmbed()
+    .setColor('RANDOM')
+    .setTitle(`${by}`)
+    .setDescription(`**${by} Commands:**`)
+    .addFields(docs)
+    .setFooter(`${by} helps`)
+    if (!args[0]) return msg.channel.send({ embeds: [Help] });
+    try {
         let selected = docs[args[0].toLowerCase()];
-
-        if (typeof selected == "undefined") {
-                const helpSelected = new Discord.MessageEmbed()
-                .setColor("#922B21")
-                .setTitle(`${by}`)
-                .setDescription(`**❌ ERROR**`)
-                .addFields({ name: "I can't find the command you're looking for.", value: "See all my commands by typing:\n```zhelp```" })
-                .setFooter(`${by} helps`)
-                msg.channel.send(helpSelected);
-        } else {
-            if (typeof selected == cmds) {
-                const helpSelected = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by}`)
-                .setDescription(`**${by} Command:**`)
-                .addFields(docs.filter(cmds => cmds.name === args[0]))
-                .setFooter(`${by} helps`)
-                msg.channel.send(helpSelected);
-            }
-        }
+        const helpSelected = new Discord.MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`${by}`)
+        .setDescription(`**${by} Command:**`)
+        .addFields(docs.filter(cmds => cmds.name === args[0]))
+        .setFooter(`${by} helps`)
+        if (typeof selected == cmds) msg.channel.send({ embeds: [helpSelected] });
+    } catch {
+        Invalid(msg, `No Command`, `I can't find the command`, `${example}`);
     }
-}
 }
 
 module.exports = {
     name: "help",
     description: "Get help on the commands of WithersBot",
     example: prefix + "help [command]",
-    execute(msg, args, cmds){
-        sendHelp(msg, args, cmds);
+    execute(msg, args, bot){
+        sendHelp(msg, args, bot, this.example);
     }
 }
