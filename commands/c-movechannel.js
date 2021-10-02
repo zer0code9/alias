@@ -4,28 +4,31 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function moveChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
-    const channel = msg.mentions.channels.first();
+    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     const category = args[1];
     const position = args[2];
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `${example}`);
 
     if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `${example}`);
+    if (isNaN(category)) return Wronganswer(msg, `Not A Number`, `The category must be a list of number`);
 
     if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `${example}`);
+    if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
 
     channel.setParent(`${category}`);
-    channel.setPosition(`${position}`);
+    channel.setPosition(`${position - 1}`);
     const Move = new MessageEmbed()
     .setColor("#00ff00")
-    .setTitle(":white_check_mark: :MOVED CHANNEL :file_folder::arrow_heading_up:")
+    .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_heading_up:")
     .setDescription("Channel")
     .addFields(
-        { name: `A channel has changed place`, value: `\`\`\`${channel.name}\`\`\``},
-        { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
+        { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\`` },
+        { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name} Position: ${position}\`\`\`` }
     )
     .setFooter(`${by} helps`)
     msg.channel.send({ embeds: [Move] });
+    msg.delete();
 }
 
 module.exports = {
@@ -99,7 +102,7 @@ module.exports = {
                                 .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_up_down:")
                                 .setDescription("Channel")
                                 .addFields(
-                                    { name: `A channel has changed place`, value: `\`\`\`${channel.name}\`\`\``},
+                                    { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\``},
                                     { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
                                 )
                                 .setFooter(`${by} helps`)

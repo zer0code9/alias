@@ -4,7 +4,7 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function delChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
-    const channel = msg.mentions.channels.first();
+    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     let reason = args.slice(1).join(" ");
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `${example}`);
@@ -14,7 +14,7 @@ function delChannel(msg, args, example) {
     channel.delete();
     const Remove = new MessageEmbed()
     .setColor('#00ff00')
-    .setTitle(`:white_check_mark: :DELETED CHANNEL :file_folder::heavy_minus_sign:`)
+    .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
     .setDescription('Channel')
     .addFields(
         { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
@@ -22,6 +22,7 @@ function delChannel(msg, args, example) {
     )
     .setFooter(`${by} helps`)
     msg.channel.send({ embeds: [Remove] });
+    msg.delete();
 }
 module.exports = {
     name: "delchannel",
@@ -50,9 +51,8 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const channel = response1.mentions.channels.first();
+                const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
-                let channelN = channel.name;
     
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -77,7 +77,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been deleted", value: `\`\`\`${channelN}\`\`\`` },
+                            { name: "A channel has been deleted", value: `\`\`\`${channel}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

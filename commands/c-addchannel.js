@@ -21,6 +21,7 @@ function addChannel(msg, args, example) {
     )
     .setFooter(`${by} helps`)
     msg.channel.send({ embeds: [Add] });
+    msg.delete();
 }
 
 module.exports = {

@@ -18,7 +18,7 @@ function banUser(msg, args, example) {
 
     if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to ban someone`, `${example}`);
 
-    if (isNaN(days)) {days = 1; reason = args.slice(1).join(" ");}
+    if (isNaN(days) || days < 1) {days = 1; reason = args.slice(1).join(" ");}
 
     //member.ban({ days, reason: `${reason}`})
     const Ban = new MessageEmbed()

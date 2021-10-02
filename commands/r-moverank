@@ -1,36 +1,38 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function nameRank(msg, args, example) {
+function moveRank(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
-    const name = args.slice(1).join(" ");
+    const position = args.slice(1).join(" ");
+
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `${example}`);
 
-    if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role`, `${example}`);
+    if (!position) return Invalid(msg, `No Name`, `I need a name in order to rename the role`, `${example}`);
+    if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
 
-    role.setName(`${name}`);
-    const Name = new MessageEmbed()
+    role.setPosition(`${position}`);
+    const Move = new MessageEmbed()
     .setColor('#00ff00')
-    .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
+    .setTitle(`:white_check_mark: MOVED ROLE :label::arrow_heading_up:`)
     .setDescription('Rank')
     .addFields(
-        { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
-        { name: "Name", value: `\`\`\`${name}\`\`\``}
+        { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
+        { name: "Position", value: `\`\`\`${position}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Name] });
+    msg.channel.send({ embeds: [Move] });
 }
 
 module.exports = {
-    name: "namerank",
-    description: "Change the name of a role",
-    example: prefix + "namerank [role] [name]",
+    name: "moverank",
+    description: "Change the position of a role",
+    example: prefix + "moverank [role] [position]",
     type: "rank",
     execute(msg, args) {
-        if (args[0]) return nameRank(msg, args, this.example);
+        if (args[0]) return moveRank(msg, args, this.example);
         if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
@@ -54,7 +56,7 @@ module.exports = {
                 const role = response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
     
-                const Name = new MessageEmbed()
+                const Position = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: namerank")
@@ -64,24 +66,25 @@ module.exports = {
                 )
                 .setFooter(`${by} helps`)
       
-                msg.channel.send({ embeds: [Name] }).then(() => {
+                msg.channel.send({ embeds: [Position] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const name = response2.content;
+                        const position = response2.content;
+                        if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
         
-                        role.setName(`${name}`)
-                        const Name = new MessageEmbed()
+                        role.setPosition(`${position}`);
+                        const Move = new MessageEmbed()
                         .setColor('#00ff00')
-                        .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
+                        .setTitle(`:white_check_mark: MOVED ROLE :label::arrow_heading_up:`)
                         .setDescription('Rank')
                         .addFields(
-                            { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
-                            { name: "Name", value: `\`\`\`${name}\`\`\``}
+                            { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
+                            { name: "Position", value: `\`\`\`${position}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
-                        msg.channel.send({ embeds: [Name] });
+                        msg.channel.send({ embeds: [Move] });
                         
                     }).catch(error => {
                         if (error == '[object Map]') Timeout(msg);
