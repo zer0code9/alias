@@ -1,38 +1,16 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
+const { timeDifference } = require('../functions');
 function userInfo(msg, args, example) {
-    const user = msg.mentions.users.first();
-
-    //var ni;
-    const author = msg.author;
-    var bo = `${author.nickname || author.username} is not a bot` ?? `${author.nickname || author.username} is a bot`;
-    //if (!author.nickname) { ni = `No nickname`} else { ni = `${author.nickname}`}
-    const meInfo = new MessageEmbed()
-    .setColor("#00ff00")
-    .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
-    .setDescription("Info")
-    .addFields(
-        [
-            { name: "Username", value: `\`\`\`${author.tag}\`\`\``, inline: true},
-            { name: "User Id", value: `\`\`\`${author.id}\`\`\``, inline: true},
-        ],
-        { name: "Created on", value: `\`\`\`${author.createdAt.toDateString()}\`\`\``},
-        [
-            { name: "User Nickname", value: `\`\`\`${author.nickname ?? `No nickname`}\`\`\``, inline: true},
-            { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},
-            { name: "Number of roles", value: `\`\`\`${author.roles}\`\`\``, inline: true}
-        ]
-    )
-    .setFooter(`${by} helps`)
-    if (args == 0) return msg.channel.send({ embeds: [meInfo] });
+    let user;
+    if (args == 0) user = msg.author;
+    else user = msg.mentions.users.first();
 
     const member = msg.guild.members.cache.get(user.id);
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
 
-    //if (!user.bot) { bo = `${user.nickname|| user.username} is not a bot` } else { if (user.bot) { bo = `${user.nickname || user.username} is a bot` }}
-    bo = `${user.nickname || user.username} is not a bot` ?? `${user.nickname || user.username} is a bot`;
-    //if (!user.nickname) { ni = `No nickname`} else { ni = `${user.nickname}`}
+    bo = `${user.username} is not a bot` ?? `${user.username} is a bot`;
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
@@ -42,7 +20,7 @@ function userInfo(msg, args, example) {
             { name: "Username", value: `\`\`\`${user.tag}\`\`\``, inline: true},
             { name: "User Id", value: `\`\`\`${user.id}\`\`\``, inline: true},
         ],
-        { name: "Created on", value: `\`\`\`${user.createdAt.toDateString()}\`\`\``},
+        { name: "Created on", value: `\`\`\`${user.createdAt.toDateString()} (${timeDifference(user.createdTimestamp)})\`\`\``},
         [
             { name: "User Nickname", value: `\`\`\`${user.nickname ?? `No nickname`}\`\`\``, inline: true},
             { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},

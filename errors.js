@@ -43,4 +43,7 @@ function Invalid(msg, name, value, use) {
 function Unknown(msg, error) {
     Error(msg, `Something went wrong`, `\`\`\`${error}\`\`\``, `Command Canceled`, `Unknown Error cancelation`, `question`);
 }
-module.exports = {Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown}
+
+
+
+module.exports = { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown }

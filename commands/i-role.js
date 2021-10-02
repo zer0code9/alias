@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
+const { timeDifference } = require('../functions');
 function roleInfo(msg, args, example) {
     const role = msg.mentions.roles.first();
 
@@ -18,13 +19,13 @@ function roleInfo(msg, args, example) {
             { name: "Role Name", value: `\`\`\`${role.name}\`\`\``, inline: true},
             { name: "Role Id", value: `\`\`\`${role.id}\`\`\``, inline: true },
         ],
-        { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+        { name: "Created on", value: `\`\`\`${cre.toDateString()} (${timeDifference(role.createdTimestamp)})\`\`\`` },
         [
             { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
             { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
-            { name: "Position", value: `\`\`\`${(msg.guild.roles.size - role.position) + 1}\`\`\``, inline: true}
-        ]
-        
+            { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
+        ],
+        { name: "Permissions", value: `${role.permissions}` }
     )
     .setFooter(`${by} helps`)
     msg.channel.send({ embeds: [Info] });

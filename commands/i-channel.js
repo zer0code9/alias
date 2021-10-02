@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
+const { timeDifference } = require('../functions');
 function channelInfo(msg, args, example) {
     const channel = msg.mentions.channels.first();
     //let id;
@@ -30,9 +31,6 @@ function channelInfo(msg, args, example) {
     if (!id) return msg.channel.send(noChannel);
     */
 
-    var cre = channel.createdAt;
-    var to;
-    if (!channel.topic) {to = "No topic"} else {to = `${channel.topic}`}
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":file_folder: CHANNEL INFO :file_folder:")
@@ -42,11 +40,11 @@ function channelInfo(msg, args, example) {
             { name: "Channel Name", value: `\`\`\`${channel.name}\`\`\``, inline: true},
             { name: "Channel Id", value: `\`\`\`${channel.id}\`\`\``, inline: true },
         ],
-        { name: "Created on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+        { name: "Created on", value: `\`\`\`${channel.createdAt.toDateString()} (${timeDifference(channel.createdTimestamp)})\`\`\`` },
         [
             { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``, inline: true},
             { name: "Category", value: `\`\`\`${channel.parent.name}\`\`\``, inline: true },
-            { name: "Channel Topic", value: `\`\`\`${to}\`\`\``, inline: true }
+            { name: "Channel Topic", value: `\`\`\`${channel.topic || `No Topic`}\`\`\``, inline: true }
         ]
     )
     .setFooter(`${by} helps`)

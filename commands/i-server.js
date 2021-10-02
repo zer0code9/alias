@@ -1,6 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
+const { timeDifference } = require('../functions')
 function serverInfo(msg, args) {
     let guild = msg.guild;
     const member = msg.mentions.members.first();
@@ -30,7 +31,7 @@ function serverInfo(msg, args) {
                 { name: "Server Name", value: `\`\`\`${guild.name}\`\`\``, inline: true},
                 { name: "Server Id", value: `\`\`\`${guild.id}\`\`\`` , inline: true},
             ],
-                { name: "Create on", value: `\`\`\`${cre.toDateString()}\`\`\`` },
+                { name: "Create on", value: `\`\`\`${cre.toDateString()} (${timeDifference(guild.createdTimestamp)})\`\`\`` },
                 { name: 'Server Region', value: `\`\`\`${guild.region}\`\`\`` },
                 { name: 'Server Owner', value: `\`\`\`${guild.owner.user.username}\`\`\``},
                 { name: `Server Members [${total}]`, value: `\`\`\`Users: ${users} | Bots: ${bots}\`\`\`` },

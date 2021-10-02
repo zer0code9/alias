@@ -1,4 +1,6 @@
 const { Client, Intents, MessageEmbed, Collection } = require('discord.js');
+const fs = require("fs");
+const CONFIG = require('./config.json');
 const bot = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -17,8 +19,6 @@ const bot = new Client({
         Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
         Intents.FLAGS.DIRECT_MESSAGE_TYPING
     ], partials: ["MESSAGE", "CHANNEL", "REACTION"]});
-const fs = require("fs");
-const CONFIG = require('./config.json');
 
 const prefix = CONFIG.prefix;
 const by = CONFIG.by;

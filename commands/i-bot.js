@@ -1,7 +1,8 @@
 const { prefix, by, version, versiondescription } = require("./../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed} = require("discord.js");
+const { timeDifference } = require('../functions');
 function botUser(msg, args, bot) {
-    const botInfo = new Discord.MessageEmbed()
+    const botInfo = new MessageEmbed()
     .setColor("RANDOM")
     .setTitle(`${by} Commands`)
     .setDescription("Command: ")
