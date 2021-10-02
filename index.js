@@ -26,7 +26,7 @@ const token = CONFIG.token;
 bot.botCommands = new Collection();
 bot.botInteractions = new Collection();
 
-
+/*
 //ERROR MESSAGE
 bot.error = (errorMsg, channel) => {
     if(!errorMsg || !channel) return;
@@ -73,9 +73,10 @@ fs.readdir('./interactions/', (error, files) => {
 		bot.botInteractions.set(interaction.name, interaction);
     });
 });
+*/
 
 
-/*
+
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
@@ -123,7 +124,7 @@ bot.on("messageCreate" , msg=>{
     console.log("Messages: OK")
 });
 
-
+/*
 bot.on("guildCreate", guild=>{
     const guildEvent = new MessageEmbed()
     .setColor("RANDOM")

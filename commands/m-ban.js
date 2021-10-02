@@ -4,21 +4,18 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function banUser(msg, args, example) {
     if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
     if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
-    const user = msg.mentions.users.first();
+    const user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
     let days = args[1];
     let reason = args.slice(2).join(" ");
 
     if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone`, `${example}`);
-
     const member = msg.guild.members.cache.get(user.id);
-
     if (!member.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `${example}`);
-
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
 
     if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to ban someone`, `${example}`);
 
-    if (isNaN(days) || days < 1) {days = 1; reason = args.slice(1).join(" ");}
+    if (isNaN(days) || days < 1) {days = 100; reason = args.slice(1).join(" ");}
 
     //member.ban({ days, reason: `${reason}`})
     const Ban = new MessageEmbed()

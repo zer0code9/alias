@@ -4,15 +4,12 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function kickUser(msg, args, example) {
     if (!msg.member.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
     if (!msg.guild.me.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
-    const user = msg.mentions.users.first();
+    const user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
     const reason = args.slice(1).join(" ");
 
     if (!user) return Invalid(msg, `No User`, `I need a username in order to kick them`, `${example}`);
-
     const member = msg.guild.members.cache.get(user.id);
-
     if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to mute is not kickable`, `${example}`);
-
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
 
     if(!reason) return Invalid(msg, `No Reason`, `I need a reason in order to kick someone`, `${example}`);

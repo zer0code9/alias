@@ -4,7 +4,7 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 function nameRank(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
-    const role = msg.mentions.roles.first();
+    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `${example}`);
