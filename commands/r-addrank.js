@@ -1,9 +1,9 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function addRank(msg, args, example) {
-    if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
-    if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
+    if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+    if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.mentions.roles.first();
     const name = args.join(" ");
 
@@ -12,7 +12,7 @@ function addRank(msg, args, example) {
     msg.guild.roles.create({ data: { name: `${name}` } });
     const Add = new MessageEmbed()
     .setColor("#00ff00")
-    .setTitle(":white_check_mark: CREATED CHANNEL :label::heavy_plus_sign:")
+    .setTitle(":white_check_mark: CREATED ROLE :label::heavy_plus_sign:")
     .setDescription("Rank")
     .addFields(
         { name: "A new role has been created", value: `\`\`\`${name}\`\`\``},
@@ -29,8 +29,8 @@ module.exports = {
     type: "rank",
     execute(msg, args) {
         if (args[0]) return addRank(msg, args, this.example);
-        if (!msg.member.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
-        if (!msg.guild.me.permissions.has("MANAGE_ROLES")) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
+        if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 
@@ -54,7 +54,7 @@ module.exports = {
                 msg.guild.roles.create({ data: { name: `${name}` } });
                 const Add = new MessageEmbed()
                 .setColor("#00ff00")
-                .setTitle(":white_check_mark: CREATED CHANNEL :label::heavy_plus_sign:")
+                .setTitle(":white_check_mark: CREATED ROKE :label::heavy_plus_sign:")
                 .setDescription("Rank")
                 .addFields(
                     { name: "A new role has been created", value: `\`\`\`${name}\`\`\``},
