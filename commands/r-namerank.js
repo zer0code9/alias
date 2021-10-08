@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function nameRank(msg, args, example) {
     if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
@@ -30,9 +30,9 @@ module.exports = {
     example: prefix + "namerank [role] [name]",
     type: "rank",
     execute(msg, args) {
-        if (args[0]) return nameRank(msg, args, this.example);
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
+        if (args[0]) return nameRank(msg, args, this.example);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
     

@@ -1,9 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Cancel, Perm, Invalid, Unknown } = require("../errors");
 function addChannel(msg, args, example) {
-    if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
-    if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
     const name = args[0];
     var type = args[1];
@@ -30,9 +28,9 @@ module.exports = {
     example: prefix + "addchannel [name] [type?]",
     type: "channel",
     execute(msg, args) {
+        if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         if (args[0]) return addChannel(msg, args, this.example);
-        if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
-        if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 

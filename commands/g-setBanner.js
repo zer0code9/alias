@@ -2,8 +2,6 @@ const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function banner(msg, args, example) {
-    if (!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
-    if (!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const url = args.join(" ");
 
     if (!url) return Invalid(msg, `No URL`, `I need a url in order to change the banner`, `${example}`);
@@ -27,9 +25,9 @@ module.exports = {
     example: prefix + "setbanner [url]",
     type: "guild",
     execute(msg, args) {
-        if (args[0]) return banner(msg, args, this.example);
         if (!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
+        if (args[0]) return banner(msg, args, this.example);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 

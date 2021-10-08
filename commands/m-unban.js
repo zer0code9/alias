@@ -2,8 +2,6 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function unbanUser(msg, args, example) {
-    if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
-    if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
     const user = args[0];
     const reason = args.slice(1).join(" ");
 
@@ -31,9 +29,9 @@ module.exports = {
     example: prefix + "unban [id] [reason]",
     type: "moderation",
     execute(msg, args){
+        if (!msg.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
         if (args[0]) return unbanUser(msg, args, this.example);
-        if (!msg.member.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `You don't have the permission to unban someone`);
-        if (!msg.guild.me.permissions.has("BAN_MEMBERS")) return Perm(msg, `No Permission`, `I don't have the permission to unban someone`);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 

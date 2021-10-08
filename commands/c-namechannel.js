@@ -1,9 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function nameChannel(msg, args, example) {
-    if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
-    if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel to change its name`, `${example}`);
 
@@ -31,9 +29,9 @@ module.exports = {
     example: prefix + "namechannel [channel] [name]",
     type: "channel",
     execute(msg, args) {
+        if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         if (args[0]) return nameChannel(msg, args, this.example);
-        if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
-        if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
     

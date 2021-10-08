@@ -1,9 +1,7 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function kickUser(msg, args, example) {
-    if (!msg.member.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
-    if (!msg.guild.me.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
     const user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
     const reason = args.slice(1).join(" ");
 
@@ -34,9 +32,9 @@ module.exports = {
     example: prefix + "kick [member] [reason]",
     type: "moderation",
     execute(msg, args){
+        if (!msg.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
         if (args[0]) return kickUser(msg, args, this.example);
-        if (!msg.member.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
-        if (!msg.guild.me.permissions.has("KICK_MEMBERS")) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 
