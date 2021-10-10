@@ -50,7 +50,7 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const channel = msg.guild.channels.cache.get(response1) || msg.mentions.channels.first();
+                const channel = msg.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
     
                 const Name = new MessageEmbed()

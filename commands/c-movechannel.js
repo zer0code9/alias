@@ -1,5 +1,5 @@
 const { prefix, by } = require("./../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function moveChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
