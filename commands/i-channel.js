@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
 const { timeDifference } = require('../functions');
 function channelInfo(msg, args, example) {
-    const channel = msg.mentions.channels.first();
+    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     //let id;
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it`, `${example}`);

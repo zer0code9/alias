@@ -50,7 +50,7 @@ async function users(msg, args) {
         if (!pageNum) pageNum = 0;
         const userList = new MessageEmbed()
         .setColor('#00ff00')
-        .setTitle(":white_check_mark: MEMBERS COUNT :busts_in_silhoutte::1234:")
+        .setTitle(":white_check_mark: MEMBERS COUNT :busts_in_silhouette::1234:")
         .setDescription("Info")
         .addFields(
             { name: `All Members of ${msg.guild.name} [${msg.guild.members.cache.size}]`, value: `${list.slice(pageNum, pageNum + 9).join("\n") || "No more member"}`}
