@@ -2,20 +2,18 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function banUser(msg, args, example) {
-    const user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
+    const user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
     let days = args[1];
     let reason = args.slice(2).join(" ");
 
     if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone`, `${example}`);
-    const member = msg.guild.members.cache.get(user.id);
-    if (!member.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `${example}`);
-    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
+    if (!user.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `${example}`);
 
     if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to ban someone`, `${example}`);
 
     if (isNaN(days) || days < 1) {days = 100; reason = args.slice(1).join(" ");}
 
-    //member.ban({ days, reason: `${reason}`})
+    //user.ban({ days, reason: `${reason}`})
     const Ban = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
@@ -58,9 +56,8 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const user = response1.mentions.users.first();
-                const member = msg.guild.member(user);
-                if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
-                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
+                if (!user) return Wronganswer(msg, `No Member`, `I need a valid member username`);
+                if (!user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
 
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -97,7 +94,7 @@ module.exports = {
                                 const days = response3.content;
                                 if (isNaN(days)) return Wronganswer(msg, `Not a number`, `The number of days must be a number`);
 
-                                //member.ban({ days, reason: `${reason}`})
+                                //user.ban({ days, reason: `${reason}`})
                                 const Ban = new MessageEmbed()
                                 .setColor("#00ff00")
                                 .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)

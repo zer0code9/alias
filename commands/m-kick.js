@@ -2,17 +2,16 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 function kickUser(msg, args, example) {
-    const user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
+    const user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
     const reason = args.slice(1).join(" ");
 
     if (!user) return Invalid(msg, `No User`, `I need a username in order to kick them`, `${example}`);
-    const member = msg.guild.members.cache.get(user.id);
-    if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to mute is not kickable`, `${example}`);
-    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
+    const member = msg.guild.fetchMember(user.id);
+    if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to kick is not kickable`, `${example}`);
 
     if(!reason) return Invalid(msg, `No Reason`, `I need a reason in order to kick someone`, `${example}`);
 
-    //member.kick(reason)
+    member.kick(reason);
     const Kick = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
@@ -53,10 +52,9 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const user = response1.mentions.users.first()
-                const member = msg.guild.member(user);
-                if (!member.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
-                if (!member) return Wronganswer(msg, `No Member`, `I need a valid member username`);
+                const user = response1.mentions.users.first();
+                if (!user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
+                if (!user) return Wronganswer(msg, `No Member`, `I need a valid member username`);
 
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -75,7 +73,7 @@ module.exports = {
                         if (response1.content == "cancel") return Cancel(msg);
                         const reason = response2.content;
   
-                        //member.kick(reason);
+                        user.kick(reason);
                         const Kick = new MessageEmbed()
                         .setColor("#00ff00")
                         .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
