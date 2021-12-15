@@ -2,10 +2,10 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
 const { timeDifference } = require('../functions');
-function userInfo(msg, args, example) {
+async function userInfo(msg, args, example) {
     let user;
     if (args == 0) user = msg.author;
-    else user = msg.mentions.users.first();
+    else user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
 
     const member = msg.guild.members.cache.get(user.id);
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
@@ -28,7 +28,8 @@ function userInfo(msg, args, example) {
         ]
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Info] });
+    await msg.channel.send({ embeds: [Info] });
+    msg.delete();
 }
 
 module.exports = {

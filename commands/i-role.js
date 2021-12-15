@@ -2,14 +2,13 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
 const { timeDifference } = require('../functions');
-function roleInfo(msg, args, example) {
-    const role = msg.mentions.roles.first();
+async function roleInfo(msg, args, example) {
+    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it`, `${example}`);
 
     var pe;
     //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
-    var cre = role.createdAt;
     const Info = new MessageEmbed()
     .setColor(`#00ff00`)
     .setTitle(":label: ROLE INFO :label:")
@@ -19,7 +18,7 @@ function roleInfo(msg, args, example) {
             { name: "Role Name", value: `\`\`\`${role.name}\`\`\``, inline: true},
             { name: "Role Id", value: `\`\`\`${role.id}\`\`\``, inline: true },
         ],
-        { name: "Created on", value: `\`\`\`${cre.toDateString()} (${timeDifference(role.createdTimestamp)})\`\`\`` },
+        { name: "Created on", value: `\`\`\`${role.createdAt.toDateString()} (${timeDifference(role.createdTimestamp)})\`\`\`` },
         [
             { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
             { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
@@ -28,7 +27,8 @@ function roleInfo(msg, args, example) {
         { name: "Permissions", value: `${role.permissions}` }
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Info] });
+    await msg.channel.send({ embeds: [Info] });
+    msg.delete();
 }
 
 module.exports = {

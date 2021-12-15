@@ -1,12 +1,12 @@
 {
-  "name": "splashbot",
+  "name": "botless",
   "version": "1.0.0",
-  "description": "The Bot of iSplashy",
+  "description": "The Bot of Zero",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "iSplashy_",
+  "author": "Zero",
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",

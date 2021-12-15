@@ -32,7 +32,7 @@ function bcalculator(msg, args, example) {
         equation.replace("", " ");
         const Calc = new MessageEmbed()
         .setColor('#00ff00')
-        .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
+        .setTitle(`:white_check_mark: CALCULATED :abacus:`)
         .addFields(
             { name: "Calculation:", value: `\`\`\`${equation} = ${answer}\`\`\`` }
         )

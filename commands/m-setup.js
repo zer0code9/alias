@@ -7,11 +7,12 @@ module.exports = {
     description: "Set up for Alias",
     example: prefix + "setup",
     type: "Moderation",
-    execute(msg, args) {
+    async execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No permission`, `You don't have the permission to set up`);
+        
         if ((msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias"))) return Wronganswer(msg, `Set up channel exists`, `Channel for-alias already exists`);
         
-        msg.guild.channels.create(`for-alias`, {
+        await msg.guild.channels.create(`for-alias`, {
             type: `GUILD_TEXT`,
             permissionOverwrites: [
                 {
@@ -28,5 +29,8 @@ module.exports = {
                 }
             ]
         });
+        let channel = await msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
+        let msg1 = await channel.send({ content: "Changing permissions..."});
+        await msg1.edit({content: "Changing permissions... Done"});
     }
 }

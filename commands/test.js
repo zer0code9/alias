@@ -1,11 +1,14 @@
 const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
 async function abc(msg, args) {
-    
+    console.log(msg.channel);
+    console.log("  ");
+    console.log(msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias"))
+    console.log(msg.channel == msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias"));
 }
 
 module.exports = {
-    name: "sayhello",
+    name: "test",
     description: "test",
     example: prefix + "test",
     type: "test",
