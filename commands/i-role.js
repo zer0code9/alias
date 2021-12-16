@@ -22,9 +22,9 @@ async function roleInfo(msg, args, example) {
         [
             { name: "Role Color", value: `\`\`\`${role.hexColor}\`\`\``, inline: true},
             { name: "Members", value: `\`\`\`${role.members.size}\`\`\``, inline: true },
-            { name: "Position", value: `\`\`\`${role.position}\`\`\``, inline: true}
+            { name: "Position", value: `\`\`\`${parseInt(msg.guild.roles.cache.size) - parseInt(role.position)}\`\`\``, inline: true}
         ],
-        { name: "Permissions", value: `${role.permissions}` }
+        { name: "Permissions", value: `\`\`\`${role.permissions.toArray().length}\`\`\`` }
     )
     .setFooter(`${by} helps`)
     await msg.channel.send({ embeds: [Info] });

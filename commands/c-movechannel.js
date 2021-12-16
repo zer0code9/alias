@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function moveChannel(msg, args, example) {
+async function moveChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     const category = args[1];
     const position = args[2];
@@ -9,13 +9,13 @@ function moveChannel(msg, args, example) {
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `${example}`);
 
     if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `${example}`);
-    if (isNaN(category)) return Wronganswer(msg, `Not A Number`, `The category must be a list of number`);
+    if (isNaN(category)) return Wronganswer(msg, `Not An ID`, `The category must be a sequence of number`);
 
     if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `${example}`);
     if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
 
-    channel.setParent(`${category}`);
-    channel.setPosition(`${position - 1}`);
+    await channel.setParent(`${category}`);
+    await channel.setPosition(`${position - 1}`);
     const Move = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_heading_up:")
@@ -25,7 +25,7 @@ function moveChannel(msg, args, example) {
         { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name} Position: ${position}\`\`\`` }
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Move] });
+    await msg.channel.send({ embeds: [Move] });
     msg.delete();
 }
 

@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function delChannel(msg, args, example) {
+async function delChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     let reason = args.slice(1).join(" ");
 
@@ -9,7 +9,7 @@ function delChannel(msg, args, example) {
     
     if (!reason) reason = "No reason";
 
-    channel.delete();
+    await channel.delete();
     const Remove = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
@@ -19,7 +19,7 @@ function delChannel(msg, args, example) {
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Remove] });
+    await msg.channel.send({ embeds: [Remove] });
     msg.delete();
 }
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const channel = msg.guild.channels.cache.get(response1) || msg.mentions.channels.first();
+                const channel = msg.guild.channels.cache.get(collected1) || response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
     
                 const Reason = new MessageEmbed()

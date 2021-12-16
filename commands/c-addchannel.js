@@ -1,14 +1,14 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Cancel, Perm, Invalid, Unknown } = require("../errors");
-function addChannel(msg, args, example) {
-    const channel = msg.mentions.channels.first();
+async function addChannel(msg, args, example) {
+    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     const name = args[0];
     var type = args[1];
 
     if (!name) return Invalid(msg, `No name`, `I need a name in order to create a new channel`, `${example}`);
 
-    msg.guild.channels.create(`${name}`, {type: `${type}`});
+    await msg.guild.channels.create(`${name}`, {type: `${type}`});
     const Add = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
@@ -18,7 +18,7 @@ function addChannel(msg, args, example) {
         { name: "To change channel position:", value: `Use \`zmovechannel\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Add] });
+    await msg.channel.send({ embeds: [Add] });
     msg.delete();
 }
 

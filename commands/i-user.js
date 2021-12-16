@@ -5,15 +5,14 @@ const { timeDifference } = require('../functions');
 async function userInfo(msg, args, example) {
     let user;
     if (args == 0) user = msg.author;
-    else user = msg.guild.users.cache.get(args[0]) || msg.mentions.users.first();
+    else user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
 
     const member = msg.guild.members.cache.get(user.id);
     if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
-
-    bo = `${user.username} is not a bot` ?? `${user.username} is a bot`;
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
+    .setThumbnail(`${user.avatarURL()}`)
     .setDescription("Info")
     .addFields(
         [
@@ -22,9 +21,8 @@ async function userInfo(msg, args, example) {
         ],
         { name: "Created on", value: `\`\`\`${user.createdAt.toDateString()} (${timeDifference(user.createdTimestamp)})\`\`\``},
         [
-            { name: "User Nickname", value: `\`\`\`${user.nickname ?? `No nickname`}\`\`\``, inline: true},
-            { name: "Bot?", value: `\`\`\`${bo}\`\`\``, inline: true},
-            { name: "Number of roles", value: `\`\`\`${user.roles}\`\`\``, inline: true}
+            { name: "User Nickname", value: `\`\`\`${user.nickname || `No nickname`}\`\`\``, inline: true},
+            { name: "Bot?", value: `\`\`\`${user.bot || `false`}\`\`\``, inline: true},
         ]
     )
     .setFooter(`${by} helps`)

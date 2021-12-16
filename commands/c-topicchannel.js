@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Unknown } = require("../errors");
-function topicChannel(msg, args, example) {
+async function topicChannel(msg, args, example) {
     if (!msg.member.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
     if (!msg.guild.me.permissions.has("MANAGE_CHANNELS")) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
     const channel = msg.mentions.channels.first();
@@ -11,7 +11,7 @@ function topicChannel(msg, args, example) {
 
     if (!topic) return Invalid(msg, `No Topic`, `I need a topic in order to change the topic of the channel`, `${example}`);
 
-    channel.setTopic(`${topic}`)
+    await channel.setTopic(`${topic}`)
     const Topic = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CHANGED TOPIC :file_folder::pencil:")
@@ -21,7 +21,8 @@ function topicChannel(msg, args, example) {
         { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Topic] });
+    await msg.channel.send({ embeds: [Topic] });
+    msg.delete();
 }
 
 module.exports = {

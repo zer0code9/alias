@@ -54,7 +54,7 @@ function serverInfo(msg, args) {
             ],
                 { name: "Create on", value: `\`\`\`${cre.toDateString()} (${timeDifference(guild.createdTimestamp)})\`\`\`` },
                 { name: 'Server Region', value: `\`\`\`${regions[guild.region]}\`\`\`` },
-                { name: 'Server Owner', value: `\`\`\`${guild.fetchOwner().id}\`\`\``},
+                { name: 'Server Owner', value: `\`\`\`${msg.guild.members.fetch(guild.ownerId).user.username}\`\`\``},
                 { name: `Server Members [${msg.guild.memberCount}]`, value: `\`\`\`Users: ${users} | Bots: ${bots}\`\`\`` },
                 { name: `Server Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nNews: ${newsChannels}\`\`\`` },
                 { name: `Server Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${guild.roles.highest.name}\`\`\`` },
@@ -70,6 +70,7 @@ function serverInfo(msg, args) {
         )
         .setFooter(`${by} helps`)
         msg.channel.send({ embeds: [Info] });
+        //console.log(msg.guild.members.fetch(guild.ownerId))
     }
 }
 

@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function nameChannel(msg, args, example) {
+async function nameChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel to change its name`, `${example}`);
 
@@ -9,7 +9,7 @@ function nameChannel(msg, args, example) {
 
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the channel`, `${example}`);
 
-    channel.setName(`${name}`);
+    await channel.setName(`${name}`);
     const Name = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
@@ -19,7 +19,7 @@ function nameChannel(msg, args, example) {
         { name: "New Name", value: `\`\`\`${name}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Name] });
+    await msg.channel.send({ embeds: [Name] });
     msg.delete();
 }
 
