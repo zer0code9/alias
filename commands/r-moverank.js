@@ -1,16 +1,16 @@
 const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function moveRank(msg, args, example) {
+async function moveRank(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
-    const position = args.slice(1).join(" ");
+    let position = args.slice(1).join(" ");
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `${example}`);
 
     if (!position) return Invalid(msg, `No Position`, `I need a postion in order to move the role`, `${example}`);
     if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
 
-    role.setPosition(`${position}`);
+    await role.setPosition(`${position}`);
     const Move = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: MOVED ROLE :label::arrow_heading_up:`)
@@ -20,7 +20,8 @@ function moveRank(msg, args, example) {
         { name: "Position", value: `\`\`\`${position}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Move] });
+    await msg.channel.send({ embeds: [Move] });
+    msg.delete();
 }
 
 module.exports = {

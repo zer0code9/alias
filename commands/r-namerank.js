@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function nameRank(msg, args, example) {
+async function nameRank(msg, args, example) {
     if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
     if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
@@ -11,7 +11,7 @@ function nameRank(msg, args, example) {
 
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role`, `${example}`);
 
-    role.setName(`${name}`);
+    await role.setName(`${name}`);
     const Name = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
@@ -21,7 +21,8 @@ function nameRank(msg, args, example) {
         { name: "Name", value: `\`\`\`${name}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Name] });
+    await msg.channel.send({ embeds: [Name] });
+    msg.delete();
 }
 
 module.exports = {

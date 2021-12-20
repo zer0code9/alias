@@ -1,13 +1,13 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function addRank(msg, args, example) {
-    const role = msg.mentions.roles.first();
+async function addRank(msg, args, example) {
+    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     const name = args.join(" ");
 
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to create a new role`, `${example}`);
 
-    msg.guild.roles.create({ data: { name: `${name}` } });
+    await msg.guild.roles.create({ data: { name: `${name}` } });
     const Add = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED ROLE :label::heavy_plus_sign:")
@@ -17,7 +17,8 @@ function addRank(msg, args, example) {
         { name: "To change role color:", value: `Use \`zcolorrank\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Add] });
+    await msg.channel.send({ embeds: [Add] });
+    msg.delete();
 }
 
 module.exports = {

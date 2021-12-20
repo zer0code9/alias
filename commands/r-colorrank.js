@@ -1,7 +1,7 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function colorRank(msg, args, example) {
+async function colorRank(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     const color = args.slice(1).join(" ");
 
@@ -9,7 +9,7 @@ function colorRank(msg, args, example) {
 
     if (!color) return Invalid(msg, `No Color`, `I need a color in hex in order to recolor the role`, `${example}`);
 
-    role.setColor(`${color}`);
+    await role.setColor(`${color}`);
     const Color = new MessageEmbed()
     .setColor(`#00ff00`)
     .setTitle(":white_check_mark: CHANGED COLOR :label::paintbrush:")
@@ -19,7 +19,8 @@ function colorRank(msg, args, example) {
         { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Color] });
+    await msg.channel.send({ embeds: [Color] });
+    msg.delete();
 }
 
 

@@ -1,15 +1,15 @@
 const { prefix, by } = require("./../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-function delRank(msg, args, example) {
+async function delRank(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     let reason = args.slice(1).join(" ");
 
-    if (!role) returnInvalid(msg, `No Role`, `I need a role in order to delete it`, `${example}`);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to delete it`, `${example}`);
 
-    if (!reason) Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `${example}`);
+    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `${example}`);
 
-    role.delete();
+    await role.delete();
     const Remove = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
@@ -19,7 +19,8 @@ function delRank(msg, args, example) {
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Remove] });
+    await msg.channel.send({ embeds: [Remove] });
+    msg.delete();
 }
 
 module.exports = {
