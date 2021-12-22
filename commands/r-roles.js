@@ -6,7 +6,7 @@ async function roles(msg, args) {
     const rolePage = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: ROLE COUNT :label::1234:`)
-    .setDescription('Rank')
+    .setDescription('Role')
     .addFields(
         { name: `All Roles of ${msg.guild.name} [${msg.guild.roles.cache.size}]`, value: `Getting all roles`}
     )

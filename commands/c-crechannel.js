@@ -1,7 +1,7 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Cancel, Perm, Invalid, Unknown } = require("../errors");
-async function addChannel(msg, args, example) {
+async function creChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     const name = args[0];
     var type = args[1];
@@ -9,7 +9,7 @@ async function addChannel(msg, args, example) {
     if (!name) return Invalid(msg, `No name`, `I need a name in order to create a new channel`, `${example}`);
 
     await msg.guild.channels.create(`${name}`, {type: `${type}`});
-    const Add = new MessageEmbed()
+    const Create = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED CHANNEL :file_folder::heavy_plus_sign:")
     .setDescription("Channel")
@@ -18,26 +18,26 @@ async function addChannel(msg, args, example) {
         { name: "To change channel position:", value: `Use \`zmovechannel\``}
     )
     .setFooter(`${by} helps`)
-    await msg.channel.send({ embeds: [Add] });
+    await msg.channel.send({ embeds: [Create] });
     msg.delete();
 }
 
 module.exports = {
-    name: "addchannel",
+    name: "crechannel",
     description: "Create a new channel",
-    example: prefix + "addchannel [name] [type?]",
+    example: prefix + "crechannel [name] [type?]",
     type: "channel",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
-        if (args[0]) return addChannel(msg, args, this.example);
+        if (args[0]) return creChannel(msg, args, this.example);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
 
         const Name = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
-        .setDescription("Command: addchannel")
+        .setDescription("Command: crechannel")
         .addFields(
             { name: "Name", value: `I need a name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
@@ -54,7 +54,7 @@ module.exports = {
                 const Type = new MessageEmbed()
                 .setColor("Random")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: addchannel")
+                .setDescription("Command: crechannel")
                 .addFields(
                     { name: "Type", value: `I need a type to continue` },
                     { name: "Types:", value: "\`\`\`text | voice | store | category | news | stage" },

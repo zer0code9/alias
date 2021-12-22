@@ -1,7 +1,7 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-async function delRank(msg, args, example) {
+async function delRole(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     let reason = args.slice(1).join(" ");
     let roleName = role.name;
@@ -14,7 +14,7 @@ async function delRank(msg, args, example) {
     const Remove = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
-    .setDescription('Rank')
+    .setDescription('Role')
     .addFields(
         { name: "A channel has been deleted", value: `\`\`\`${roleName}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
@@ -25,21 +25,21 @@ async function delRank(msg, args, example) {
 }
 
 module.exports = {
-    name: "delrank",
+    name: "delrole",
     description: "Delete a role",
-    example: prefix + "delrank [role] [reason]",
-    type: "rank",
+    example: prefix + "delrole [role] [reason]",
+    type: "role",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
-        if (args[0]) return delRank(msg, args, this.example);
+        if (args[0]) return delRole(msg, args, this.example);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
     
         const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
-        .setDescription("Command: delrank")
+        .setDescription("Command: delrole")
         .addFields(
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
@@ -58,7 +58,7 @@ module.exports = {
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: delrank")
+                .setDescription("Command: delrole")
                 .addFields(
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
@@ -76,7 +76,7 @@ module.exports = {
                         const Remove = new MessageEmbed()
                         .setColor('#00ff00')
                         .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
-                        .setDescription('Rank')
+                        .setDescription('Role')
                         .addFields(
                             { name: "A role has been deleted", value: `\`\`\`${roleName}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}

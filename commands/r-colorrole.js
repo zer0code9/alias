@@ -1,7 +1,7 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
-async function colorRank(msg, args, example) {
+async function colorRole(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     const color = args.slice(1).join(" ");
 
@@ -13,7 +13,7 @@ async function colorRank(msg, args, example) {
     const Color = new MessageEmbed()
     .setColor(`#00ff00`)
     .setTitle(":white_check_mark: CHANGED COLOR :label::paintbrush:")
-    .setDescription("Rank")
+    .setDescription("Role")
     .addFields(
         { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
         { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
@@ -23,23 +23,22 @@ async function colorRank(msg, args, example) {
     msg.delete();
 }
 
-
 module.exports = {
-    name: "colorrank",
+    name: "colorrole",
     description: "Change the color of a role",
-    example: prefix + "colorrank [role] [color:hex]",
-    type: "rank",
+    example: prefix + "colorrole [role] [color:hex]",
+    type: "role",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
-        if (args[0]) return colorRank(msg, args, this.example);
+        if (args[0]) return colorRole(msg, args, this.example);
         let authorid = msg.author.id;
         const filter = (m) => m.author.id === authorid;
     
         const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
-        .setDescription("Command: colorrank")
+        .setDescription("Command: colorrole")
         .addFields(
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
@@ -57,7 +56,7 @@ module.exports = {
                 const Color = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle(`${by} Commands`)
-                .setDescription("Command: colorrank")
+                .setDescription("Command: colorrole")
                 .addFields(
                     { name: "Color", value: `I need a color to continue: hex format` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
@@ -75,7 +74,7 @@ module.exports = {
                         const Color = new MessageEmbed()
                         .setColor(`#00ff00`)
                         .setTitle(":white_check_mark: CHANGED COLOR :label::paintbrush:")
-                        .setDescription("Rank")
+                        .setDescription("Role")
                         .addFields(
                             { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
                             { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
