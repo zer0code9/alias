@@ -7,8 +7,6 @@ async function userInfo(msg, args, example) {
     if (args == 0) user = msg.author;
     else user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
 
-    const member = msg.guild.members.cache.get(user.id);
-    if (!member) return Invalid(msg, `No Member`, `I don't know that member`, `${example}`);
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")
