@@ -6,6 +6,7 @@ async function nameRank(msg, args, example) {
     if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     const name = args.slice(1).join(" ");
+    let roleName = role.name;
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `${example}`);
 
@@ -17,8 +18,8 @@ async function nameRank(msg, args, example) {
     .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
     .setDescription('Rank')
     .addFields(
-        { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
-        { name: "Name", value: `\`\`\`${name}\`\`\``}
+        { name: "A role has been renamed", value: `\`\`\`${roleName}\`\`\`` },
+        { name: "New Name", value: `\`\`\`${name}\`\`\``}
     )
     .setFooter(`${by} helps`)
     await msg.channel.send({ embeds: [Name] });
@@ -54,6 +55,7 @@ module.exports = {
                 if (response1.content == "cancel") return Cancel(msg);
                 const role = response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
+                let roleName = role.name;
     
                 const Name = new MessageEmbed()
                 .setColor("RANDOM")
@@ -78,8 +80,8 @@ module.exports = {
                         .setTitle(`:white_check_mark: RENAMED ROLE :label::pencil2:`)
                         .setDescription('Rank')
                         .addFields(
-                            { name: "A role has been renamed", value: `\`\`\`${role.name}\`\`\`` },
-                            { name: "Name", value: `\`\`\`${name}\`\`\``}
+                            { name: "A role has been renamed", value: `\`\`\`${roleName}\`\`\`` },
+                            { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send({ embeds: [Name] });

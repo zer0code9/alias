@@ -17,7 +17,7 @@ async function moveRank(msg, args, example) {
     .setDescription('Rank')
     .addFields(
         { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
-        { name: "Position", value: `\`\`\`${position}\`\`\``}
+        { name: "New Position", value: `\`\`\`${position}\`\`\``}
     )
     .setFooter(`${by} helps`)
     await msg.channel.send({ embeds: [Move] });
@@ -79,7 +79,7 @@ module.exports = {
                         .setDescription('Rank')
                         .addFields(
                             { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
-                            { name: "Position", value: `\`\`\`${position}\`\`\``}
+                            { name: "New Position", value: `\`\`\`${position}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
                         msg.channel.send({ embeds: [Move] });

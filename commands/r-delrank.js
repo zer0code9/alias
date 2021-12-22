@@ -4,6 +4,7 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 async function delRank(msg, args, example) {
     const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
     let reason = args.slice(1).join(" ");
+    let roleName = role.name;
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to delete it`, `${example}`);
 
@@ -15,7 +16,7 @@ async function delRank(msg, args, example) {
     .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
     .setDescription('Rank')
     .addFields(
-        { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
+        { name: "A channel has been deleted", value: `\`\`\`${roleName}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
@@ -52,7 +53,7 @@ module.exports = {
                 if (response1.content == "cancel") return Cancel(msg);
                 const role = response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
-                let roleN = role.name;
+                let roleName = role.name;
     
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -77,7 +78,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: DELETED ROLE :label::heavy_minus_sign:`)
                         .setDescription('Rank')
                         .addFields(
-                            { name: "A role has been deleted", value: `\`\`\`${roleN}\`\`\`` },
+                            { name: "A role has been deleted", value: `\`\`\`${roleName}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

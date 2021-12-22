@@ -4,6 +4,7 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 async function delChannel(msg, args, example) {
     const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
     let reason = args.slice(1).join(" ");
+    let channelName = channel.name;
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `${example}`);
     
@@ -15,7 +16,7 @@ async function delChannel(msg, args, example) {
     .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
     .setDescription('Channel')
     .addFields(
-        { name: "A channel has been deleted", value: `\`\`\`${args[0]}\`\`\`` },
+        { name: "A channel has been deleted", value: `\`\`\`${channelName}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
     .setFooter(`${by} helps`)
@@ -51,6 +52,7 @@ module.exports = {
                 if (response1.content == "cancel") return Cancel(msg);
                 const channel = msg.guild.channels.cache.get(collected1) || response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
+                let channelName = channel.name;
     
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -75,7 +77,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: DELETED CHANNEL :file_folder::heavy_minus_sign:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been deleted", value: `\`\`\`${channel}\`\`\`` },
+                            { name: "A channel has been deleted", value: `\`\`\`${channelName}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
                         .setFooter(`${by} helps`)

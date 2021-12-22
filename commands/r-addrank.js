@@ -7,7 +7,7 @@ async function addRank(msg, args, example) {
 
     if (!name) return Invalid(msg, `No Name`, `I need a name in order to create a new role`, `${example}`);
 
-    await msg.guild.roles.create({ data: { name: `${name}` } });
+    msg.guild.roles.create({ data: { name: `${name}` } });
     const Add = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: CREATED ROLE :label::heavy_plus_sign:")

@@ -15,7 +15,7 @@ async function colorRank(msg, args, example) {
     .setTitle(":white_check_mark: CHANGED COLOR :label::paintbrush:")
     .setDescription("Rank")
     .addFields(
-        { name: "A role has changed its color", value: `\`\`\`${role.name}\`\`\``},
+        { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
         { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
     )
     .setFooter(`${by} helps`)
@@ -77,7 +77,7 @@ module.exports = {
                         .setTitle(":white_check_mark: CHANGED COLOR :label::paintbrush:")
                         .setDescription("Rank")
                         .addFields(
-                            { name: "A role has changed its color", value: `\`\`\`${role.name}\`\`\``},
+                            { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
                             { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
