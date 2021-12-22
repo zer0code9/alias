@@ -43,7 +43,7 @@ async function channels(msg, args) {
     });
 
     function getChannels(page) {
-        const list = msg.guild.channels.cache.map(c => c).sort();
+        const list = msg.guild.channels.cache.map(c => c.name).sort();
 
         var pageNum = (page * 10) - 10;
         if (!pageNum) pageNum = 0;

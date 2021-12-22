@@ -4,30 +4,14 @@ const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../err
 async function membersRole(msg, args, example) {
     const role = msg.mentions.roles.first();
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it`, `${example}`);
-/*
-    let membermap = role.members
-        .sort((a, b) => b.position - a.position)
-        .map(m => m)
-        .join(`\n`);
-    if (membermap.length > 1024) membermap = "To many members to display";
-    if (!membermap) membermap = `No member with role ${role}`;
-    const Info = new MessageEmbed()
-    .setColor(`#00ff00`)
-    .setTitle(":white_check_mark: ROLE MEMBERS COUNT :busts_in_silhoutte::1234:")
-    .setDescription("Info")
-    .addFields(
-        { name: `All Members with ${role.name}`, value: `${membermap}`}
-    )  
-    .setFooter(`${by} helps`)
-    msg.channel.send({ embeds: [Info] });
-*/
+
     var page = 1;
     const memberPage = new MessageEmbed()
     .setColor(`#00ff00`)
-    .setTitle(":white_check_mark: ROLE MEMBERS COUNT :busts_in_silhoutte::1234:")
+    .setTitle(":white_check_mark: ROLE MEMBERS COUNT :busts_in_silhouette::1234:")
     .setDescription("Info")
     .addFields(
-        { name: `All Members with ${role.name}`, value: `Getting all members with ${role}`}
+        { name: `All Members with ${role.name}`, value: `Getting all members with ${role.name}`}
     )  
     .setFooter(`${by} helps`)
     const listMsg = await msg.channel.send({ embeds: [memberPage] });
@@ -62,13 +46,13 @@ async function membersRole(msg, args, example) {
     });
 
     function getMembers(page) {
-        const list = role.members.map(m => m).sort();
+        const list = role.members.map(m => m.username).sort();
 
         var pageNum = (page * 10) - 10;
         if (!pageNum) pageNum = 0;
         const memberList = new MessageEmbed()
         .setColor('#00ff00')
-        .setTitle(":white_check_mark: ROLE MEMBERS COUNT :busts_in_silhoutte::1234:")
+        .setTitle(":white_check_mark: ROLE MEMBERS COUNT :busts_in_silhouette::1234:")
         .setDescription("Info")
         .addFields(
             { name: `All Members with ${role.name}`, value: `${list.slice(pageNum, pageNum + 9).join("\n") || "No more member with role"}`}

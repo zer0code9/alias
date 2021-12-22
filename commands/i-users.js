@@ -2,7 +2,6 @@ const { prefix, by } = require("./../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 async function users(msg, args) {
-
     page = 1;
     const userPage = new MessageEmbed()
     .setColor(`#00ff00`)
@@ -44,7 +43,7 @@ async function users(msg, args) {
     });
 
     function getUsers(page) {
-        const list = msg.guild.members.map(m => m).sort();
+        const list = msg.guild.members.cache.map(m => m).sort();
 
         var pageNum = (page * 10) - 10;
         if (!pageNum) pageNum = 0;
