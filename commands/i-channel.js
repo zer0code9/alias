@@ -7,6 +7,11 @@ async function channelInfo(msg, args, example) {
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it`, `${example}`);
 
+    let parent = "";
+    if (channel.type == "GUILD_CATEGORY") parent = "Is A Category";
+    else if (channel.parent.name) parent = channel.parent.name;
+    else parent = "None";
+
     const Info = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":file_folder: CHANNEL INFO :file_folder:")
@@ -19,7 +24,7 @@ async function channelInfo(msg, args, example) {
         { name: "Created on", value: `\`\`\`${channel.createdAt.toDateString()} (${timeDifference(channel.createdTimestamp)})\`\`\`` },
         [
             { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``, inline: true},
-            { name: "Category", value: `\`\`\`${channel.parent.name || "None"}\`\`\``, inline: true },
+            { name: "Category", value: `\`\`\`${parent}\`\`\``, inline: true },
             { name: "Channel Topic", value: `\`\`\`${channel.topic || `No Topic`}\`\`\``, inline: true }
         ]
     )

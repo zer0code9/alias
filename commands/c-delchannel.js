@@ -50,7 +50,7 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const channel = msg.guild.channels.cache.get(collected1) || response1.mentions.channels.first();
+                const channel = msg.guild.channels.cache.get(response1.content) || response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
                 let channelName = channel.name;
     
@@ -69,7 +69,7 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const reason = response2.content;
+                        const reason = response2;
         
                         channel.delete();
                         const Remove = new MessageEmbed()

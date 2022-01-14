@@ -22,7 +22,7 @@ async function moveChannel(msg, args, example) {
     .setDescription("Channel")
     .addFields(
         { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\`` },
-        { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name} Position: ${position}\`\`\`` }
+        { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name}\nPosition: ${position}\`\`\`` }
     )
     .setFooter(`${by} helps`)
     await msg.channel.send({ embeds: [Move] });
@@ -55,8 +55,8 @@ module.exports = {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1 == `cancel`) return Cancel(msg);
-                const channel = response1.mentions.channels.first();
+                if (response1.content == `cancel`) return Cancel(msg);
+                const channel = msg.guild.channels.cache.get(response1.content) || response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
     
                 const Category = new MessageEmbed()
@@ -74,7 +74,7 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const category = response2.content;
+                        const category = response2;
         
                         const Position = new MessageEmbed()
                         .setColor("RANDOM")
@@ -91,17 +91,17 @@ module.exports = {
                             .then(collected3 => {
                                 const response3 = collected3.first();
                                 if (response3.content == "cancel") return Cancel(msg);
-                                const position = response3.content;
+                                const position = response3;
 
                                 channel.setParent(`${category}`);
-                                channel.setPosition(`${position}`);
+                                channel.setPosition(`${position - 1}`);
                                 const Move = new MessageEmbed()
                                 .setColor("#00ff00")
                                 .setTitle(":white_check_mark: MOVED CHANNEL :file_folder::arrow_up_down:")
                                 .setDescription("Channel")
                                 .addFields(
                                     { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\``},
-                                    { name: "New placement", value: `\`\`\`Category: ${category.name} Position: ${position}\`\`\``}
+                                    { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name}\nPosition: ${position}\`\`\``}
                                 )
                                 .setFooter(`${by} helps`)
                                 msg.channel.send({ embeds: [Move] });

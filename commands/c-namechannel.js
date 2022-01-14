@@ -50,8 +50,9 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const channel = msg.mentions.channels.first();
+                const channel = msg.guild.channels.cache.get(response1.content) || response1.mentions.channels.first();
                 if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
+                let channelName = channel.name;
     
                 const Name = new MessageEmbed()
                 .setColor("RANDOM")
@@ -68,7 +69,7 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const name = response2.content;
+                        const name = response2;
         
                         channel.setName(`${name}`)
                         const Name = new MessageEmbed()
@@ -76,7 +77,7 @@ module.exports = {
                         .setTitle(`:white_check_mark: RENAMED CHANNEL :file_folder::pencil2:`)
                         .setDescription('Channel')
                         .addFields(
-                            { name: "A channel has been renamed", value: `\`\`\`${channel.name}\`\`\`` },
+                            { name: "A channel has been renamed", value: `\`\`\`${channelName}\`\`\`` },
                             { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
                         .setFooter(`${by} helps`)
