@@ -10,7 +10,7 @@ module.exports = (bot, msg) => {
     if(!commandName) return;
     
     const command = bot.botCommands.get(commandName);
-    if(!command) return msg.reply(`I don't know the command ${commandName}.`);
+    if(!command) return msg.reply(`I don't know the command ${commandName}`);
 
     try {
         command.execute(msg, args, bot);

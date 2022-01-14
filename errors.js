@@ -45,5 +45,4 @@ function Unknown(msg, error) {
 }
 
 
-
 module.exports = { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown }

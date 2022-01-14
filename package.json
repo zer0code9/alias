@@ -1,7 +1,7 @@
 {
   "name": "aliasbot",
   "version": "1.0.0",
-  "description": "The Bot of Zero",
+  "description": "The bot of Zero",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -2,7 +2,7 @@ const fs = require('fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { id, token } = require('./config.json');
-const guildId = 627583332930027541;
+const guildId = 627583332930027541n;
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));

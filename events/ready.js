@@ -3,7 +3,7 @@ module.exports = (bot) => {
     bot.user.setPresence({
         status: 'online',
         activities: [{
-            name: 'Discord API v13',
+            name: 'Discord.JS API',
             type: 'PLAYING'
         }]
     })
