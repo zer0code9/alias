@@ -1,4 +1,4 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const Discord = require("discord.js");
 function abc(msg, args) {
     if (!msg.member.hasPermission("BAN_MEMBERS")) return msg.channel.send(`You don't have the permission to see ban users, ${msg.author}`)

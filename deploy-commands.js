@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes } = require('discord-api-types');
 const { id, token } = require('./config.json');
 const guildId = 627583332930027541n;
 

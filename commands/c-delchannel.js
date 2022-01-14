@@ -1,4 +1,4 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../errors");
 async function delChannel(msg, args, example) {

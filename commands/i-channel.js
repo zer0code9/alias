@@ -1,4 +1,4 @@
-const { prefix, by } = require("./../config.json");
+const { prefix, by } = require("../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../errors');
 const { timeDifference } = require('../functions');
