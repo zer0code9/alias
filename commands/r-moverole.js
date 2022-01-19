@@ -9,15 +9,17 @@ async function moveRole(msg, args, example) {
 
     if (!position) return Invalid(msg, `No Position`, `I need a postion in order to move the role`, `${example}`);
     if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
+    if (position < 1 || position > parseInt(msg.guild.roles.cache.size)-2) return Wronganswer(msg, `Imposiible position`, `can only be between 1 and ${parseInt(msg.guild.roles.cache.size)-2}`);
 
-    await role.setPosition(`${position}`);
+    console.log((parseInt(msg.guild.roles.cache.size) - position) - 1)
+    await role.setPosition(`${(parseInt(msg.guild.roles.cache.size) - position) - 1}`);
     const Move = new MessageEmbed()
     .setColor('#00ff00')
     .setTitle(`:white_check_mark: MOVED ROLE :label::arrow_heading_up:`)
     .setDescription('Role')
     .addFields(
         { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
-        { name: "New Position", value: `\`\`\`${position}\`\`\``}
+        { name: "New Position", value: `\`\`\`${parseInt(msg.guild.roles.cache.size) - parseInt(role.position)}\`\`\``}
     )
     .setFooter(`${by} helps`)
     await msg.channel.send({ embeds: [Move] });
@@ -51,7 +53,7 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const role = response1.mentions.roles.first();
+                const role = msg.guild.roles.cache.get(response1.content) || response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
     
                 const Position = new MessageEmbed()
@@ -69,8 +71,8 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const position = response2.content;
-                        if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
+                        const position = response2;
+                        if (isNaN(position.content)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
         
                         role.setPosition(`${position}`);
                         const Move = new MessageEmbed()

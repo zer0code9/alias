@@ -51,7 +51,7 @@ module.exports = {
             .then(collected1 => {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
-                const role = response1.mentions.roles.first();
+                const role = msg.guild.roles.cache.get(response1.content) || response1.mentions.roles.first();
                 if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
                 let roleName = role.name;
     
@@ -70,7 +70,7 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const reason = response2.content;
+                        const reason = response2;
         
                         role.delete();
                         const Remove = new MessageEmbed()
