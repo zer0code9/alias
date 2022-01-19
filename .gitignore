@@ -1,4 +1,4 @@
 # Node
 /node_modules
-/config.json
-/pacakge-lock.json
+/config.json*
+/pacakge-lock.json*
