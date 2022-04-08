@@ -1,8 +1,19 @@
 const { prefix, by } = require("/home/asorinus/workspace/myFirstProject/splashy/SplashBot/config.json");
 const Discord = require("discord.js");
-const { MessageEmbed, Permissions } = require('discord.js');
+const { MessageEmbed, Permissions, MessageButton } = require('discord.js');
 async function abc(msg, args) {
     console.log(!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS));
+    const Embed = new MessageEmbed()
+    .setColor("#ff0000")
+    .setTitle(`test`)
+    .addFields(
+        { name: `test`, value: `working?` }
+    )
+    .setFooter(`${by} helps`)
+    const Button = new MessageButton()
+    .setEmoji(":o:")
+    .setLabel("Ok")
+    return msg.channel.send({ embeds: [Embed], buttons: [Button] })
 }
 
 module.exports = {

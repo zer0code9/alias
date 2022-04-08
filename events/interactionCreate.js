@@ -4,6 +4,7 @@ module.exports = async (bot, interaction) => {
     if (!interaction.isCommand()) return;
 	const command = bot.botInteractions.get(interaction.commandName);
 	if (!command) return;
+	
 	try {
 		await command.execute(interaction);
 	} catch (error) {

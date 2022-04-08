@@ -1,4 +1,5 @@
 const CONFIG = require('../config.json');
+
 module.exports = (bot) => {
     bot.user.setPresence({
         status: 'online',

@@ -1,6 +1,9 @@
 const { Client, Intents, MessageEmbed, Collection } = require('discord.js');
 const fs = require("fs");
-const CONFIG = require('./config.json');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { token, by } = require('./config.json');
 const bot = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -20,12 +23,9 @@ const bot = new Client({
         Intents.FLAGS.DIRECT_MESSAGE_TYPING
     ], partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 
-const prefix = CONFIG.prefix;
-const by = CONFIG.by;
-const token = CONFIG.token;
 bot.botCommands = new Collection();
 bot.botInteractions = new Collection();
-
+const interactions = [];
 
 //ERROR MESSAGE
 bot.error = (errorMsg, channel) => {
@@ -70,11 +70,14 @@ fs.readdir('./interactions/', (error, files) => {
 	var interactionFiles = files.filter(fileName => fileName.endsWith(".js"));
 	interactionFiles.forEach(file => {
         const interaction = require(`./interactions/${file}`);
-		bot.botInteractions.set(interaction.name, interaction);
+		bot.botInteractions.set(interaction.data.name, interaction);
+        interactions.push(interaction.data.toJSON());
     });
+    const rest = new REST({ version: '9' }).setToken(token);
+rest.put(Routes.applicationGuildCommands("768214696019886121", "759949225861054466"), { body: interactions })
+	.then(() => console.log('Successfully registered application commands.'))
+	.catch(console.error);
 });
-
-
 
 /*
 const commandFiles = fs.readdirSync("./commands/").filter(file => file.endsWith(".js"));
