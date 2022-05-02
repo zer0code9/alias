@@ -56,17 +56,21 @@ fs.readdir('./events/', (error, files) => {
     });
 });
 //COMMAND HANDLER
-fs.readdir('./commands/', (error, files) => {
-    if (error) return console.error(err);
-	var commandFiles = files.filter(fileName => fileName.endsWith(".js"));
-	commandFiles.forEach(file => {
-        const command = require(`./commands/${file}`);
-		bot.botCommands.set(command.name, command);
-    });
+fs.readdir('./commands/', (error, folders) => {
+    if (error) return console.error(error);
+    folders.forEach(folder => {
+        fs.readdir(`./commands/${folder}`, (error, files) => {
+            if (error) return console.error(error);
+            files.forEach(file => {
+                const command = require(`./commands/${folder}/${file}`);
+                bot.botCommands.set(command.name, command);
+            });
+        });
+    })
 });
 //INTERACTION HANDLER
 fs.readdir('./interactions/', (error, files) => {
-    if (error) return console.error(err);
+    if (error) return console.error(error);
 	var interactionFiles = files.filter(fileName => fileName.endsWith(".js"));
 	interactionFiles.forEach(file => {
         const interaction = require(`./interactions/${file}`);
