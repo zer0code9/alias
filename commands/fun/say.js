@@ -4,7 +4,7 @@ function sayIt(msg, args) {
     if (!args) return;
     const string = args.slice(1).join(" ");
     var enable;
-    if (args[0] == "diasble"){enble == false; msg.channel.send("Disabled")} else {if (args[0] == "enable"){enable == true; msg.channel.send("Disabled")}}
+    if (args[0] == "diasble"){enable == false; msg.channel.send("Disabled")} else {if (args[0] == "enable"){enable == true; msg.channel.send("Enabled")}}
     if (enable == false) {msg.channel.send("The command 'say' has been disable")} else
     if (args == 0){
         const noSay = new Discord.MessageEmbed()
@@ -28,9 +28,9 @@ function sayIt(msg, args) {
 
 module.exports = {
     name: "say",
-    description: "Make the bot say something say something",
+    description: "Make the bot say something",
     example: prefix + "say [sentence]",
-    type: "info",
+    type: "fun",
     execute(msg, args){
         sayIt(msg, args)
     }
