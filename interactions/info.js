@@ -42,7 +42,7 @@ module.exports = {
                         { name: "Bot?", value: `\`\`\`${user.bot || `false`}\`\`\``, inline: true},
                     ]
                     )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
                 await interaction.reply({ embeds: [Info] });
         } else if (interaction.options.getSubcommand() === 'channel') {
             const channel = interaction.options.getUser('thechannel');

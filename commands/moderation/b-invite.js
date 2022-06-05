@@ -11,7 +11,7 @@ function abc(msg, args) {
             .addFields(
                 { name: "Guild", value: `${invite.guild}`}
             )
-            .setFooter(`${by} helps`)
+            .setFooter({ text: `${by} helps` })
             msg.channel.send(yes);
         }
     }

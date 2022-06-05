@@ -18,7 +18,7 @@ async function creChannel(msg, args, example, types) {
         { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
         { name: "To change channel position:", value: `Use \`zmovechannel\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps`})
     await msg.channel.send({ embeds: [Create] });
     msg.delete();
 }
@@ -44,7 +44,7 @@ module.exports = {
             { name: "Name", value: `I need a name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Name] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1, time: 30000, errors: ['time']})
@@ -62,7 +62,7 @@ module.exports = {
                     { name: "Types:", value: `${types.join(" | ")}` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
 
                 msg.channel.send({ embeds: [Type] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1, time: 30000, errors: ['time']})
@@ -82,7 +82,7 @@ module.exports = {
                             { name: "The channel is of type", value: `\`\`\`${type}\`\`\`` },
                             { name: "To change channel position:", value: `Use \`zmovechannel\`` }
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Add] });
 
                     }).catch(error => {

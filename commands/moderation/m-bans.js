@@ -14,7 +14,7 @@ function abc(msg, args) {
         .addFields(
             { name: `Banned members (${guild.fetchBans().size})`, value: `${guild.name}`}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(banned);
     }
 }

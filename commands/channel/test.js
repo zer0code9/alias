@@ -8,7 +8,7 @@ async function abc(msg, args) {
     .addFields(
         { name: `test`, value: `working?` }
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     const Button = new MessageButton()
     .setEmoji(":o:")
     .setLabel("Ok")

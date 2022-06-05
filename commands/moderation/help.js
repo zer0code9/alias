@@ -15,7 +15,7 @@ function sendHelp(msg, args, bot, example){
     .setTitle(`${by}`)
     .setDescription(`**${by} Commands:**`)
     .addFields(docs)
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     if (!args[0]) return msg.channel.send({ embeds: [Help] });
     try {
         let selected = docs[args[0].toLowerCase()];
@@ -24,7 +24,7 @@ function sendHelp(msg, args, bot, example){
         .setTitle(`${by}`)
         .setDescription(`**${by} Command:**`)
         .addFields(docs.filter(cmds => cmds.name === args[0]))
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         if (typeof selected == cmds) msg.channel.send({ embeds: [helpSelected] });
     } catch {
         Invalid(msg, `No Command`, `I can't find the command`, `${example}`);

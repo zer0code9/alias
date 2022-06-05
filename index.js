@@ -37,7 +37,7 @@ bot.error = (errorMsg, channel) => {
         { name: `Error`, value: `Something went wrong` },
         { name: "ErrorType", value: `\`\`\`${errorMsg}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     return channel.send({ embeds: [errorEmbed] }).catch(e => channel.send(`Couldn't send error embed!\n${e}`))
 }
 //EVENT HANDLER

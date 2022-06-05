@@ -10,7 +10,7 @@ async function roles(msg, args) {
     .addFields(
         { name: `All Roles of ${msg.guild.name} [${msg.guild.roles.cache.size}]`, value: `Getting all roles`}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     const listMsg = await msg.channel.send({ embeds: [rolePage] });
 
     await listMsg.react("◀️");
@@ -19,7 +19,7 @@ async function roles(msg, args) {
 
     const filter = (reaction, user) => ["◀️", "▶️", "❌"].includes(reaction.emoji.name) && user.id === msg.author.id;
     const collector = listMsg.createReactionCollector(filter, { time: 120000} );
-    await listMsg.edit({embeds: [getRoles(page)]});
+    await listMsg.edit({ embeds: [getRoles(page)] });
 
     collector.on('collect', (reaction, user) => {
         reaction.emoji.reaction.users.remove(user.id);
@@ -54,7 +54,7 @@ async function roles(msg, args) {
         .addFields(
             { name: `All Roles of ${msg.guild.name} [${msg.guild.roles.cache.size}]`, value: `${list.slice(pageNum, pageNum + 9).join("\n") || "No more role"}`}
         )
-        .setFooter(`${by} helps | ${(pageNum / 10) + 1}`)
+        .setFooter({ text: `${by} helps | ${(pageNum / 10) + 1}` })
         return roleList;
     };
 }

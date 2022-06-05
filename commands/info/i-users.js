@@ -10,7 +10,7 @@ async function users(msg, args) {
     .addFields(
         { name: `All Users of ${msg.guild.name} [${msg.guild.members.cache.size}]`, value: `Getting all users`}
     )  
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     const listMsg = await msg.channel.send({ embeds: [userPage] });
 
     await listMsg.react("◀️");

@@ -28,7 +28,7 @@ function revRole(msg, args) {
         { name: "A user has been taken a role", value: `\`\`\`${user.username}\`\`\`` },
         { name: "Removed Role", value: `\`\`\`${role.name}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send(revRole);
 }
 
@@ -53,7 +53,7 @@ module.exports = {
             { name: "Username", value: `I need a username to continue` },
             { name: `Type \`cancel\` to cancel the command` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send(User).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
@@ -74,7 +74,7 @@ module.exports = {
                     { name: "Role", value: `I need a role's name to continue` },
                     { name: `Type \`cancel\` to cancel the command` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send(Role).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
@@ -96,7 +96,7 @@ module.exports = {
                             { name: "A user has been taken a role", value: `\`\`\`${user.username}\`\`\`` },
                             { name: "Removed Role", value: `\`\`\`${role.name}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send(revRole);
                         
                     }).catch(error => {

@@ -24,7 +24,7 @@ function banUser(msg, args, example) {
         { name: "Days Banned", value: `\`\`\`${days}\`\`\``},
         { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [Ban] });
 }
 
@@ -48,7 +48,7 @@ module.exports = {
             { name: "Username", value: `I need a member's username to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
 
         msg.channel.send({ embeds: [User] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -67,7 +67,7 @@ module.exports = {
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
 
                 msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -84,7 +84,7 @@ module.exports = {
                             { name: "Days", value: `I need a number of days to continue` },
                             { name: `Cancel Command`, value: `Type \`cancel\`` }
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
 
                         msg.channel.send({ embeds: [Day] }).then(() => {
                             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -105,7 +105,7 @@ module.exports = {
                                     { name: "Days Banned", value: `\`\`\`${days}\`\`\``},
                                     { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
                                 )
-                                .setFooter(`${by} helps`)
+                                .setFooter({ text: `${by} helps` })
                                 msg.channel.send({ embeds: [Ban] });
 
                             }).catch(error => {

@@ -12,7 +12,7 @@ async function abc(msg, args, bot) {
         .addFields(
             { name: "Command", value: `here\n\`\`\`${prefix}\`\`\``}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(no);
     } else
                 reactions = `${args[1]}`
@@ -25,7 +25,7 @@ async function abc(msg, args, bot) {
                 .addFields(
                     { name: "Command", value: `Geth the role ${role}`}
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
                 let message = await msg.channel.send(embed);
                 message.react(`${reactions}`);
 

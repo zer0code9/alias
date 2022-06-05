@@ -24,7 +24,7 @@ async function moveChannel(msg, args, example) {
         { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\`` },
         { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name}\nPosition: ${position}\`\`\`` }
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Move] });
     msg.delete();
 }
@@ -49,7 +49,7 @@ module.exports = {
             { name: "Channel Name", value: `I need a channel's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Channel] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -67,7 +67,7 @@ module.exports = {
                     { name: "Category", value: `I need a category id to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Category] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -84,7 +84,7 @@ module.exports = {
                             { name: "Position", value: `I need a number to continue` },
                             { name: `Cancel Command`, value: `Type \`cancel\`` }
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
 
                         msg.channel.send({ embeds: [Position] }).then(() => {
                             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -103,7 +103,7 @@ module.exports = {
                                     { name: `A channel has been moved`, value: `\`\`\`${channel.name}\`\`\``},
                                     { name: "New placement", value: `\`\`\`Category: ${msg.guild.channels.cache.get(category).name}\nPosition: ${position}\`\`\``}
                                 )
-                                .setFooter(`${by} helps`)
+                                .setFooter({ text: `${by} helps` })
                                 msg.channel.send({ embeds: [Move] });
 
                             }).catch(error => {

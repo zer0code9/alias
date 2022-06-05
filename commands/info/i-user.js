@@ -23,7 +23,7 @@ async function userInfo(msg, args, example) {
             { name: "Bot?", value: `\`\`\`${user.bot || `false`}\`\`\``, inline: true},
         ]
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Info] });
     msg.delete();
 }

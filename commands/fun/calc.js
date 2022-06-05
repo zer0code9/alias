@@ -36,7 +36,7 @@ function bcalculator(msg, args, example) {
         .addFields(
             { name: "Calculation:", value: `\`\`\`${equation} = ${answer}\`\`\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send({ embeds: [Calc] });
 
     } catch (error) {

@@ -13,7 +13,7 @@ async function membersRole(msg, args, example) {
     .addFields(
         { name: `All Members with ${role.name}`, value: `Getting all members with ${role.name}`}
     )  
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     const listMsg = await msg.channel.send({ embeds: [memberPage] });
 
     await listMsg.react("◀️");

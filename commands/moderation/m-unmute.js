@@ -16,7 +16,7 @@ function unmuteUser(msg, args) {
         .addFields(
           { name: "Successful", value: `${user.username} has been successfully unmuted on ${msg.channel.name}.` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(unmuted);
         } else {
           const noMember = new Discord.MessageEmbed()
@@ -27,7 +27,7 @@ function unmuteUser(msg, args) {
           { name: "No Member", value: `I don't know that member` },
           { name: "Command", value: `Unmute a member\n\`\`\`${prefix}unmute [member]\`\`\``}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(noMember);
         }
 
@@ -41,7 +41,7 @@ function unmuteUser(msg, args) {
           { name: "No User", value: `I need an username in order to mute someone.` },
           { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``}
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
       if (!user) return msg.channel.send(noTag);
   
       const member = msg.guild.member(user);
@@ -53,7 +53,7 @@ function unmuteUser(msg, args) {
           { name: "Not mute", value: `The user you are trying to unmute is not mute.` },
           { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``}
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
       if (!member.isMute()) return msg.channel.send(isMute);
   
       const noMember = new Discord.MessageEmbed()
@@ -63,7 +63,7 @@ function unmuteUser(msg, args) {
           { name: "No Member", value: `I don't know that member` },
           { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``}
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
       if (!member) return msg.channel.send(noMember);
   
       const noReason = new Discord.MessageEmbed()
@@ -73,7 +73,7 @@ function unmuteUser(msg, args) {
           { name: "No Reason", value: `I need a reason in order to mute someone`},
           { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``}
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
       if(!reason) return msg.channel.send(noReason);
   
       member.muteMember(msg.channel, member);
@@ -87,7 +87,7 @@ function unmuteUser(msg, args) {
           { name: "Reason:", value: `\`\`\`${reason}\`\`\``},
           { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
       msg.channel.send(muted);
 }
 
@@ -112,7 +112,7 @@ module.exports = {
           { name: "Username", value: `I need a member's username to continue` },
           { name: `Type \`cancel\` to cancel the command` }
       )
-      .setFooter(`${by} helps`)
+      .setFooter({ text: `${by} helps` })
 
       msg.channel.send(User).then(() => {
           msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
@@ -130,7 +130,7 @@ module.exports = {
                       { name: "Command Canceled", value: `Wrong answer concelation`},
                       { name: `Type \`cancel\` to cancel the command` }
                   )
-                  .setFooter(`${by} helps`)
+                  .setFooter({ text: `${by} helps` })
                   msg.channel.send(noMember);
               }
 
@@ -144,7 +144,7 @@ module.exports = {
                   { name: "Reason", value: `I need a reason to continue` },
                   { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
               )
-              .setFooter(`${by} helps`)
+              .setFooter({ text: `${by} helps` })
 
               msg.channel.send(Reason).then(() => {
                   msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
@@ -162,7 +162,7 @@ module.exports = {
                         { name: "Reason", value: `\`\`\`${reason}\`\`\``},
                         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
                     )
-                    .setFooter(`${by} helps`)
+                    .setFooter({ text: `${by} helps` })
                     msg.channel.send(mute)
                   }).catch(error => {
                       const Error = new Discord.MessageEmbed()
@@ -171,7 +171,7 @@ module.exports = {
                       .addFields(
                           { name: "Command Canceled", value: `Timeout cancelation`}
                       )
-                      .setFooter(`${by} helps`)
+                      .setFooter({ text: `${by} helps` })
                       msg.channel.send(Error);  
                   });
               })
@@ -182,7 +182,7 @@ module.exports = {
               .addFields(
                   { name: "Command Canceled", value: `Timeout cancelation`}
               )
-              .setFooter(`${by} helps`)
+              .setFooter({ text: `${by} helps` })
               msg.channel.send(Error);  
           });
       })

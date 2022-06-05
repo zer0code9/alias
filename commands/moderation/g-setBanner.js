@@ -15,7 +15,7 @@ function banner(msg, args, example) {
     .addFields(
         { name: "URL", value: `\`\`\`${url}\`\`\``},
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [Banner] });
 }
 
@@ -39,7 +39,7 @@ module.exports = {
             { name: "URL", value: `I need a url to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [URL] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -57,7 +57,7 @@ module.exports = {
                 .addFields(
                     { name: "URL", value: `\`\`\`${url}\`\`\``},
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
                 msg.channel.send({ embeds: [Banner] });
                 
             }).catch(error => {

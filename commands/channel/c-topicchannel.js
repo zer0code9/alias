@@ -20,7 +20,7 @@ async function topicChannel(msg, args, example) {
         { name: "A channel has been changed its topic", value: `\`\`\`${channel.name}\`\`\`` },
         { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Topic] });
     msg.delete();
 }
@@ -45,7 +45,7 @@ module.exports = {
             { name: "Channel Name", value: `I need a channel's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Channel] }).then(() => {
             msg.channel.awaitMessages(filter, { max: 1 , time: 30000, errors: ['time']})
@@ -63,7 +63,7 @@ module.exports = {
                     { name: "Name", value: `I need a topic sentence to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Topic] }).then(() => {
                     msg.channel.awaitMessages(filter, { max: 1 , time: 30000, errors: ['time']})
@@ -81,7 +81,7 @@ module.exports = {
                             { name: "A channel has been changed its topic", value: `\`\`\`${channel.name}\`\`\`` },
                             { name: "Topic sentence", value: `\`\`\`${topic}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Topic] });
 
                     }).catch(error => {

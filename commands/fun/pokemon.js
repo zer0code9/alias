@@ -12,7 +12,7 @@ function abc(msg, args) {
         .addFields(
             { name: "Name", value: `hi`}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(poke);
     } else {
         const noPokemon = new Discord.MessageEmbed()
@@ -22,7 +22,7 @@ function abc(msg, args) {
         .addFields(
             { name: "Command", value: `Get info on any pokemon\n\`\`\`${prefix}pokemon [pokemon]\`\`\``}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(noPokemon);
     }
 }

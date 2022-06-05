@@ -68,7 +68,7 @@ function serverInfo(msg, args) {
                 { name: "Verification Level", value: `\`\`\`${verificationLevels[guild.verificationLevel]}\`\`\``, inline: true }
             ],
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send({ embeds: [Info] });
         //console.log(msg.guild.members.fetch(guild.ownerId))
     }

@@ -21,7 +21,7 @@ async function moveRole(msg, args, example) {
         { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
         { name: "New Position", value: `\`\`\`${parseInt(msg.guild.roles.cache.size) - parseInt(role.position)}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Move] });
     msg.delete();
 }
@@ -46,7 +46,7 @@ module.exports = {
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Role] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -64,7 +64,7 @@ module.exports = {
                     { name: "Name", value: `I need a name to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Position] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -83,7 +83,7 @@ module.exports = {
                             { name: "A role has been moved", value: `\`\`\`${role.name}\`\`\`` },
                             { name: "New Position", value: `\`\`\`${position}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Move] });
                         
                     }).catch(error => {

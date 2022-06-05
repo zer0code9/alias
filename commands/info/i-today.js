@@ -24,7 +24,7 @@ function todayInfo(msg, args) {
             { name: "Computer Date:", value: `\`\`\`Day: ${day} | Month: ${month} | Date: ${date} | Year: ${year}\`\`\``},
             { name: "Time:", value: `\`\`\`${hour}:${minute}.${second}\`\`\``}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [todayDate] });
 
 

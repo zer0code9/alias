@@ -10,7 +10,7 @@ async function channels(msg, args) {
     .addFields(
         { name: `All Channels of ${msg.guild.name} [${msg.guild.channels.cache.size}]`, value: `Getting all channels`}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     const listMsg = await msg.channel.send({ embeds: [channelPage] });
 
     await listMsg.react("◀️");
@@ -54,7 +54,7 @@ async function channels(msg, args) {
         .addFields(
             { name: `All Channels of ${msg.guild.name} [${msg.guild.channels.cache.size}]`, value: `${list.slice(pageNum, pageNum + 9).join("\n") || "No more channel"}`}
         )
-        .setFooter(`${by} helps | ${(pageNum / 10) + 1}`)
+        .setFooter({ text: `${by} helps | ${(pageNum / 10) + 1}` })
         return channelList;
     };
 }

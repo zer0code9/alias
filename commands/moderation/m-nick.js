@@ -16,7 +16,7 @@ function abc(msg, args) {
             .addFields(
                 { name: `New Nickname for ${user.username}`, value: `New nickname: ${name}`}
             )
-            .setFooter(`${by} helps`)
+            .setFooter({ text: `${by} helps` })
             msg.channel.send(change);
 
     } else {
@@ -32,7 +32,7 @@ function abc(msg, args) {
             .addFields(
                 { name: "New Nickname", value: `New nickname: ${name}`}
             )
-            .setFooter(`${by} helps`)
+            .setFooter({ text: `${by} helps` })
             msg.channel.send(newName);
     }
 }

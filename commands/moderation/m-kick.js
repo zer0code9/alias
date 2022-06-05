@@ -21,7 +21,7 @@ function kickUser(msg, args, example) {
         { name: "Reason", value: `\`\`\`${reason}\`\`\``},
         { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [Kick] });
 }
 
@@ -45,7 +45,7 @@ module.exports = {
             { name: "Username", value: `I need a member's username to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
 
         msg.channel.send({ embeds: [User] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -64,7 +64,7 @@ module.exports = {
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
 
                 msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -82,7 +82,7 @@ module.exports = {
                             { name: "Kicked Member", value: `\`\`\`${user.tag}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Kick] });
 
                     }).catch(error => {

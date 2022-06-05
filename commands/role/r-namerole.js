@@ -21,7 +21,7 @@ async function nameRole(msg, args, example) {
         { name: "A role has been renamed", value: `\`\`\`${roleName}\`\`\`` },
         { name: "New Name", value: `\`\`\`${name}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Name] });
     msg.delete();
 }
@@ -46,7 +46,7 @@ module.exports = {
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Role] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -65,7 +65,7 @@ module.exports = {
                     { name: "Name", value: `I need a name to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Name] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -83,7 +83,7 @@ module.exports = {
                             { name: "A role has been renamed", value: `\`\`\`${roleName}\`\`\`` },
                             { name: "New Name", value: `\`\`\`${name}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Name] });
                         
                     }).catch(error => {

@@ -30,7 +30,7 @@ module.exports = {
             ]
         });
         let channel = await msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
-        let msg1 = await channel.send({ content: "Changing permissions..."});
-        await msg1.edit({content: "Changing permissions... Done"});
+        let msg1 = await channel.send({ content: "Changing permissions..." });
+        await msg1.edit({ content: "Changing permissions... Done" });
     }
 }

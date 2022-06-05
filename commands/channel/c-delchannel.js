@@ -19,7 +19,7 @@ async function delChannel(msg, args, example) {
         { name: "A channel has been deleted", value: `\`\`\`${channelName}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Remove] });
     msg.delete();
 }
@@ -43,7 +43,7 @@ module.exports = {
             { name: "Channel Name", value: `I need a channel's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Channel] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -62,7 +62,7 @@ module.exports = {
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -80,7 +80,7 @@ module.exports = {
                             { name: "A channel has been deleted", value: `\`\`\`${channelName}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Remove] });
 
                     }).catch(error => {

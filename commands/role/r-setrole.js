@@ -15,7 +15,7 @@ async function setRole(msg, args, example) {
         { name: "A role has been changed", value: `\`\`\`${role.name}\`\`\`` },
         { name: "Mentionable?", value: `\`\`\`${role.mentionable}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Set] });
     msg.delete();
 }
@@ -40,7 +40,7 @@ module.exports = {
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Role] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -59,7 +59,7 @@ module.exports = {
                     { name: "A role has been changed", value: `\`\`\`${role.name}\`\`\`` },
                     { name: "Mentionable?", value: `\`\`\`${role.mentionable}\`\`\``}
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
                 msg.channel.send({ embeds: [Set] });
 
             }).catch(error => {

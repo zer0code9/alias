@@ -28,7 +28,7 @@ async function channelInfo(msg, args, example) {
             { name: "Channel Topic", value: `\`\`\`${channel.topic || `No Topic`}\`\`\``, inline: true }
         ]
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Info] });
     msg.delete();
 }

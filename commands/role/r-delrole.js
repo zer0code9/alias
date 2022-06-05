@@ -19,7 +19,7 @@ async function delRole(msg, args, example) {
         { name: "A channel has been deleted", value: `\`\`\`${roleName}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Remove] });
     msg.delete();
 }
@@ -44,7 +44,7 @@ module.exports = {
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Role] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -63,7 +63,7 @@ module.exports = {
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -81,7 +81,7 @@ module.exports = {
                             { name: "A role has been deleted", value: `\`\`\`${roleName}\`\`\`` },
                             { name: "Reason", value: `\`\`\`${reason}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Remove] });
                         
                     }).catch(error => {

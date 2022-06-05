@@ -11,7 +11,7 @@ function abc(msg, args) {
             { name: "Mined", value: `You got ${num} coins`},
             { name: "Total", value: `You have a total of coins`}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
         msg.channel.send(mined);
     }
 }

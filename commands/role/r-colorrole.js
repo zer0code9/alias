@@ -18,7 +18,7 @@ async function colorRole(msg, args, example) {
         { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
         { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Color] });
     msg.delete();
 }
@@ -43,7 +43,7 @@ module.exports = {
             { name: "Role Name", value: `I need a role's name to continue` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     
         msg.channel.send({ embeds: [Role] }).then(() => {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -61,7 +61,7 @@ module.exports = {
                     { name: "Color", value: `I need a color to continue: hex format` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
       
                 msg.channel.send({ embeds: [Color] }).then(() => {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
@@ -79,7 +79,7 @@ module.exports = {
                             { name: "A role has been color-changed", value: `\`\`\`${role.name}\`\`\``},
                             { name: "New Color", value: `\`\`\`${role.hexColor}\`\`\``}
                         )
-                        .setFooter(`${by} helps`)
+                        .setFooter({ text: `${by} helps` })
                         msg.channel.send({ embeds: [Color] });
                         
                     }).catch(error => {

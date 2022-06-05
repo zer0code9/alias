@@ -24,7 +24,7 @@ function emojiInfo(msg, args, example) {
         { name: "Animated?", value: `${an}`},
         { name: "URL", value: `${emoji.url}`}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [Info] });
 }
 

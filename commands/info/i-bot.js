@@ -13,7 +13,7 @@ function botUser(msg, args, bot) {
         ],
         { name: "Guilds on", value: `${bot.guilds}`}
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     msg.channel.send({ embeds: [botInfo] });
 }
 

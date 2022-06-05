@@ -26,7 +26,7 @@ async function roleInfo(msg, args, example) {
         ],
         { name: "Permissions", value: `\`\`\`${role.permissions.toArray().length}\`\`\`` }
     )
-    .setFooter(`${by} helps`)
+    .setFooter({ text: `${by} helps` })
     await msg.channel.send({ embeds: [Info] });
     msg.delete();
 }

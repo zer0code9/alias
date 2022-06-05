@@ -14,7 +14,7 @@ function sayIt(msg, args) {
         .addFields(
             { name: "Command:", value: `\n\`\`\`${prefix}say [sentence]\`\`\``}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
     msg.channel.send(noSay);
         return;
     }else {

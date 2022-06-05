@@ -14,8 +14,8 @@ function muteUser(msg, args) {
         { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
     )
-    .setFooter(`${by} helps`)
-    if (!user) return msg.channel.send(noTag);
+    .setFooter({ text: `${by} helps` })
+    if (!user) return msg.channel.send({ embeds: [noTag] });
 
     const member = msg.guild.member(user);
 
@@ -27,8 +27,8 @@ function muteUser(msg, args) {
         { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
     )
-    .setFooter(`${by} helps`)
-    if (!member.manageable) return msg.channel.send(noMute);
+    .setFooter({ text: `${by} helps` })
+    if (!member.manageable) return msg.channel.send({ embeds: [noMute] });
 
     const noMember = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -38,8 +38,8 @@ function muteUser(msg, args) {
         { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
     )
-    .setFooter(`${by} helps`)
-    if (!member) return msg.channel.send(noMember);
+    .setFooter({ text: `${by} helps` })
+    if (!member) return msg.channel.send({ embeds: [noMember] });
 
     const noReason = new Discord.MessageEmbed()
     .setColor("#ff0000")
@@ -49,8 +49,8 @@ function muteUser(msg, args) {
         { name: "Command", value: `Mute a member\n\`\`\`${prefix}mute [member] [reason]\`\`\``},
         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
     )
-    .setFooter(`${by} helps`)
-    if(!reason) return msg.channel.send(noReason);
+    .setFooter({ text: `${by} helps` })
+    if(!reason) return msg.channel.send({ embeds: [noReason] });
 
     member.setMute(true, reason);
     const muted = new Discord.MessageEmbed()
@@ -63,8 +63,8 @@ function muteUser(msg, args) {
         { name: "Reason:", value: `\`\`\`${reason}\`\`\``},
         { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
     )
-    .setFooter(`${by} helps`)
-    msg.channel.send(muted);
+    .setFooter({ text: `${by} helps` })
+    msg.channel.send({ embeds: [muted] });
 }
 
 module.exports = {
@@ -88,9 +88,9 @@ module.exports = {
             { name: "Username", value: `I need a member's username to continue` },
             { name: `**NOTE**`, value: `**Only use "mute" when someone has a bad behavior**`}
         )
-        .setFooter(`${by} helps`)
+        .setFooter({ text: `${by} helps` })
 
-        msg.channel.send(User).then(() => {
+        msg.channel.send({ embeds: [User] }).then(() => {
             msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
@@ -106,8 +106,8 @@ module.exports = {
                         { name: "Command Canceled", value: `Wrong answer concelation`},
                         { name: `Type \`cancel\` to cancel the command` }
                     )
-                    .setFooter(`${by} helps`)
-                    msg.channel.send(noMember);
+                    .setFooter({ text: `${by} helps` })
+                    msg.channel.send({ embeds: [noMember] });
                 }
   
                 const filter2 = response2 => { return response2.author.id === authorid; }
@@ -120,9 +120,9 @@ module.exports = {
                     { name: "Reason", value: `I need a reason to continue` },
                     { name: `Type \`cancel\` to cancel the command` }
                 )
-                .setFooter(`${by} helps`)
+                .setFooter({ text: `${by} helps` })
   
-                msg.channel.send(Reason).then(() => {
+                msg.channel.send({ embeds: [Reason] }).then(() => {
                     msg.channel.awaitMessages(filter2, { max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
@@ -138,28 +138,17 @@ module.exports = {
                           { name: "Reason", value: `\`\`\`${reason}\`\`\``},
                           { name: `Type \`cancel\` to cancel the command` }
                       )
-                      .setFooter(`${by} helps`)
-                      msg.channel.send(mute)
+                      .setFooter({ text: `${by} helps` })
+                      msg.channel.send({ embeds: [mute] })
+
                     }).catch(error => {
-                        const Error = new Discord.MessageEmbed()
-                        .setColor("#ff0000")
-                        .setTitle(":x: CANCELED :x:")
-                        .addFields(
-                            { name: "Command Canceled", value: `Timeout cancelation`}
-                        )
-                        .setFooter(`${by} helps`)
-                        msg.channel.send(Error);  
+                        if (error == '[object Map]') Timeout(msg);
+                        else Unknown(msg, error);
                     });
                 })
             }).catch(error => {
-                const Error = new Discord.MessageEmbed()
-                .setColor("#ff0000")
-                .setTitle(":x: CANCELED :x:")
-                .addFields(
-                    { name: "Command Canceled", value: `Timeout cancelation`}
-                )
-                .setFooter(`${by} helps`)
-                msg.channel.send(Error);  
+                if (error == '[object Map]') Timeout(msg);
+                else Unknown(msg, error);
             });
         })
     }
