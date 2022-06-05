@@ -7,10 +7,8 @@ async function moveChannel(msg, args, example) {
     const position = args[2];
 
     if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to move it`, `${example}`);
-
     if (!category) return Invalid(msg, `No Category`, `I need a category in order to move the channel`, `${example}`);
-    if (isNaN(category)) return Wronganswer(msg, `Not An ID`, `The category must be a sequence of number`);
-
+    if (isNaN(category)) return Wronganswer(msg, `Not An ID`, `The category must be a sequence of number (id)`);
     if (!position) return Invalid(msg, `No Position`, `I need a position in order to move the channel`, `${example}`);
     if (isNaN(position)) return Wronganswer(msg, `Not A Number`, `The position must be a number`);
 
@@ -38,8 +36,7 @@ module.exports = {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
         if (args[0]) return moveChannel(msg, args, this.example);
-        let authorid = msg.author.id;
-        const filter = (m) => m.author.id === authorid;
+        const filter = (m) => m.author.id === msg.author.id;
     
         const Channel = new MessageEmbed()
         .setColor("RANDOM")

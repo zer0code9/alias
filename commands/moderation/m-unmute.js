@@ -1,5 +1,6 @@
 const { prefix, by } = require("../../config.json");
-const Discord = require("discord.js");
+const { MessageEmbed, Permissions } = require('discord.js');
+const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 function unmuteUser(msg, args) {
   const user = msg.mentions.users.first();
 
@@ -97,14 +98,12 @@ module.exports = {
     example: prefix + "unmute [member]",
     type: "moderation",
     execute(msg, args){
-      if (args[0]) {return unmuteUser(msg, args)}
-      if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`)
-      if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to mute someone, ${msg.author}`)
-      let authorid = msg.author.id;
+      if (!msg.member.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`You don't have the permission to mute members, ${msg.author}`);
+      if(!msg.guild.me.hasPermission("MUTE_MEMBERS")) return msg.channel.send(`I dont have the permission to mute someone, ${msg.author}`);
+      if (args[0]) return unmuteUser(msg, args);
+      const filter = (m) => m.author.id === msg.author.id;
 
-      const filter1 = response1 => { return response1.author.id === authorid; }
-
-      const User = new Discord.MessageEmbed()
+      const User = new MessageEmbed()
       .setColor("RANDOM")
       .setTitle(`${by} Commands`)
       .setDescription("Command: unmute")
@@ -114,25 +113,14 @@ module.exports = {
       )
       .setFooter({ text: `${by} helps` })
 
-      msg.channel.send(User).then(() => {
-          msg.channel.awaitMessages(filter1, { max: 1 , time: 30000, errors: ['time']})
+      msg.channel.send({ embeds: [User] }).then(() => {
+          msg.channel.awaitMessages(filter, { max: 1 , time: 30000, errors: ['time']})
           .then(collected1 => {
               const response1 = collected1.first();
               const user = response1.mentions.users.first()
               const member = msg.guild.member(user);
-              if (!member.manageable) return msg.channel.send(`I cant mute ${user}`);
-              if (!member) {
-                  const noMember = new Discord.MessageEmbed()
-                  .setColor("#ff0000")
-                  .setTitle(`:warning: CANCELED :warning:`)
-                  .addFields(
-                      { name: "No Member", value: `I need a valid member username.` },
-                      { name: "Command Canceled", value: `Wrong answer concelation`},
-                      { name: `Type \`cancel\` to cancel the command` }
-                  )
-                  .setFooter({ text: `${by} helps` })
-                  msg.channel.send(noMember);
-              }
+              if (!user.manageable) return msg.channel.send(`I cant mute ${user}`);
+              if (!member) return Wronganswer(msg, )
 
               const filter2 = response2 => { return response2.author.id === authorid; }
 

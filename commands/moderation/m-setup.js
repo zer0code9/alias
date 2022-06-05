@@ -9,8 +9,8 @@ module.exports = {
     type: "Moderation",
     async execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return Perm(msg, `No permission`, `You don't have the permission to set up`);
-        
-        if ((msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias"))) return Wronganswer(msg, `Set up channel exists`, `Channel for-alias already exists`);
+        if ((msg.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias")))
+            return Wronganswer(msg, `Set up channel exists`, `Channel for-alias already exists`);
         
         await msg.guild.channels.create(`for-alias`, {
             type: `GUILD_TEXT`,

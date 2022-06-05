@@ -3,9 +3,8 @@ const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../../errors');
 const { timeDifference } = require('../../functions');
 async function userInfo(msg, args, example) {
-    let user;
+    let user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
     if (args == 0) user = msg.author;
-    else user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
 
     const Info = new MessageEmbed()
     .setColor("#00ff00")

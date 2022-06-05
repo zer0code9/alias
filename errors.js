@@ -9,7 +9,7 @@ function Error(msg, name1, value1, name2, value2, emoji) {
         { name: `${name2}`, value: `${value2}` }
     )
     .setFooter({ text: `${by} helps` })
-    return msg.channel.send({ embeds: [Error] });
+    return msg.reply({ embeds: [Error] });
 }
 function Timeout(msg) {
     const Error = new MessageEmbed()
