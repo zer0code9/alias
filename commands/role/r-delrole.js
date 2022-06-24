@@ -2,13 +2,12 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function delRole(msg, args, example) {
-    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
-    let reason = args.slice(1).join(" ");
+    const role = await msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
+    let reason = await args.slice(1).join(" ");
     let roleName = role.name;
 
-    if (!role) return Invalid(msg, `No Role`, `I need a role in order to delete it`, `${example}`);
-
-    if (!reason) return Invalid(msg, `No Reason`, `I need a reason in order to delete it`, `${example}`);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to delete it \n(mention:role or role:id)`, `${example}`);
+    if (!reason) reason = "No Reason";
 
     await role.delete();
     const Remove = new MessageEmbed()
@@ -27,21 +26,21 @@ async function delRole(msg, args, example) {
 module.exports = {
     name: "delrole",
     description: "Delete a role",
-    example: prefix + "delrole [role] [reason]",
+    example: prefix + "delrole [role:ro|id] [reason:p?]",
     type: "role",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
-        if (args[0]) return delRole(msg, args, this.example);
-        let authorid = msg.author.id;
-        const filter = (m) => m.author.id === authorid;
+        const example = this.example;
+        if (args[0]) return delRole(msg, args, example);
+        const filter = (m) => m.author.id === msg.author.id;
     
         const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: delrole")
         .addFields(
-            { name: "Role Name", value: `I need a role's name to continue` },
+            { name: "Role Name", value: `I need a role's name to continue \n(mention:role or role:id)` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter({ text: `${by} helps` })
@@ -52,7 +51,7 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const role = msg.guild.roles.cache.get(response1.content) || response1.mentions.roles.first();
-                if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
+                if (!role) return Invalid(msg, `No Role`, `I need a role in order to delete it \n(mention:role or role:id)`, `${example}`);
                 let roleName = role.name;
     
                 const Reason = new MessageEmbed()
@@ -60,7 +59,7 @@ module.exports = {
                 .setTitle(`${by} Commands`)
                 .setDescription("Command: delrole")
                 .addFields(
-                    { name: "Reason", value: `I need a reason to continue` },
+                    { name: "Reason", value: `I need a reason to continue \n(phrase)` },
                     { name: `Cancel Command`, value: `Type \`cancel\`` }
                 )
                 .setFooter({ text: `${by} helps` })
@@ -70,7 +69,8 @@ module.exports = {
                     .then(collected2 => {
                         const response2 = collected2.first();
                         if (response2.content == "cancel") return Cancel(msg);
-                        const reason = response2;
+                        let reason = response2;
+                        if (!reason) reason = "No Reason";
         
                         role.delete();
                         const Remove = new MessageEmbed()

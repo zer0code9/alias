@@ -3,8 +3,8 @@ const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../../errors');
 const { timeDifference } = require('../../functions');
 async function userInfo(msg, args, example) {
-    let user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
-    if (args == 0) user = msg.author;
+    let user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
+    if (args == 0) user = await msg.author;
 
     const Info = new MessageEmbed()
     .setColor("#00ff00")
@@ -30,7 +30,7 @@ async function userInfo(msg, args, example) {
 module.exports = {
     name: "user",
     description: "Get info on a user",
-    example: prefix + "user [user]",
+    example: prefix + "user [user:us|id]",
     type: "info",
     execute(msg, args) {
         userInfo(msg, args, this.example);

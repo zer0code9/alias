@@ -2,9 +2,9 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function setRole(msg, args, example) {
-    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
+    const role = await msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
 
-    if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it`, `${example}`);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it \n(mention:role or role:id)`, `${example}`);
 
     await role.setMentionable(`${!role.mentionable}`);
     const Set = new MessageEmbed()
@@ -23,21 +23,21 @@ async function setRole(msg, args, example) {
 module.exports = {
     name: "setrole",
     description: "Change if a role can be mentioned",
-    example: prefix + "setrole [role]",
+    example: prefix + "setrole [role:ro|id]",
     type: "role",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `You don't have the permission to manage roles`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return Perm(msg, `No Permission`, `I don't have the permission to manage roles`);
-        if (args[0]) return setRole(msg, args, this.example);
-        let authorid = msg.author.id;
-        const filter = (m) => m.author.id === authorid;
+        const example = this.example;
+        if (args[0]) return setRole(msg, args, example);
+        const filter = (m) => m.author.id === msg.author.id;
     
         const Role = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: setrole")
         .addFields(
-            { name: "Role Name", value: `I need a role's name to continue` },
+            { name: "Role Name", value: `I need a role's name to continue \n(mention:role or role:id)` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter({ text: `${by} helps` })
@@ -48,7 +48,7 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1.content == "cancel") return Cancel(msg);
                 const role = response1.mentions.roles.first();
-                if (!role) return Wronganswer(msg, `No Role`, `I need a valid role name`);
+                if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it \n(mention:role or role:id)`, `${example}`);
     
                 role.setMentionable(`${!role.mentionable}`);
                 const Set = new MessageEmbed()

@@ -1,30 +1,11 @@
-const { Client, Intents, MessageEmbed, Collection } = require('discord.js');
+const { token, by } = require('./config.json');
+const { MessageEmbed } = require('discord.js');
 const fs = require("fs");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { token, by } = require('./config.json');
-const bot = new Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_BANS,
-        Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-        Intents.FLAGS.GUILD_INTEGRATIONS,
-        Intents.FLAGS.GUILD_WEBHOOKS,
-        Intents.FLAGS.GUILD_INVITES,
-        Intents.FLAGS.GUILD_VOICE_STATES,
-        Intents.FLAGS.GUILD_PRESENCES,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MESSAGE_TYPING,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGE_TYPING
-    ], partials: ["MESSAGE", "CHANNEL", "REACTION"]});
+const bot = require('./client')
 
-bot.botCommands = new Collection();
-bot.botInteractions = new Collection();
 const interactions = [];
 
 //ERROR MESSAGE
@@ -78,9 +59,9 @@ fs.readdir('./interactions/', (error, files) => {
         interactions.push(interaction.data.toJSON());
     });
     const rest = new REST({ version: '9' }).setToken(token);
-rest.put(Routes.applicationGuildCommands("768214696019886121", "759949225861054466"), { body: interactions })
-	.then(() => console.log('Successfully registered application commands.'))
-	.catch(console.error);
+    rest.put(Routes.applicationGuildCommands("768214696019886121", "759949225861054466"), { body: interactions })
+	    .then(() => console.log('Successfully registered application commands.'))
+	    .catch(console.error);
 });
 
 /*

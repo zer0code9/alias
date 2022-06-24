@@ -2,13 +2,13 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function banUser(msg, args, example) {
-    const user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
-    let days = args[1];
-    let reason = args.slice(2).join(" ");
+    const user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
+    let days = await args[1];
+    let reason = await args.slice(2).join(" ");
 
     if (isNaN(days) || days < 1) {days = 100; reason = args.slice(1).join(" ");}
-    if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone`, `${example}`);
-    if (!user.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to ban is not manageable`, `${example}`);
+    if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone \n(mention:user or user:id)`, `${example}`);
+    if (user.manageable) return Wronganswer(msg, `Not Manageable`, `The user you are trying to ban is not manageable`);
     if (!reason) return Invalid(msg, `No Reason`, `You must have a reason to ban them`, `${example}`);
 
     //await user.ban({ days, reason: `${reason}`})
@@ -17,7 +17,7 @@ async function banUser(msg, args, example) {
     .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
     .setDescription("Moderation")
     .addFields(
-        { name: "Banned Member", value: `\`\`\`${user.tag}\`\`\`` },
+        { name: "Banned User", value: `\`\`\`${user.tag}\`\`\`` },
         { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
         { name: "Days Banned", value: `\`\`\`${days}\`\`\`` },
         { name: "By", value: `\`\`\`${msg.author.username}\`\`\`` }
@@ -29,12 +29,12 @@ async function banUser(msg, args, example) {
 
 module.exports = {
     name: "ban",
-    description: "Ban a member",
-    example: prefix + "ban [member] [days] [reason]",
+    description: "Ban a user",
+    example: prefix + "ban [user:us|id] [days:in?] [reason:p]",
     type: "moderation",
     execute(msg, args){
-        if (!msg.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to ban members`);
-        if (!msg.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to ban members`);
+        if (!msg.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to ban users`);
+        if (!msg.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to ban users`);
         if (args[0]) return banUser(msg, args, this.example);
         const filter = (m) => m.author.id === msg.author.id;
 

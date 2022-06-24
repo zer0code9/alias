@@ -3,9 +3,9 @@ const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../../errors');
 const { timeDifference } = require('../../functions');
 async function roleInfo(msg, args, example) {
-    const role = msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
+    const role = await msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
 
-    if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it`, `${example}`);
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it \n(mention:role or role:id)`, `${example}`);
 
     var pe;
     //if (role.hasPermission("ADMINISTRATOR")) {return pe = "Administrator (all)"} else {pe = `${role.permission.cache.size}`}
@@ -34,7 +34,7 @@ async function roleInfo(msg, args, example) {
 module.exports = {
     name: "role",
     description: "Get info on a role",
-    example: prefix + "role [role]",
+    example: prefix + "role [role:ro|id]",
     type: "info",
     execute(msg, args) {
         roleInfo(msg, args, this.example);

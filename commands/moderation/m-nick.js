@@ -2,15 +2,15 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function nick(msg, args, example) {
-    let user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
+    let user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
     if (args.length == 1) user = msg.author;
-    let name = args.slice(1).join(" ");
+    let name = await args.slice(1).join(" ");
     if (args.length == 1) name = args.join(" ");
 
     if (!user) return Invalid(msg, 'No User', 'I need a user to change their name', `${example}`);
     if (!name) return Invalid(msg, 'No Name', 'I need a name to change the name', `${example}`);
 
-    await user.setNickname(`${name}`)
+    await user.setNickname(`${name}`);
     const change = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: RENAMED MEMBER :bust_in_silhouette::pencil2:")

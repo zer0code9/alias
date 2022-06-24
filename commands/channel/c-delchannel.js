@@ -2,12 +2,11 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function delChannel(msg, args, example) {
-    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
-    let reason = args.slice(1).join(" ");
+    const channel = await msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
+    let reason = await args.slice(1).join(" ");
     let channelName = channel.name;
 
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it`, `${example}`);
-    
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it \n(mention:channel or channel:id)`, `${example}`);
     if (!reason) reason = "No reason";
 
     await channel.delete();
@@ -26,21 +25,21 @@ async function delChannel(msg, args, example) {
 module.exports = {
     name: "delchannel",
     description: "Delete a channel",
-    example: prefix + "delchannel [channel] [reason]",
+    example: prefix + "delchannel [channel:ch|id] [reason:p?]",
     type: "channel",
     execute(msg, args) {
         if (!msg.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `You don't have the permission to manage channels`);
         if (!msg.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) return Perm(msg, `No Permission`, `I don't have the permission to manage channels`);
-        if (args[0]) return delChannel(msg, args, this.example);
-        let authorid = msg.author.id;
-        const filter = (m) => m.author.id === authorid;
+        const example = this.example;
+        if (args[0]) return delChannel(msg, args, example);
+        const filter = (m) => m.author.id === msg.author.id;
     
         const Channel = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`${by} Commands`)
         .setDescription("Command: delchannel")
         .addFields(
-            { name: "Channel Name", value: `I need a channel's name to continue` },
+            { name: "Channel Name", value: `I need a channel's name to continue \n(mention:channel or channel:id` },
             { name: `Cancel Command`, value: `Type \`cancel\`` }
         )
         .setFooter({ text: `${by} helps` })
@@ -49,9 +48,9 @@ module.exports = {
             msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
             .then(collected1 => {
                 const response1 = collected1.first();
-                if (response1.content == "cancel") return Cancel(msg);
+                if (response1.content == `cancel`) return Cancel(msg);
                 const channel = msg.guild.channels.cache.get(response1.content) || response1.mentions.channels.first();
-                if (!channel) return Wronganswer(msg, `No Channel`, `I need a valid channel name`);
+                if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to delete it \n(mention:channel or channel:id)`, `${example}`);
                 let channelName = channel.name;
     
                 const Reason = new MessageEmbed()
@@ -68,8 +67,9 @@ module.exports = {
                     msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
                     .then(collected2 => {
                         const response2 = collected2.first();
-                        if (response2.content == "cancel") return Cancel(msg);
+                        if (response2.content == `cancel`) return Cancel(msg);
                         const reason = response2;
+                        if (!reason) reason = "No reason";
         
                         channel.delete();
                         const Remove = new MessageEmbed()

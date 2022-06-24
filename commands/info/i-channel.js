@@ -3,9 +3,21 @@ const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../../errors');
 const { timeDifference } = require('../../functions');
 async function channelInfo(msg, args, example) {
-    const channel = msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
+    const channel = await msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
 
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it`, `${example}`);
+    const guildTypes = {
+        GUILD_TEXT: "Text",
+        GUILD_VOICE: "Voice",
+        GUILD_NEWS: "News",
+        GUILD_CATEGORY: "Category",
+        GUILD_NEWS_THREAD: "News Thread",
+        GUILD_PUBLIC_THREAD: "Public Thread",
+        GUILD_PRIVATE_THREAD: "Private Thread",
+        GUILD_STAGE_VOICE: "Stage Voice",
+        GUILD_DIRECTORY: "Hub"
+    }
+
+    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it \n(mention:channel or channel:id)`, `${example}`);
 
     let parent = "";
     if (channel.type == "GUILD_CATEGORY") parent = "Is A Category";
@@ -23,7 +35,7 @@ async function channelInfo(msg, args, example) {
         ],
         { name: "Created on", value: `\`\`\`${channel.createdAt.toDateString()} (${timeDifference(channel.createdTimestamp)})\`\`\`` },
         [
-            { name: "Channel Type", value: `\`\`\`${channel.type}\`\`\``, inline: true},
+            { name: "Channel Type", value: `\`\`\`${guildTypes[channel.type]}\`\`\``, inline: true},
             { name: "Category", value: `\`\`\`${parent}\`\`\``, inline: true },
             { name: "Channel Topic", value: `\`\`\`${channel.topic || `No Topic`}\`\`\``, inline: true }
         ]
@@ -36,7 +48,7 @@ async function channelInfo(msg, args, example) {
 module.exports = {
     name: "channel",
     description: "Get info on a channel",
-    example: prefix + "channel [channel]",
+    example: prefix + "channel [channel:ch|id]",
     type: "info",
     execute(msg, args) {
         channelInfo(msg, args, this.example);

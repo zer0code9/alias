@@ -8,7 +8,7 @@ async function unbanUser(msg, args, example) {
     if (!user) return Invalid(msg, `No Id`, `I need a valid id in order to unban someone`, `${example}`);
     if (!reason) return Invalid(msg, `No Reason`, `You must have a reason to unban them`, `${example}`);
 
-    await msg.guild.members.unban(user, `${reason}`)
+    await msg.guild.members.unban(user, `${reason}`);
     const Unban = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(`:white_check_mark: UNBANNED MEMBER :bust_in_silhouette::o:`)

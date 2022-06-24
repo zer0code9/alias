@@ -1,15 +1,15 @@
 const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
-function muteUser(msg, args, example) {
-    const user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
-    const reason = args.slice(1).join(" ");
+async function muteUser(msg, args, example) {
+    const user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
+    const reason = await args.slice(1).join(" ");
 
     if (!user) return Invalid(msg, 'No User', 'I need a user to mute them', `${example}`);
     if (!user.manageable) return Invalid(msg, `Not Manageable`, `The user you are trying to mute is not manageable`, `${example}`);
     if (!reason) return Invalid(msg, 'No Reason', 'You must have a reason to mute them', `${example}`)
 
-    member.setMute(true, reason);
+    await member.setMute(true, reason);
     const Mute = new MessageEmbed()
     .setColor("#00ff00")
     .setTitle(":white_check_mark: MUTED MEMBER :bust_in_silhouette::mute:")
@@ -21,7 +21,8 @@ function muteUser(msg, args, example) {
         { name: `By`, value: `\`\`\`${msg.author.username}\`\`\`` }
     )
     .setFooter({ text: `${by} helps` })
-    msg.channel.send({ embeds: [Mute] });
+    await msg.channel.send({ embeds: [Mute] });
+    msg.delete();
 }
 
 module.exports = {

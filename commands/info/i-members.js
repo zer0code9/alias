@@ -2,8 +2,8 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
 async function membersRole(msg, args, example) {
-    const role = msg.mentions.roles.first();
-    if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it`, `${example}`);
+    const role = await msg.guild.roles.cache.get(args[0]) || msg.mentions.roles.first();
+    if (!role) return Invalid(msg, `No Role`, `I need a role in order to return info about it \n(mention:role or role:id)`, `${example}`);
 
     var page = 1;
     const memberPage = new MessageEmbed()
@@ -65,7 +65,7 @@ async function membersRole(msg, args, example) {
 module.exports = {
     name: "members",
     description: "Get the names of members that have a certain role",
-    example: prefix + "members [role]",
+    example: prefix + "members [role:ro|id]",
     type: "info",
     execute(msg, args) {
         membersRole(msg, args, this.example);

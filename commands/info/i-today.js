@@ -2,7 +2,7 @@ const { prefix, by } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 const { Invalid } = require('../../errors');
 const { timeDifference } = require('../../functions');
-function todayInfo(msg, args) {
+async function todayInfo(msg, args) {
     let tdy = new Date();
     let date = tdy.getDate();
     let day = tdy.getDay();
@@ -25,10 +25,10 @@ function todayInfo(msg, args) {
             { name: "Time:", value: `\`\`\`${hour}:${minute}.${second}\`\`\``}
         )
         .setFooter({ text: `${by} helps` })
-    msg.channel.send({ embeds: [todayDate] });
-
-
+    await msg.channel.send({ embeds: [todayDate] });
+    msg.delete();
 }
+
 module.exports = {
     name: "today",
     description: "Get info on today",
