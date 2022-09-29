@@ -1,7 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { prefix, by } = require('./config.json');
 function Error(msg, name1, value1, name2, value2, emoji) {
-    msg.delete();
     const Error = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(`:${emoji}: CANCELED :${emoji}:`)
@@ -13,7 +12,6 @@ function Error(msg, name1, value1, name2, value2, emoji) {
     return msg.reply({ embeds: [Error] });
 }
 function Timeout(msg) {
-    msg.delete();
     const Error = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(":x: CANCELED :x:")
@@ -31,7 +29,6 @@ function Perm(msg, name, value) {
     return Error(msg, `${name}`, `${value}`, `Command Canceled`, `Invalid Permission cancelation`, `no_entry_sign`);
 }
 function Cancel(msg) {
-    msg.delete();
     var Cancel = new MessageEmbed()
     .setColor("#ff0000")
     .setTitle(":stop_sign: CANCELED :stop_sign:")
@@ -49,4 +46,4 @@ function Unknown(msg, error) {
 }
 
 
-module.exports = { Timeout, Wronganswer, Perm, Cancel, Invalid, Unabled, Unknown }
+module.exports = { Timeout, Wronganswer, Unabled, Perm, Cancel, Invalid, Unknown }

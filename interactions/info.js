@@ -11,21 +11,22 @@ module.exports = {
         .addSubcommand(sub => sub
             .setName("user")
             .setDescription("Get info on a user"))
-            .addUserOption(option => option.setName('theuser').setDescription('The targeted user'))
+            //.addUserOption(option => option.setName('user').setDescription('The targeted user').setRequired(false))
         .addSubcommand(sub => sub
             .setName("channel")
             .setDescription("Get info on a channel"))
-            .addChannelOption(option => option.setName('thechannel').setDescription('The targeted channel'))
+            //.addChannelOption(option => option.setName('thechannel').setDescription('The targeted channel').setRequired(false))
         .addSubcommand(role => role
             .setName("role")
             .setDescription("Get info on a role"))
-            .addRoleOption(option => option.setName('therole').setDescription('the targeted role'))
+            //.addRoleOption(option => option.setName('therole').setDescription('the targeted role').setRequired(false))
         .addSubcommand(server => server
             .setName("server")
             .setDescription("Get info on the server")),
+
 	async execute(interaction) {
         if (interaction.options.getSubcommand() === 'user') {
-            const user = interaction.options.getUser('theuser') ? interaction.options.getUser('theuser') : interaction.user;
+            //const user = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user;
             const Info = new MessageEmbed()
                 .setColor("#00ff00")
                 .setTitle(":bust_in_silhouette: USER INFO :bust_in_silhouette:")

@@ -1,6 +1,6 @@
 const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
-const { Timeout, Wronganswer, Cancel, Perm, Invalid, Unknown } = require("../../errors");
+const { Timeout, Unabled, Cancel, Perm, Invalid, Unknown } = require("../../errors");
 async function creChannel(msg, args, example, types) {
     const name = await args[0];
     var type = await args[1];

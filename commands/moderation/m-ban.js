@@ -1,6 +1,6 @@
 const { prefix, by } = require("../../config.json");
 const { MessageEmbed, Permissions } = require('discord.js');
-const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
+const { Timeout, Unabled, Cancel, Perm, Invalid, Unknown } = require("../../errors");
 async function banUser(msg, args, example) {
     const user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
     let days = await args[1];
@@ -8,7 +8,7 @@ async function banUser(msg, args, example) {
 
     if (isNaN(days) || days < 1) {days = 100; reason = args.slice(1).join(" ");}
     if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone \n(mention:user or user:id)`, `${example}`);
-    if (user.manageable) return Wronganswer(msg, `Not Manageable`, `The user you are trying to ban is not manageable`);
+    if (user.manageable) return Unabled(msg, `Not Manageable`, `The user you are trying to ban is not manageable`);
     if (!reason) return Invalid(msg, `No Reason`, `You must have a reason to ban them`, `${example}`);
 
     //await user.ban({ days, reason: `${reason}`})
@@ -54,8 +54,8 @@ module.exports = {
                 const response1 = collected1.first();
                 if (response1.content == `cancel`) return Cancel(msg);
                 const user = msg.guild.members.cache.get(response1.content) || response1.mentions.users.first();
-                if (!user) return Wronganswer(msg, `No Member`, `I need a valid member username`);
-                if (!user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
+                if (!user) return Unabled(msg, `No Member`, `I need a valid member username`);
+                if (user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
 
                 const Reason = new MessageEmbed()
                 .setColor("RANDOM")
@@ -90,7 +90,7 @@ module.exports = {
                                 const response3 = collected3.first();
                                 if (response3.content == `cancel`) return Cancel(msg);
                                 let days = response3.content;
-                                if (isNaN(days)) {return Wronganswer(msg, `Not a number`, `The number of days must be a number`); days = 100}
+                                if (isNaN(days)) {return Unabled(msg, `Not a number`, `The number of days must be a number`); days = 100}
 
                                 //user.ban({ days, reason: `${reason}`})
                                 const Ban = new MessageEmbed()

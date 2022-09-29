@@ -1,6 +1,6 @@
 const { prefix, by } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
-const { Wronganswer, Invalid, Unknown } = require('../../errors');
+const { Wronganswer, Invalid, Unabled, Unknown } = require('../../errors');
 function bcalculator(msg, args, example) {
     let equation = args.join(" ");
 
@@ -22,11 +22,9 @@ function bcalculator(msg, args, example) {
             if (!(".1234567890+-*/%() ".split("").includes(letter))) {
                 someError = true;
                 incorrect = letter;
-                return;
+                if (someError) return Unabled(msg, `You used \`${incorrect}\``, `This key can't be used`);
             }
         }
-
-        if (someError) return Wronganswer(msg, `You used \`${incorrect}\``, `This key can't be used`);
 
         answer = eval(equation);
         equation.replace("", " ");
