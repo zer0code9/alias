@@ -6,7 +6,7 @@ async function colorRole(msg, args, example) {
     const color = await args.slice(1).join(" ");
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to recolor it \n(mention:role or role:id)`, `${example}`);
-    if (!color) return Invalid(msg, `No Color`, `I need a color in hex in order to recolor the role \n(phrae:hex)`, `${example}`);
+    if (!color) return Invalid(msg, `No Color`, `I need a color in hex in order to recolor the role \n(text:hex)`, `${example}`);
 
     await role.setColor(`${color}`);
     const Color = new MessageEmbed()

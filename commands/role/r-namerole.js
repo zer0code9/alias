@@ -7,7 +7,7 @@ async function nameRole(msg, args, example) {
     let roleName = role.name;
 
     if (!role) return Invalid(msg, `No Role`, `I need a role in order to rename it \n(mention:role or role:id)`, `${example}`);
-    if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role \n(phrase)`, `${example}`);
+    if (!name) return Invalid(msg, `No Name`, `I need a name in order to rename the role \n(text:phrase)`, `${example}`);
 
     await role.setName(`${name}`);
     const Name = new MessageEmbed()
