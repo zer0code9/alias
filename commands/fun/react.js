@@ -10,8 +10,8 @@ async function react(msg, args, bot, example) {
     if (!role) return Invalid(mg, `No Role`, `I need a role to give \n(mention:role or role:id)`, `${example}`);
     if (!message) return Invalid(mg, `No Message`, `I need a message to put the role on \n(message:id)`, `${example}`);
 
-    let message = msg.channel.messages.fetch(message);
-    message.react(`${emoji}`);
+    let themsg = msg.channel.messages.fetch(message);
+    themsg.react(`${emoji}`);
 
     bot.on('messageReactionAdd', async (reaction, user) => {
         if (reaction.message.partial) await reaction.message.fetch();

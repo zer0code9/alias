@@ -1,7 +1,7 @@
 const { prefix, by, version, versiondescription } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 const { timeDifference } = require('../../functions');
-const package = require("./../../package.json");
+const package = require("../../package.json");
 function botUser(msg, args, bot) {
     const client = bot.user;
 

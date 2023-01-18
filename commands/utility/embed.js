@@ -12,7 +12,7 @@ async function delChannel(msg, args, example) {
     .setTitle(`:: NAME ::::`)
     .setDescription('type')
     .addFields(
-        { name: "", value: `\`\`\`${}\`\`\`` },
+        { name: "", value: `` },
         { name: "", value: ``}
     )
     .setFooter({ text: `${by} helps` })
