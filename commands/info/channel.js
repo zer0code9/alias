@@ -1,56 +1,87 @@
-const { prefix, by } = require("../../config.json");
-const { MessageEmbed } = require("discord.js");
-const { Invalid } = require('../../errors');
-const { timeDifference } = require('../../functions');
-async function channelInfo(msg, args, example) {
-    const channel = await msg.guild.channels.cache.get(args[0]) || msg.mentions.channels.first();
-
-    const guildTypes = {
-        GUILD_TEXT: "Text",
-        GUILD_VOICE: "Voice",
-        GUILD_NEWS: "News",
-        GUILD_CATEGORY: "Category",
-        GUILD_NEWS_THREAD: "News Thread",
-        GUILD_PUBLIC_THREAD: "Public Thread",
-        GUILD_PRIVATE_THREAD: "Private Thread",
-        GUILD_STAGE_VOICE: "Stage Voice",
-        GUILD_DIRECTORY: "Hub"
-    }
-
-    if (!channel) return Invalid(msg, `No Channel`, `I need a channel in order to return info about it \n(mention:channel or channel:id)`, `${example}`);
-
-    let parent = "";
-    if (channel.type == "GUILD_CATEGORY") parent = "Is A Category";
-    else if (channel.parent.name) parent = channel.parent.name;
-    else parent = "None";
-
-    const Info = new MessageEmbed()
-    .setColor("#00ff00")
-    .setTitle(":file_folder: CHANNEL INFO :file_folder:")
-    .setDescription("Info")
-    .addFields(
-        [
-            { name: "Channel Name", value: `\`\`\`${channel.name}\`\`\``, inline: true},
-            { name: "Channel Id", value: `\`\`\`${channel.id}\`\`\``, inline: true },
-        ],
-        { name: "Created on", value: `\`\`\`${channel.createdAt.toDateString()} (${timeDifference(channel.createdTimestamp)})\`\`\`` },
-        [
-            { name: "Channel Type", value: `\`\`\`${guildTypes[channel.type]}\`\`\``, inline: true},
-            { name: "Category", value: `\`\`\`${parent}\`\`\``, inline: true },
-            { name: "Channel Topic", value: `\`\`\`${channel.topic || `No Topic`}\`\`\``, inline: true }
-        ]
-    )
-    .setFooter({ text: `${by} helps` })
-    await msg.channel.send({ embeds: [Info] });
-    msg.delete();
-}
+const { bot, emojiType } = require('../../config.js');
+const { ApplicationCommandOptionType } = require('discord.js');
+const AliasCancels = require("../../helpers/cancels");
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require("../../helpers/utils");
+const AliasTemps = require('../../helpers/temps');
 
 module.exports = {
     name: "channel",
     description: "Get info on a channel",
-    example: prefix + "channel [channel:ch|id]",
-    type: "info",
-    execute(msg, args) {
-        channelInfo(msg, args, this.example);
+    type: "Info",
+    botPerms: [],
+    memPerms: [],
+    args: [
+        { name: "channel", type: "channel-mention|id", required: true }
+    ],
+    msgCommand: {
+        exist: true,
+        usage: bot.prefix + "channel [channel:ch-me|id]",
+    },
+    intCommand: {
+        exist: true,
+        options: [
+            {
+                name: "channel",
+                description: "The channel to get info on",
+                type: ApplicationCommandOptionType.Channel,
+                required: true,
+            }
+        ]
+    },
+    
+    async msgRun(msg, args) {
+        const channel = await msg.guild.channels.cache.get(args[0]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
+
+        try {
+            const Info = await this.Channel(msg, channel);
+            AliasUtils.sendEmbed(msg, Info);
+        } catch {
+            AliasUtils.sendError(msg, this.name);
+        }
+
+        msg.delete();
+    },
+
+    async intRun(int) {
+        const channel = int.options.getChannel('channel');
+
+        try {
+            const Info = await this.Channel(int, channel);
+            AliasUtils.sendEmbed(int, Info);
+        } catch {
+            AliasUtils.sendError(int, this.name);
+        }
+    },
+
+    async Channel(type, channel) {
+        if (!channel) return AliasCancels.invalid(`No Channel`, `I need a channel in order to return info about it \n(${this.args[0].type})`, this.msgCommand.usage);
+
+        const guildTypes = {
+            0: "Text",
+            1: "DM",
+            2: "Voice",
+            3: "Group DM",
+            4: "Category",
+            5: "Announcement/News",
+            10: "News Thread",
+            11: "Public Thread",
+            12: "Private Thread",
+            13: "Stage",
+            14: "Directory",
+            15: "Forum",
+        }
+    
+        const Info = AliasEmbeds.embedInfo("CHANNEL INFO", emojiType.channel,
+        [
+                { name: "Name", value: `\`\`\`${channel.name}\`\`\``, inline: true },
+                { name: "Id", value: `\`\`\`${channel.id}\`\`\``, inline: true },
+            { name: "Created on", value: `\`\`\`${channel.createdAt.toDateString()} (${AliasTemps.timeDifference(channel.createdTimestamp)})\`\`\`` },
+                { name: "Type", value: `\`\`\`${guildTypes[channel.type] ?? channel.type}\`\`\``, inline: true},
+                { name: "Parent", value: `\`\`\`${type.guild.channels.cache.get(channel.parentId)?.name ?? `No Parent`}\`\`\``, inline: true },
+                { name: "Topic", value: `\`\`\`${channel.topic ?? `No Topic`}\`\`\``, inline: true },
+                { name: "Is NSFW", value: `\`\`\`${channel.nsfw ? `Yes` : `No`}\`\`\``, inline: true }
+        ])
+        return Info;
     }
 }

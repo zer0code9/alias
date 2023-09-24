@@ -1,42 +1,56 @@
-const { prefix, by, version, versiondescription } = require("../../config.json");
-const { MessageEmbed } = require("discord.js");
-const { timeDifference } = require('../../functions');
-const package = require("../../package.json");
-function botUser(msg, args, bot) {
-    const client = bot.user;
-
-    const botInfo = new MessageEmbed()
-    .setColor(`#00ff00`)
-    .setTitle(":robot: BOT INFO :robot:")
-    .setDescription("Info")
-    .addFields(
-        [
-            { name: "Username", value: `\`\`\`${client.tag}\`\`\``, inline: true},
-            { name: "User Id", value: `\`\`\`${client.id}\`\`\``, inline: true},
-        ],
-        { name: "Create on", value: `\`\`\`${client.createdAt.toDateString()} (${timeDifference(client.createdTimestamp)})\`\`\`` },
-        { name: "Last Ready on", value: `\`\`\`${bot.readyAt.toDateString()} (${timeDifference(client.readyTimestamp)})\`\`\`` },
-        [
-            { name: "Version", value: `\`\`\`${version}\`\`\``, inline: true },
-            { name: "Version Description", value: `\`\`\`${versiondescription}\`\`\``, inline: true },
-            { name: "Discord.JS Version", value: `\`\`\`${package.dependencies["discord.js"]}\`\`\`` }
-        ],
-        { name: "Application", value: `\`\`\`${bot.application}\`\`\`` },
-        [
-            { name: "On", value: `\`\`\`Guilds: ${bot.guilds.cache.size} | Channels: ${bot.channels.cache.size}\`\`\`` },
-            { name: "Has", value: `\`\`\`Users: ${bot.users.cache.size} | Emojis: ${bot.emojis.cache.size}\`\`\`` }
-        ]
-    )
-    .setFooter({ text: `${by} helps` })
-    msg.channel.send({ embeds: [botInfo] });
-}
+const { bot, emojiType } = require('../../config.js');
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require('../../helpers/utils');
+const AliasTemps = require('../../helpers/temps');
 
 module.exports = {
     name: "bot",
     description: "Get info on the bot",
-    example: prefix + "bot",
-    type: "info",
-    execute(msg, args, bot) {
-        botUser(msg, args, bot);
+    type: "Info",
+    botPerms: [],
+    memPerms: [],
+    args: [],
+    msgCommand: {
+        exist: true,
+        usage: bot.prefix + "bot",
+    },
+    intCommand: {
+        exist: true,
+        options: []
+    },
+
+    async msgRun(msg, args, alias) {
+        try {
+            const Info = await this.Bot(alias);
+            AliasUtils.sendEmbed(msg, Info);
+        } catch {
+            AliasUtils.sendError(msg, this.name);
+        }
+
+        msg.delete();
+    },
+
+    async intRun(int, alias) {
+        try {
+            const Info = await this.Bot(alias);
+            AliasUtils.sendEmbed(int, Info);
+        } catch {
+            AliasUtils.sendError(int, this.name);
+        }
+    },
+
+    async Bot(alias) {
+        const Info = AliasEmbeds.embedInfo("BOT INFO", emojiType.bot,
+        [
+                { name: "Name", value: `\`\`\`${alias.user.tag}\`\`\``, inline: true },
+                { name: "Id", value: `\`\`\`${alias.user.id}\`\`\``, inline: true },
+                { name: "Version", value: `\`\`\`${bot.version}\`\`\``, inline: true },
+            { name: "Create on", value: `\`\`\`${alias.user.createdAt.toDateString()} (${AliasTemps.timeDifference(alias.user.createdTimestamp)})\`\`\`` },
+            { name: "Last Ready on", value: `\`\`\`${alias.readyAt.toDateString()} (${AliasTemps.timeDifference(alias.readyTimestamp)})\`\`\`` },
+            { name: "Application", value: `\`\`\`${alias.user.application}\`\`\`` },
+                { name: "On", value: `\`\`\`Guilds: ${alias.guilds.cache.size} | Channels: ${alias.channels.cache.size}\`\`\`` },
+                { name: "Has", value: `\`\`\`Users: ${alias.users.cache.size} | Emojis: ${alias.emojis.cache.size}\`\`\`` }
+        ])
+        return Info;
     }
 }

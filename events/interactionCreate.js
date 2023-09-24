@@ -1,14 +1,31 @@
-const CONFIG = require('../config.json');
+const { event } = require('../config.js');
+const AliasCancels = require("../helpers/cancels");
+const { permissions } = require('../helpers/collectors');
 
-module.exports = async (bot, interaction) => {
-    if (!interaction.isCommand()) return;
-	const command = bot.botInteractions.get(interaction.commandName);
-	if (!command) return;
+module.exports = async (alias, int) => {
+	if (!event.interactionCre) return;
+    if (!int.isCommand()) return;
+
+	const command = await alias.intCommands.get(int.commandName);
+	if (!command || !command.intCommand.exist) return;
+
+	let noperm = false;
+    if (command.memPerms) {
+        command.memPerms.forEach(perm => {
+            if (!int.member.permissions.has(permissions[perm])) {
+                const Perm = AliasCancels.permission(`No Permission`, `<@${int.member.user.id}> doesn't have the permission to ${perm.toLowerCase()}`);
+				AliasUtils.sendEmbed(int, Perm);
+                noperm = true;
+            }
+        });
+        if (noperm) { return; }
+    }
 	
 	try {
-		await command.execute(interaction);
+		await command.intRun(int, alias);
 	} catch (error) {
 		console.error(error);
-		return interaction.reply({ content: 'There was an error while executing the command!', ephemeral: true });
+		int.reply({ content: `There was an error while executing the command!`, ephemeral: true });
+		return;
 	}
 }

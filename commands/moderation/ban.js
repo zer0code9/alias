@@ -1,125 +1,100 @@
-const { prefix, by } = require("../../config.json");
-const { MessageEmbed, Permissions } = require('discord.js');
-const { Timeout, Unabled, Cancel, Perm, Invalid, Unknown } = require("../../errors");
-async function banUser(msg, args, example) {
-    const user = await msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
-    let days = await args[1];
-    let reason = await args.slice(2).join(" ");
-
-    if (isNaN(days) || days < 1) {days = 100; reason = args.slice(1).join(" ");}
-    if (!user) return Invalid(msg, `No User`, `I need an username in order to ban someone \n(mention:user or user:id)`, `${example}`);
-    if (user.manageable) return Unabled(msg, `Not Manageable`, `The user you are trying to ban is not manageable`);
-    if (!reason) return Invalid(msg, `No Reason`, `You must have a reason to ban them`, `${example}`);
-
-    //await user.ban({ days, reason: `${reason}`})
-    const Ban = new MessageEmbed()
-    .setColor("#00ff00")
-    .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
-    .setDescription("Moderation")
-    .addFields(
-        { name: "Banned User", value: `\`\`\`${user.tag}\`\`\`` },
-        { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-        { name: "Days Banned", value: `\`\`\`${days}\`\`\`` },
-        { name: "By", value: `\`\`\`${msg.author.username}\`\`\`` }
-    )
-    .setFooter({ text: `${by} helps` })
-    await msg.channel.send({ embeds: [Ban] });
-    msg.delete();
-}
+const { bot, emojiType } = require('../../config.js');
+const { ApplicationCommandOptionType } = require('discord.js');
+const AliasCancels = require("../../helpers/cancels");
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "ban",
     description: "Ban a user",
-    example: prefix + "ban [user:us|id] [days:in?] [reason:p]",
-    type: "moderation",
-    execute(msg, args){
-        if (!msg.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to ban users`);
-        if (!msg.guild.me.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to ban users`);
-        if (args[0]) return banUser(msg, args, this.example);
-        const filter = (m) => m.author.id === msg.author.id;
+    type: "Moderation",
+    botPerms: ["banMembers"],
+    memPerms: ["banMembers"],
+    args: [
+        { name: "option", type: "soft|harsh", required: true },
+        { name: "user", type: "user-mention|id", required: true },
+        { name: "reason", type: "phrase", required: true },
+    ],
+    msgCommand: {
+        exist: true,
+        usage: bot.prefix + "ban [option:(soft/harsh)] [user:us-me|id] [reason:ph]"
+    },
+    intCommand: {
+        exist: false,
+        options: [
+            {
+                name: "option",
+                description: "Choose soft or harsh",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+            },
+            {
+                name: "user",
+                description: "The user to ban",
+                type: ApplicationCommandOptionType.User,
+                required: true,
+            },
+            {
+                name: "reason",
+                description: "The reason to ban",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+            }
+        ]
+    },
 
-        const User = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: ban")
-        .addFields(
-            { name: "Username", value: `I need a member's username to continue` },
-            { name: `Cancel Command`, value: `Type \`cancel\`` }
-        )
-        .setFooter({ text: `${by} helps` })
+    async msgRun(msg, args, alias) {
+        const option = await args[0];
+        const issuer = await msg.member;
+        const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+        let reason = await args.slice(2).join(" ");
 
-        msg.channel.send({ embeds: [User] }).then(() => {
-            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
-            .then(collected1 => {
-                const response1 = collected1.first();
-                if (response1.content == `cancel`) return Cancel(msg);
-                const user = msg.guild.members.cache.get(response1.content) || response1.mentions.users.first();
-                if (!user) return Unabled(msg, `No Member`, `I need a valid member username`);
-                if (user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
+        try {
+            const Ban = await this.Ban(option, issuer, user, reason);
+            AliasUtils.sendEmbedAlias(msg, Ban);
 
-                const Reason = new MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by} Commands`)
-                .setDescription("Command: ban")
-                .addFields(
-                    { name: "Reason", value: `I need a reason to continue` },
-                    { name: `Cancel Command`, value: `Type \`cancel\`` }
-                )
-                .setFooter({ text: `${by} helps` })
+            if (Ban.toJSON().title.includes('BANNED USER')) AliasUtils.sendEmbedUser(alias, user, `banned`, reason);
+        } catch {
+            AliasUtils.sendErrorAlias(msg, this.name);
+        }
+        msg.delete();
+    },
 
-                msg.channel.send({ embeds: [Reason] }).then(() => {
-                    msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
-                    .then(collected2 => {
-                        const response2 = collected2.first();
-                        if (response2.content == `cancel`) return Cancel(msg);
-                        const reason = response2.content;
+    async intRun(int) {
+        const option = await int.options.getString('option');
+        const issuer = await int.member;
+        const user = await int.options.getUser('user');
 
-                        const Day = new MessageEmbed()
-                        .setColor("RANDOM")
-                        .setTitle(`${by} Commands`)
-                        .setDescription("Command: ban")
-                        .addFields(
-                            { name: "Days", value: `I need a number of days to continue\nPut nothing if infinite` },
-                            { name: `Cancel Command`, value: `Type \`cancel\`` }
-                        )
-                        .setFooter({ text: `${by} helps` })
+        try {
+            const Ban = await this.Ban(option, issuer, user, reason);
+            AliasUtils.sendEmbedAlias(int, Ban);
 
-                        msg.channel.send({ embeds: [Day] }).then(() => {
-                            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
-                            .then(collected3 => {
-                                const response3 = collected3.first();
-                                if (response3.content == `cancel`) return Cancel(msg);
-                                let days = response3.content;
-                                if (isNaN(days)) {return Unabled(msg, `Not a number`, `The number of days must be a number`); days = 100}
+            if (Ban.toJSON().title.includes('BANNED USER')) AliasUtils.sendEmbedUser(alias, user, `banned`, reason);
+        } catch {
+            AliasUtils.sendErrorAlias(int, this.name);
+        }
+    },
 
-                                //user.ban({ days, reason: `${reason}`})
-                                const Ban = new MessageEmbed()
-                                .setColor("#00ff00")
-                                .setTitle(`:white_check_mark: BANNED MEMBER :bust_in_silhouette::no_entry_sign:`)
-                                .setDescription("Moderation")
-                                .addFields(
-                                    { name: "Banned Member", value: `\`\`\`${user.tag}\`\`\`` },
-                                    { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-                                    { name: "Days Banned", value: `\`\`\`${days}\`\`\`` },
-                                    { name: "By", value: `\`\`\`${msg.author.username}\`\`\`` }
-                                )
-                                .setFooter({ text: `${by} helps` })
-                                msg.channel.send({ embeds: [Ban] });
+    async Ban(option, issuer, user, reason) {
+        if (!option) return AliasCancels.invalid(`No Option`, `I need to know whether to soft or harsh ban \n(option (soft/harsh))`, this.msgCommand.usage);
+        if (option != `soft` && option != `harsh`) return AliasCancels.unabled(`Need a valid option`, `The options are either soft or harsh \n Soft: only bans | Harsh: bans and deletes messages`);
+        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to ban someone \n(${this.args[1].type})`, this.msgCommand.usage);
+        if (!reason) return AliasCancels.invalid(`No Reason`, `You must have a reason to ban them \n(${this.args[2].type})`, this.msgCommand.usage);
 
-                            }).catch(error => {
-                                if (error == '[object Map]') Timeout(msg);
-                                else Unknown(msg, error);
-                            });
-                        })
-                    }).catch(error => {
-                        if (error == '[object Map]') Timeout(msg);
-                        else Unknown(msg, error);
-                    });
-                })
-            }).catch(error => {
-                if (error == '[object Map]') Timeout(msg);
-                else Unknown(msg, error);
-            });
-        })
+        if (!AliasUtils.userInteract(issuer, user)) return AliasCancels.unabled(`Not Bannable`, `The user you are trying to ban cannot be banned by you`);
+
+        if (option == `soft`) {
+            console.log(`soft`)
+            //await user.ban({ reason: reason });
+        } else if (option == `harsh`) {
+            console.log(`harsh`)
+            //await user.ban({ deleteMessageSeconds: 60 * 60 * 24 * 7, reason: reason });
+        }
+        const Ban = AliasEmbeds.embedSuccess("BANNED USER", emojiType.user, emojiType.no, this.type, [
+            { name: "Banned User", value: `\`\`\`${user.user.tag}\`\`\`` },
+            { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
+            { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\`` }
+        ])
+        return Ban;
     }
 }

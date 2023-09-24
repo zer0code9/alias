@@ -1,99 +1,84 @@
-const { prefix, by } = require("../../config.json");
-const { MessageEmbed, Permissions } = require('discord.js');
-const { Timeout, Wronganswer, Perm, Cancel, Invalid, Unknown } = require("../../errors");
-function kickUser(msg, args, example) {
-    const user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first();
-    const reason = args.slice(1).join(" ");
-
-    if (!user) return Invalid(msg, `No User`, `I need a username in order to kick them`, `${example}`);
-    const member = msg.guild.fetchMember(user.id);
-    if (!member.kickable) return Invalid(msg, `Not Kickable`, `The user you are trying to kick is not kickable`, `${example}`);
-
-    if(!reason) return Invalid(msg, `No Reason`, `I need a reason in order to kick someone`, `${example}`);
-
-    member.kick(reason);
-    const Kick = new MessageEmbed()
-    .setColor("#00ff00")
-    .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
-    .setDescription("Moderation")
-    .addFields(
-        { name: "Kicked Member", value: `\`\`\`${user.tag}\`\`\`` },
-        { name: "Reason", value: `\`\`\`${reason}\`\`\``},
-        { name: "By", value: `\`\`\`${msg.author.username}\`\`\``}
-    )
-    .setFooter({ text: `${by} helps` })
-    msg.channel.send({ embeds: [Kick] });
-}
+const { bot, emojiType } = require('../../config.js');
+const { ApplicationCommandOptionType } = require('discord.js');
+const AliasCancels = require("../../helpers/cancels");
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "kick",
-    description: "Kick a member",
-    example: prefix + "kick [member] [reason]",
-    type: "moderation",
-    execute(msg, args){
-        if (!msg.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return Perm(msg, `No permission`, `You don't have the permission to kick members`);
-        if (!msg.guild.me.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return Perm(msg, `No permission`, `I don't have the permission to kick members`);
-        if (args[0]) return kickUser(msg, args, this.example);
-        let authorid = msg.author.id;
-        const filter = (m) => m.author.id === authorid;
+    description: "Kick a user",
+    type: "Moderation",
+    botPerms: ["kickMembers"],
+    memPerms: ["kickMembers"],
+    args: [
+        { name: "user", type: "user-mention|id", required: true },
+        { name: "reason", type: "phrase", required: true },
+    ],
+    msgCommand: {
+        exist: true,
+        usage: bot.prefix + "kick [user:us-me|id] [reason:ph]",
+    },
+    intCommand: {
+        exist: false,
+        options: [
+            {
+                name: "user",
+                description: "The user to kick",
+                type: ApplicationCommandOptionType.User,
+                required: true,
+            },
+            {
+                name: "reason",
+                description: "The reason to kick",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+            }
+        ]
+    },
 
-        const User = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${by} Commands`)
-        .setDescription("Command: kick")
-        .addFields(
-            { name: "Username", value: `I need a member's username to continue` },
-            { name: `Cancel Command`, value: `Type \`cancel\`` }
-        )
-        .setFooter({ text: `${by} helps` })
+    async msgRun(msg, args){
+        const issuer = await msg.member;
+        const user = await msg.guild.members.cache.get(args[0]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+        const reason = await args.slice(1).join(" ");
+    
+        try {
+            const Kick = await this.Kick(issuer, user, reason);
+            AliasUtils.sendEmbedAlias(msg, Kick);
 
-        msg.channel.send({ embeds: [User] }).then(() => {
-            msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
-            .then(collected1 => {
-                const response1 = collected1.first();
-                if (response1.content == "cancel") return Cancel(msg);
-                const user = response1.mentions.users.first();
-                if (!user.manageable) return Perm(msg, `Not manageable`, `That user cant be banned`);
-                if (!user) return Wronganswer(msg, `No Member`, `I need a valid member username`);
+            if (Ban.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
+        } catch {
+            AliasUtils.sendErrorAlias(msg, this.name);
+        }
+        msg.delete();
+    },
 
-                const Reason = new MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(`${by} Commands`)
-                .setDescription("Command: kick")
-                .addFields(
-                    { name: "Reason", value: `I need a reason to continue` },
-                    { name: `Cancel Command`, value: `Type \`cancel\`` }
-                )
-                .setFooter({ text: `${by} helps` })
+    async intRun(int) {
+        const issuer = await int.member;
+        const user = await int.options.getUser('user');
+        const reason = await int.options.getString('reason');
 
-                msg.channel.send({ embeds: [Reason] }).then(() => {
-                    msg.channel.awaitMessages({filter, max: 1 , time: 30000, errors: ['time']})
-                    .then(collected2 => {
-                        const response2 = collected2.first();
-                        if (response1.content == "cancel") return Cancel(msg);
-                        const reason = response2.content;
-  
-                        user.kick(reason);
-                        const Kick = new MessageEmbed()
-                        .setColor("#00ff00")
-                        .setTitle(`:white_check_mark: KICKED MEMBER :bust_in_silhouette::outbox_tray:`)
-                        .setDescription("Moderation")
-                        .addFields(
-                            { name: "Kicked Member", value: `\`\`\`${user.tag}\`\`\`` },
-                            { name: "Reason", value: `\`\`\`${reason}\`\`\``}
-                        )
-                        .setFooter({ text: `${by} helps` })
-                        msg.channel.send({ embeds: [Kick] });
+        try {
+            const Kick = await this.Kick(issuer, user, reason);
+            AliasUtils.sendEmbedAlias(int, Kick);
 
-                    }).catch(error => {
-                        if (error == '[object Map]') Timeout(msg);
-                        else Unknown(msg, error);
-                    });
-                })
-            }).catch(error => {
-                if (error == '[object Map]') Timeout(msg);
-                else Unknown(msg, error); 
-            });
-        })
+            if (Kick.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
+        } catch {
+            AliasUtils.sendErrorAlias(int, this.name);
+        }
+    },
+
+    async Kick(issuer, user, reason) {
+        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to kick them \n(${this.args[0].type})`, this.msgCommand.usage);
+        if (!reason) return AliasCancels.invalid(`No Reason`, `I need a reason in order to kick someone \n(${this.args[1].type})`, this.msgCommand.usage);
+
+        if (!userInteract(issuer, user)) return AliasCancels.unabled(`Not Kickable`, `The user you are trying to kick cannot be kicked by you`);
+
+        //await user.kick(reason);
+        const Kick = AliasEmbeds.embedSuccess("KICKED USER", emojiType.user, "outbox_tray", this.type, [
+            { name: "Kicked Member", value: `\`\`\`${user.user.tag}\`\`\`` },
+            { name: "Reason", value: `\`\`\`${reason}\`\`\``},
+            { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\``}
+        ])
+        return Kick;
     }
 }
