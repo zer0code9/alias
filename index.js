@@ -2,6 +2,7 @@ const { bot } = require('./config.js');
 const { REST, Routes } = require('discord.js');
 const fs = require("fs");
 const alias = require('./client');
+const { initializeMongoose } = require('./database/database.js');
 
 //EVENT HANDLER
 /*
@@ -71,6 +72,7 @@ for (const folder of folders) {
 // SLASH HANDLER
 const rest = new REST({ version: '9' }).setToken(bot.token);
 (async () => {
+    await initializeMongoose();
     try {
         await rest.put(Routes.applicationCommands(bot.id), { body: commands })
         console.log(`${bot.name} Commands Done`);

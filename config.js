@@ -4,6 +4,7 @@ module.exports = {
         version: "2.12.1",
         id: "768214696019886121",
         token: "NzY4MjE0Njk2MDE5ODg2MTIx.X49NsA.LxdzcdiJLcF22qqDk9Uii2E-fJE",
+        db: "mongodb+srv://zer0less:mOomega2!@cluster0.l1jzh8c.mongodb.net/?appname=mongodb-vscode+1.2.1",
         prefix: "z",
     },
 

@@ -35,8 +35,9 @@ module.exports = class AliasUtils {
     }
 
     static getAliasChannel(type) {
-        let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
-        if (!channelAlias) {
+        //let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
+        let guild = AliasUtils.getDoc('guilds', type.guild.id);
+        if (!guild) {
             const Warning = AliasEmbeds.embed(colorEmbed.warning, "No Alias Setup", "Setup", [
                 { name: "Please set up the log channel for Alias", value: `\`${bot.prefix}setup\`` },
                 { name: "Note", value: "Please don't change the name of the log channel \`for-alias\`" }
@@ -44,7 +45,7 @@ module.exports = class AliasUtils {
             AliasUtils.sendEmbed(type, Warning);
             return;
         }
-        return channelAlias;
+        return guild[0].modChannelId;
     }
 
     static sendError(type, command) {
@@ -111,4 +112,29 @@ module.exports = class AliasUtils {
             if ()
         })
     }*/
+
+    static generateNumbers() {
+        const characters = '1234567890';
+        let result = "";
+        for ( let i = 0; i <= 10; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    }
+
+    static generateId(first, guild) {
+        var id = first;
+        if (first.startsWith("g")) {
+            id += guild.id.substring(0, 2);
+            id += generateNumbers().substring(0, 9);
+        } else {
+            id += generateNumbers();
+        }
+    }
+
+    static getDoc(collection, id) {
+        let doc = db.getCollection(collection).find( { idD: { $gt: id } } );
+        if (!doc) return;
+        return doc;
+    }
 }

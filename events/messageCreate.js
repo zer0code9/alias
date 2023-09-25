@@ -2,6 +2,7 @@ const { bot, event } = require('../config.js');
 const AliasCancels = require("../helpers/cancels");
 const AliasUtils = require("../helpers/utils");
 const { permissions } = require('../helpers/collectors');
+const { getGuild } = require("./../database/schemas/Guild.js");
 
 module.exports = async (alias, msg) => {
     if (!event.messageCre) return;
@@ -12,6 +13,8 @@ module.exports = async (alias, msg) => {
 
     const commandName = args.shift().toLowerCase();
     if (!commandName) return;
+
+    let guildData = getGuild(msg.guild);
     
     const command = await alias.msgCommands.get(commandName);
     if (!command || !command.msgCommand.exist) return;

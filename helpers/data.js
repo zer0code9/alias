@@ -4,6 +4,7 @@ module.exports = {
         {
             idA: "ag##########",
             idD: "guildId",
+            modChannelId: "channelId",
             commands: [
                 {
                     idA: "ac##########",
