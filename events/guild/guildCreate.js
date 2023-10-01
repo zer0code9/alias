@@ -4,12 +4,11 @@ const AliasCancels = require("../../helpers/cancels");
 const AliasUtils = require("../../helpers/utils");
 const AliasEmbeds = require("../../helpers/embeds");
 const { permissions } = require('../../helpers/collectors');
-const { createGuild } = require("@schemas/Guild");
+//const { createGuild } = require("../../database/schemas/Guild.js");
 
 module.exports = async (alias, guild) => {
     if (!event.guildCre) return;
     if (!guild.available) return;
     if (!guild.members.cache.has(guild.ownerId));
 
-    createGuild(guild);
 }

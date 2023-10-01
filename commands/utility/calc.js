@@ -13,27 +13,29 @@ module.exports = {
     args: [
         { name: "equation", type: "phrase", required: true }
     ],
-    msgCommand: {
-        exist: true,
-        usage: bot.prefix + "calc [expression:ph]"
-    },
-    intCommand: {
-        exist: false,
+    msgCommand: { exist: true },
+    intCommand: { exist: true },
+    settings: {
+        existMsg: true,
+        existInt: true,
+        sub: false,
         options: [
             {
                 name: "expression",
-                description: "The expression to evaluate",
+                description: "The expression to evaluate [phrase]",
                 type: ApplicationCommandOptionType.String,
+                specific: "phrase",
+                options: [],
                 required: true,
             }
         ]
     },
 
     async msgRun(msg, args){
-        let equation = args.join(" ");
+        const expression = args.join(" ");
 
         try {
-            const Calc = await this.Calc(equation);
+            const Calc = await this.Calc(expression);
             AliasUtils.sendEmbed(msg, Calc);
         } catch {
             AliasUtils.sendError(msg, this.name);
@@ -41,10 +43,23 @@ module.exports = {
         msg.delete();
     },
 
-    async Calc(equation) {
-        if (!equation) return AliasCancels.invalid(`No Expression`, `I need an expression \n(${this.args[0].type})`, this.msgCommand.usage);
+    async intRun(int) {
+        const expression = int.options.getString("expression");
 
-        equation = equation
+        try {
+            const Calc = await this.Calc(expression);
+            AliasUtils.sendEmbed(int, Calc);
+        } catch {
+            AliasUtils.sendError(int, this.name);
+        }
+    },
+
+    async Calc(expression) {
+        const settings = this.settings.options[0];
+        if (!expression)
+return AliasCancels.invalid(`No Expression`, `I need an expression \n(${settings.specific})`, AliasUtils.getUsage(this));
+
+        expression = expression
             .replace(/\n/g, "")
             .replace(/`/g, "")
             .replace(/--/g, " - -")
@@ -53,18 +68,18 @@ module.exports = {
             .replace(/\]/g, ")");
 
         let someError = false;
-        for (const letter of equation.replace(" ", "")) {
+        for (const letter of expression.replace(" ", "")) {
             if (!(".1234567890+-*/%() ".split("").includes(letter))) {
                 someError = true;
             }
         }
         if (someError) return AliasCancels.unabled(`Invalid Character`, `You used a character that can't be processed`);
 
-        answer = eval(equation);
-        equation = equation.replace("", " ");
+        answer = eval(expression);
+        expression = expression.replace("", " ");
 
         const Calc = AliasEmbeds.embedSuccess('CALCULATED', emojiType.fun, 'abacus', this.type, [
-            { name: "Calculation:", value: `\`\`\`${equation} = ${answer}\`\`\`` }
+            { name: "Calculation:", value: `\`\`\`${expression} = ${answer}\`\`\`` }
         ])
         return Calc;
     }

@@ -7,7 +7,7 @@ module.exports = async (alias, int) => {
     if (!int.isCommand()) return;
 
 	const command = await alias.intCommands.get(int.commandName);
-	if (!command || !command.intCommand.exist) return;
+	if (!command || !command.intCommand?.exist) return;
 
 	let noperm = false;
     if (command.memPerms) {

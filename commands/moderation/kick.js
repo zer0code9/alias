@@ -36,7 +36,7 @@ module.exports = {
         ]
     },
 
-    async msgRun(msg, args){
+    async msgRun(msg, args) {
         const issuer = await msg.member;
         const user = await msg.guild.members.cache.get(args[0]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
         const reason = await args.slice(1).join(" ");

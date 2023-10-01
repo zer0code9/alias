@@ -114,25 +114,21 @@ module.exports = {
         let guildData = await Guild.findOne( { idD: guild.id } );
 
         if (!guildData) {
-            guildData = this.createGuild(guild);
+            let guildData = new Guild({
+                idA: AliasUtils.generateId("ag"),
+                idD: guild.id,
+                commands: [],
+                members: [],
+                shops: [],
+                tickets: [],
+                currency: {
+                    token: 0,
+                    powder: 0,
+                },
+                xp: 0,
+            })
+            guildData.save();
         }
         return guildData;
     },
-    createGuild: async (guild) => {
-        let guildData = new Guild({
-            idA: AliasUtils.generateId("ag"),
-            idD: guild.id,
-            commands: [],
-            members: [],
-            shops: [],
-            tickets: [],
-            currency: {
-                token: 0,
-                powder: 0,
-            },
-            xp: 0,
-        })
-        guildData.save();
-        return guildData;
-    }
 }

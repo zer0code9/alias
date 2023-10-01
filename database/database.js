@@ -17,9 +17,10 @@ module.exports = {
       }
     },
   
-    
+    /*
     schemas: {
       Guild: require("./schemas/Guild"),
       User: require("./schemas/User"),
     },
+    */
   };

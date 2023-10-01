@@ -1,7 +1,7 @@
-const { bot, emojiType } = require('../../config.js');
-const AliasEmbeds = require("../../helpers/embeds");
-const AliasUtils = require('../../helpers/utils');
-const AliasTemps = require('../../helpers/temps');
+const { bot, emojiType } = require('../config.js');
+const AliasEmbeds = require("../helpers/embeds.js");
+const AliasUtils = require('../helpers/utils.js');
+const AliasTemps = require('../helpers/temps.js');
 
 module.exports = {
     name: "guild",

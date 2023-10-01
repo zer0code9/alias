@@ -3,7 +3,7 @@ const { PermissionFlagsBits, ChannelType } = require('discord.js');
 const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
-const { getGuild } = require("../../database/schemas/Guild.js");
+//const { getGuild } = require("../../database/schemas/Guild.js");
 
 module.exports = {
     name: "join",
@@ -39,10 +39,13 @@ module.exports = {
             xp: 0,
         }
 
+        /*
+
         let msgDB = await channel.send({ content: `Creating guild data for ${msg.guild.name}...` });
         await msgDB.edit({ content: `Creating guild data for ${msg.guild.name}... Done` });
         let msgFinish = await channel.send({ content: "Finishing up..." });
         await msgFinish.edit({ content: "Finishing up... Done" });
+        */
 
         const Note = AliasEmbeds.embed(colorEmbed.neutral, "Welcome to the Alias Channel", "This channel is used by Alias to log information", [
             { name: `Data for ${msg.guild.name}`, value: `All the data needed was successfully recorded in the Alias Database!` },

@@ -1,6 +1,6 @@
 const { bot, colorEmbed, emojiType } = require('../config.js');
 const AliasEmbeds = require('./embeds');
-const { permissions } = require('./collectors');
+const AliasCollectors = require('./collectors');
 
 module.exports = class AliasUtils {
     static userInteract(issuer, user) {
@@ -35,9 +35,9 @@ module.exports = class AliasUtils {
     }
 
     static getAliasChannel(type) {
-        //let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
-        let guild = AliasUtils.getDoc('guilds', type.guild.id);
-        if (!guild) {
+        let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
+        //let guild = AliasUtils.getDoc('guilds', type.guild.id);
+        if (!channelAlias) {
             const Warning = AliasEmbeds.embed(colorEmbed.warning, "No Alias Setup", "Setup", [
                 { name: "Please set up the log channel for Alias", value: `\`${bot.prefix}setup\`` },
                 { name: "Note", value: "Please don't change the name of the log channel \`for-alias\`" }
@@ -45,7 +45,7 @@ module.exports = class AliasUtils {
             AliasUtils.sendEmbed(type, Warning);
             return;
         }
-        return guild[0].modChannelId;
+        return channelAlias; //guild[0].modChannelId
     }
 
     static sendError(type, command) {
@@ -76,8 +76,8 @@ module.exports = class AliasUtils {
     }
     
     static getSplitedValue(value) {
-        if (!value.includes('-')) return value;
-        const parts = value.split(`-`);
+        if (!value.includes(bot.seperator)) return value;
+        const parts = value.split(bot.seperator);
         let newValue = "";
         parts.forEach(part => {
             newValue += part + " "
@@ -85,21 +85,40 @@ module.exports = class AliasUtils {
         return newValue;
     }
 
-    static getUsage(command) {
-        let usage = command.name;
-        for (const arg of command.args) {
-            usage += " [" + arg.name + ":";
-            usage += arg.type;
-            if (!arg.required) usage += "?";
+    static getUsage(command, subname) {
+        let cmd;
+        let usage = bot.prefix + command.name;
+        if (subname) cmd = command.settings.options.find(sub => sub.name == subname);
+        else cmd = command.settings;
+        usage += " " + cmd.name;
+        cmd.options.forEach(option => {
+            usage += " [" + option.name + ":";
+            usage += AliasUtils.getTruncType(option.specific);
+            if (!option.required) usage += "?"
             usage += "]";
-        }
+        })
         return usage;
+    }
+
+    static getTruncType(type) {
+        if (type == "channel") return "ch-me|id";
+        else if (type == "role") return "ro-me|id";
+        else if (type == "user") return "us-me|id";
+        else return type.substring(0, 2);
+    }
+
+    static getType(type) {
+        for (let option in AliasCollectors.optionType) {
+            if (AliasCollectors.optionType[option] == type)
+                return option;
+        }
+        return;
     }
 
     static hasPermission(user, command) {
         let has = true;
         command.memPerms.forEach(perm => {
-            if (!user.permissions.has(permissions[perm])) {
+            if (!user.permissions.has(AliasCollectors.permissions[perm])) {
                 has = false;
             }
         });
@@ -126,9 +145,9 @@ module.exports = class AliasUtils {
         var id = first;
         if (first.startsWith("g")) {
             id += guild.id.substring(0, 2);
-            id += generateNumbers().substring(0, 9);
+            id += AliasUtils.generateNumbers().substring(0, 9);
         } else {
-            id += generateNumbers();
+            id += AliasUtils.generateNumbers();
         }
     }
 

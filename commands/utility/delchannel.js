@@ -40,7 +40,6 @@ module.exports = {
         const channel = await msg.guild.channels.cache.get(args[0]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
         const reason = await args.slice(1).join(" ");
         
-
         try {
             const Delete = await this.DelChannel(channel, reason);
             AliasUtils.sendEmbed(msg, Delete);

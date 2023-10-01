@@ -57,11 +57,11 @@ for (const folder of folders) {
     for (const file of files) {
         const command = require(`./commands/${folder}/${file}`);
         alias.commands.set(command.name, command);
-        if (command.msgCommand.exist) alias.msgCommands.set(command.name, command);
+        if (command.msgCommand?.exist) alias.msgCommands.set(command.name, command);
         if (command.intCommand?.exist) {
             alias.intCommands.set(command.name, command);
             commands.push({
-                options: command.intCommand.options,
+                options: command.intCommand?.options || command.settings?.options,
                 name: command.name,
                 description: command.description,
             })
@@ -72,7 +72,7 @@ for (const folder of folders) {
 // SLASH HANDLER
 const rest = new REST({ version: '9' }).setToken(bot.token);
 (async () => {
-    await initializeMongoose();
+    //await initializeMongoose();
     try {
         await rest.put(Routes.applicationCommands(bot.id), { body: commands })
         console.log(`${bot.name} Commands Done`);
