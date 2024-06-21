@@ -5,24 +5,6 @@ const alias = require('./client');
 const { initializeMongoose } = require('./database/database.js');
 
 //EVENT HANDLER
-/*
-fs.readdir('./events/', (error, files) => {
-    if (error) return console.error(error);
-    alias.removeAllListeners();
-    files.forEach(file => {
-        if(fs.lstatSync(`./events/${file}`).isDirectory()) return;
-        var event = require(`./events/${file}`);
-        var eventName = file.split(".")[0];
-        try {
-            alias.on(eventName, event.bind(null, alias));
-        } catch(e) {
-            console.log(e)
-        }
-    });
-});*/
-
-
-//EVENT HANDLER
 fs.readdir('./events/', (error, files) => {
     if (error) return console.error(error);
     alias.removeAllListeners();
@@ -83,28 +65,3 @@ const rest = new REST({ version: '9' }).setToken(bot.token);
 })();
 
 alias.login(bot.token);
-
-/*const getCommands = () => {
-    fs.readdir('./commands/', (errorFolder, folders) => {
-        if (errorFolder) return console.error(errorFolder);
-        folders.forEach(folder => {
-            fs.readdir(`./commands/${folder}`, (errorFile, files) => {
-                if (errorFile) return console.error(errorFile);
-                var commandFiles = files.filter(fileName => fileName.endsWith(".js"));
-                commandFiles.forEach(file => {
-                    const command = require(`./commands/${folder}/${file}`);
-                    alias.commands.set(command.name, command);
-                    if (command.msgCommand.exist) alias.msgCommands.set(command.name, command);
-                    if (command.intCommand?.exist) {
-                        alias.intCommands.set(command.name, command);
-                        commands.push({
-                            options: command.intCommand.options,
-                            name: command.name,
-                            description: command.description,
-                        })
-                    }
-                });
-            })
-        })
-    });
-}*/

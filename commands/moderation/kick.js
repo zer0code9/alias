@@ -14,23 +14,27 @@ module.exports = {
         { name: "user", type: "user-mention|id", required: true },
         { name: "reason", type: "phrase", required: true },
     ],
-    msgCommand: {
-        exist: true,
-        usage: bot.prefix + "kick [user:us-me|id] [reason:ph]",
-    },
-    intCommand: {
-        exist: false,
+    msgCommand: { exist: true },
+    intCommand: { exist: true },
+    settings: {
+        existMsg: true,
+        existInt: true,
+        sub: false,
         options: [
             {
                 name: "user",
-                description: "The user to kick",
+                description: "The user to kick [user]",
                 type: ApplicationCommandOptionType.User,
+                specific: "user",
+                options: [],
                 required: true,
             },
             {
                 name: "reason",
-                description: "The reason to kick",
+                description: "The reason to kick [phrase]",
                 type: ApplicationCommandOptionType.String,
+                specific: "phrase",
+                options: [],
                 required: true,
             }
         ]
@@ -68,8 +72,11 @@ module.exports = {
     },
 
     async Kick(issuer, user, reason) {
-        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to kick them \n(${this.args[0].type})`, this.msgCommand.usage);
-        if (!reason) return AliasCancels.invalid(`No Reason`, `I need a reason in order to kick someone \n(${this.args[1].type})`, this.msgCommand.usage);
+        const settings = this.settings;
+        if (!user)
+return AliasCancels.invalid(`No User`, `I need a user in order to kick them \n(${settings.options[0].specific})`, AliasUtils.getUsage(this));
+        if (!reason)
+return AliasCancels.invalid(`No Reason`, `I need a reason in order to kick someone \n(${settings.options[1].specific})`, AliasUtils.getUsage(this));
 
         if (!userInteract(issuer, user)) return AliasCancels.unabled(`Not Kickable`, `The user you are trying to kick cannot be kicked by you`);
 

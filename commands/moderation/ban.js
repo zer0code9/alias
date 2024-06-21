@@ -42,9 +42,67 @@ module.exports = {
             }
         ]
     },
+    settings: {
+        existMsg: true,
+        existInt: true,
+        sub: true,
+        options: [
+            {
+                name: "soft",
+                description: "Soft ban a user",
+                type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: "user",
+                        description: "The user to ban [user]",
+                        type: ApplicationCommandOptionType.User,
+                        specific: "user",
+                        options: [],
+                        required: true,
+                    },
+                    {
+                        name: "reason",
+                        description: "The reason to ban [phrase]",
+                        type: ApplicationCommandOptionType.String,
+                        specific: "phrase",
+                        options: [],
+                        required: true,
+                    }
+                ]
+            },
+            {
+                name: "harsh",
+                description: "Harsh ban a user",
+                type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: "user",
+                        description: "The user to ban [user]",
+                        type: ApplicationCommandOptionType.User,
+                        specific: "user",
+                        options: [],
+                        required: true,
+                    },
+                    {
+                        name: "reason",
+                        description: "The reason to ban [phrase]",
+                        type: ApplicationCommandOptionType.String,
+                        required: true,
+                    },
+                    {
+                        name: "reason",
+                        description: "The reason to ban []",
+                        type: ApplicationCommandOptionType.String,
+                        required: true,
+                    }
+                ]
+            }
+        ]
+    },
 
     async msgRun(msg, args, alias) {
         const option = await args[0];
+
         const issuer = await msg.member;
         const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
         let reason = await args.slice(2).join(" ");

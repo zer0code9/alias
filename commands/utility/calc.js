@@ -55,9 +55,9 @@ module.exports = {
     },
 
     async Calc(expression) {
-        const settings = this.settings.options[0];
+        const settings = this.settings;
         if (!expression)
-return AliasCancels.invalid(`No Expression`, `I need an expression \n(${settings.specific})`, AliasUtils.getUsage(this));
+return AliasCancels.invalid(`No Expression`, `I need an expression \n(${settings.options[0].specific})`, AliasUtils.getUsage(this));
 
         expression = expression
             .replace(/\n/g, "")
