@@ -3,6 +3,7 @@ const { ApplicationCommandOptionType } = require('discord.js');
 const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
+const AliasDB = require("../../database/functions");
 
 module.exports = {
     name: "warn",
@@ -45,6 +46,7 @@ module.exports = {
             const Warn = await this.Warn(issuer, user, warning);
             AliasUtils.sendEmbedAlias(msg, Warn);
 
+            
             if (Warn.toJSON().title.includes('WARNED USER')) AliasUtils.sendEmbedUser(alias, user, `warned`, warning);
         } catch (e) {
             console.log(e)
