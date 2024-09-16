@@ -15,12 +15,7 @@ module.exports = async (alias, msg) => {
     
     const command = await alias.msgCommands.get(commandName);
     if (!command || !command.msgCommand?.exist) return;
-/*
-    if (command.memPerms && !AliasUtils.hasPermission(msg.guild.members.cache.get(alias.user.id), command)) {
-        msg.channel.send({ content: `I don't have all the needed permissions!` });
-        msg.delete(); return;
-    }
-*/
+
     if (command.memPerms && !AliasUtils.hasPermission(msg.member, command)) {
         msg.channel.send({ content: `<@${msg.member.user.id}>, you don't have all the needed permissions!` });
         msg.delete(); return;

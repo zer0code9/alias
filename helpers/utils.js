@@ -135,20 +135,13 @@ module.exports = class AliasUtils {
     static generateNumbers() {
         const characters = '1234567890';
         let result = "";
-        for ( let i = 0; i < 10; i++ ) {
+        for ( let i = 0; i < 10; i++ )
             result += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
         return result;
     }
 
-    static generateId(first, guild) {
-        var id = first;
-        if (first.startsWith("g")) {
-            id += guild.id.substring(0, 2);
-            id += AliasUtils.generateNumbers().substring(0, 9);
-        } else {
-            id += AliasUtils.generateNumbers();
-        }
+    static generateId(type, adder) {
+        return type + adder?.substring(0, 2) + AliasUtils.generateNumbers();
     }
 
     static getDoc(collection, id) {

@@ -9,6 +9,11 @@ module.exports = {
         seperator: "-"
     },
 
+    database: {
+        email: "asorinus@gmail.com",
+        pass: "aLomega3!"
+    },
+
     colorEmbed: {
         success: "#00ff00",
         error: "#FF0000",
@@ -18,7 +23,7 @@ module.exports = {
     },
 
     event: {
-        guildCre: false,
+        guildCre: true,
         guildDel: false,
         messageCre: true,
         messageDel: true,

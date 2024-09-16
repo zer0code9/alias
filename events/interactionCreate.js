@@ -1,6 +1,7 @@
 const { event } = require('../config.js');
 const AliasCancels = require("../helpers/cancels");
 const { permissions } = require('../helpers/collectors');
+const AliasDB = require('../database/functions');
 
 module.exports = async (alias, int) => {
 	if (!event.interactionCre) return;
@@ -22,6 +23,9 @@ module.exports = async (alias, int) => {
     }
 	
 	try {
+		AliasDB.userLogin(int.member.user);
+		AliasDB.guildLogin(int.member.guild);
+		AliasDB.memberLogin(int.member);
 		await command.intRun(int, alias);
 	} catch (error) {
 		console.error(error);
