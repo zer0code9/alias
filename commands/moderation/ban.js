@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "ban",
+    id: "338831695611",
     description: "Ban a user",
     type: "Moderation",
     botPerms: ["banMembers"],
@@ -48,36 +49,70 @@ module.exports = {
         sub: true,
         options: [
             {
-                name: "soft",
-                description: "Soft ban a user",
+                name: "create",
+                description: "Create a ban for a user",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to ban [user]",
-                        type: ApplicationCommandOptionType.User,
-                        specific: "user",
-                        options: [],
-                        required: true,
+                        name: "soft",
+                        description: "Soft ban a user",
+                        type: ApplicationCommandOptionType.Subcommand,
+                        options: [
+                            {
+                                name: "user",
+                                description: "The user to ban [user]",
+                                type: ApplicationCommandOptionType.User,
+                                specific: "user",
+                                options: [],
+                                required: true,
+                            },
+                            {
+                                name: "reason",
+                                description: "The reason to ban [phrase]",
+                                type: ApplicationCommandOptionType.String,
+                                specific: "phrase",
+                                options: [],
+                                required: true,
+                            }
+                        ]
                     },
                     {
-                        name: "reason",
-                        description: "The reason to ban [phrase]",
-                        type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
-                        options: [],
-                        required: true,
-                    }
+                        name: "harsh",
+                        description: "Harsh ban a user",
+                        type: ApplicationCommandOptionType.Subcommand,
+                        options: [
+                            {
+                                name: "user",
+                                description: "The user to ban [user]",
+                                type: ApplicationCommandOptionType.User,
+                                specific: "user",
+                                options: [],
+                                required: true,
+                            },
+                            {
+                                name: "reason",
+                                description: "The reason to ban [phrase]",
+                                type: ApplicationCommandOptionType.String,
+                                required: true,
+                            },
+                            {
+                                name: "reason",
+                                description: "The reason to ban []",
+                                type: ApplicationCommandOptionType.String,
+                                required: true,
+                            }
+                        ]
+                    },
                 ]
             },
             {
-                name: "harsh",
-                description: "Harsh ban a user",
+                name: "delete",
+                description: "Delete a ban from a user",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
                         name: "user",
-                        description: "The user to ban [user]",
+                        description: "The user to unban [user]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user",
                         options: [],
@@ -85,14 +120,10 @@ module.exports = {
                     },
                     {
                         name: "reason",
-                        description: "The reason to ban [phrase]",
+                        description: "The reason for unban [phrase]",
                         type: ApplicationCommandOptionType.String,
-                        required: true,
-                    },
-                    {
-                        name: "reason",
-                        description: "The reason to ban []",
-                        type: ApplicationCommandOptionType.String,
+                        specific: "phrase",
+                        options: [],
                         required: true,
                     }
                 ]

@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils.js");
 
 module.exports = {
     name: "role",
+    id: "684798693751",
     description: "Manage a role",
     type: "Utility",
     botPerms: ["manageRoles"],

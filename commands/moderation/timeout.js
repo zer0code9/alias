@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "timeout",
+    id: "963393912460",
     description: "Timeout a user",
     type: "Moderation",
     botPerms: ["muteMembers"],

@@ -40,7 +40,7 @@ module.exports = class AliasDB {
                 powder: 0,
             },
             xp: 0,
-            tckets: [],
+            tickets: [],
             shops: [],
             logs: [],
         })
@@ -50,7 +50,7 @@ module.exports = class AliasDB {
         if (await this.searchDocs(collection(db, 'guilds', member.guild.id, 'members'), member.user.id)) return;
         setDoc(doc(db, 'guilds', member.guild.id, 'members', member.user.id), {
             idG: AliasUtils.generateId('gm', member.guild.id),
-            idA: 1,
+            idA: this.searchDocs(collection(db, 'users'), member.user.id).idA,
             currency: {
                 gold: 0,
                 cookie: 0

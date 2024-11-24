@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils.js");
 
 module.exports = {
     name: "channel",
+    id: "799489362224",
     description: "Manage a channel",
     type: "Utility",
     botPerms: ["manageChannels"],
@@ -38,7 +39,8 @@ module.exports = {
                     {
                         name: "type",
                         description: "The type of the channel [integer:text:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15]",
-                        type: ApplicationCommandOptionType.Integer, specific: "integer",
+                        type: ApplicationCommandOptionType.Integer,
+                        specific: "integer",
                         options: [0, 2, 4, 5, 13, 14, 15],
                         required: false,
                     },
@@ -134,7 +136,7 @@ module.exports = {
     },
     
     async msgRun(msg, args) {
-        let action = args[0];
+        const action = args[0];
 
         if (action == "data") {
             const Data = AliasEmbeds.embed(colorEmbed.neutral, `Data for Channel`, this.type, [

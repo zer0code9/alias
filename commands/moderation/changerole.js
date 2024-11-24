@@ -3,9 +3,11 @@ const { ApplicationCommandOptionType } = require('discord.js');
 const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
+const { id } = require('./kick.js');
 
 module.exports = {
     name: "changerole",
+    id: "907852796759",
     description: "Change a role for a user",
     type: "Moderation",
     botPerms: ["manageRoles"],

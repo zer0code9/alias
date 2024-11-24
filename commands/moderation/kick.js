@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "kick",
+    id: "308795241268",
     description: "Kick a user",
     type: "Moderation",
     botPerms: ["kickMembers"],
@@ -48,8 +49,7 @@ module.exports = {
         try {
             const Kick = await this.Kick(issuer, user, reason);
             AliasUtils.sendEmbedAlias(msg, Kick);
-
-            if (Ban.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
+            if (Kick.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
         } catch {
             AliasUtils.sendErrorAlias(msg, this.name);
         }
