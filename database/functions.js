@@ -9,12 +9,17 @@ module.exports = class AliasDB {
 
     static async searchDocs(colRef, search) {
         (await getDocs(colRef)).forEach((doc) => {
-            if (doc.id == search) return doc;
+            if (doc == search) return doc;
         })
         return false;
     }
 
+    static async updateDoc(docRef, data) {
+        await updateDoc(docRef, data);
+    }
+
     static async userLogin(user) {
+        if (await this.searchDocs(collection(db, 'users'), user.id)) return;
         setDoc(doc(db, 'users', user.id), {
             idA: AliasUtils.generateId('au', user.id),
             currency: {
@@ -22,11 +27,12 @@ module.exports = class AliasDB {
                 star: 0,
             },
             xp: 0,
-            items: []
+            items: [],
         })
     }
 
     static async guildLogin(guild) {
+        if (await this.searchDocs(collection(db, 'guilds'), guild.id)) return;
         setDoc(doc(db, 'guilds', guild.id), {
             idA: AliasUtils.generateId('ag', guild.id),
             currency: {
@@ -41,6 +47,7 @@ module.exports = class AliasDB {
     }
 
     static async memberLogin(member) {
+        if (await this.searchDocs(collection(db, 'guilds', member.guild.id, 'members'), member.user.id)) return;
         setDoc(doc(db, 'guilds', member.guild.id, 'members', member.user.id), {
             idG: AliasUtils.generateId('gm', member.guild.id),
             idA: 1,
