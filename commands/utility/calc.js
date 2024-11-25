@@ -6,6 +6,7 @@ const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "calc",
+    id: "922500535916",
     description: "Use the basic calculator on Alias",
     type: "Utility",
     botPerms: [],

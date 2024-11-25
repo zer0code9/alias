@@ -1,8 +1,8 @@
-const { bot, colorEmbed } = require('../../config.js');
+const { bot, colorEmbed } = require('../config.js');
 const { PermissionFlagsBits, ChannelType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
-const AliasEmbeds = require("../../helpers/embeds");
-const AliasUtils = require("../../helpers/utils");
+const AliasCancels = require("../helpers/cancels.js");
+const AliasEmbeds = require("../helpers/embeds.js");
+const AliasUtils = require("../helpers/utils.js");
 //const { getGuild } = require("../../database/schemas/Guild.js");
 
 module.exports = {
@@ -61,7 +61,6 @@ module.exports = {
     },
 
     async Setup(type) {
-        let guild = guilds.find({ idD: msg.guild.id });
         if (type.member.user.id !== type.guild.ownerId) return AliasCancels.unabled(`Can't setup`, `Only the owner can set up \n Tell them to do it`);
         if (guild[0].modChannelId) return AliasCancels.unabled(`Set up channel exists`, `Channel for-alias already exists`);
         // (type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias"))

@@ -1,9 +1,9 @@
-const { bot, emojiType } = require('../../config.js');
+const { bot, emojiType } = require('../config.js');
 const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
-const AliasEmbeds = require("../../helpers/embeds");
-const AliasUtils = require("../../helpers/utils");
-const { id } = require('./kick.js');
+const AliasCancels = require("../helpers/cancels.js");
+const AliasEmbeds = require("../helpers/embeds.js");
+const AliasUtils = require("../helpers/utils.js");
+const { id } = require('../commands/moderation/kick.js');
 
 module.exports = {
     name: "changerole",

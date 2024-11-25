@@ -1,4 +1,4 @@
-const { bot, emojiType } = require('../../config.js');
+const { bot, emojiType } = require('../../config');
 const { ApplicationCommandOptionType } = require('discord.js');
 const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
@@ -24,7 +24,7 @@ module.exports = {
         options: [
             {
                 name: "user",
-                description: "The user to kick [user]",
+                description: "The user to kick [user-mention|id]",
                 type: ApplicationCommandOptionType.User,
                 specific: "user",
                 options: [],
@@ -32,9 +32,9 @@ module.exports = {
             },
             {
                 name: "reason",
-                description: "The reason to kick [phrase]",
+                description: "The reason to kick [string]",
                 type: ApplicationCommandOptionType.String,
-                specific: "phrase",
+                specific: "string",
                 options: [],
                 required: true,
             }
@@ -49,7 +49,7 @@ module.exports = {
         try {
             const Kick = await this.Kick(issuer, user, reason);
             AliasUtils.sendEmbedAlias(msg, Kick);
-            if (Kick.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
+            AliasUtils.sendEmbedUser(user, `kicked`, reason);
         } catch {
             AliasUtils.sendErrorAlias(msg, this.name);
         }
@@ -64,8 +64,7 @@ module.exports = {
         try {
             const Kick = await this.Kick(issuer, user, reason);
             AliasUtils.sendEmbedAlias(int, Kick);
-
-            if (Kick.toJSON().title.includes('KICKED USER')) AliasUtils.sendEmbedUser(alias, user, `kicked`, reason);
+            AliasUtils.sendEmbedUser(user, `kicked`, reason);
         } catch {
             AliasUtils.sendErrorAlias(int, this.name);
         }

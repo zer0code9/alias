@@ -1,8 +1,8 @@
-const { bot, colorEmbed } = require('../../config.js');
+const { bot, colorEmbed } = require('../config.js');
 const { PermissionFlagsBits, ChannelType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
-const AliasEmbeds = require("../../helpers/embeds");
-const AliasUtils = require("../../helpers/utils");
+const AliasCancels = require("../helpers/cancels.js");
+const AliasEmbeds = require("../helpers/embeds.js");
+const AliasUtils = require("../helpers/utils.js");
 //const { getGuild, createGuild } = require("../../database/schemas/Guild.js");
 
 module.exports = {

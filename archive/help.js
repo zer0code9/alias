@@ -1,8 +1,9 @@
-const { bot, colorEmbed } = require("../../config.js");
+const { bot, colorEmbed } = require("../config");
 const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
-const AliasEmbeds = require("../../helpers/embeds");
-const AliasUtils = require("../../helpers/utils");
+const AliasCancels = require("../helpers/cancels");
+const AliasEmbeds = require("../helpers/embeds");
+const AliasUtils = require("../helpers/utils");
+const alias = require('../client');
 
 module.exports = {
     name: "help",
@@ -13,12 +14,12 @@ module.exports = {
     args: [
         { name: "command", type: "phrase", required: false }
     ],
-    msgCommand: {
-        exist: true,
-        usage: bot.prefix + "help [command:ph?]"
-    },
-    intCommand: {
-        exist: false,
+    msgCommand: { exist: true, },
+    intCommand: { exist: false, },
+    settings: {
+        existMsg: true,
+        existInt: false,
+        sub: false,
         options: [
             {
                 name: "command",
@@ -29,13 +30,12 @@ module.exports = {
         ]
     },
 
-    async msgRun(msg, args, alias){
-        var cmds = await alias.commands;
+    async msgRun(msg, args){
         let docs = [];
         let list = ["moderation", "utility", "info"];
     
         if (list.includes(args[0]?.toLowerCase())) {
-            for (const [name, description] of cmds) {
+            for (const [name, description] of alias.commands) {
                 if (args[0].toLowerCase() === description.type) {
                     docs.push({
                         name: bot.prefix + name + " [" + description.type + "]",
@@ -51,7 +51,7 @@ module.exports = {
             }
         }
         else if (args[0]) {
-            for (const [name, description] of cmds) {
+            for (const [name, description] of alias.commands) {
                 if (args[0].toLowerCase() === name) {
                     docs.push({
                         name: bot.prefix + name + " [" + description.type + "]",
@@ -68,10 +68,10 @@ module.exports = {
             }
         }
         else {
-            for (const [name, description] of cmds) {
+            for (const command of alias.commands) {
                 docs.push({
-                    name: bot.prefix + name + " [" + description.type + "]",
-                    value: description.description + '```' + description.msgCommand.usage + '```' + "\nSlash Command: " + description.intCommand?.exist
+                    name: bot.prefix + command.name + " [" + command.type + "]",
+                    value: command.description + '```' + description.msgCommand.usage + '```' + "\nSlash Command: " + description.intCommand?.exist
                 });
             }
             const docs1 = docs.slice(0, 24);

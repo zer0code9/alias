@@ -1,5 +1,5 @@
-const { bot } = require('./config.js');
-const { discordjs } = require('./secure.json');
+const { bot } = require('./config');
+const { discordjs } = require('./secure');
 const { REST, Routes } = require('discord.js');
 const fs = require("fs");
 const alias = require('./client');
@@ -36,7 +36,7 @@ for (const file of fs.readdirSync('./events/')) {
     const eventName = file.split(".")[0];
     try {
         alias.events.set(eventName, event);
-        alias.on(eventName, event.bind(null, alias));
+        alias.on(eventName, event.bind(null));
     } catch(e) { console.log(e); }
 }
 
@@ -46,8 +46,8 @@ for (const folder of fs.readdirSync('./commands/')) {
     for (const file of fs.readdirSync(`./commands/${folder}`).filter(name => name.endsWith('.js'))) {
         const command = require(`./commands/${folder}/${file}`);
         alias.commands.set(command.name, command);
-        if (command.msgCommand?.exist) alias.msgCommands.set(command.name, command);
-        if (command.intCommand?.exist) {
+        if (command.settings?.existMsg) alias.msgCommands.set(command.name, command);
+        if (command.settings?.existInt) {
             alias.intCommands.set(command.name, command);
             commands.push({
                 options: command.intCommand?.options || command.settings?.options,
@@ -59,7 +59,7 @@ for (const folder of fs.readdirSync('./commands/')) {
 }
 
 // SLASH HANDLER
-const rest = new REST({ version: '9' }).setToken(discordjs.token);
+const rest = new REST().setToken(discordjs.token);
 (async () => {
     try {
         await rest.put(Routes.applicationCommands(bot.id), { body: commands })

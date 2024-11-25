@@ -1,13 +1,13 @@
-const { bot, emojiType, colorEmbed } = require('../../config.js');
+const { bot, emojiType, colorEmbed } = require('../../config');
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels.js");
-const AliasEmbeds = require("../../helpers/embeds.js");
-const AliasUtils = require("../../helpers/utils.js");
+const AliasCancels = require("../../helpers/cancels");
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require("../../helpers/utils");
 
 module.exports = {
     name: "role",
     id: "684798693751",
-    description: "Manage a role",
+    description: "Manage roles",
     type: "Utility",
     botPerms: ["manageRoles"],
     memPerms: ["manageRoles"],
@@ -29,9 +29,9 @@ module.exports = {
                 options: [
                     {
                         name: "name",
-                        description: "The name of the new role [phrase]",
+                        description: "The name of the new role [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
+                        specific: "string-phrase",
                         options: [],
                         required: true,
                     }
@@ -44,17 +44,17 @@ module.exports = {
                 options: [
                     {
                         name: "role",
-                        description: "The role that is going to be edited [role]",
+                        description: "The role that is going to be edited [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
-                        specific: "role",
+                        specific: "role-mention|id",
                         options: [],
                         required: true,
                     },
                     {
                         name: "name",
-                        description: "The new name of the channel [phrase]",
+                        description: "The new name of the channel [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
+                        specific: "string-phrase",
                         options: [],
                         required: false,
                     },
@@ -68,9 +68,9 @@ module.exports = {
                     },
                     {
                         name: "color",
-                        description: "The new color of the role [hex]",
+                        description: "The new color of the role [string-hex]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "hex",
+                        specific: "string-hex",
                         options: [],
                         required: false,
                     },
@@ -107,17 +107,17 @@ module.exports = {
                 options: [
                     {
                         name: "role",
-                        description: "The role to delete [role]",
+                        description: "The role to delete [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
-                        specific: "role",
+                        specific: "role-mention|id",
                         options: [],
                         required: true,
                     },
                     {
                         name: "reason",
-                        description: "The reason to delete the role [phrase]",
+                        description: "The reason to delete the role [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
+                        specific: "string-phrase",
                         options: [],
                         required: false,
                     }

@@ -1,25 +1,27 @@
-const { bot, emojiType } = require('../../config.js');
+const { bot, emojiType } = require('../../config');
 const { ApplicationCommandOptionType } = require('discord.js');
 const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
 const AliasTemps = require('../../helpers/temps');
+const alias = require('../../client');
 
 module.exports = {
     name: "info",
+    id: "032712401586",
     description: "Get info on stuff",
     type: "Info",
     botPerms: [],
     memPerms: [],
-    args: [
-        { name: "channel", type: "channel-mention|id", required: true }
-    ],
-    msgCommand: { exist: true },
-    intCommand: { exist: true },
     settings: {
+        name: "info",
+        id: "032712401586",
+        description: "Get info on stuff",
+        type: "Info",
+        botPerms: [],
+        memPerms: [],
         existMsg: true,
         existInt: true,
-        sub: true,
         options: [
             {
                 name: "channel",
@@ -28,9 +30,9 @@ module.exports = {
                 options: [
                     {
                         name: "channel",
-                        description: "The channel to get info on [channel]",
+                        description: "The channel to get info on [channel-mention|id]",
                         type: ApplicationCommandOptionType.Channel,
-                        specific: "channel",
+                        specific: "channel-mention|id",
                         options: [],
                         required: true,
                     }
@@ -43,9 +45,9 @@ module.exports = {
                 options: [
                     {
                         name: "role",
-                        description: "The role to get info on [role]",
+                        description: "The role to get info on [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
-                        specific: "role",
+                        specific: "role-mention|id",
                         options: [],
                         required: true,
                     }
@@ -58,9 +60,9 @@ module.exports = {
                 options: [
                     {
                         name: "user",
-                        description: "The user to get info on [user]",
+                        description: "The user to get info on [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
-                        specific: "user",
+                        specific: "user-mention|id",
                         options: [],
                         required: false,
                     }
@@ -85,9 +87,9 @@ module.exports = {
                 options: [
                     {
                         name: "emoji",
-                        description: "The emoji to get info on [id]",
+                        description: "The emoji to get info on [emoji-id]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "id",
+                        specific: "emoji-id",
                         options: [],
                         required: true,
                     }
@@ -96,7 +98,7 @@ module.exports = {
         ]
     },
     
-    async msgRun(msg, args, alias) {
+    async msgRun(msg, args) {
         let thing = args[0];
 
         if (thing == "channel") {
@@ -172,7 +174,7 @@ module.exports = {
         msg.delete();
     },
 
-    async intRun(int, alias) {
+    async intRun(int) {
         const thing = await int.options.getSubcommand();
 
         if (thing == "channel") {
@@ -236,7 +238,6 @@ module.exports = {
                 AliasUtils.sendError(int, this.name);
             }
         }
-
     },
 
     async Channel(type, channel) {

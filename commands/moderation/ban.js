@@ -7,7 +7,7 @@ const AliasUtils = require("../../helpers/utils");
 module.exports = {
     name: "ban",
     id: "338831695611",
-    description: "Ban a user",
+    description: "Manage bans",
     type: "Moderation",
     botPerms: ["banMembers"],
     memPerms: ["banMembers"],
@@ -16,36 +16,11 @@ module.exports = {
         { name: "user", type: "user-mention|id", required: true },
         { name: "reason", type: "phrase", required: true },
     ],
-    msgCommand: {
-        exist: true,
-        usage: bot.prefix + "ban [option:(soft/harsh)] [user:us-me|id] [reason:ph]"
-    },
-    intCommand: {
-        exist: false,
-        options: [
-            {
-                name: "option",
-                description: "Choose soft or harsh",
-                type: ApplicationCommandOptionType.String,
-                required: true,
-            },
-            {
-                name: "user",
-                description: "The user to ban",
-                type: ApplicationCommandOptionType.User,
-                required: true,
-            },
-            {
-                name: "reason",
-                description: "The reason to ban",
-                type: ApplicationCommandOptionType.String,
-                required: true,
-            }
-        ]
-    },
+    msgCommand: { exist: true, },
+    intCommand: { exist: false, },
     settings: {
         existMsg: true,
-        existInt: true,
+        existInt: false,
         sub: true,
         options: [
             {
@@ -94,12 +69,6 @@ module.exports = {
                                 description: "The reason to ban [phrase]",
                                 type: ApplicationCommandOptionType.String,
                                 required: true,
-                            },
-                            {
-                                name: "reason",
-                                description: "The reason to ban []",
-                                type: ApplicationCommandOptionType.String,
-                                required: true,
                             }
                         ]
                     },
@@ -112,17 +81,17 @@ module.exports = {
                 options: [
                     {
                         name: "user",
-                        description: "The user to unban [user]",
+                        description: "The user to unban [user-id]",
                         type: ApplicationCommandOptionType.User,
-                        specific: "user",
+                        specific: "user-id",
                         options: [],
                         required: true,
                     },
                     {
                         name: "reason",
-                        description: "The reason for unban [phrase]",
+                        description: "The reason for unban [string]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
+                        specific: "string",
                         options: [],
                         required: true,
                     }
@@ -131,44 +100,86 @@ module.exports = {
         ]
     },
 
-    async msgRun(msg, args, alias) {
-        const option = await args[0];
+    async msgRun(msg, args) {
+        const action = await args[0];
 
-        const issuer = await msg.member;
-        const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-        let reason = await args.slice(2).join(" ");
+        if (action == "create") {
+            const option = await args[1];
+            const issuer = await msg.member;
+            const user = await msg.guild.members.cache.get(args[2]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            let reason = await args.slice(3).join(" ");
 
-        try {
-            const Ban = await this.Ban(option, issuer, user, reason);
-            AliasUtils.sendEmbedAlias(msg, Ban);
-
-            if (Ban.toJSON().title.includes('BANNED USER')) AliasUtils.sendEmbedUser(alias, user, `banned`, reason);
-        } catch {
-            AliasUtils.sendErrorAlias(msg, this.name);
+            try {
+                const Create = await this.Create(option, issuer, user, reason);
+                AliasUtils.sendEmbedAlias(msg, Create);
+                AliasUtils.sendEmbedUser(user, `banned`, reason);
+            } catch {
+                AliasUtils.sendErrorAlias(msg, this.name);
+            }
         }
+
+        if (action == "delete") {
+            const issuer = await msg.member;
+            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            let reason = await args.slice(2).join(" ");
+
+            try {
+                const Delete = await this.Delete(issuer, user, reason);
+                AliasUtils.sendEmbedAlias(msg, Delete);
+            } catch {
+                AliasUtils.sendErrorAlias(msg, this.name);
+            }
+        }
+
+        else {
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.type, [
+                { name: `Unknown Action Used`, value: `I don't know the action ${action}` },
+                { name: "Possible Actions", value: `create | delete `}
+            ], bot.name + " helps");
+            AliasUtils.sendEmbedAlias(msg, Invalid);
+        }
+
         msg.delete();
     },
 
     async intRun(int) {
-        const option = await int.options.getString('option');
-        const issuer = await int.member;
-        const user = await int.options.getUser('user');
+        const action = await int.options.getSubcommand();
 
-        try {
-            const Ban = await this.Ban(option, issuer, user, reason);
-            AliasUtils.sendEmbedAlias(int, Ban);
+        if (action == "create") {
+            const option = await int.options.getSubcommand();
+            const issuer = await int.member;
+            const user = await int.options.getUser('user');
+            const reason = await int.options.getString('reason');
 
-            if (Ban.toJSON().title.includes('BANNED USER')) AliasUtils.sendEmbedUser(alias, user, `banned`, reason);
-        } catch {
-            AliasUtils.sendErrorAlias(int, this.name);
+            try {
+                const Create = await this.Create(option, issuer, user, reason);
+                AliasUtils.sendEmbedAlias(int, Create);
+                AliasUtils.sendEmbedUser(user, `banned`, reason);
+            } catch {
+                AliasUtils.sendErrorAlias(int, this.name);
+            }
+        }
+
+        else if (action == "delete") {
+            const issuer = await int.member;
+            const user = await int.options.getUser('user');
+            const reason = await int.options.getString('reason');
+            
+            try {
+                const Delete = await this.Delete(issuer, user, reason);
+                AliasUtils.sendEmbedAlias(int, Delete);
+            } catch {
+                AliasUtils.sendErrorAlias(int, this.name);
+            }
         }
     },
 
-    async Ban(option, issuer, user, reason) {
-        if (!option) return AliasCancels.invalid(`No Option`, `I need to know whether to soft or harsh ban \n(option (soft/harsh))`, this.msgCommand.usage);
+    async Create(option, issuer, user, reason) {
+        const settings = this.settings.options[0];
+        if (!option) return AliasCancels.invalid(`No Option`, `I need to know whether to soft or harsh ban \n(option (soft/harsh))`, AliasUtils.getUsage(this, "create", option));
         if (option != `soft` && option != `harsh`) return AliasCancels.unabled(`Need a valid option`, `The options are either soft or harsh \n Soft: only bans | Harsh: bans and deletes messages`);
-        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to ban someone \n(${this.args[1].type})`, this.msgCommand.usage);
-        if (!reason) return AliasCancels.invalid(`No Reason`, `You must have a reason to ban them \n(${this.args[2].type})`, this.msgCommand.usage);
+        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to ban someone \n(${settings.options[0].options[0].specific})`, AliasUtils.getUsage(this, "create", option));
+        if (!reason) return AliasCancels.invalid(`No Reason`, `You must have a reason to ban them \n(${settings.options[0].options[0].specific})`, AliasUtils.getUsage(this, "create", option));
 
         if (!AliasUtils.userInteract(issuer, user)) return AliasCancels.unabled(`Not Bannable`, `The user you are trying to ban cannot be banned by you`);
 
@@ -179,11 +190,25 @@ module.exports = {
             console.log(`harsh`)
             //await user.ban({ deleteMessageSeconds: 60 * 60 * 24 * 7, reason: reason });
         }
-        const Ban = AliasEmbeds.embedSuccess("BANNED USER", emojiType.user, emojiType.no, this.type, [
+        const Create = AliasEmbeds.embedSuccess("BANNED USER", emojiType.user, emojiType.no, this.type, [
             { name: "Banned User", value: `\`\`\`${user.user.tag}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
             { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\`` }
         ])
-        return Ban;
+        return Create;
+    },
+
+    async Delete(issuer, user, reason) {
+        const settings = this.settings.options[1];
+        if (!user) return AliasCancels.invalid(`No Id`, `I need a valid id in order to unban someone \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        if (!reason) return AliasCancels.invalid(`No Reason`, `You must have a reason to unban them \n(${settings.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
+
+        //await issuer.guild.bans.remove(target, reason);
+        const Delete = AliasEmbeds.embedSuccess("UNBANNED USER", emojiType.user, "o", this.type, [
+            { name: "Unbanned User", value: `\`\`\`${user.user.tag}\`\`\`` },
+            { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
+            { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\`` }
+        ])
+        return Delete;
     }
 }

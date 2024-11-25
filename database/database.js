@@ -7,7 +7,7 @@ const app = initializeApp(firebase.firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-signInWithEmailAndPassword(auth, secure.email, secure.pass)
+signInWithEmailAndPassword(auth, firebase.email, firebase.pass)
     .then((userCred) => {
         console.log("Signed in as " + userCred.user.uid);
     })

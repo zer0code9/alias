@@ -1,6 +1,7 @@
-const { bot, colorEmbed, emojiType } = require('../config.js');
+const { bot, colorEmbed, emojiType } = require('../config');
 const AliasEmbeds = require('./embeds');
 const AliasCollectors = require('./collectors');
+const alias = require('../client');
 
 module.exports = class AliasUtils {
     static userInteract(issuer, user) {
@@ -24,8 +25,8 @@ module.exports = class AliasUtils {
         channelAlias.send({ embeds: [Embed] });
     }
 
-    static sendEmbedUser(alias, user, word, reason) {
-        if (user.user.bot === true) return;
+    static sendEmbedUser(user, word, reason) {
+        if (user.user.bot) return;
 
         const Embed = AliasEmbeds.embed(colorEmbed.neutral, `You got ${word}`, `This message is automatically sent when ${word}`, [
             { name: `Looks like you were ${word} from ${user.guild.name}`, value: `You won't be able to know who ${word} you` },
@@ -36,7 +37,6 @@ module.exports = class AliasUtils {
 
     static getAliasChannel(type) {
         let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
-        //let guild = AliasUtils.getDoc('guilds', type.guild.id);
         if (!channelAlias) {
             const Warning = AliasEmbeds.embed(colorEmbed.warning, "No Alias Setup", "Setup", [
                 { name: "Please set up the log channel for Alias", value: `\`${bot.prefix}setup\`` },
@@ -85,26 +85,24 @@ module.exports = class AliasUtils {
         return newValue;
     }
 
-    static getUsage(command, subname) {
+    static getUsage(command, subcommand, subsubcommand) {
         let cmd;
         let usage = bot.prefix + command.name;
-        if (subname) cmd = command.settings.options.find(sub => sub.name == subname);
+        if (subname) {
+            cmd = command.settings.options.find(sub => sub.name == subcommand);
+            usage += " " + cmd.name;
+            if (subsubcommand) {
+                cmd = cmd.options.find(sub => sub.name == subsubcommand);
+                usage += " " + cmd.name;
+            }
+        }
         else cmd = command.settings;
-        usage += " " + cmd.name;
         cmd.options.forEach(option => {
-            usage += " [" + option.name + ":";
-            usage += AliasUtils.getTruncType(option.specific);
-            if (!option.required) usage += "?"
+            usage += " [" + option.name + ": " + option.specific;
+            if (!option.required) usage += "?";
             usage += "]";
         })
         return usage;
-    }
-
-    static getTruncType(type) {
-        if (type == "channel") return "ch-me|id";
-        else if (type == "role") return "ro-me|id";
-        else if (type == "user") return "us-me|id";
-        else return type.substring(0, 2);
     }
 
     static getType(type) {
@@ -125,13 +123,6 @@ module.exports = class AliasUtils {
         return has;
     }
 
-    /*static hasRole(command) {
-        let has = true;
-        command.deniedRoles.forEach(role => {
-            if ()
-        })
-    }*/
-
     static generateNumbers() {
         const characters = '1234567890';
         let result = "";
@@ -144,9 +135,9 @@ module.exports = class AliasUtils {
         return type + adder?.substring(0, 2) + AliasUtils.generateNumbers();
     }
 
-    static getDoc(collection, id) {
-        let doc = db.getCollection(collection).find( { idD: { $gt: id } } );
-        if (!doc) return;
-        return doc;
-    }
+    // static getDoc(collection, id) {
+    //     let doc = db.getCollection(collection).find( { idD: { $gt: id } } );
+    //     if (!doc) return;
+    //     return doc;
+    // }
 }
