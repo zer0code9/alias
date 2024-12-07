@@ -1,5 +1,5 @@
 const { bot, ready } = require('../config.js');
-const { ActivityType } = require("discord.js");
+const { ActivityType, Client } = require("discord.js");
 
 const getType = (type) => {
     switch (type) {
@@ -17,6 +17,11 @@ const getType = (type) => {
     }
 }
 
+/**
+ * 
+ * @param {Client} alias 
+ * @returns
+ */
 module.exports = (alias) => {
     alias.user.setPresence({
         status: ready.status.toLowerCase(),

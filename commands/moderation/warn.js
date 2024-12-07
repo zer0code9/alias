@@ -1,35 +1,29 @@
 const { bot, emojiType, colorEmbed } = require('../../config.js');
-const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
+const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildMember } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
-const AliasDB = require("../../database/functions");
+const AliasSends = require("../../helpers/sends");
 
 module.exports = {
-    name: "warn",
-    description: "Manage warnings",
-    type: "Moderation",
-    botPerms: ["manageGuild"],
-    memPerms: ["manageGuild"],
-    args: [
-        { name: "user", type: "user-mention|id", required: true },
-        { name: "warning", type: "phrase", required: true },
-    ],
-    msgCommand: { exist: true, },
-    intCommand: { exist: false, },
     settings: {
+        name: "warn",
+        id: "793417267397",
+        description: "Manage warnings",
+        category: "Moderation",
+        botPerms: ["manageGuild"],
+        memPerms: ["manageGuild"],
         existMsg: true,
         existInt: false,
         sub: false,
         options: [
             {
                 name: "create",
-                description: "Create a warn for a user",
+                description: "Create a warn for a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to warn [user-mention|id]",
+                        name: "member",
+                        description: "The member to warn [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         options: [],
@@ -47,12 +41,12 @@ module.exports = {
             },
             {
                 name: "delete",
-                description: "Delete a warn from a user",
+                description: "Delete a warn from a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to unwarn [user-mention|id]",
+                        name: "member",
+                        description: "The member to unwarn [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         options: [],
@@ -71,102 +65,125 @@ module.exports = {
         ]
     },
 
-    async msgRun(msg, args, alias) {
-        const action = await args[0];
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     */
+    async msgRun(msg, args) {
+        const action = args[0];
 
         if (action == "create") {
-            const issuer = await msg.member;
-            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-            const warning = await args.slice(2).join(" ");
+            const issuer = msg.member;
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            const warning = args.slice(2).join(" ");
 
             try {
-                const Create = await this.Create(issuer, user, warning);
-                AliasUtils.sendEmbedAlias(msg, Create);
-                AliasUtils.sendEmbedUser(user, `warned`, warning);
+                const Create = await this.Create(issuer, member, warning);
+                AliasSends.sendEmbedAlias(msg, Create);
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `warned`, warning));
             } catch {
-                AliasUtils.sendErrorAlias(msg, this.name);
+                AliasSends.sendErrorAlias(msg, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const issuer = await msg.member;
-            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-            const reason = await args.slice(2).join(" ");
+            const issuer = msg.member;
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            const reason = args.slice(2).join(" ");
 
             try {
-                const Delete = await this.Delete(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(msg, Delete);
+                const Delete = await this.Delete(issuer, member, reason);
+                AliasSends.sendEmbedAlias(msg, Delete);
             } catch {
-                AliasUtils.sendErrorAlias(msg, this.name);
+                AliasSends.sendErrorAlias(msg, this.settings.name);
             }
         }
 
         else {
-            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.type, [
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.settings.category, [
                 { name: `Unknown Action Used`, value: `I don't know the action ${action}` },
                 { name: "Possible Actions", value: `create | delete `}
             ], bot.name + " helps");
-            AliasUtils.sendEmbedAlias(msg, Invalid);
+            AliasSends.sendEmbedAlias(msg, Invalid);
         }
 
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     */
     async intRun(int) {
-        const action = await int.options.getSubcommand();
+        const action = int.options.getSubcommand();
         
         if (action == "create") {
-            const issuer = await int.member;
-            const user = await int.options.getUser('user');
-            const warning = await int.options.getString('warning');
+            const issuer = int.member;
+            const member = int.guild.members.cache.get(int.options.getUser('member').id);
+            const warning = int.options.getString('warning');
 
             try {
-                const Create = await this.Create(issuer, user, warning);
-                AliasUtils.sendEmbedAlias(int, Create);
-                AliasUtils.sendEmbedUser(user, `warned`, warning);
+                const Create = await this.Create(issuer, member, warning);
+                AliasSends.sendEmbedAlias(int, Create);
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `warned`, warning));
             } catch {
-                AliasUtils.sendErrorAlias(int, this.name);
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const issuer = await int.member;
-            const user = await int.options.getUser('user');
-            const reason = await int.options.getString('reason');
+            const issuer = int.member;
+            const member = int.guild.members.cache.get(int.options.getUser('member').id);
+            const reason = int.options.getString('reason');
 
             try {
-                const Delete = await this.Delete(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(int, Delete);
+                const Delete = await this.Delete(issuer, member, reason);
+                AliasSends.sendEmbedAlias(int, Delete);
             } catch {
-                AliasUtils.sendErrorAlias(int, this.name);
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
     },
 
-    async Create(issuer, user, warning) {
-        const settings = this.settings.options[0];
-        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to warn someone \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "create"));
-        if (!warning) return AliasCancels.invalid(`No Warning`, `If there is no warning, then why warn them? \n(${settings.options[1].specific})`, AliasUtils.getUsage(this, "create"));
+    /**
+     * 
+     * @param {GuildMember} issuer 
+     * @param {GuildMember} member 
+     * @param {String} warning 
+     * @returns {Promise<EmbedBuilder>} 
+     */
+    async Create(issuer, member, warning) {
+        const options = this.settings.options[0];
+        if (!member) return AliasEmbeds.invalid(`No Member`, `I need a member in order to warn someone \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
+        if (!warning) return AliasEmbeds.invalid(`No Warning`, `If there is no warning, then why warn them? \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "create"));
 
-        if (!AliasUtils.userInteract(issuer, user)) return AliasCancels.unabled(`Not Warnable`, `The user you are trying to warn cannot be warned by you`);
+        if (!AliasUtils.userInteract(issuer, member)) return AliasEmbeds.unabled(`Not Warnable`, `The member you are trying to warn cannot be warned by you`);
 
-        const Create = AliasEmbeds.embedSuccess("WARNED USER", emojiType.user, emojiType.warning, this.type, [
-            { name: "Warned User", value: `\`\`\`${user.user.tag}\`\`\`` },
+        const Create = AliasEmbeds.embedSuccess("WARNED MEMBER", emojiType.user, emojiType.warning, this.settings.category, [
+            { name: "Warned Member", value: `\`\`\`${member.user.username}\`\`\`` },
             { name: "Warning", value: `\`\`\`${warning}\`\`\`` },
-            { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\`` }
+            { name: "By", value: `\`\`\`${issuer.user.username}\`\`\`` }
         ])
         return Create;
     },
 
-    async Delete(issuer, user, reason) {
-        const settings = this.settings.options[1];
-        if (!user) return AliasCancels.invalid(`No User`, `I need a user in order to unwarn someone \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
-        if (!reason) return AliasCancels.invalid(`No Reason`, `You must have a reason to unwarn them \n(${settings.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
+    /**
+     * 
+     * @param {GuildMember} issuer 
+     * @param {GuildMember} member 
+     * @param {String} reason 
+     * @returns {Promise<EmbedBuilder>} 
+     */
+    async Delete(issuer, member, reason) {
+        const options = this.settings.options[1];
+        if (!member) return AliasEmbeds.invalid(`No User`, `I need a member in order to unwarn someone \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        if (!reason) return AliasEmbeds.invalid(`No Reason`, `You must have a reason to unwarn them \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
 
-        const Delete = AliasEmbeds.embedSuccess("UNWARNED USER", emojiType.user, emojiType.warning, this.type, [
-            { name: "Unwarned User", value: `\`\`\`${user.user.tag}\`\`\`` },
+        const Delete = AliasEmbeds.embedSuccess("UNWARNED MEMBER", emojiType.user, emojiType.warning, this.settings.category, [
+            { name: "Unwarned Member", value: `\`\`\`${member.user.username}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-            { name: "By", value: `\`\`\`${issuer.user.tag}\`\`\`` }
+            { name: "By", value: `\`\`\`${issuer.user.username}\`\`\`` }
         ])
         return Delete;
     }

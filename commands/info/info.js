@@ -1,27 +1,22 @@
-const { bot, emojiType } = require('../../config');
-const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
+const { bot, emojiType, colorEmbed } = require('../../config');
+const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildChannel, Role, GuildMember, Guild, Client, GuildEmoji } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
 const AliasTemps = require('../../helpers/temps');
+const AliasSends = require("../../helpers/sends");
 const alias = require('../../client');
 
 module.exports = {
-    name: "info",
-    id: "032712401586",
-    description: "Get info on stuff",
-    type: "Info",
-    botPerms: [],
-    memPerms: [],
     settings: {
         name: "info",
         id: "032712401586",
         description: "Get info on stuff",
-        type: "Info",
+        cateogry: "Info",
         botPerms: [],
         memPerms: [],
         existMsg: true,
         existInt: true,
+        sub: false,
         options: [
             {
                 name: "channel",
@@ -54,13 +49,13 @@ module.exports = {
                 ]
             },
             {
-                name: "user",
-                description: "Get info on a user",
+                name: "member",
+                description: "Get info on a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to get info on [user-mention|id]",
+                        name: "member",
+                        description: "The member to get info on [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         options: [],
@@ -97,94 +92,103 @@ module.exports = {
             }
         ]
     },
-    
+
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     */
     async msgRun(msg, args) {
         let thing = args[0];
 
         if (thing == "channel") {
-            const channel = await msg.guild.channels.cache.get(args[1]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
+            const channel = msg.guild.channels.cache.get(args[1]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
 
             try {
                 const Info = await this.Channel(msg, channel);
-                AliasUtils.sendEmbed(msg, Info);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (thing == "role") {
-            const role = await msg.guild.roles.cache.get(args[1]) ?? msg.guild.roles.cache.get(msg.mentions.roles.first()?.id);
+            const role = msg.guild.roles.cache.get(args[1]) ?? msg.guild.roles.cache.get(msg.mentions.roles.first()?.id);
 
             try {
                 const Info = await this.Role(msg, role);
-                AliasUtils.sendEmbed(msg, Info);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
-        else if (thing == "user") {
-            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+        else if (thing == "member") {
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
         
             try {
-                const Info = await this.User(msg, user);
-                AliasUtils.sendEmbed(msg, Info);
+                const Info = await this.Member(msg, member);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (thing == "guild") {
             try {
                 const Info = await this.Guild(msg.guild);
-                AliasUtils.sendEmbed(msg, Info);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (thing == "bot") {
             try {
                 const Info = await this.Bot(alias);
-                AliasUtils.sendEmbed(msg, Info);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (thing == "emoji") {
-            const emoji = await msg.guild.emojis.cache.get(args[1]);
+            const emoji = msg.guild.emojis.cache.get(args[1]);
     
             try {
                 const Info = await this.Emoji(emoji);
-                AliasUtils.sendEmbed(msg, Info);
+                AliasSends.sendEmbed(msg, Info);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else {
-            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Thing", this.type, [
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Thing", this.settings.category, [
                 { name: `Unknown Thing Used`, value: `I don't know the thing ${action}` },
                 { name: "Possible Things", value: `channel | role | user | guild | bot | emoji `}
             ], bot.name + " helps");
-            AliasUtils.sendEmbed(msg, Invalid);
+            AliasSends.sendEmbed(msg, Invalid);
         }
 
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     */
     async intRun(int) {
-        const thing = await int.options.getSubcommand();
+        const thing = int.options.getSubcommand();
 
         if (thing == "channel") {
             const channel = int.options.getChannel('channel');
 
             try {
                 const Info = await this.Channel(int, channel);
-                AliasUtils.sendEmbed(int, Info);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
@@ -193,57 +197,62 @@ module.exports = {
 
             try {
                 const Info = await this.Role(int, role);
-                AliasUtils.sendEmbed(int, Info);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
-        else if (thing == "user") {
-            let user = int.options.getUser('user');
+        else if (thing == "member") {
+            let member = int.guild.members.cache.get(int.options.getUser('member').id);
 
             try {
-                const Info = await this.User(int, user);
-                AliasUtils.sendEmbed(int, Info);
+                const Info = await this.Member(int, member);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (thing == "guild") {
             try {
                 const Info = await this.Guild(int.guild);
-                AliasUtils.sendEmbed(int, Info);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (thing == "bot") {
             try {
                 const Info = await this.Bot(alias);
-                AliasUtils.sendEmbed(int, Info);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (thing == "emoji") {
-            const emoji = int.guild.emojis.cache.get(int.options.getChannel('emoji'));
+            const emoji = int.guild.emojis.cache.get(int.options.getString('emoji'));
 
             try {
                 const Info = await this.Emoji(emoji);
-                AliasUtils.sendEmbed(int, Info);
+                AliasSends.sendEmbed(int, Info);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
     },
 
+    /**
+     * 
+     * @param {Message | ChatInputCommandInteraction} type 
+     * @param {GuildChannel} channel 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Channel(type, channel) {
-        const settings = this.settings.options[0];
-        if (!channel)
-return AliasCancels.invalid(`No Channel`, `I need a channel in order to return info about it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "channel"));
+        const options = this.settings.options[0];
+        if (!channel) return AliasEmbeds.invalid(`No Channel`, `I need a channel in order to return info about it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "channel"));
 
         const guildTypes = {
             0: "Text",
@@ -273,10 +282,15 @@ return AliasCancels.invalid(`No Channel`, `I need a channel in order to return i
         return Info;
     },
 
+    /**
+     * 
+     * @param {Message | ChatInputCommandInteraction} type 
+     * @param {Role} role 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Role(type, role) {
-        const settings = this.settings.options[1];
-        if (!role)
-return AliasCancels.invalid(`No Role`, `I need a role in order to return info about it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "role"));
+        const options = this.settings.options[1];
+        if (!role) return AliasEmbeds.invalid(`No Role`, `I need a role in order to return info about it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "role"));
 
         const Info = AliasEmbeds.embedInfo("ROLE INFO", emojiType.role,
         [
@@ -291,24 +305,33 @@ return AliasCancels.invalid(`No Role`, `I need a role in order to return info ab
         return Info;
     },
 
-    async User(type, user) {
-        const settings = this.settings.options[2];
-        if (!user) user = await type.member;
+    /**
+     * 
+     * @param {Message | ChatInputCommandInteraction} type 
+     * @param {GuildMember} member 
+     * @returns {Promise<EmbedBuilder>}
+     */
+    async Member(type, member) {
+        if (!member) member = type.member;
 
-        const Info = AliasEmbeds.embedInfo("USER INFO", emojiType.user,
+        const Info = AliasEmbeds.embedInfo("MEMBER INFO", emojiType.user,
         [
-                { name: "Name", value: `\`\`\`${user.user.tag}\`\`\``, inline: true },
-                { name: "Id", value: `\`\`\`${user.user.id}\`\`\``, inline: true },
-            { name: "Created on", value: `\`\`\`${user.user.createdAt.toDateString()} (${AliasTemps.timeDifference(user.user.createdTimestamp)})\`\`\`` },
-            { name: "Joined on", value: `\`\`\`${user.joinedAt.toDateString()} (${AliasTemps.timeDifference(user.joinedTimestamp)})\`\`\`` },
-                { name: "Nickname", value: `\`\`\`${user.nickname ?? `No nickname`}\`\`\``, inline: true },
-                { name: "Is Bot", value: `\`\`\`${user.user.bot ? `Yes` : `No`}\`\`\``, inline: true },
+                { name: "Name", value: `\`\`\`${member.user.username}\`\`\``, inline: true },
+                { name: "Id", value: `\`\`\`${member.user.id}\`\`\``, inline: true },
+            { name: "Created on", value: `\`\`\`${member.user.createdAt.toDateString()} (${AliasTemps.timeDifference(member.user.createdTimestamp)})\`\`\`` },
+            { name: "Joined on", value: `\`\`\`${member.joinedAt.toDateString()} (${AliasTemps.timeDifference(member.joinedTimestamp)})\`\`\`` },
+                { name: "Nickname", value: `\`\`\`${member.nickname ?? `No nickname`}\`\`\``, inline: true },
+                { name: "Is Bot", value: `\`\`\`${member.user.bot ? `Yes` : `No`}\`\`\``, inline: true },
         ])
         return Info;
     },
 
+    /**
+     * 
+     * @param {Guild} guild 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Guild(guild) {
-        const settings = this.settings.options[3];
         const verificationLevels = {
             0: "None",
             1: "Low",
@@ -334,7 +357,7 @@ return AliasCancels.invalid(`No Role`, `I need a role in order to return info ab
                 { name: "Name", value: `\`\`\`${guild.name}\`\`\``, inline: true },
                 { name: "Id", value: `\`\`\`${guild.id}\`\`\`` , inline: true },
             { name: "Create on", value: `\`\`\`${guild.createdAt.toDateString()} (${AliasTemps.timeDifference(guild.createdTimestamp)})\`\`\`` },
-            { name: 'Owner', value: `\`\`\`${guild.members.cache.get(guild.ownerId).user.tag}\`\`\``},
+            { name: 'Owner', value: `\`\`\`${guild.members.cache.get(guild.ownerId).user.username}\`\`\``},
             { name: `Members [${guild.members.cache.size}]`, value: `\`\`\`Users: ${users} | Bots: ${bots}\`\`\`` },
             { name: `Channels [${guild.channels.cache.size}]`, value: `\`\`\`Categories: ${categoryChannels} | Text: ${textChannels} | Voice: ${voiceChannels} \nNews: ${newsChannels}\`\`\`` },
             { name: `Roles [${guild.roles.cache.size}]`, value: `\`\`\`Highest: ${guild.roles.highest.name}\`\`\`` },
@@ -349,26 +372,33 @@ return AliasCancels.invalid(`No Role`, `I need a role in order to return info ab
         return Info;
     },
 
+    /**
+     * 
+     * @param {Client} alias 
+     * @returns 
+     */
     async Bot(alias) {
-        const settings = this.settings.options[4];
         const Info = AliasEmbeds.embedInfo("BOT INFO", emojiType.bot,
         [
-                { name: "Name", value: `\`\`\`${alias.user.tag}\`\`\``, inline: true },
+                { name: "Name", value: `\`\`\`${alias.user.username}\`\`\``, inline: true },
                 { name: "Id", value: `\`\`\`${alias.user.id}\`\`\``, inline: true },
                 { name: "Version", value: `\`\`\`${bot.version}\`\`\``, inline: true },
             { name: "Create on", value: `\`\`\`${alias.user.createdAt.toDateString()} (${AliasTemps.timeDifference(alias.user.createdTimestamp)})\`\`\`` },
             { name: "Last Ready on", value: `\`\`\`${alias.readyAt.toDateString()} (${AliasTemps.timeDifference(alias.readyTimestamp)})\`\`\`` },
-            { name: "Application", value: `\`\`\`${alias.user.application}\`\`\`` },
                 { name: "On", value: `\`\`\`Guilds: ${alias.guilds.cache.size} | Channels: ${alias.channels.cache.size}\`\`\`` },
                 { name: "Has", value: `\`\`\`Users: ${alias.users.cache.size} | Emojis: ${alias.emojis.cache.size}\`\`\`` }
         ])
         return Info;
     },
 
+    /**
+     * 
+     * @param {GuildEmoji} emoji 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Emoji(emoji) {
-        const settings = this.settings.options[5];
-        if (!emoji)
-return AliasCancels.invalid(`No Emoji`, `I need an emoji in order to return info about it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "emoji"));
+        const options = this.settings.options[5];
+        if (!emoji) return AliasEmbeds.invalid(`No Emoji`, `I need an emoji in order to return info about it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "emoji"));
 
         const Info = AliasEmbeds.embedInfo("EMOJI INFO", emojiType.emoji,
         [

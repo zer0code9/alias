@@ -1,35 +1,29 @@
-const { bot, emojiType } = require('../../config.js');
-const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
+const { bot, emojiType, colorEmbed } = require('../../config.js');
+const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildMember } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
+const AliasSends = require("../../helpers/sends");
 
 module.exports = {
-    name: "mute",
-    id: "205188921806",
-    description: "Manage mutes in voice channels",
-    type: "Moderation",
-    botPerms: ["muteMembers"],
-    memPerms: ["muteMembers"],
-    args: [
-        { name: "user", type: "user-mention|id", required: true },
-        { name: "reason", type: "phrase", required: true },
-    ],
-    msgCommand: { exist: true, },
-    intCommand: { exist: true, },
     settings: {
+        name: "mute",
+        id: "205188921806",
+        description: "Manage mutes in voice channels",
+        category: "Moderation",
+        botPerms: ["muteMembers"],
+        memPerms: ["muteMembers"],
         existMsg: true,
         existInt: true,
         sub: true,
         options: [
             {
                 name: "create",
-                description: "Create a mute for a user",
+                description: "Create a mute for a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to mute [user-mention|id]",
+                        name: "member",
+                        description: "The member to mute [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         options: [],
@@ -37,9 +31,9 @@ module.exports = {
                     },
                     {
                         name: "reason",
-                        description: "The reason for mute [string]",
+                        description: "The reason for mute [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "string",
+                        specific: "string-phrase",
                         options: [],
                         required: true,
                     }
@@ -47,12 +41,12 @@ module.exports = {
             },
             {
                 name: "delete",
-                description: "Delete a mute from a user",
+                description: "Delete a mute from a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to unmute [user-mention|id]",
+                        name: "member",
+                        description: "The member to unmute [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         options: [],
@@ -60,9 +54,9 @@ module.exports = {
                     },
                     {
                         name: "reason",
-                        description: "The reason for unmute [string]",
+                        description: "The reason for unmute [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "string",
+                        specific: "string-phrase",
                         options: [],
                         required: true,
                     }
@@ -71,103 +65,128 @@ module.exports = {
         ]
     },
 
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     */
     async msgRun(msg, args){
         const action = args[0];
 
         if (action == "create") {
-            const issuer = await msg.member;
-            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-            const reason = await args.slice(2).join(" ");
+            const issuer = msg.member;
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            const reason = args.slice(2).join(" ");
 
             try {
-                const Create = await this.Create(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(msg, Create);
-                AliasUtils.sendEmbedUser(user, `muted`, reason);
+                const Create = await this.Create(issuer, member, reason);
+                AliasSends.sendEmbedAlias(msg, Create);
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `muted`, reason));
             } catch {
-                AliasUtils.sendErrorAlias(msg, this.name);
+                AliasSends.sendErrorAlias(msg, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const issuer = await msg.member;
-            const user = await msg.guild.members.cache.get(args[1]) ?? await msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-            const reason = await args.slice(2).join(" ");
+            const issuer = msg.member;
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
+            const reason = args.slice(2).join(" ");
 
             try {
-                const Delete = await this.Delete(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(msg, Delete);
+                const Delete = await this.Delete(issuer, member, reason);
+                AliasSends.sendEmbedAlias(msg, Delete);
             } catch {
-                AliasUtils.sendErrorAlias(msg, this.name);
+                AliasSends.sendErrorAlias(msg, this.settings.name);
             }
         }
 
         else {
-            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.type, [
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.settings.category, [
                 { name: `Unknown Action Used`, value: `I don't know the action ${action}` },
                 { name: "Possible Actions", value: `create | delete `}
             ], bot.name + " helps");
-            AliasUtils.sendEmbedAlias(msg, Invalid);
+            AliasSends.sendEmbedAlias(msg, Invalid);
         }
 
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     */
     async intRun(int) {
-        const action = await int.options.getSubcommand();
+        const action = int.options.getSubcommand();
 
         if (action == "create") {
-            const issuer = await int.member;
-            const user = await int.options.getUser('user');
-            const reason = await int.options.getString('reason');
+            const issuer = int.member;
+            const member = int.guild.members.cache.get(int.options.getUser('member').id);
+            const reason = int.options.getString('reason');
             
             try {
-                const Create = await this.Create(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(int, Create);
-                AliasUtils.sendEmbedUser(user, `muted`, reason);
+                const Create = await this.Create(issuer, member, reason);
+                AliasSends.sendEmbedAlias(int, Create);
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `muted`, reason));
             } catch {
-                AliasUtils.sendErrorAlias(int, this.name);
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const issuer = await int.member;
-            const user = await int.options.getUser('user');
-            const reason = await int.options.getString('reason');
+            const issuer = int.member;
+            const member = int.guild.members.cache.get(int.options.getUser('member').id);
+            const reason = int.options.getString('reason');
             
             try {
-                const Delete = await this.Delete(issuer, user, reason);
-                AliasUtils.sendEmbedAlias(int, Delete);
+                const Delete = await this.Delete(issuer, member, reason);
+                AliasSends.sendEmbedAlias(int, Delete);
             } catch {
-                AliasUtils.sendErrorAlias(int, this.name);
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
     },
 
-    async Create(issuer, user, reason) {
-        const settings = this.settings.options[0];
-        if (!user) return AliasCancels.invalid('No User', `I need a user in order to mute them \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "create"));
-        if (!reason) return AliasCancels.invalid('No Reason', `You must have a reason to mute them \n(${settings.options[1].specific})`, AliasUtils.getUsage(this, "create"));
+    /**
+     * 
+     * @param {GuildMember} issuer 
+     * @param {GuildMember} member 
+     * @param {String} reason 
+     * @returns {Promise<EmbedBuilder>} 
+     */
+    async Create(issuer, member, reason) {
+        const options = this.settings.options[0];
+        if (!member) return AliasEmbeds.invalid('No Member', `I need a member in order to mute them \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
+        if (!reason) return AliasEmbeds.invalid('No Reason', `You must have a reason to mute them \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "create"));
 
-        //await user.voice.setMute(true, reason);
-        const Create = AliasEmbeds.embedSuccess("MUTED USER", emojiType.user, "mute", this.type, [
-            { name: "Muted User", value: `\`\`\`${user.user.id}\`\`\`` },
-            { name: "On Channel", value: `\`\`\`${user.voice.channel.name}\`\`\`` },
+        if (!AliasUtils.userInteract(issuer, member)) return AliasEmbeds.unabled(`Not Mutable`, `The member you are trying to mute cannot be muted by you`);
+
+        //await member.voice.setMute(true, reason);
+        const Create = AliasEmbeds.embedSuccess("MUTED MEMBER", emojiType.user, "mute", this.settings.category, [
+            { name: "Muted Member", value: `\`\`\`${member.user.username}\`\`\`` },
+            { name: "On Channel", value: `\`\`\`${member.voice.channel.name}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-            { name: `By`, value: `\`\`\`${issuer.user.id}\`\`\`` }
+            { name: `By`, value: `\`\`\`${issuer.user.username}\`\`\`` }
         ])
         return Create;
     },
 
-    async Delete(issuer, user, reason) {
-        const settings = this.settings.options[1];
-        if (!user) return AliasCancels.invalid('No User', `I need a user in order to unmute them \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
-        if (!reason) return AliasCancels.invalid('No Reason', `You must have a reason to unmute them \n(${settings.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
+    /**
+     * 
+     * @param {GuildMember} issuer 
+     * @param {GuildMember} member 
+     * @param {String} reason 
+     * @returns {Promise<EmbedBuilder>} 
+     */
+    async Delete(issuer, member, reason) {
+        const options = this.settings.options[1];
+        if (!member) return AliasEmbeds.invalid('No Member', `I need a member in order to unmute them \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        if (!reason) return AliasEmbeds.invalid('No Reason', `You must have a reason to unmute them \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
 
-        //await user.voice.setMute(false);
-        const Delete = AliasEmbeds.embedSuccess("UNMUTED USER", emojiType.user, "unmute", this.type, [
-            { name: "Unmuted User", value: `\`\`\`${user.user.id}\`\`\`` },
+        //await member.voice.setMute(false);
+        const Delete = AliasEmbeds.embedSuccess("UNMUTED MEMBER", emojiType.user, "unmute", this.settings.category, [
+            { name: "Unmuted Member", value: `\`\`\`${member.user.username}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-            { name: `By`, value: `\`\`\`${issuer.user.id}\`\`\`` }
+            { name: `By`, value: `\`\`\`${issuer.user.username}\`\`\`` }
         ])
         return Delete;
     }

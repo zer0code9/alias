@@ -13,20 +13,6 @@ module.exports = {
         type: "PLAYING"
     },
 
-    event: {
-        guildCre: true,
-        guildDel: false,
-        messageCre: true,
-        messageDel: true,
-        interactionCre: true,
-        inviteCre: false,
-        inviteDel: false,
-        memberAdd: false,
-        memberRem: false,
-        reactionAdd: false,
-        reactionRem: false,
-    },
-
     colorEmbed: {
         success: "#00ff00",
         error: "#FF0000",

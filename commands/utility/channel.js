@@ -1,8 +1,8 @@
-const { bot, emojiType, colorEmbed } = require('../../config.js');
-const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels.js");
-const AliasEmbeds = require("../../helpers/embeds.js");
-const AliasUtils = require("../../helpers/utils.js");
+const { bot, emojiType, colorEmbed } = require('../../config');
+const { ApplicationCommandOptionType, EmbedBuilder, Message, ChatInputCommandInteraction, Guild, GuildChannel } = require('discord.js');
+const AliasEmbeds = require("../../helpers/embeds");
+const AliasUtils = require("../../helpers/utils");
+const AliasSends = require("../../helpers/sends");
 
 module.exports = {
     name: "channel",
@@ -11,14 +11,13 @@ module.exports = {
     type: "Utility",
     botPerms: ["manageChannels"],
     memPerms: ["manageChannels"],
-    args: [
-        { name: "action", type: "phrase", required: true },
-        { name: "channel", type:"channel-mention|id", required: true },
-        { name: "data", type:"data", required: false }
-    ],
-    msgCommand: { exist: true },
-    intCommand: { exist: true },
     settings: {
+        name: "channel",
+        id: "799489362224",
+        description: "Manage channels",
+        category: "Utility",
+        botPerms: ["manageChannels"],
+        memPerms: ["manageChannels"],
         existMsg: true,
         existInt: true,
         sub: true,
@@ -135,11 +134,17 @@ module.exports = {
         ],
     },
     
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     * @returns 
+     */
     async msgRun(msg, args) {
         const action = args[0];
 
         if (action == "data") {
-            const Data = AliasEmbeds.embed(colorEmbed.neutral, `Data for Channel`, this.type, [
+            const Data = AliasEmbeds.embed(colorEmbed.neutral, `Data for Channel`, this.settings.category, [
                 { name: "na:", value: `The new name of the channel {na:phrase}` },
                 { name: "pa:", value: `The new parent of the channel (if none put 0) {pa:id}` },
                 { name: "po:", value: `The new position of the channel in the category {po:integer}` },
@@ -147,28 +152,27 @@ module.exports = {
                 { name: "ra:", value: `The new rate limit per user of the channel {ra:second}` },
                 { name: "li:", value: `The new user limit (only for voice) {li:integer}` },
             ], bot.name + " helps")
-            return msg.channel.send({ embeds: [Data] });
+            AliasSends.sendEmbed(msg, Data);
+            msg.delete();
+            return;
         }
 
 
         if (action == "create") {
-            const name = await args[1];
-            const type = await args[2];
+            const name = args[1];
+            const type = args[2];
 
             try {
                 const Create = await this.Create(msg.guild, name, type);
-                AliasUtils.sendEmbed(msg, Create);
+                AliasSends.sendEmbed(msg, Create);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (action == "edit") {
-            const channel = await msg.guild.channels.cache.get(args[1]) ?? await msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
+            const channel = msg.guild.channels.cache.get(args[1]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
             const data = {};
-
-            if (!args.slice(2))
-return AliasCancels.invalid(`No Data`, `I need data to edit the channel \n\`zeditchannel data\` to see available types`, AliasUtils.getUsage(this, "edit"));
 
             try {
                 for (const arg of args.slice(2)) {
@@ -176,105 +180,114 @@ return AliasCancels.invalid(`No Data`, `I need data to edit the channel \n\`zedi
                 }
     
                 const Edit = await this.Edit(channel, data, msg.guild);
-                AliasUtils.sendEmbed(msg, Edit);
+                AliasSends.sendEmbed(msg, Edit);
             } catch (e) {
                 console.log(e)
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const channel = await msg.guild.channels.cache.get(args[1]) ?? await msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
-            const reason = await args.slice(2).join(" ");
+            const channel = msg.guild.channels.cache.get(args[1]) ?? msg.guild.channels.cache.get(msg.mentions.channels.first()?.id);
+            const reason = args.slice(2).join(" ");
 
             try {
                 const Delete = await this.Delete(channel, reason);
-                AliasUtils.sendEmbed(msg, Delete);
+                AliasSends.sendEmbed(msg, Delete);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else {
-            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.type, [
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.settings.category, [
                 { name: `Unknown Action Used`, value: `I don't know the action ${action}` },
                 { name: "Possible Actions", value: `create | edit | delete `}
             ], bot.name + " helps");
-            AliasUtils.sendEmbed(msg, Invalid);
+            AliasSends.sendEmbed(msg, Invalid);
         }
 
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     */
     async intRun(int) {
-        const action = await int.options.getSubcommand();
+        const action = int.options.getSubcommand();
 
         if (action == "create") {
-            const name = await int.options.getString('name');
-            const type = await int.options.getInteger('type');
+            const name = int.options.getString('name');
+            const type = int.options.getInteger('type');
             
             try {
                 const Create = await this.Create(int.guild, name, type);
-                AliasUtils.sendEmbed(int, Create);
+                AliasSends.sendEmbed(int, Create);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (action == "edit") {
-            const channel = await int.options.getChannel('channel');
+            const channel = int.options.getChannel('channel');
             const data = {};
     
             try {
-                const name = await int.options.getString('name');
+                const name = int.options.getString('name');
                 if (name) { data['na'] = name; }
         
-                const parent = await int.options.getString('parent');
+                const parent = int.options.getString('parent');
                 if (parent) { data['pa'] = parent; }
         
-                const position = await int.options.getInteger('position');
+                const position = int.options.getInteger('position');
                 if (position) { data['po'] = position; }
         
-                const topic = await int.options.getString('topic');
+                const topic = int.options.getString('topic');
                 if (topic) { data['to'] = topic; }
         
-                const rate = await int.options.getString('rate');
+                const rate = int.options.getString('rate');
                 if (rate) { data['ra'] = rate; }
         
-                const limit = await int.options.getInteger('limit');
+                const limit = int.options.getInteger('limit');
                 if (limit) { data['li'] = limit; }
     
                 const Edit = await this.Edit(channel, data, int.guild);
-                AliasUtils.sendEmbed(int, Edit);
+                AliasSends.sendEmbed(int, Edit);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const channel = await int.options.getChannel('channel');
-            const reason = await int.options.getString('reason');
+            const channel = int.options.getChannel('channel');
+            const reason = int.options.getString('reason');
     
             try {
                 const Delete = await this.Delete(channel, reason);
-                AliasUtils.sendEmbed(int, Delete);
+                AliasSends.sendEmbed(int, Delete);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
     },
 
+    /**
+     * 
+     * @param {Guild} guild 
+     * @param {String} name 
+     * @param {Number} type 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Create(guild, name, type) {
-        const settings = this.settings.options[0];
-        if (!name)
-return AliasCancels.invalid(`No Name`, `I need a name in order to create a new channel \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "create"));
+        const options = this.settings.options[0];
+        if (!name) return AliasEmbeds.invalid(`No Name`, `I need a name in order to create a new channel \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
 
         if (!type) type = 0;
-        if (!settings.options[1].options.includes(type))
-return AliasCancels.unabled(`Invalid Type`, `I need an integer for the type \n(${settings.options[1].specific}) \ntext:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15`)
+        if (!options.options[1].options.includes(type)) return AliasEmbeds.unabled(`Invalid Type`, `I need an integer for the type \n(${options.options[1].specific}) \ntext:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15`)
 
         await guild.channels.create({ name: name, type: type });
-        const Create = AliasEmbeds.embedSuccess("CREATED CHANNEL", emojiType.channel, emojiType.create, this.type,
+        const Create = AliasEmbeds.embedSuccess("CREATED CHANNEL", emojiType.channel, emojiType.create, this.settings.category,
         [
             { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
             { name: "Edit channel with:", value: `\`zmanagechannel edit\``}
@@ -282,15 +295,22 @@ return AliasCancels.unabled(`Invalid Type`, `I need an integer for the type \n($
         return Create;
     },
 
+    /**
+     * 
+     * @param {GuildChannel} channel 
+     * @param {{}} data 
+     * @param {Guild} guild 
+     * @returns {Promise<EmbedBuilder>} 
+     */
     async Edit(channel, data, guild){
-        const settings = this.settings.options[1];
-        if (!channel)
-return AliasCancels.invalid(`No Channel`, `I need a channel in order to move it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
+        const options = this.settings.options[1];
+        if (!channel) return AliasEmbeds.invalid(`No Channel`, `I need a channel in order to move it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
+        if (!data) return AliasEmbeds.invalid(`No Data`, `I need data to edit the channel`, AliasUtils.getUsage(this, "edit"));
 
         const Edit = new EmbedBuilder()
         .setColor(colorEmbed.success)
         .setTitle(`:` + emojiType.success + `: EDITED CHANNEL :` + emojiType.channel + `::` + emojiType.edit + `:`)
-        .setDescription(this.type + ` | ${channel.name} - ${channel.id}`)
+        .setDescription(this.settings.category + ` | ${channel.name} - ${channel.id}`)
         .setFooter({ text: bot.name + " helps" })
 
         for (const type in data) {
@@ -298,7 +318,6 @@ return AliasCancels.invalid(`No Channel`, `I need a channel in order to move it 
 
                 let value = data[type];
                 if (value) {
-                    if (!value || value == "") return Error(`cant`);
                     switch (type) {
                         case `na`:
                             const name = value;
@@ -342,15 +361,20 @@ return AliasCancels.invalid(`No Channel`, `I need a channel in order to move it 
         return Edit;
     },
 
+    /**
+     * 
+     * @param {GuildChannel} channel 
+     * @param {String} reason 
+     * @returns {Promise<EmbedBuilder>} 
+     */
     async Delete(channel, reason) {
-        const settings = this.settings.options[2];
-        if (!channel)
-return AliasCancels.invalid(msg, `No Channel`, `I need a channel in order to delete it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        const options = this.settings.options[2];
+        if (!channel) return AliasEmbeds.invalid(msg, `No Channel`, `I need a channel in order to delete it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
         if (!reason) reason = "No reason";
 
         let channelName = channel.name;
         await channel.delete();
-        const Delete = AliasEmbeds.embedSuccess("DELETED CHANNEL", emojiType.channel, emojiType.delete, this.type,
+        const Delete = AliasEmbeds.embedSuccess("DELETED CHANNEL", emojiType.channel, emojiType.delete, this.settings.category,
         [
             { name: "A channel has been deleted", value: `\`\`\`${channelName}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\``}

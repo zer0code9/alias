@@ -1,4 +1,4 @@
-const { ChannelType, ApplicationCommandOptionType, PermissionFlagsBits, Emoji } = require('discord.js')
+const { ChannelType, ApplicationCommandOptionType, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     permissions: {

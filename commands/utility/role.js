@@ -1,23 +1,17 @@
 const { bot, emojiType, colorEmbed } = require('../../config');
-const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
+const { ApplicationCommandOptionType, EmbedBuilder, Message, ChatInputCommandInteraction, Guild, Role } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
+const AliasSends = require("../../helpers/sends");
 
 module.exports = {
-    name: "role",
-    id: "684798693751",
-    description: "Manage roles",
-    type: "Utility",
-    botPerms: ["manageRoles"],
-    memPerms: ["manageRoles"],
-    args: [
-        { name: "role", type:"role-mention|id", required: true },
-        { name: "data", type:"data", required: true }
-    ],
-    msgCommand: { exist: true },
-    intCommand: { exist: true },
     settings: {
+        name: "role",
+        id: "684798693751",
+        description: "Manage roles",
+        category: "Utility",
+        botPerms: ["manageRoles"],
+        memPerms: ["manageRoles"],
         existMsg: true,
         existInt: true,
         sub: true,
@@ -126,11 +120,16 @@ module.exports = {
         ]
     },
     
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     */
     async msgRun(msg, args) {
         let action = args[0];
 
         if (action == "data") {
-            const Data = AliasEmbeds.embed(colorEmbed.neutral, `Data for Role`, this.type, [
+            const Data = AliasEmbeds.embed(colorEmbed.neutral, `Data for Role`, this.settings.category, [
                 { name: "na:", value: `The new name of the role \nna:phrase` },
                 { name: "po:", value: `The new position of the role \npo:integer` },
                 { name: "co:", value: `The new color of the role \nco:hex` },
@@ -138,142 +137,158 @@ module.exports = {
                 { name: "ho:", value: `Set whether the role is hoist \nho:boolean` },
                 { name: "un:", value: `The new unicode of the role \nun:string` },
             ], bot.name + " helps")
-            return msg.role.send({ embeds: [Data] });
+            AliasSends.sendEmbed(msg, Data);
+            msg.delete();
+            return;
         }
 
         if (action == "create") {
-            const name = await args.slice(1).join(" ");
+            const name = args.slice(1).join(" ");
     
             try {
                 const Create = await this.Create(msg.guild, name);
-                AliasUtils.sendEmbed(msg, Create);
+                AliasSends.sendEmbed(msg, Create);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (action == "edit") {
-            const role = await msg.guild.roles.cache.get(args[1]) ?? await msg.guild.roles.cache.get(msg.mentions.roles.first()?.id);
+            const role = msg.guild.roles.cache.get(args[1]) ?? msg.guild.roles.cache.get(msg.mentions.roles.first()?.id);
             const data = {};
 
-            if (!args.slice(2))
-return AliasCancels.invalid(msg, `No Data`, `I need data to edit the role \n\`zeditrole data\` to see available types`, AliasUtils.getUsage(this, "edit"));
-
             try {
-                for (const arg of args) {
+                for (const arg of args.slice(2)) {
                     data[AliasUtils.getDataType(arg)] = AliasUtils.getValue(arg);
                 }
 
                 const Edit = await this.Edit(role, data, msg.guild);
-                AliasUtils.sendEmbed(msg, Edit);
+                AliasSends.sendEmbed(msg, Edit);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else if (action == "delete") {
-            const role = await msg.guild.roles.cache.get(args[1]) ?? msg.guild.roles.cache.get(msg.mentions.roles.first()?.id); 
-            const reason = await args.slice(2).join(" "); 
+            const role = msg.guild.roles.cache.get(args[1]) ?? msg.guild.roles.cache.get(msg.mentions.roles.first()?.id); 
+            const reason = args.slice(2).join(" "); 
         
             try {
                 const Delete = await this.Delete(role, reason);
-                AliasUtils.sendEmbed(msg, Delete);
+                AliasSends.sendEmbed(msg, Delete);
             } catch {
-                AliasUtils.sendError(msg, this.name);
+                AliasSends.sendError(msg, this.settings.name);
             }
         }
 
         else {
-            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.type, [
+            const Invalid = AliasEmbeds.embed(colorEmbed.warning, "Invalid Action", this.settings.category, [
                 { name: `Unknown Action Used`, value: `I don't know the action ${action}` },
                 { name: "Possible Actions", value: `create | edit | delete `}
             ], bot.name + " helps");
-            AliasUtils.sendEmbed(msg, Invalid);
+            AliasSends.sendEmbed(msg, Invalid);
         }
 
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     * @returns 
+     */
     async intRun(int) {
-        const action = await int.options.getSubcommand();
+        const action = int.options.getSubcommand();
 
         if (action == "create") {
-            const name = await int.options.getString('name');
+            const name = int.options.getString('name');
 
             try {
                 const Create = await this.Create(int.guild, name);
-                AliasUtils.sendEmbed(int, Create);
+                AliasSends.sendEmbed(int, Create);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
 
         else if (action == "edit") {
-            const role = await int.options.getRole('role');
+            const role = int.options.getRole('role');
             const data = {};
     
             try {
-                const name = await int.options.getString('name');
+                const name = int.options.getString('name');
                 if (name) { data['na'] = name; }
         
-                const position = await int.options.getInteger('position');
+                const position = int.options.getInteger('position');
                 if (position) { data['po'] = position; }
         
-                const color = await int.options.getString('color');
+                const color = int.options.getString('color');
                 if (color) { data['co'] = color; }
         
-                const mention = await int.options.getBoolean('mention');
+                const mention = int.options.getBoolean('mention');
                 if (mention) { data['me'] = mention; }
         
-                const hoist = await int.options.getBoolean('hoist');
+                const hoist = int.options.getBoolean('hoist');
                 if (hoist) { data['ho'] = hoist; }
     
-                const unicode = await int.options.getString('unicode');
+                const unicode = int.options.getString('unicode');
                 if (unicode) { data['un'] = unicode; }
     
                 const Edit = await this.Edit(role, data, int.guild);
-                AliasUtils.sendEmbed(int, Edit);
+                AliasSends.sendEmbed(int, Edit);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
         
         else if (action == "delete") {
-            const role = await int.options.getRole('role');
-            const reason = await int.options.getString('reason');
+            const role = int.options.getRole('role');
+            const reason = int.options.getString('reason');
             
             try {
                 const Delete = await this.Delete(role, reason);
-                AliasUtils.sendEmbed(int, Delete);
+                AliasSends.sendEmbed(int, Delete);
             } catch {
-                AliasUtils.sendError(int, this.name);
+                AliasSends.sendError(int, this.settings.name);
             }
         }
     },
 
+    /**
+     * 
+     * @param {Guild} guild 
+     * @param {String} name 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Create(guild, name) {
-        const settings = this.settings.options[0];
-        if (!name)
-return AliasCancels.invalid(`No Name`, `I need a name in order to create a new role \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "create"));
+        const options = this.settings.options[0];
+        if (!name) return AliasEmbeds.invalid(`No Name`, `I need a name in order to create a new role \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
 
         await guild.roles.create({ name: name });
-        const Create = AliasEmbeds.embedSuccess("CREATED ROLE", emojiType.role, emojiType.create, this.type,
+        const Create = AliasEmbeds.embedSuccess("CREATED ROLE", emojiType.role, emojiType.create, this.settings.category,
         [
             { name: "A new role has been created", value: `\`\`\`${name}\`\`\``},
-            { name: "Edit role with:", value: `\`zmrole edit\``}
+            { name: "Edit role with:", value: `\`zrole edit or \\role edit\``}
         ])
         return Create;
     },
 
+    /**
+     * 
+     * @param {Role} role 
+     * @param {{}} data 
+     * @param {Guild} guild 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Edit(role, data, guild) {
-        const settings = this.settings.options[1];
-        if (!role)
-return AliasCancels.invalid(`No Role`, `I need a role in order to edit it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
+        const options = this.settings.options[1];
+        if (!role) return AliasEmbeds.invalid(`No Role`, `I need a role in order to edit it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
+        if (!data) return AliasEmbeds.invalid(`No Data`, `I need data to edit the role`, AliasUtils.getUsage(this, "edit"));
 
         const Edit = new EmbedBuilder()
         .setColor(colorEmbed.success)
         .setTitle(`:` + emojiType.success + `: EDITED ROLE :` + emojiType.role + `::` + emojiType.edit + `:`)
-        .setDescription(this.type + ` | ${role.name} - ${role.id}`)
+        .setDescription(this.settings.category + ` | ${role.name} - ${role.id}`)
         .setFooter({ text: bot.name + " helps" })
 
         for (const type in data) {
@@ -281,7 +296,6 @@ return AliasCancels.invalid(`No Role`, `I need a role in order to edit it \n(${s
 
                 let value = data[type];
                 if (value) {
-                    if (!value || value == "") return Error(`cant`);
                     switch (type) {
                         case `na`:
                             const name = value;
@@ -324,15 +338,20 @@ return AliasCancels.invalid(`No Role`, `I need a role in order to edit it \n(${s
         return Edit;
     },
 
+    /**
+     * 
+     * @param {Role} role 
+     * @param {String} reason 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async DelRole(role, reason) {
-        const settings = this.settings.options[2];
-        if (!role)
-return AliasCancels.invalid(msg, `No Role`, `I need a role in order to delete it \n(${settings.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        const options = this.settings.options[2];
+        if (!role) return AliasEmbeds.invalid(msg, `No Role`, `I need a role in order to delete it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
         if (!reason) reason = "No reason";
 
         let roleName = role.name;
         await role.delete(reason);
-        const Delete = AliasEmbeds.embedSuccess("DELETED ROLE", emojiType.role, emojiType.delete, this.type,
+        const Delete = AliasEmbeds.embedSuccess("DELETED ROLE", emojiType.role, emojiType.delete, this.settings.category,
         [
             { name: "A channel has been deleted", value: `\`\`\`${roleName}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\``}

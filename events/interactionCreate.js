@@ -1,6 +1,6 @@
-const { event } = require('../config');
 const { ChatInputCommandInteraction } = require('discord.js');
 const AliasCancels = require("../helpers/cancels");
+const AliasSends = require("../helpers/sends");
 const { permissions } = require('../helpers/collectors');
 const AliasDB = require('../database/functions');
 const alias = require('../client');
@@ -8,25 +8,25 @@ const alias = require('../client');
 /**
  * 
  * @param {ChatInputCommandInteraction} int 
- * @returns 
  */
 module.exports = async (int) => {
-	if (!event.interactionCre) return;
     if (!int.isCommand()) return;
 
 	const command = await alias.intCommands.get(int.commandName);
 	if (!command || !command.settings.existInt) return;
 
 	let noperm = false;
-    if (command.memPerms) {
-        command.memPerms.forEach(perm => {
+    if (command.settings.memPerms) {
+        command.settings.memPerms.forEach(perm => {
             if (!int.member.permissions.has(permissions[perm])) {
                 const Perm = AliasCancels.permission(`No Permission`, `<@${int.member.user.id}> doesn't have the permission to ${perm.toLowerCase()}`);
-				AliasUtils.sendEmbed(int, Perm);
+				AliasSends.sendEmbed(int, Perm);
                 noperm = true;
             }
         });
-        if (noperm) { return; }
+        if (noperm) {
+			return;
+		}
     }
 	
 	try {
