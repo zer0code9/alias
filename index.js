@@ -1,6 +1,6 @@
 const { bot } = require('./config');
 const { discordjs } = require('./secure');
-const { REST, Routes, SlashCommandBuilder } = require('discord.js');
+const { REST, Routes } = require('discord.js');
 const fs = require("fs");
 const alias = require('./client');
 
@@ -24,17 +24,13 @@ for (const folder of fs.readdirSync('./commands/')) {
         if (command.settings.existMsg) alias.msgCommands.set(command.settings.name, command);
         if (command.settings.existInt) {
             alias.intCommands.set(command.settings.name, command);
-            commands.push({
-                name: command.settings.name,
-                description: command.settings.description,
-                options: command.settings.options,
-            });
+            commands.push(command.settings);
         }
     }
 }
 
 // SLASH HANDLER
-const rest = new REST().setToken(discordjs.token);
+const rest = new REST({ version: '10' }).setToken(discordjs.token);
 (async () => {
     try {
         await rest.put(Routes.applicationCommands(bot.id), { body: commands });

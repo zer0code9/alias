@@ -1,3 +1,4 @@
+const { colorEmbed, emojiType } = require('../config');
 const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember } = require('discord.js');
 const AliasEmbeds = require('./embeds');
 const AliasUtils = require('./utils');

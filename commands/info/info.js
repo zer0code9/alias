@@ -9,14 +9,14 @@ const alias = require('../../client');
 module.exports = {
     settings: {
         name: "info",
-        id: "032712401586",
+        idDB: "032712401586",
         description: "Get info on stuff",
         cateogry: "Info",
         botPerms: [],
         memPerms: [],
         existMsg: true,
         existInt: true,
-        sub: false,
+        type: 1,
         options: [
             {
                 name: "channel",
@@ -28,7 +28,6 @@ module.exports = {
                         description: "The channel to get info on [channel-mention|id]",
                         type: ApplicationCommandOptionType.Channel,
                         specific: "channel-mention|id",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -43,7 +42,6 @@ module.exports = {
                         description: "The role to get info on [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
                         specific: "role-mention|id",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -58,7 +56,6 @@ module.exports = {
                         description: "The member to get info on [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: false,
                     }
                 ]
@@ -85,7 +82,6 @@ module.exports = {
                         description: "The emoji to get info on [emoji-id]",
                         type: ApplicationCommandOptionType.String,
                         specific: "emoji-id",
-                        options: [],
                         required: true,
                     }
                 ]

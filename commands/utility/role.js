@@ -1,4 +1,5 @@
 const { bot, emojiType, colorEmbed } = require('../../config');
+const { SlashCommandBuilder, SlashCommandSubcommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandOptionType, EmbedBuilder, Message, ChatInputCommandInteraction, Guild, Role } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
@@ -7,14 +8,14 @@ const AliasSends = require("../../helpers/sends");
 module.exports = {
     settings: {
         name: "role",
-        id: "684798693751",
+        idDB: "684798693751",
         description: "Manage roles",
         category: "Utility",
         botPerms: ["manageRoles"],
         memPerms: ["manageRoles"],
         existMsg: true,
         existInt: true,
-        sub: true,
+        type: 1,
         options: [
             {
                 name: "create",
@@ -26,7 +27,6 @@ module.exports = {
                         description: "The name of the new role [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -41,7 +41,6 @@ module.exports = {
                         description: "The role that is going to be edited [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
                         specific: "role-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -49,7 +48,6 @@ module.exports = {
                         description: "The new name of the channel [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: false,
                     },
                     {
@@ -57,7 +55,6 @@ module.exports = {
                         description: "The new position of the role [integer]",
                         type: ApplicationCommandOptionType.Integer,
                         specific: "integer",
-                        options: [],
                         required: false,
                     },
                     {
@@ -65,7 +62,6 @@ module.exports = {
                         description: "The new color of the role [string-hex]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-hex",
-                        options: [],
                         required: false,
                     },
                     {
@@ -73,7 +69,6 @@ module.exports = {
                         description: "Set whether the role is mentioable [boolean]",
                         type: ApplicationCommandOptionType.Boolean,
                         specific: "boolean",
-                        options: [],
                         required: false,
                     },
                     {
@@ -81,15 +76,13 @@ module.exports = {
                         description: "Set whether the role is hoist [boolean]",
                         type: ApplicationCommandOptionType.Boolean,
                         specific: "boolean",
-                        options: [],
                         required: false,
                     },
                     {
                         name: "unicode",
-                        description: "The new unicode of the role [string]",
+                        description: "The new unicode of the role [string-phrase]",
                         type: ApplicationCommandOptionType.String,
-                        specific: "phrase",
-                        options: [],
+                        specific: "string-phrase",
                         required: false,
                     },
                 ]
@@ -104,7 +97,6 @@ module.exports = {
                         description: "The role to delete [role-mention|id]",
                         type: ApplicationCommandOptionType.Role,
                         specific: "role-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -112,7 +104,6 @@ module.exports = {
                         description: "The reason to delete the role [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: false,
                     }
                 ]

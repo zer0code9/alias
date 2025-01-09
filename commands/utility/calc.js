@@ -1,32 +1,26 @@
-const { bot, emojiType } = require('../../config.js');
+const { emojiType } = require('../../config.js');
 const { ApplicationCommandOptionType } = require('discord.js');
-const AliasCancels = require("../../helpers/cancels");
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
+const AliasSends = require("../../helpers/sends");
 
 module.exports = {
-    name: "calc",
-    id: "922500535916",
-    description: "Use the basic calculator on Alias",
-    type: "Utility",
-    botPerms: [],
-    memPerms: [],
-    args: [
-        { name: "equation", type: "phrase", required: true }
-    ],
-    msgCommand: { exist: true },
-    intCommand: { exist: true },
     settings: {
+        name: "calc",
+        idDB: "922500535916",
+        description: "Use the basic calculator on Alias",
+        category: "Utility",
+        botPerms: [],
+        memPerms: [],
         existMsg: true,
         existInt: true,
-        sub: false,
+        type: 1,
         options: [
             {
                 name: "expression",
-                description: "The expression to evaluate [phrase]",
+                description: "The expression to evaluate [string-phrase]",
                 type: ApplicationCommandOptionType.String,
-                specific: "phrase",
-                options: [],
+                specific: "string-phrase",
                 required: true,
             }
         ]
@@ -37,9 +31,9 @@ module.exports = {
 
         try {
             const Calc = await this.Calc(expression);
-            AliasUtils.sendEmbed(msg, Calc);
+            AliasSends.sendEmbed(msg, Calc);
         } catch {
-            AliasUtils.sendError(msg, this.name);
+            AliasSends.sendError(msg, this.name);
         }
         msg.delete();
     },
@@ -49,16 +43,16 @@ module.exports = {
 
         try {
             const Calc = await this.Calc(expression);
-            AliasUtils.sendEmbed(int, Calc);
+            AliasSends.sendEmbed(int, Calc);
         } catch {
-            AliasUtils.sendError(int, this.name);
+            AliasSends.sendError(int, this.name);
         }
     },
 
     async Calc(expression) {
         const settings = this.settings;
         if (!expression)
-return AliasCancels.invalid(`No Expression`, `I need an expression \n(${settings.options[0].specific})`, AliasUtils.getUsage(this));
+return AliasEmbeds.invalid(`No Expression`, `I need an expression \n(${settings.options[0].specific})`, AliasUtils.getUsage(this));
 
         expression = expression
             .replace(/\n/g, "")
@@ -74,7 +68,7 @@ return AliasCancels.invalid(`No Expression`, `I need an expression \n(${settings
                 someError = true;
             }
         }
-        if (someError) return AliasCancels.unabled(`Invalid Character`, `You used a character that can't be processed`);
+        if (someError) return AliasEmbeds.unabled(`Invalid Character`, `You used a character that can't be processed`);
 
         answer = eval(expression);
         expression = expression.replace("", " ");

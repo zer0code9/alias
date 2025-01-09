@@ -5,22 +5,16 @@ const AliasUtils = require("../../helpers/utils");
 const AliasSends = require("../../helpers/sends");
 
 module.exports = {
-    name: "channel",
-    id: "799489362224",
-    description: "Manage channels",
-    type: "Utility",
-    botPerms: ["manageChannels"],
-    memPerms: ["manageChannels"],
     settings: {
         name: "channel",
-        id: "799489362224",
+        idDB: "799489362224",
         description: "Manage channels",
         category: "Utility",
         botPerms: ["manageChannels"],
         memPerms: ["manageChannels"],
         existMsg: true,
         existInt: true,
-        sub: true,
+        type: 1,
         options: [
             {
                 name: "create",
@@ -32,7 +26,6 @@ module.exports = {
                         description: "The name of the new channel [string]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string",
-                        options: [],
                         required: true,
                     },
                     {
@@ -40,7 +33,6 @@ module.exports = {
                         description: "The type of the channel [integer-text:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15]",
                         type: ApplicationCommandOptionType.Integer,
                         specific: "integer",
-                        options: [0, 2, 4, 5, 13, 14, 15],
                         required: false,
                     },
                 ],
@@ -55,7 +47,6 @@ module.exports = {
                         description: "The channel that is going to be edited [channel-mention|id]",
                         type: ApplicationCommandOptionType.Channel,
                         specific: "channel-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -63,7 +54,6 @@ module.exports = {
                         description: "The new name of the channel [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: false,
                     },
                     {
@@ -71,7 +61,6 @@ module.exports = {
                         description: "The new parent of the channel (if none put 0) [channel-id]",
                         type: ApplicationCommandOptionType.String,
                         specific: "channel-id",
-                        options: [],
                         required: false,
                     },
                     {
@@ -79,7 +68,6 @@ module.exports = {
                         description: "The new position of the channel in the category [integer]",
                         type: ApplicationCommandOptionType.Integer,
                         specific: "integer",
-                        options: [],
                         required: false,
                     },
                     {
@@ -87,7 +75,6 @@ module.exports = {
                         description: "The new topic of the channel [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: false,
                     },
                     {
@@ -95,7 +82,6 @@ module.exports = {
                         description: "The new rate limit per user of the channel [string-second]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-second",
-                        options: [],
                         required: false,
                     },
                     {
@@ -103,7 +89,6 @@ module.exports = {
                         description: "The new user limit (only for voice) [integer]",
                         type: ApplicationCommandOptionType.Integer,
                         specific: "integer",
-                        options: [],
                         required: false,
                     },
                 ],
@@ -118,7 +103,6 @@ module.exports = {
                         description: "The channel that is going to be deleted [channel-mention|id]",
                         type: ApplicationCommandOptionType.Channel,
                         specific: "channel-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -126,7 +110,6 @@ module.exports = {
                         description: "The reason to delete the channel [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: false,
                     },
                 ],

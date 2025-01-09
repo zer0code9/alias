@@ -7,14 +7,14 @@ const AliasSends = require("../../helpers/sends");
 module.exports = {
     settings: {
         name: "ban",
-        id: "338831695611",
+        idDB: "338831695611",
         description: "Manage bans",
         category: "Moderation",
         botPerms: ["banMembers"],
         memPerms: ["banMembers"],
         existMsg: true,
-        existInt: false,
-        sub: true,
+        existInt: true,
+        type: 1,
         options: [
             {
                 name: "create",
@@ -25,8 +25,7 @@ module.exports = {
                         name: "option",
                         description: "The type of ban [string-'soft'|'harsh']",
                         type: ApplicationCommandOptionType.String,
-                        specific: "'soft'|'harsh'",
-                        options: [],
+                        specific: "string-'soft'|'harsh'",
                         required: true,
                     },
                     {
@@ -34,7 +33,6 @@ module.exports = {
                         description: "The member to ban [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -42,7 +40,6 @@ module.exports = {
                         description: "The reason to ban [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -57,7 +54,6 @@ module.exports = {
                         description: "The user to unban [user-id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -65,7 +61,6 @@ module.exports = {
                         description: "The reason for unban [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]

@@ -7,21 +7,20 @@ const AliasSends = require("../../helpers/sends");
 module.exports = {
     settings: {
         name: "kick",
-        id: "308795241268",
+        idDB: "308795241268",
         description: "Kick a user",
         category: "Moderation",
         botPerms: ["kickMembers"],
         memPerms: ["kickMembers"],
         existMsg: true,
         existInt: true,
-        sub: false,
+        type: 1,
         options: [
             {
                 name: "member",
                 description: "The member to kick [user-mention|id]",
                 type: ApplicationCommandOptionType.User,
                 specific: "user-mention|id",
-                options: [],
                 required: true,
             },
             {
@@ -29,7 +28,6 @@ module.exports = {
                 description: "The reason to kick [string-phrase]",
                 type: ApplicationCommandOptionType.String,
                 specific: "string-phrase",
-                options: [],
                 required: true,
             }
         ]

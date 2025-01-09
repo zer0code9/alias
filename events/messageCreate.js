@@ -1,6 +1,6 @@
 const { bot } = require('../config');
 const { Message } = require('discord.js');
-const AliasCancels = require("../helpers/cancels");
+const AliasEmbeds = require("../helpers/embeds");
 const AliasSends = require("../helpers/sends");
 const { permissions } = require('../helpers/collectors');
 const AliasDB = require('../database/functions');
@@ -25,7 +25,7 @@ module.exports = async (msg) => {
     if (command.settings.memPerms) {
         command.settings.memPerms.forEach(perm => {
             if (!msg.member.permissions.has(permissions[perm])) {
-                const Perm = AliasCancels.permission(`No Permission`, `<@${msg.member.user.id}> doesn't have the permission to ${perm.toLowerCase()}`);
+                const Perm = AliasEmbeds.permission(`No Permission`, `<@${msg.member.user.id}> doesn't have the permission to ${perm.toLowerCase()}`);
 				AliasSends.sendEmbed(msg, Perm);
                 noperm = true;
             }

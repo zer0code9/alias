@@ -1,9 +1,8 @@
-const { bot, colorEmbed, emojiType } = require('../config');
+const { bot, colorEmbed } = require('../config');
 const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember, GuildChannel } = require('discord.js');
 const AliasEmbeds = require('./embeds');
 const AliasCollectors = require('./collectors');
 const AliasSends = require('./sends');
-const alias = require('../client');
 
 module.exports = class AliasUtils {
     /**

@@ -7,14 +7,14 @@ const AliasSends = require("../../helpers/sends");
 module.exports = {
     settings: {
         name: "warn",
-        id: "793417267397",
+        idDB: "793417267397",
         description: "Manage warnings",
         category: "Moderation",
         botPerms: ["manageGuild"],
         memPerms: ["manageGuild"],
         existMsg: true,
-        existInt: false,
-        sub: false,
+        existInt: true,
+        type: 1,
         options: [
             {
                 name: "create",
@@ -26,7 +26,6 @@ module.exports = {
                         description: "The member to warn [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -34,7 +33,6 @@ module.exports = {
                         description: "The warning for warn [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -49,7 +47,6 @@ module.exports = {
                         description: "The member to unwarn [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -57,7 +54,6 @@ module.exports = {
                         description: "The reason for unwarn [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]

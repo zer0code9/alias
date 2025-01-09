@@ -7,14 +7,14 @@ const AliasSends = require("../../helpers/sends");
 module.exports = {
     settings: {
         name: "mute",
-        id: "205188921806",
+        idDB: "205188921806",
         description: "Manage mutes in voice channels",
         category: "Moderation",
         botPerms: ["muteMembers"],
         memPerms: ["muteMembers"],
         existMsg: true,
         existInt: true,
-        sub: true,
+        type: 1,
         options: [
             {
                 name: "create",
@@ -26,7 +26,6 @@ module.exports = {
                         description: "The member to mute [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -34,7 +33,6 @@ module.exports = {
                         description: "The reason for mute [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]
@@ -49,7 +47,6 @@ module.exports = {
                         description: "The member to unmute [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
-                        options: [],
                         required: true,
                     },
                     {
@@ -57,7 +54,6 @@ module.exports = {
                         description: "The reason for unmute [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
-                        options: [],
                         required: true,
                     }
                 ]

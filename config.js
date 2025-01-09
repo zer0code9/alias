@@ -1,8 +1,8 @@
 module.exports = {
     bot: {
         name: "Alias",
-        version: "2.13.2",
-        id: "768214696019886121",
+        version: "2.13.3",
+        id: "1326700970066837514",
         prefix: "z",
         seperator: "-"
     },
