@@ -1,5 +1,4 @@
 const { bot, emojiType, colorEmbed } = require('../../config');
-const { SlashCommandBuilder, SlashCommandSubcommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandOptionType, EmbedBuilder, Message, ChatInputCommandInteraction, Guild, Role } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
@@ -186,7 +185,6 @@ module.exports = {
     /**
      * 
      * @param {ChatInputCommandInteraction} int 
-     * @returns 
      */
     async intRun(int) {
         const action = int.options.getSubcommand();

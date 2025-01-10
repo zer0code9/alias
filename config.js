@@ -17,6 +17,7 @@ module.exports = {
         success: "#00ff00",
         error: "#FF0000",
         warning: "#FF4433",
+        stop: "FFFF00",
         neutral: "#FFFFFF",
         asking: "#000000"
     },

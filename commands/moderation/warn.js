@@ -1,4 +1,4 @@
-const { bot, emojiType, colorEmbed } = require('../../config.js');
+const { bot, emojiType, colorEmbed } = require('../../config');
 const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildMember } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");

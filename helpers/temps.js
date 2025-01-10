@@ -1,4 +1,9 @@
 module.exports = class AliasTemps {
+    /**
+     * 
+     * @param {Number} previous 
+     * @returns {String}
+     */
     static timeDifference(previous) {
         var msPerMinute = 60 * 1000;
         var msPerHour = msPerMinute * 60;

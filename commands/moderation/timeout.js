@@ -1,43 +1,43 @@
 const { bot, emojiType, colorEmbed } = require('../../config');
-const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildMember, User } = require('discord.js');
+const { ApplicationCommandOptionType, Message, ChatInputCommandInteraction, GuildMember } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
 const AliasSends = require("../../helpers/sends");
 
 module.exports = {
     settings: {
-        name: "ban",
-        idDB: "338831695611",
-        description: "Manage bans",
+        name: "timeout",
+        idDB: "963393912460",
+        description: "Manage timeouts",
         category: "Moderation",
-        botPerms: ["banMembers"],
-        memPerms: ["banMembers"],
+        botPerms: ["muteMembers"],
+        memPerms: ["muteMembers"],
         existMsg: true,
         existInt: true,
         type: 1,
         options: [
             {
                 name: "create",
-                description: "Create a ban for a user",
+                description: "Create a timeout for a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
                         name: "member",
-                        description: "The member to ban [user-mention|id]",
+                        description: "The member to timeout [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
                         specific: "user-mention|id",
                         required: true,
                     },
                     {
-                        name: "option",
-                        description: "The type of ban [string-'soft'|'harsh']",
-                        type: ApplicationCommandOptionType.String,
-                        specific: "string-'soft'|'harsh'",
+                        name: "time",
+                        description: "The time for timeout [number-seconds]",
+                        type: ApplicationCommandOptionType.Number,
+                        specific: "number-seconds",
                         required: true,
                     },
                     {
                         name: "reason",
-                        description: "The reason to ban [string-phrase]",
+                        description: "The reason for timeout [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
                         required: true,
@@ -46,19 +46,19 @@ module.exports = {
             },
             {
                 name: "delete",
-                description: "Delete a ban from a user",
+                description: "Delete a timeout from a member",
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
-                        name: "user",
-                        description: "The user to unban [user-id]",
+                        name: "member",
+                        description: "The member to untimeout [user-mention|id]",
                         type: ApplicationCommandOptionType.User,
-                        specific: "user-id",
+                        specific: "user-mention|id",
                         required: true,
                     },
                     {
                         name: "reason",
-                        description: "The reason for unban [string-phrase]",
+                        description: "The reason for untimeout [string-phrase]",
                         type: ApplicationCommandOptionType.String,
                         specific: "string-phrase",
                         required: true,
@@ -79,25 +79,25 @@ module.exports = {
         if (action == "create") {
             const issuer = msg.member;
             const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
-            const option = args[2];
+            const time = args[2];
             const reason = args.slice(3).join(" ");
 
             try {
-                const Create = await this.Create(issuer, member, option, reason);
+                const Create = await this.Create(issuer, member, time, reason);
                 AliasSends.sendEmbedAlias(msg, Create);
-                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `${option} banned`, reason));
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `timed out`, reason));
             } catch {
                 AliasSends.sendErrorAlias(msg, this.settings.name);
             }
         }
 
-        if (action == "delete") {
+        else if (action == "delete") {
             const issuer = msg.member;
-            const user = msg.guild.members.cache.get(args[1])?.user;
+            const member = msg.guild.members.cache.get(args[1]) ?? msg.guild.members.cache.get(msg.mentions.users.first()?.id);
             const reason = args.slice(2).join(" ");
 
             try {
-                const Delete = await this.Delete(issuer, user, reason);
+                const Delete = await this.Delete(issuer, member, reason);
                 AliasSends.sendEmbedAlias(msg, Delete);
             } catch {
                 AliasSends.sendErrorAlias(msg, this.settings.name);
@@ -125,25 +125,25 @@ module.exports = {
         if (action == "create") {
             const issuer = int.member;
             const member = int.guild.members.cache.get(int.options.getUser('member').id);
-            const option = int.options.getString('option');
+            const time = int.options.getNumber('time');
             const reason = int.options.getString('reason');
-
+            
             try {
-                const Create = await this.Create(issuer, member, option, reason);
+                const Create = await this.Create(issuer, member, time, reason);
                 AliasSends.sendEmbedAlias(int, Create);
-                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `${option} banned`, reason));
+                AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `timed out`, reason));
             } catch {
-                AliasUtils.sendErrorAlias(int, this.settings.name);
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
 
         else if (action == "delete") {
             const issuer = int.member;
-            const user = int.options.getUser('user');
+            const member = int.guild.members.cache.get(int.options.getUser('member').id);
             const reason = int.options.getString('reason');
             
             try {
-                const Delete = await this.Delete(issuer, user, reason);
+                const Delete = await this.Delete(issuer, member, reason);
                 AliasSends.sendEmbedAlias(int, Delete);
             } catch {
                 AliasSends.sendErrorAlias(int, this.settings.name);
@@ -155,49 +155,36 @@ module.exports = {
      * 
      * @param {GuildMember} issuer 
      * @param {GuildMember} member 
-     * @param {"soft" | "harsh"} option 
+     * @param {Number} time 
      * @param {String} reason 
      * @returns {Promise<EmbedBuilder>} 
      */
-    async Create(issuer, member, option, reason) {
+    async Create(issuer, member, time, reason) {
         const options = this.settings.options[0];
-        if (!member) return AliasEmbeds.invalid(`No Member`, `I need a member in order to ban them \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
-        if (!option) return AliasEmbeds.invalid(`No Option`, `I need to know whether to soft or harsh ban \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "create"));
-        if (option != `soft` && option != `harsh`) return AliasEmbeds.unabled(`Need a valid option`, `The options are either soft or harsh \n Soft: only bans | Harsh: bans and deletes messages`);
-        if (!reason) return AliasEmbeds.invalid(`No Reason`, `You must have a reason to ban them \n(${options.options[2].specific})`, AliasUtils.getUsage(this, "create"));
+        if (!member) return AliasEmbeds.invalid(`No Member`, `I need a member in order to time them out \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
+        if (!time) return AliasEmbeds.invalid(`No time`, `I need a time to time them out \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "create"));
+        if (!reason) return AliasEmbeds.invalid(`No Reason`, `You must have a reason to time them out \n(${options.options[2].specific})`, AliasUtils.getUsage(this, "create"));
 
-        if (!AliasUtils.userInteract(issuer, member)) return AliasEmbeds.unabled(`Not Bannable`, `The member you are trying to ban cannot be banned by you`);
+        if (!AliasUtils.userInteract(issuer, user)) return AliasEmbeds.unabled(`Not Manageable`, `The user you are trying to timeout cannot be timed out by you`);
 
-        if (option == `soft`) {
-            //member.ban({ reason: reason });
-        } else if (option == `harsh`) {
-            //member.ban({ deleteMessageSeconds: 60 * 60 * 24 * 7, reason: reason });
-        }
-        const Create = AliasEmbeds.embedSuccess("BANNED MEMBER", emojiType.user, emojiType.no, this.settings.category, [
-            { name: "Banned MEMBER", value: `\`\`\`${member.user.username}\`\`\`` },
+        const Create = AliasEmbeds.embedSuccess("TIMED OUT USER", emojiType.user, "no_bell", this.type, [
+            { name: "Timed out User", value: `\`\`\`${user.user.id}\`\`\`` },
+            { name: "For", value: `\`\`\`${time * 1000} seconds\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-            { name: "By", value: `\`\`\`${issuer.user.username}\`\`\`` }
+            { name: `By`, value: `\`\`\`${issuer.user.id}\`\`\`` }
         ])
         return Create;
     },
 
-    /**
-     * 
-     * @param {GuildMember} issuer 
-     * @param {User} user 
-     * @param {String} reason 
-     * @returns {Promise<EmbedBuilder>} 
-     */
-    async Delete(issuer, user, reason) {
+    async Delete(issuer, member, reason) {
         const options = this.settings.options[1];
-        if (!user) return AliasEmbeds.invalid(`No Id`, `I need a valid id in order to unban them \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
-        if (!reason) return AliasEmbeds.invalid(`No Reason`, `You must have a reason to unban them \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
+        if (!member) return AliasEmbeds.invalid(`No Member`, `I need a member in order to untime them out \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
+        if (!reason) return AliasEmbeds.invalid(`No Reason`, `You must have a reason to untime them out \n(${options.options[1].specific})`, AliasUtils.getUsage(this, "delete"));
 
-        //issuer.guild.bans.remove(target, reason);
-        const Delete = AliasEmbeds.embedSuccess("UNBANNED USER", emojiType.user, "o", this.settings.category, [
-            { name: "Unbanned User", value: `\`\`\`${user.username}\`\`\`` },
+        const Delete = AliasEmbeds.embedSuccess("UNTIMED OUT USER", emojiType.user, "bell", this.type, [
+            { name: "Untimed out User", value: `\`\`\`${user.user.id}\`\`\`` },
             { name: "Reason", value: `\`\`\`${reason}\`\`\`` },
-            { name: "By", value: `\`\`\`${issuer.user.username}\`\`\`` }
+            { name: `By`, value: `\`\`\`${issuer.user.id}\`\`\`` }
         ])
         return Delete;
     }

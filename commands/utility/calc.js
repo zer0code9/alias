@@ -1,5 +1,5 @@
-const { emojiType } = require('../../config.js');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { emojiType } = require('../../config');
+const { ApplicationCommandOptionType, EmbedBuilder,Message, ChatInputCommandInteraction } = require('discord.js');
 const AliasEmbeds = require("../../helpers/embeds");
 const AliasUtils = require("../../helpers/utils");
 const AliasSends = require("../../helpers/sends");
@@ -26,6 +26,11 @@ module.exports = {
         ]
     },
 
+    /**
+     * 
+     * @param {Message} msg 
+     * @param {String[]} args 
+     */
     async msgRun(msg, args){
         const expression = args.join(" ");
 
@@ -38,6 +43,10 @@ module.exports = {
         msg.delete();
     },
 
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} int 
+     */
     async intRun(int) {
         const expression = int.options.getString("expression");
 
@@ -49,6 +58,11 @@ module.exports = {
         }
     },
 
+    /**
+     * 
+     * @param {String} expression 
+     * @returns {Promise<EmbedBuilder>}
+     */
     async Calc(expression) {
         const settings = this.settings;
         if (!expression)

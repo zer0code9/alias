@@ -47,25 +47,4 @@ module.exports = {
         directory: ChannelType.GuildDirectory,
         forum: ChannelType.GuildForum,
     },
-
-    argType: {
-        channelMI: ["channel-mention|id", "ch-me|id"],
-        channelI: ["channel-id", "ch-id"],
-        roleMI: ["role-mention|id", "ro-me|id"],
-        roleI: ["role-id", "ro-id"],
-        userMI: ["user-mention|id", "us-me|id"],
-        userI: ["user-id", "us-id"],
-
-        string: ["string", "st"],
-        integer: ["integer", "in"],
-        number: ["number", "nu"],
-        boolean: ["boolean", "bo"],
-
-        word: ["word", "wo"],
-        phrase: ["phrase", "ph"],
-        id: ["id", "id"],
-        hex: ["hex", "he"],
-        option: ["option", "()"],
-        data: ["data", "{}"]
-    }
 }
