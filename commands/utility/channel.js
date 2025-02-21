@@ -267,13 +267,14 @@ module.exports = {
         if (!name) return AliasEmbeds.invalid(`No Name`, `I need a name in order to create a new channel \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "create"));
 
         if (!type) type = 0;
-        if (!options.options[1].options.includes(type)) return AliasEmbeds.unabled(`Invalid Type`, `I need an integer for the type \n(${options.options[1].specific}) \ntext:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15`)
+        const types = [0, 2, 4, 5, 13, 14, 15];
+        if (!types.includes(type)) return AliasEmbeds.unabled(`Invalid Type`, `I need an integer for the type \n(${options.options[1].specific}) \ntext:0,voice:2,category:4,news:5,stage:13,directory:14,forum:15`)
 
         await guild.channels.create({ name: name, type: type });
         const Create = AliasEmbeds.embedSuccess("CREATED CHANNEL", emojiType.channel, emojiType.create, this.settings.category,
         [
             { name: "A new channel has been created", value: `\`\`\`${name}\`\`\``},
-            { name: "Edit channel with:", value: `\`zmanagechannel edit\``}
+            { name: "Edit channel with:", value: `\`zchannel edit or \\channel edit\``}
         ])
         return Create;
     },
@@ -287,7 +288,7 @@ module.exports = {
      */
     async Edit(channel, data, guild){
         const options = this.settings.options[1];
-        if (!channel) return AliasEmbeds.invalid(`No Channel`, `I need a channel in order to move it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
+        if (!channel) return AliasEmbeds.invalid(`No Channel`, `I need a channel in order to edit it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "edit"));
         if (!data) return AliasEmbeds.invalid(`No Data`, `I need data to edit the channel`, AliasUtils.getUsage(this, "edit"));
 
         const Edit = new EmbedBuilder()

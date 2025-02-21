@@ -18,6 +18,7 @@ for (const file of fs.readdirSync('./events/')) {
 // COMMAND HANDLER
 const commands = [];
 for (const folder of fs.readdirSync('./commands/')) {
+    if (folder == ".DS_Store") continue;
     for (const file of fs.readdirSync(`./commands/${folder}`).filter(name => name.endsWith('.js'))) {
         const command = require(`./commands/${folder}/${file}`);
         alias.commands.set(command.settings.name, command);

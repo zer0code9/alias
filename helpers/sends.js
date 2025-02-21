@@ -26,7 +26,11 @@ module.exports = class AliasSends {
     static sendEmbedAlias(type, Embed) {
         const channelAlias = AliasUtils.getAliasChannel(type);
         if (!channelAlias) return;
-        channelAlias.send({ embeds: [Embed] });
+        if (type.type == 0) {
+            channelAlias.send({ embeds: [Embed] });
+        } else if (type.type == 2) {
+            channelAlias.reply({ embeds: [Embed], ephemeral: true });
+        }
     }
 
     /**

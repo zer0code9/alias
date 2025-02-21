@@ -1,5 +1,5 @@
 const { bot, colorEmbed } = require('../config');
-const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember, GuildChannel } = require('discord.js');
+const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember, GuildBasedChannel } = require('discord.js');
 const AliasEmbeds = require('./embeds');
 const AliasCollectors = require('./collectors');
 const AliasSends = require('./sends');
@@ -21,16 +21,16 @@ module.exports = class AliasUtils {
     /**
      * 
      * @param {Message | ChatInputCommandInteraction} type 
-     * @returns {GuildChannel | undefined}
+     * @returns {GuildBasedChannel | undefined}
      */
     static getAliasChannel(type) {
         let channelAlias = type.guild.channels.cache.find(c => c.name.toLowerCase() === "for-alias");
         if (!channelAlias) {
-            const Warning = AliasEmbeds.embed(colorEmbed.warning, "No Alias Setup", "Setup", [
-                { name: "Please set up the log channel for Alias", value: `\`${bot.prefix}setup\`` },
-                { name: "Note", value: "Please don't change the name of the log channel \`for-alias\`" }
-            ])
-            AliasSends.sendEmbed(type, Warning);
+            // const Warning = AliasEmbeds.embed(colorEmbed.warning, "No Alias Setup", "Setup", [
+            //     { name: "Please set up the log channel for Alias", value: `\`${bot.prefix}setup\`` },
+            //     { name: "Note", value: "Please don't change the name of the log channel \`for-alias\`" }
+            // ], `${bot.name} helps`)
+            // AliasSends.sendEmbed(type, Warning);
             return;
         }
         return channelAlias;

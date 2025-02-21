@@ -333,7 +333,7 @@ module.exports = {
      * @param {String} reason 
      * @returns {Promise<EmbedBuilder>}
      */
-    async DelRole(role, reason) {
+    async Delete(role, reason) {
         const options = this.settings.options[2];
         if (!role) return AliasEmbeds.invalid(msg, `No Role`, `I need a role in order to delete it \n(${options.options[0].specific})`, AliasUtils.getUsage(this, "delete"));
         if (!reason) reason = "No reason";

@@ -132,8 +132,8 @@ module.exports = {
                 const Create = await this.Create(issuer, member, option, reason);
                 AliasSends.sendEmbedAlias(int, Create);
                 AliasSends.sendEmbedUser(member, AliasUtils.getMesage(member, `${option} banned`, reason));
-            } catch {
-                AliasUtils.sendErrorAlias(int, this.settings.name);
+            } catch (e) {
+                AliasSends.sendErrorAlias(int, this.settings.name);
             }
         }
 
