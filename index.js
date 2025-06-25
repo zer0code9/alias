@@ -35,7 +35,7 @@ const rest = new REST({ version: '10' }).setToken(discordjs.token);
 (async () => {
     try {
         await rest.put(Routes.applicationCommands(bot.id), { body: commands });
-        console.log(`Slash Commands Done`);
+        console.log(`Slash Commands Done:`, commands.length);
     } catch (error) {
         console.error(error);
     }

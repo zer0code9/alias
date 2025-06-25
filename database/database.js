@@ -1,24 +1,31 @@
 const { firebase } = require("./../secure.json");
+const { getAuth, signInWithEmailAndPassword, onAuthStateChanged } = require("firebase/auth");
 const { initializeApp } = require("firebase/app");
 const { getFirestore } = require("firebase/firestore");
-const { getAuth, signInWithEmailAndPassword, onAuthStateChanged } = require("firebase/auth");
+const { getAI, getGenerativeModel, GoogleAIBackend } = require("firebase/ai")
 
-const app = initializeApp(firebase.firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth();
+const appDB = initializeApp(firebase.firebaseDBConfig, "DB");
+const db = getFirestore(appDB);
 
-signInWithEmailAndPassword(auth, firebase.email, firebase.pass)
+const authDB = getAuth(appDB);
+
+const appAI = initializeApp(firebase.firebaseAIConfig, "AI");
+const ai = getAI(appAI, { backend: new GoogleAIBackend() });
+const model = getGenerativeModel(ai, { model: "gemini-2.0-flash" });
+
+signInWithEmailAndPassword(authDB, firebase.email, firebase.pass)
     .then((userCred) => {
-        console.log("Signed in as " + userCred.user.uid);
+        console.log("Signed in as " + userCred.user.displayName);
     })
     .catch((error) => {
         console.log("Unable to sign in");
     })
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(authDB, (user) => {
     if (!user) console.log("Signed out");
 })
 
 module.exports = {
-    db
+    db,
+    model
 }

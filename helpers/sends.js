@@ -1,5 +1,5 @@
 const { colorEmbed, emojiType } = require('../config');
-const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember } = require('discord.js');
+const { Message, ChatInputCommandInteraction, EmbedBuilder, GuildMember, MessageFlags } = require('discord.js');
 const AliasEmbeds = require('./embeds');
 const AliasUtils = require('./utils');
 const alias = require('../client');
@@ -14,7 +14,7 @@ module.exports = class AliasSends {
         if (type.type == 0) {
             type.channel.send({ embeds: [Embed] });
         } else if (type.type == 2) {
-            type.reply({ embeds: [Embed], ephemeral: true });
+            type.reply({ embeds: [Embed], flags: MessageFlags.Ephemeral });
         }
     }
 
@@ -29,7 +29,7 @@ module.exports = class AliasSends {
         if (type.type == 0) {
             channelAlias.send({ embeds: [Embed] });
         } else if (type.type == 2) {
-            channelAlias.reply({ embeds: [Embed], ephemeral: true });
+            channelAlias.reply({ embeds: [Embed], flags: MessageFlags.Ephemeral });
         }
     }
 

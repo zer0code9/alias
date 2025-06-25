@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction } = require('discord.js');
+const { ChatInputCommandInteraction, MessageFlags } = require('discord.js');
 const AliasEmbeds = require("../helpers/embeds");
 const AliasSends = require("../helpers/sends");
 const { permissions } = require('../helpers/collectors');
@@ -36,7 +36,7 @@ module.exports = async (int) => {
 		await command.intRun(int);
 	} catch (error) {
 		console.error(error);
-		int.reply({ content: `There was an error while executing the command!`, ephemeral: true });
+		int.reply({ content: `There was an error while executing the command!`, flags: MessageFlags.Ephemeral });
 		return;
 	}
 }

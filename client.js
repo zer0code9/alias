@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const alias = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -9,8 +9,8 @@ const alias = new Client({
         // GatewayIntentBits.GuildInvites,
         // GatewayIntentBits.GuildVoiceStates,
         // GatewayIntentBits.GuildPresences,
-        // GatewayIntentBits.GuildMessages,
-        // GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
         // GatewayIntentBits.GuildMessageTyping,
         // GatewayIntentBits.DirectMessages,
         // GatewayIntentBits.DirectMessageReactions,
@@ -18,6 +18,11 @@ const alias = new Client({
         // GatewayIntentBits.AutoModerationConfiguration,
         // GatewayIntentBits.AutoModerationExecution,
         // GatewayIntentBits.MessageContent,
+    ],
+    partials: [
+        Partials.Channel,
+        Partials.Message,
+        Partials.Reaction,
     ]
 });
 

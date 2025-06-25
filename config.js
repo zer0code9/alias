@@ -31,6 +31,7 @@ module.exports = {
         emoji: "envelope",
         fun: "teddy_bear",
         time: "clock12",
+        ai: "computer",
 
         create: "heavy_plus_sign",
         delete: "heavy_minus_sign",

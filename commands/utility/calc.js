@@ -38,7 +38,7 @@ module.exports = {
             const Calc = await this.Calc(expression);
             AliasSends.sendEmbed(msg, Calc);
         } catch {
-            AliasSends.sendError(msg, this.name);
+            AliasSends.sendError(msg, this.settings.name);
         }
         msg.delete();
     },
@@ -54,7 +54,7 @@ module.exports = {
             const Calc = await this.Calc(expression);
             AliasSends.sendEmbed(int, Calc);
         } catch {
-            AliasSends.sendError(int, this.name);
+            AliasSends.sendError(int, this.settings.name);
         }
     },
 
@@ -87,7 +87,7 @@ return AliasEmbeds.invalid(`No Expression`, `I need an expression \n(${settings.
         answer = eval(expression);
         expression = expression.replace("", " ");
 
-        const Calc = AliasEmbeds.embedSuccess('CALCULATED', emojiType.fun, 'abacus', this.type, [
+        const Calc = AliasEmbeds.embedSuccess('CALCULATED', emojiType.fun, 'abacus', this.settings.category, [
             { name: "Calculation:", value: `\`\`\`${expression} = ${answer}\`\`\`` }
         ])
         return Calc;
